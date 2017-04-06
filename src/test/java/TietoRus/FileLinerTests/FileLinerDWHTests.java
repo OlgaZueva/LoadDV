@@ -4,7 +4,6 @@ import TietoRus.helpers.Asserts;
 import TietoRus.helpers.GetDataHelper;
 import TietoRus.models.FileLiner;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -62,7 +61,7 @@ public class FileLinerDWHTests {
                 /* Запись в HubStaStatus statellit table появиться только если загружаем сат.
                 * //Когда только хаб, без сата -  ее не будет, поэтому проверку отключила
 
-                Integer dwhIdHub = dh.getdwhIdHub(dwhSQL);
+                Integer dwhIdHub = dh.getDWHidHub(dwhSQL);
                 Integer satHubStatus = dh.getSatHubStatus(satHubStatusTable + dwhIdHub);
                 if (satHubStatus == null) {
                     System.err.println("SatHubStatus is null! Maybe record not found or more then one record in SA with identical keys.");
@@ -127,7 +126,7 @@ public class FileLinerDWHTests {
         FileLiner hubfromSA = dh.getHubFromSA(saSQL);
         FileLiner hubfromDWH = dh.getHubFromDWH(dwhSQL);
         asserts.assertHubs(hubfromSA, hubfromDWH);
-        int satHubStatus = dh.getSatHubStatus(satHubStatusTable + dh.getdwhIdHub(dwhSQL));
+        int satHubStatus = dh.getSatHubStatus(satHubStatusTable + dh.getDWHidHub(dwhSQL));
         System.out.println("SatHubStatus = " + satHubStatus);
         int tryCountAfter = dh.getTryCtnFromSA(saSQL);
         System.out.println("TryCount в SA после добавления хаба: " + tryCountAfter);
