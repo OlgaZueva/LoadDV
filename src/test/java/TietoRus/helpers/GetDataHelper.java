@@ -54,7 +54,7 @@ public class GetDataHelper {
                     System.err.println("TryCtn. More then one record in SA. Check query!");
                 } else {
                     tryCnt = Integer.valueOf(rsFromSA.getString("tryCnt"));
-                    System.out.println("tryCnt in SA: " + tryCnt);
+                    //System.out.println("tryCnt in SA: " + tryCnt);
                 }
             }
         }
@@ -76,7 +76,7 @@ public class GetDataHelper {
                     System.err.println("HubStatus. More then one record in SA. Check query!");
                 } else {
                     hubStatus = Integer.valueOf(rsFromSA.getString("statusHub"));
-                    System.out.println("statusHub in SA: " + hubStatus);
+                    //System.out.println("statusHub in SA: " + hubStatus);
                 }
             }
         }
@@ -117,7 +117,7 @@ public class GetDataHelper {
         return countRowHub;
     }
 
-    public Integer getdwhIdHub(String hubSQL) throws SQLException {
+    public Integer getDWHidHub(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
