@@ -3,6 +3,7 @@ package TietoRus.FileLinerTests;
 import TietoRus.helpers.Asserts;
 import TietoRus.helpers.GetDataHelper;
 import TietoRus.models.FileLiner;
+import TietoRus.objects.FileLinerObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -16,10 +17,12 @@ import java.util.Properties;
  * Created by zuevaolg on 05.04.2017.
  * Проверка правильного формирования HUB'ов, SAT'ов и LINK'ов после первоначальной загрузки данных
  */
-public class FileLinerDWHTests {
-    /** тест проверяет общий положительный сценарий по добавлению записи
+public class FileLinerDWHMainTest {
+    /**
+     * тест проверяет общий положительный сценарий по добавлению записи
      * Предусловия:
-     * 1. Запись в SA должна существовать. У нее: PartitionId = 0, srcSysID =1, TryCnt < maxTryCount и валидные значения бизнес-ключей
+     * 1. Запись в SA должна существовать.
+     * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
      * 2. Запись в DWH не должна существовать
      * 3. Зафиксировать значение tryCtn в SA-таблице, присвоить это значение переменной tryCtnPrecondition
      * Действия:
@@ -29,17 +32,20 @@ public class FileLinerDWHTests {
      */
 
     private GetDataHelper dh = new GetDataHelper();
+    private FileLinerObjects objects = new FileLinerObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
-    private String tableForTestDataInSA = "stg.UNITY_Sag";
-    private String tableForTestDataInDWH = "hub.hubFileLiner";
+    private String tableForTestDataInSA;
+    private String tableForTestDataInDWH;
 
     //Подготовь данные в SQLforTestData -> получи запрос на добавление записи -> используй его для добавления тестовой записи!
     // Добавь запись в SA перед выполнением теста!
     @Test
     public void HubCreatedValidFlow() throws SQLException, IOException {
         getPropertiesFile();
+        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
         int tryCtnPrecondition = 0;
         String saSQL = SQL.getSelectFromSA("stg.v_Sag");
         String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
@@ -54,8 +60,8 @@ public class FileLinerDWHTests {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else if (hubStatus != 0 || (tryCtn <= Integer.parseInt(properties.getProperty("system.MaxTryCount")))) {
             if (dh.getCountRowOfHub(dwhSQL) == 1) {
-                FileLiner hubfromSA = dh.getHubFromSA(saSQL);
-                FileLiner hubfromDWH = dh.getHubFromDWH(dwhSQL);
+                FileLiner hubfromSA = objects.getHubFromSA(saSQL);
+                FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
                 asserts.assertHubs(hubfromSA, hubfromDWH);
 
                 /* Запись в HubStaStatus statellit table появиться только если загружаем сат.
@@ -74,17 +80,18 @@ public class FileLinerDWHTests {
                 }
                */
 
-                Integer hubStatusAfter = dh.getHubStatusFromSA(saSQL);
-                if (hubStatusAfter == 1) {
-                    System.out.println("HubStatus set valid values! HubStatus [" + hubStatusAfter + "]");
-                } else {
-                    System.err.println("HubStatus have not valid values! HubStatus [" + hubStatusAfter + "]");
-                }
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
                 if (tryCtnAfter == tryCtnPrecondition) {
                     System.out.println("TryCount not update. It's valid. TryCtn [" + tryCtnAfter + "]");
                 } else {
                     System.err.println("TryCtn was updated,  but it's wrong! TryCtn [" + tryCtnAfter + "]");
+                }
+
+                Integer hubStatusAfter = dh.getHubStatusFromSA(saSQL);
+                if (hubStatusAfter == 1) {
+                    System.out.println("HubStatus set valid values! HubStatus [" + hubStatusAfter + "]");
+                } else {
+                    System.err.println("HubStatus have not valid values! HubStatus [" + hubStatusAfter + "]");
                 }
 
 /* Проверка накручивания счетчика tryCnt. Счетчик увеличивается только при неудачных попытках загразки.
@@ -102,7 +109,7 @@ public class FileLinerDWHTests {
                 System.err.println("Record in DWH not found or they are more one!");
             }
         } else {
-            FileLiner hubfromDWH = dh.getHubFromDWH(dwhSQL);
+            FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
             if (hubfromDWH != null) {
                 System.err.println("Hub was created, but hubStatus or tryCtn out of valid values!");
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
@@ -123,8 +130,8 @@ public class FileLinerDWHTests {
         String dwhSQL = "select * from hub.hubFileLiner where accessCompanyId = 13 and fileLinerNr = 21677777 and serviceCode = '020' and SrcSystemId =1";
         String satHubStatusTable = "SELECT *  FROM sat.satFileLinerStatus where dwhIdHubFileLiner = ";
 
-        FileLiner hubfromSA = dh.getHubFromSA(saSQL);
-        FileLiner hubfromDWH = dh.getHubFromDWH(dwhSQL);
+        FileLiner hubfromSA = objects.getHubFromSA(saSQL);
+        FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
         asserts.assertHubs(hubfromSA, hubfromDWH);
         int satHubStatus = dh.getSatHubStatus(satHubStatusTable + dh.getDWHidHub(dwhSQL));
         System.out.println("SatHubStatus = " + satHubStatus);

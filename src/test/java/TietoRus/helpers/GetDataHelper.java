@@ -19,27 +19,6 @@ public class GetDataHelper {
     private Map<String, Object> mapAllFromSA = new HashMap<String, Object>();
     private Map<String, Object> mapHubFromDWH = new HashMap<String, Object>();
 
-    public Map<String, Object> getMapFromSA(String sql) throws SQLException {
-        Connection connectionToSA = db.connToSA();
-        Statement stForSA = db.stFromConnection(connectionToSA);
-        System.out.println("SQL из SA: " + sql);
-        ResultSet rsFromSA = db.rsFromDB(stForSA, sql);
-
-        while (rsFromSA.next()) {
-            if (rsFromSA.getRow() > 1) {
-                System.err.println("Count rows got from SA: " + rsFromSA.getRow()
-                        + ". If its > 1 check values in keys in sql query to SA! SQL: " + sql);
-            } else {
-                for (int k = 1; k <= rsFromSA.getMetaData().getColumnCount(); k++) {
-                    mapAllFromSA.put(rsFromSA.getMetaData().getColumnName(k), rsFromSA.getObject(k));
-                    System.out.println("SA MAP: " + mapAllFromSA);
-                }
-            }
-        }
-        closeConnecions(rsFromSA, stForSA, connectionToSA);
-        return mapAllFromSA;
-    }
-
     public Integer getTryCtnFromSA(String sql) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
@@ -58,7 +37,7 @@ public class GetDataHelper {
                 }
             }
         }
-        closeConnecions(rsFromSA, stForSA, connectionToSA);
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
         return tryCnt;
     }
 
@@ -80,28 +59,11 @@ public class GetDataHelper {
                 }
             }
         }
-        closeConnecions(rsFromSA, stForSA, connectionToSA);
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
         return hubStatus;
     }
 
-    public Map<String, Object> getHubMap(String hubSQL) throws SQLException {
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        System.out.println("SQL из DWH: " + hubSQL);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        while (rsFromDWH.next()) {
-            if (rsFromDWH.getRow() < 1) {
-                System.out.println("Record in SA not found!");
-            } else {
-                for (int k = 1; k <= rsFromDWH.getMetaData().getColumnCount(); k++) {
-                    mapHubFromDWH.put(rsFromDWH.getMetaData().getColumnName(k), rsFromDWH.getObject(k));
-                    System.out.println("Hub Map: " + mapHubFromDWH);
-                }
-            }
-        }
-        closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        return mapHubFromDWH;
-    }
+
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
@@ -112,7 +74,7 @@ public class GetDataHelper {
         while (rsFromDWH.next()) {
             countRowHub = rsFromDWH.getRow();
         }
-        closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         System.out.println("countRowHub in DWH: " + countRowHub);
         return countRowHub;
     }
@@ -131,55 +93,9 @@ public class GetDataHelper {
                 return dwhIdHubFileLiner;
             }
         }
-        closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         System.out.println("dwhIdHubFileLiner in DWH: " + dwhIdHubFileLiner);
         return dwhIdHubFileLiner;
-    }
-
-    public FileLiner getHubFromDWH(String hubSQL) throws SQLException {
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        //System.out.println("SQL из DWH: " + hubSQL);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        FileLiner fileLiner = null;
-        while (rsFromDWH.next()) {
-            if (rsFromDWH.getRow() == 1) {
-                String serviceCode = rsFromDWH.getString("serviceCode");
-                int fileLinerNr = rsFromDWH.getInt("fileLinerNr");
-                int accessCompanyId = rsFromDWH.getInt("accessCompanyId");
-                int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                fileLiner = new FileLiner(serviceCode, fileLinerNr, accessCompanyId, srcSystemId);
-            } else {
-                System.err.println("Record not found or more one!");
-                return null;
-            }
-        }
-        closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("FileLiner from DWH: " + fileLiner);
-        return fileLiner;
-    }
-
-    public FileLiner getHubFromSA(String saSQL) throws SQLException {
-        Connection connectionToSA = db.connToSA();
-        Statement stForSA = db.stFromConnection(connectionToSA);
-        //System.out.println("SQL из SA: " + sql);
-        ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
-        FileLiner fileLiner = null;
-        while (rsFromSA.next()) {
-            if (rsFromSA.getRow() == 1) {
-                String serviceCode = rsFromSA.getString("AFDELING");
-                int fileLinerNr = rsFromSA.getInt("SAGSNR");
-                int accessCompanyId = rsFromSA.getInt("SELSKAB");
-                int srcSystemId = rsFromSA.getInt("srcSystemId");
-                fileLiner = new FileLiner(serviceCode, fileLinerNr, accessCompanyId, srcSystemId);
-            } else {
-                System.err.println("Record nor found or more one!");
-                return null;
-            }
-        }
-        closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("FileLiner from SA: " + fileLiner);
-        return fileLiner;
     }
 
     public Integer getSatHubStatus(String sql) throws SQLException {
@@ -195,40 +111,12 @@ public class GetDataHelper {
                 System.err.println("status. Record nor found or more one!");
             }
         }
-        closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         System.out.println("status in DWH: " + status);
         return status;
     }
 
-    private void closeConnecions(ResultSet rs, Statement st, Connection connection) throws SQLException {
-        if (rs==null){
-            st.close();
-            connection.close();
-        } else {
-            rs.close();
-            st.close();
-            connection.close();
-        }
-    }
 
-    public void insertTestRowInSA(String tableName) throws SQLException {
-        String insert = SQL.getInsertIntoSA(tableName);
-        Connection connectionToSA = db.connToSA();
-        Statement stForSA = db.stFromConnection(connectionToSA);
-        stForSA.execute(insert);
-        System.out.println("SQL for Insert in SA: " + insert);
-        System.out.println("Insert test row complete!");
-        closeConnecions(null, stForSA, connectionToSA);
-    }
-    public void insertTestRowInDWH(String tableName) throws SQLException {
-        String insert = SQL.getInsertIntoDWH(tableName);
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        stForDWH.execute(insert);
-        System.out.println("SQL for Insert in DWH: " + insert);
-        System.out.println("Insert test row complete!");
-        closeConnecions(null, stForDWH, connectionToDWH);
-    }
 
     public int getCountRowInSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
@@ -238,8 +126,28 @@ public class GetDataHelper {
         while (rsFromSA.next()) {
             countRowSA = rsFromSA.getRow();
         }
-        closeConnecions(rsFromSA, stForSA, connectionToSA);
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
         return countRowSA;
+    }
+
+    public void insertTestRowInSA(String tableName) throws SQLException {
+        String insert = SQL.getInsertIntoSA(tableName);
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        stForSA.execute(insert);
+        System.out.println("SQL for Insert in SA: " + insert);
+        System.out.println("Insert test row complete!");
+        db.closeConnecions(null, stForSA, connectionToSA);
+    }
+
+    public void insertTestRowInDWH(String tableName) throws SQLException {
+        String insert = SQL.getInsertIntoDWH(tableName);
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        stForDWH.execute(insert);
+        System.out.println("SQL for Insert in DWH: " + insert);
+        System.out.println("Insert test row complete!");
+        db.closeConnecions(null, stForDWH, connectionToDWH);
     }
 
     public void deleteTestRowFromSA(String tableName) throws SQLException {
@@ -249,7 +157,7 @@ public class GetDataHelper {
         stForSA.execute(delete);
         System.out.println("SQL for Delete from SA: " + delete);
         System.out.println("Delete test row in SA complete!");
-        closeConnecions(null, stForSA, connectionToSA);
+        db.closeConnecions(null, stForSA, connectionToSA);
     }
 
     public void deleteTestRowFromDWH(String tableName) throws SQLException {
@@ -259,6 +167,46 @@ public class GetDataHelper {
         stForDWH.execute(delete);
         System.out.println("SQL for Delete from DWH: " + delete);
         System.out.println("Delete test row in DWH complete!");
-        closeConnecions(null, stForDWH, connectionToDWH);
+        db.closeConnecions(null, stForDWH, connectionToDWH);
+    }
+
+    public Map<String, Object> getMapFromSA(String sql) throws SQLException {
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        System.out.println("SQL из SA: " + sql);
+        ResultSet rsFromSA = db.rsFromDB(stForSA, sql);
+
+        while (rsFromSA.next()) {
+            if (rsFromSA.getRow() > 1) {
+                System.err.println("Count rows got from SA: " + rsFromSA.getRow()
+                        + ". If its > 1 check values in keys in sql query to SA! SQL: " + sql);
+            } else {
+                for (int k = 1; k <= rsFromSA.getMetaData().getColumnCount(); k++) {
+                    mapAllFromSA.put(rsFromSA.getMetaData().getColumnName(k), rsFromSA.getObject(k));
+                    System.out.println("SA MAP: " + mapAllFromSA);
+                }
+            }
+        }
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
+        return mapAllFromSA;
+    }
+
+    public Map<String, Object> getHubMap(String hubSQL) throws SQLException {
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        System.out.println("SQL из DWH: " + hubSQL);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
+        while (rsFromDWH.next()) {
+            if (rsFromDWH.getRow() < 1) {
+                System.out.println("Record in SA not found!");
+            } else {
+                for (int k = 1; k <= rsFromDWH.getMetaData().getColumnCount(); k++) {
+                    mapHubFromDWH.put(rsFromDWH.getMetaData().getColumnName(k), rsFromDWH.getObject(k));
+                    System.out.println("Hub Map: " + mapHubFromDWH);
+                }
+            }
+        }
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        return mapHubFromDWH;
     }
 }

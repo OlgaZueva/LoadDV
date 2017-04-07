@@ -2,11 +2,13 @@ package TietoRus.FileLinerTests;
 
 import TietoRus.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Тест проверяет поведение системы в случае, когда  записьв SA имеет statusHub = 1
@@ -14,31 +16,36 @@ import java.sql.SQLException;
 
 /**
  * Тест проверяет поведение системы в случае, когда в SA statusHub = 1
- * Обрабатывать должны только записи, у которых statusHub = 0
+ * Обрабатывать должны только записи, у которых statusHub = 0, если иначе, то ничего делать не должны
  * Предусловия:
- * 1. Запись в SA должна существовать. У нее: PartitionId = 0, tryCnt < MaxTryCount, srcSysId =1, statusHub = 1  остальные значения любые
+ * 1. Запись в SA должна существовать. У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 1, cdcOperation = null,  остальные значения любые
+ * 2. В DWH записи с этими же ключами быть не должно
  * Действия:
  * 1. Вставить в SA запись с statusHub = 1
  * 2. Запустить пакет загрузки хаба
  * 3. Запустить тест
  * 4. После анализа результатов теста зачистить тестовые данные
  */
-public class StatusHubIs1 {
+public class HubStatusIs1 {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
-    private String tableForTestDataInDWH = "hub.hubFileLiner";
-    private String tableForTestData = "stg.UNITY_Sag";
-    private String viewForDWH = "stg.v_Sag";
+    private Properties properties = new Properties();
+    private String tableForTestDataInSA;
+    private String tableForTestDataInDWH;
 
 
     @Test
-    public void statusHubIs1() throws SQLException, IOException {
-
+    public void HubStatusIs1() throws SQLException, IOException {
+        getPropertiesFile();
+        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
+        String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
         dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else {
@@ -47,15 +54,26 @@ public class StatusHubIs1 {
             } else {
                 System.out.println("Record in DWH doesn't created. It's expected result! Check package log!");
             }
+            if (hubStatus == 1) {
+                System.out.println("HubStatus set valid values! It's expected. HubStatus [" + hubStatus + "]");
+            } else {
+                System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
+            }
+            Integer tryCtn = dh.getTryCtnFromSA(saSQL);
+            System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
         }
-        Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-        System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+
     }
 
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestData);
+        dh.deleteTestRowFromSA(tableForTestDataInSA);
         dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+    }
+
+
+    private void getPropertiesFile() throws IOException {
+        properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));
     }
 }

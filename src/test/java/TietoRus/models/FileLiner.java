@@ -14,37 +14,6 @@ public class FileLiner {
         this.srcSystemId = srcSystemId;
     }
 
-    public String getServiceCode() {
-        return serviceCode;
-    }
-
-    public void setServiceCode(String serviceCode) {
-        this.serviceCode = serviceCode;
-    }
-
-    public int getFileLinerNr() {
-        return fileLinerNr;
-    }
-
-    public void setFileLinerNr(int fileLinerNr) {
-        this.fileLinerNr = fileLinerNr;
-    }
-
-    public int getAccessCompanyId() {
-        return accessCompanyId;
-    }
-
-    public void setAccessCompanyId(int accessCompanyId) {
-        this.accessCompanyId = accessCompanyId;
-    }
-
-    public int getSrcSystemId() {
-        return srcSystemId;
-    }
-
-    public void setSrcSystemId(int srcSystemId) {
-        this.srcSystemId = srcSystemId;
-    }
 
     @Override
     public boolean equals(Object o) {

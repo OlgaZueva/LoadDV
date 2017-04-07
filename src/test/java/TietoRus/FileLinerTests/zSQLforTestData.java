@@ -22,37 +22,49 @@ public class zSQLforTestData {
     }
 
     @Test
-    public void getAllSQLs() {
-        String[] keys = getValues("BIFROST.stg.UNITY_Sag");
-
+    public void getSaSQLs() {
+        //String[] keys = getValues("BIFROST.stg.UNITY_Sag");
+        System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println("Insert into " + keys[0] + " (SELSKAB, SAGSNR, AFDELING, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] +  ", " + keys[7] + ", " + keys[8] + ")");
+        System.out.println(getInsertIntoSA("BIFROST.stg.UNITY_Sag"));
         System.out.println("------");
+        /*
         System.out.println("UPDATE " + keys[0] + " SET SrcSystemId = " + keys[4] + ", " + "TryCnt = " + keys[5] + ", "
                 + "PartitionId = " + keys[6] + ", " + "statusHub = " + keys[7] + ", " + "cdcOperation = " + keys[8]  + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' ");
+                + " and AFDELING = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4]);
         System.out.println("------");
-        System.out.println("DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' ");
+        */
+        System.out.println(getDeleteFromSA("BIFROST.stg.UNITY_Sag"));
         System.out.println("------");
-        System.out.println("SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' ");
+        System.out.println(getSelectFromSA("BIFROST.stg.UNITY_Sag"));
         System.out.println("---------------------------");
 
     }
+
+    @Test
+    public void getDWHSQLs() {
+        System.err.println("DataVault");
+        System.out.println("---------------------------");
+        System.out.println(getInsertIntoDWH("hub.hubFileLiner"));
+        System.out.println("------");
+        System.out.println(getDeleteFromDWH("hub.hubFileLiner"));
+        System.out.println("------");
+        System.out.println(getSelectFromDWH("hub.hubFileLiner"));
+        System.out.println("---------------------------");
+    }
+
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (SELSKAB, SAGSNR, AFDELING, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] +  ", " + keys[7] + ", " + keys[8] + ")";
+                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ")";
         //System.out.println(insert);
         return insert;
     }
 
     public String getInsertIntoDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, fileLinerNr, serviceCode, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3]  + "', "+ keys[6] + ")";
+        String insert = "Insert into " + keys[0] + " (accessCompanyId, fileLinerNr, serviceCode, SrcSystemId, PartitionId) Values ("
+                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[6] + ")";
         //System.out.println(insert);
         return insert;
     }
@@ -61,7 +73,7 @@ public class zSQLforTestData {
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' ";
+                + " and AFDELING = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
         //System.out.println(delete);
         return delete;
     }
@@ -69,7 +81,7 @@ public class zSQLforTestData {
     public String getDeleteFromDWH(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
-                + " and serviceCode = '" + keys[3] + "' ";
+                + " and serviceCode = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
         //System.out.println(delete);
         return delete;
     }
@@ -77,7 +89,7 @@ public class zSQLforTestData {
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' ";
+                + " and AFDELING = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }
@@ -86,12 +98,10 @@ public class zSQLforTestData {
     public String getSelectFromDWH(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
-                + " and serviceCode = '" + keys[3] + "' ";
+                + " and serviceCode = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }
-
-
 
 
 }

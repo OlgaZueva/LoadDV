@@ -21,6 +21,16 @@ public class DBHelper {
         return statement.executeQuery(sql);
     }
 
+    public void closeConnecions(ResultSet rs, Statement st, Connection connection) throws SQLException {
+        if (rs == null) {
+            st.close();
+            connection.close();
+        } else {
+            rs.close();
+            st.close();
+            connection.close();
+        }
+    }
 
 
 
