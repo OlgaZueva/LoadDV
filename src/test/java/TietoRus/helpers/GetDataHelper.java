@@ -220,6 +220,15 @@ public class GetDataHelper {
         System.out.println("Insert test row complete!");
         closeConnecions(null, stForSA, connectionToSA);
     }
+    public void insertTestRowInDWH(String tableName) throws SQLException {
+        String insert = SQL.getInsertIntoDWH(tableName);
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        stForDWH.execute(insert);
+        System.out.println("SQL for Insert in DWH: " + insert);
+        System.out.println("Insert test row complete!");
+        closeConnecions(null, stForDWH, connectionToDWH);
+    }
 
     public int getCountRowInSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
