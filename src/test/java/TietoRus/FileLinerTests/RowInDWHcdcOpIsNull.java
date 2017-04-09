@@ -1,11 +1,14 @@
 package TietoRus.FileLinerTests;
 
-import TietoRus.helpers.GetDataHelper;
+import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Тест проверяет поведение системы в случае, когда запись в SA имеет statusHub = 0 и при этом существует запись в DWH
@@ -28,15 +31,19 @@ import java.sql.SQLException;
 public class RowInDWHcdcOpIsNull {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
-    private String tableForTestDataInDWH = "hub.hubFileLiner";
-    private String tableForTestData = "stg.UNITY_Sag";
-    private String viewForDWH = "stg.v_Sag";
+    private Properties properties = new Properties();
+    private String tableForTestDataInSA;
+    private String tableForTestDataInDWH;
 
 
     @Test
     public void rowInDWHcdcOpIsNull() throws SQLException, IOException {
 
 
+        getPropertiesFile();
+        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
+        String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
@@ -67,7 +74,11 @@ public class RowInDWHcdcOpIsNull {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestData);
+        dh.deleteTestRowFromSA(tableForTestDataInSA);
         dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+    }
+
+    private void getPropertiesFile() throws IOException {
+        properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));
     }
 }

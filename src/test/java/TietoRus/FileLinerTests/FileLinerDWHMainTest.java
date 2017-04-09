@@ -1,9 +1,9 @@
 package TietoRus.FileLinerTests;
 
-import TietoRus.helpers.Asserts;
-import TietoRus.helpers.GetDataHelper;
-import TietoRus.models.FileLiner;
-import TietoRus.objects.FileLinerObjects;
+import TietoRus.system.helpers.helpers.Asserts;
+import TietoRus.system.helpers.helpers.GetDataHelper;
+import TietoRus.system.helpers.models.FileLiner;
+import TietoRus.system.helpers.objects.FileLinerObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -121,26 +121,6 @@ public class FileLinerDWHMainTest {
                 System.out.println("HubStatus in SA =0. Do nothing. Check package log");
             }
         }
-    }
-
-    @Test(enabled = false)
-    public void MainScenario() throws SQLException, IOException {
-        int tryCtnPrecondition = 0;
-        String saSQL = "select * from stg.UNITY_Sag where SELSKAB = 13 and SAGSNR = 21677777 and AFDELING = '020' and SrcSystemId =1";
-        String dwhSQL = "select * from hub.hubFileLiner where accessCompanyId = 13 and fileLinerNr = 21677777 and serviceCode = '020' and SrcSystemId =1";
-        String satHubStatusTable = "SELECT *  FROM sat.satFileLinerStatus where dwhIdHubFileLiner = ";
-
-        FileLiner hubfromSA = objects.getHubFromSA(saSQL);
-        FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
-        asserts.assertHubs(hubfromSA, hubfromDWH);
-        int satHubStatus = dh.getSatHubStatus(satHubStatusTable + dh.getDWHidHub(dwhSQL));
-        System.out.println("SatHubStatus = " + satHubStatus);
-        int tryCountAfter = dh.getTryCtnFromSA(saSQL);
-        System.out.println("TryCount в SA после добавления хаба: " + tryCountAfter);
-        int hubStatusAfter = dh.getHubStatusFromSA(saSQL);
-        System.out.println("HubStatus в SA после добавления хаба:" + hubStatusAfter);
-
-
     }
 
     @AfterMethod

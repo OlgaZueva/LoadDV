@@ -1,6 +1,6 @@
-package TietoRus.helpers;
+package TietoRus.system.helpers.helpers;
 
-import TietoRus.models.FileLiner;
+import TietoRus.system.helpers.models.FileLiner;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;

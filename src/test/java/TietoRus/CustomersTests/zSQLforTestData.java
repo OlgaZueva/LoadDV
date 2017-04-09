@@ -1,4 +1,4 @@
-package TietoRus.FileLinerTests;
+package TietoRus.CustomersTests;
 
 import org.testng.annotations.Test;
 
@@ -16,14 +16,15 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[9];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99); //SELSKAB
-        keys[2] = String.valueOf(999001); //SAGSNR
-        keys[3] = String.valueOf(98); //AFDELING
-        keys[4] = String.valueOf(1); //SrcSystemId
-        keys[5] = String.valueOf(0); //TryCnt
-        keys[6] = String.valueOf(0); //PartitionId
-        keys[7] = String.valueOf(0);// statusHub
-        keys[8] = null;// cdcOperation
+        keys[1] = String.valueOf(99); //NR
+        keys[2] = String.valueOf(999001); //REF_NR
+        keys[3] = String.valueOf(9); //REF_TYPE
+        keys[4] = String.valueOf(98); //SELSKAB
+        keys[5] = String.valueOf(1); //SrcSystemId
+        keys[6] = String.valueOf(0); //TryCnt
+        keys[7] = String.valueOf(0); //PartitionId
+        keys[8] = String.valueOf(0);// statusHub
+        keys[9] = null;// cdcOperation
         return keys;
     }
 

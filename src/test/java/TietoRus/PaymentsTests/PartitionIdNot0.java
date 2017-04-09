@@ -1,5 +1,6 @@
-package TietoRus.FileLinerTests;
+package TietoRus.PaymentsTests;
 
+import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -35,13 +36,13 @@ public class PartitionIdNot0 {
     @BeforeMethod
     public void insertTestData() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableForTestDataInSA = properties.getProperty("payments.UNITY.table");
         dh.insertTestRowInSA(tableForTestDataInSA);
     }
 
     @Test
     public void partitionIdNot0() throws SQLException, IOException {
-        String viewForDWH = properties.getProperty("fileLiner.hub.view");
+        String viewForDWH = properties.getProperty("payments.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         int countRowInSA = dh.getCountRowInSA(saSQL);
         if (countRowInSA > 0) {

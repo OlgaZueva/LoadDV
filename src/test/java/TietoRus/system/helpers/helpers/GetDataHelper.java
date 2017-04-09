@@ -1,7 +1,7 @@
-package TietoRus.helpers;
+package TietoRus.system.helpers.helpers;
 
 import TietoRus.FileLinerTests.zSQLforTestData;
-import TietoRus.models.FileLiner;
+import TietoRus.system.helpers.helpers.DBHelper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -1,7 +1,7 @@
-package TietoRus.objects;
+package TietoRus.system.helpers.objects;
 
-import TietoRus.helpers.DBHelper;
-import TietoRus.models.FileLiner;
+import TietoRus.system.helpers.helpers.DBHelper;
+import TietoRus.system.helpers.models.FileLiner;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,6 +11,29 @@ import java.sql.Statement;
 
 public class FileLinerObjects {
     private DBHelper db = new DBHelper();
+
+    public FileLiner getHubFromSA(String saSQL) throws SQLException {
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        //System.out.println("SQL из SA: " + sql);
+        ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
+        FileLiner fileLiner = null;
+        while (rsFromSA.next()) {
+            if (rsFromSA.getRow() == 1) {
+                String serviceCode = rsFromSA.getString("AFDELING");
+                int fileLinerNr = rsFromSA.getInt("SAGSNR");
+                int accessCompanyId = rsFromSA.getInt("SELSKAB");
+                int srcSystemId = rsFromSA.getInt("srcSystemId");
+                fileLiner = new FileLiner(serviceCode, fileLinerNr, accessCompanyId, srcSystemId);
+            } else {
+                System.err.println("Record nor found or more one!");
+                return null;
+            }
+        }
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
+        System.out.println("FileLiner from SA: " + fileLiner);
+        return fileLiner;
+    }
 
     public FileLiner getHubFromDWH(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
@@ -35,26 +58,5 @@ public class FileLinerObjects {
         return fileLiner;
     }
 
-    public FileLiner getHubFromSA(String saSQL) throws SQLException {
-        Connection connectionToSA = db.connToSA();
-        Statement stForSA = db.stFromConnection(connectionToSA);
-        //System.out.println("SQL из SA: " + sql);
-        ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
-        FileLiner fileLiner = null;
-        while (rsFromSA.next()) {
-            if (rsFromSA.getRow() == 1) {
-                String serviceCode = rsFromSA.getString("AFDELING");
-                int fileLinerNr = rsFromSA.getInt("SAGSNR");
-                int accessCompanyId = rsFromSA.getInt("SELSKAB");
-                int srcSystemId = rsFromSA.getInt("srcSystemId");
-                fileLiner = new FileLiner(serviceCode, fileLinerNr, accessCompanyId, srcSystemId);
-            } else {
-                System.err.println("Record nor found or more one!");
-                return null;
-            }
-        }
-        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("FileLiner from SA: " + fileLiner);
-        return fileLiner;
-    }
+
 }

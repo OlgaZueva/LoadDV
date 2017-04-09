@@ -1,7 +1,6 @@
 package TietoRus.FileLinerTests;
 
-import TietoRus.helpers.Asserts;
-import TietoRus.helpers.GetDataHelper;
+import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -29,14 +28,16 @@ import java.util.Properties;
 public class SrcSysIdMore1WithKeys {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
-    private String tableForTestDataInDWH = "hub.hubFileLiner";
-    private String tableForTestData = "stg.UNITY_Sag";
-    private String viewForDWH = "stg.v_Sag";
-
+    private Properties properties = new Properties();
+    private String tableForTestDataInSA;
+    private String tableForTestDataInDWH;
 
     @Test
     public void srcSysIdNot1Test() throws SQLException, IOException {
-
+        getPropertiesFile();
+        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
+        String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
@@ -53,8 +54,12 @@ public class SrcSysIdMore1WithKeys {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestData);
+        dh.deleteTestRowFromSA(tableForTestDataInSA);
         dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+    }
+
+    private void getPropertiesFile() throws IOException {
+        properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));
     }
 }
 

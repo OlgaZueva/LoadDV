@@ -1,4 +1,4 @@
-package TietoRus.models;
+package TietoRus.system.helpers.models;
 
 public class FileLiner {
 

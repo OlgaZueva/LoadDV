@@ -1,6 +1,6 @@
 package TietoRus.FileLinerTests;
 
-import TietoRus.helpers.GetDataHelper;
+import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
