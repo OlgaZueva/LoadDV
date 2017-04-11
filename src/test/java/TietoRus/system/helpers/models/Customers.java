@@ -1,8 +1,5 @@
 package TietoRus.system.helpers.models;
 
-/**
- * Created by HOME on 09.04.2017.
- */
 public class Customers {
     private int number;
     private int bookingNumber;

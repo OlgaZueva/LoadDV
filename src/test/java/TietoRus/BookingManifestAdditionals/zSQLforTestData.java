@@ -1,4 +1,4 @@
-package TietoRus.CustomersTests;
+package TietoRus.BookingManifestAdditionals;
 
 import org.testng.annotations.Test;
 
@@ -16,16 +16,15 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[11];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99); //NR
-        keys[2] = String.valueOf(999001); //REF_NR
-        keys[3] = String.valueOf(9); //REF_TYPE
-        keys[4] = String.valueOf(98); //SELSKAB
+        keys[1] = String.valueOf(99); //BOOK_NR
+        keys[2] = String.valueOf(999001); //SEGMENT_CODE
+        keys[3] = String.valueOf(9); //SELSKAB
+        keys[4] = String.valueOf(98); //SEQ_NR
         keys[5] = String.valueOf(1); //SrcSystemId
         keys[6] = String.valueOf(0); //TryCnt
         keys[7] = String.valueOf(0); //PartitionId
         keys[8] = String.valueOf(0);// statusHub
         keys[9] = null;// cdcOperation
-        keys[10] = String.valueOf(1);//customerType (not null in DB, because it's here)
         return keys;
     }
 
@@ -35,17 +34,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoSA(properties.getProperty("customers.UNITY.table")));
+        System.out.println(getInsertIntoSA(properties.getProperty("bookingManifestAdditionals.UNITY.table")));
         System.out.println("------");
-        /*
-        System.out.println("UPDATE " + keys[0] + " SET SrcSystemId = " + keys[4] + ", " + "TryCnt = " + keys[5] + ", "
-                + "PartitionId = " + keys[6] + ", " + "statusHub = " + keys[7] + ", " + "cdcOperation = " + keys[8]  + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4]);
+        System.out.println(getDeleteFromSA(properties.getProperty("bookingManifestAdditionals.UNITY.table")));
         System.out.println("------");
-        */
-        System.out.println(getDeleteFromSA(properties.getProperty("customers.UNITY.table")));
-        System.out.println("------");
-        System.out.println(getSelectFromSA(properties.getProperty("customers.UNITY.table")));
+        System.out.println(getSelectFromSA(properties.getProperty("bookingManifestAdditionals.UNITY.table")));
         System.out.println("---------------------------");
 
     }
@@ -55,11 +48,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("DataVault");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoDWH(properties.getProperty("customers.hub.table")));
+        System.out.println(getInsertIntoDWH(properties.getProperty("bookingManifestAdditionals.hub.table")));
         System.out.println("------");
-        System.out.println(getDeleteFromDWH(properties.getProperty("customers.hub.table")));
+        System.out.println(getDeleteFromDWH(properties.getProperty("bookingManifestAdditionals.hub.table")));
         System.out.println("------");
-        System.out.println(getSelectFromDWH(properties.getProperty("customers.hub.table")));
+        System.out.println(getSelectFromDWH(properties.getProperty("bookingManifestAdditionals.hub.table")));
         System.out.println("---------------------------");
     }
 
@@ -67,7 +60,7 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (NR, REF_NR, REF_TYPE, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
+        String insert = "Insert into " + keys[0] + " (BOOK_NR, SEGMENT_CODE, SELSKAB, SEQ_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
                 + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9] + ")";
         //System.out.println(insert);
         return insert;
@@ -75,8 +68,8 @@ public class zSQLforTestData {
 
     public String getInsertIntoDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (number, bookingNumber, refType, accessCompanyId, SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
+        String insert = "Insert into " + keys[0] + " (bookingNumber, segmentCode, accessCompanyId, sequenceNr, SrcSystemId, PartitionId) Values ("
+                + keys[1] + ", '" + keys[2] + "', " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
         //System.out.println(insert);
         return insert;
     }
@@ -84,24 +77,24 @@ public class zSQLforTestData {
 
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE NR = " + keys[1] + " and REF_NR = " + keys[2]
-                + " and REF_TYPE = '" + keys[3] + "' and SELSKAB = " + keys[4] +  " and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = '" + keys[2]
+                + "' and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] +  " and SrcSystemId = " + keys[5];
         //System.out.println(delete);
         return delete;
     }
 
     public String getDeleteFromDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE number = " + keys[1] + " and bookingNumber = " + keys[2]
-                + " and refType = '" + keys[3] + "' " + " and accessCompanyId = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
+                + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
         //System.out.println(delete);
         return delete;
     }
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE NR = " + keys[1] + " and REF_NR = " + keys[2]
-                + " and REF_TYPE = '" + keys[3] + "' " + " and SELSKAB = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = '" + keys[2]
+                + "' and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] + " and SrcSystemId = " + keys[5];
         //System.out.println(select);
         return select;
     }
@@ -109,8 +102,8 @@ public class zSQLforTestData {
 
     public String getSelectFromDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE number = " + keys[1] + " and bookingNumber = " + keys[2]
-                + " and refType = '" + keys[3] + "' " + " and accessCompanyId = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
+                + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
         //System.out.println(select);
         return select;
     }

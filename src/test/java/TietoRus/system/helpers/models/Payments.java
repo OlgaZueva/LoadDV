@@ -3,21 +3,22 @@ package TietoRus.system.helpers.models;
 
 public class Payments {
 
-    private String F_TYPE;
-    private String FAKTURANR;
-    private String K_TYPE;
-    private double KUNDE;
-    private int LOBE_NR;
-    private int SELSKAB;
+    private String invoiceType;
+    private String invoiceNr;
+    private String debitCredit;
+    private double customerCode;
+    private int sequenceNr;
+    private int accessCompanyId;
     private int srcSystemId;
 
-    public Payments (String F_TYPE, String FAKTURANR, String K_TYPE, double KUNDE, int LOBE_NR, int SELSKAB, int srcSystemId){
-        this.F_TYPE = F_TYPE;
-        this.FAKTURANR = FAKTURANR;
-        this.K_TYPE = K_TYPE;
-        this.KUNDE = KUNDE;
-        this.LOBE_NR = LOBE_NR;
-        this.SELSKAB = SELSKAB;
+
+    public Payments (String invoiceType, String invoiceNr, String debitCredit, double customerCode, int sequenceNr, int accessCompanyId, int srcSystemId){
+        this.invoiceType = invoiceType;
+        this.invoiceNr = invoiceNr;
+        this.debitCredit = debitCredit;
+        this.customerCode = customerCode;
+        this.sequenceNr = sequenceNr;
+        this.accessCompanyId = accessCompanyId;
         this.srcSystemId = srcSystemId;
     }
 
@@ -28,26 +29,27 @@ public class Payments {
 
         Payments payments = (Payments) o;
 
-        if (Double.compare(payments.KUNDE, KUNDE) != 0) return false;
-        if (LOBE_NR != payments.LOBE_NR) return false;
-        if (SELSKAB != payments.SELSKAB) return false;
+        if (Double.compare(payments.customerCode, customerCode) != 0) return false;
+        if (sequenceNr != payments.sequenceNr) return false;
+        if (accessCompanyId != payments.accessCompanyId) return false;
         if (srcSystemId != payments.srcSystemId) return false;
-        if (F_TYPE != null ? !F_TYPE.equals(payments.F_TYPE) : payments.F_TYPE != null) return false;
-        if (FAKTURANR != null ? !FAKTURANR.equals(payments.FAKTURANR) : payments.FAKTURANR != null) return false;
-        return K_TYPE != null ? K_TYPE.equals(payments.K_TYPE) : payments.K_TYPE == null;
+        if (invoiceType != null ? !invoiceType.equals(payments.invoiceType) : payments.invoiceType != null)
+            return false;
+        if (invoiceNr != null ? !invoiceNr.equals(payments.invoiceNr) : payments.invoiceNr != null) return false;
+        return debitCredit != null ? debitCredit.equals(payments.debitCredit) : payments.debitCredit == null;
     }
 
     @Override
     public int hashCode() {
         int result;
         long temp;
-        result = F_TYPE != null ? F_TYPE.hashCode() : 0;
-        result = 31 * result + (FAKTURANR != null ? FAKTURANR.hashCode() : 0);
-        result = 31 * result + (K_TYPE != null ? K_TYPE.hashCode() : 0);
-        temp = Double.doubleToLongBits(KUNDE);
+        result = invoiceType != null ? invoiceType.hashCode() : 0;
+        result = 31 * result + (invoiceNr != null ? invoiceNr.hashCode() : 0);
+        result = 31 * result + (debitCredit != null ? debitCredit.hashCode() : 0);
+        temp = Double.doubleToLongBits(customerCode);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + LOBE_NR;
-        result = 31 * result + SELSKAB;
+        result = 31 * result + sequenceNr;
+        result = 31 * result + accessCompanyId;
         result = 31 * result + srcSystemId;
         return result;
     }
@@ -55,12 +57,12 @@ public class Payments {
     @Override
     public String toString() {
         return "Payments{" +
-                "F_TYPE='" + F_TYPE + '\'' +
-                ", FAKTURANR='" + FAKTURANR + '\'' +
-                ", K_TYPE='" + K_TYPE + '\'' +
-                ", KUNDE=" + KUNDE +
-                ", LOBE_NR=" + LOBE_NR +
-                ", SELSKAB=" + SELSKAB +
+                "invoiceType='" + invoiceType + '\'' +
+                ", invoiceNr='" + invoiceNr + '\'' +
+                ", debitCredit='" + debitCredit + '\'' +
+                ", customerCode=" + customerCode +
+                ", sequenceNr=" + sequenceNr +
+                ", accessCompanyId=" + accessCompanyId +
                 ", srcSystemId=" + srcSystemId +
                 '}';
     }

@@ -1,4 +1,4 @@
-package TietoRus.PaymentsTests;
+package TietoRus.BookingTests;
 
 
 import TietoRus.system.helpers.helpers.GetDataHelper;
@@ -36,13 +36,13 @@ public class PartitionIdNot0 {
     @BeforeMethod
     public void insertTestData() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("payments.UNITY.table");
+        tableForTestDataInSA = properties.getProperty("booking.UNITY.table");
         dh.insertTestRowInSA(tableForTestDataInSA);
     }
 
     @Test
     public void partitionIdNot0() throws SQLException, IOException {
-        String viewForDWH = properties.getProperty("payments.hub.view");
+        String viewForDWH = properties.getProperty("booking.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         int countRowInSA = dh.getCountRowInSA(saSQL);
         if (countRowInSA > 0) {
