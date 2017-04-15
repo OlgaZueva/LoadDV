@@ -39,7 +39,7 @@ public class SrcSysIdMore1WithKeys {
         tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
         String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
-        String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
+        String dwhSQL = SQL.getSelectHub(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
         int contRowInDWH = dh.getCountRowOfHub(dwhSQL);

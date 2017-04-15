@@ -3,7 +3,6 @@ package TietoRus.AccountingTransactionTests;
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import TietoRus.system.helpers.models.AccountingTransaction;
-import TietoRus.system.helpers.models.FileLiner;
 import TietoRus.system.helpers.objects.AccountingTransactionObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -48,7 +47,7 @@ public class CreateNewHub {
         tableForTestDataInDWH = properties.getProperty("accountingTransaction.hub.table");
         int tryCtnPrecondition = 0;
         String saSQL = SQL.getSelectFromSA(tableForTestDataInSA);
-        String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
+        String dwhSQL = SQL.getSelectHubFromDWH(tableForTestDataInDWH);
 
         Integer tryCtn = dh.getTryCtnFromSA(saSQL);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);

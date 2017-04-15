@@ -1,7 +1,6 @@
 package TietoRus.system.helpers.helpers;
 
 import TietoRus.FileLinerTests.zSQLforTestData;
-import TietoRus.system.helpers.helpers.DBHelper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -79,36 +78,37 @@ public class GetDataHelper {
         return countRowHub;
     }
 
-    public Integer getDWHidHub(String hubSQL) throws SQLException {
+    public Integer getDWHHubId(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        Integer dwhIdHubFileLiner = null;
+        Integer dwhHubId = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
-                dwhIdHubFileLiner = rsFromDWH.getInt("dwhIdHubFileLiner");
+                dwhHubId = rsFromDWH.getInt("dwhHubId");
             } else {
-                System.err.println("dwhIdHubFileLiner. Record nor found or more one!");
-                return dwhIdHubFileLiner;
+                System.err.println("dwhHubId. Record not found or more one!");
+                return dwhHubId;
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("dwhIdHubFileLiner in DWH: " + dwhIdHubFileLiner);
-        return dwhIdHubFileLiner;
+        System.out.println("dwhHubId in DWH: " + dwhHubId);
+        return dwhHubId;
     }
 
-    public Integer getSatHubStatus(String sql) throws SQLException {
+    public Integer getSatHubStatus(String table, String fieldNameForHubId, Integer dwhHubId) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
-        System.out.println("Status из DWH: " + sql);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
+        String select = "SELECT * from " + table + " WHERE " + fieldNameForHubId + " = " + dwhHubId;
+        //System.out.println("SQL for Status из DWH: " + select);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, select);
         Integer status = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
                 status = rsFromDWH.getInt("status");
             } else {
-                System.err.println("status. Record nor found or more one!");
+                System.err.println("status. Record not found or more one!");
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
@@ -141,7 +141,7 @@ public class GetDataHelper {
     }
 
     public void insertTestRowInDWH(String tableName) throws SQLException {
-        String insert = SQL.getInsertIntoDWH(tableName);
+        String insert = SQL.getInsertHub(tableName);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(insert);
@@ -161,7 +161,7 @@ public class GetDataHelper {
     }
 
     public void deleteTestRowFromDWH(String tableName) throws SQLException {
-        String delete = SQL.getDeleteFromDWH(tableName);
+        String delete = SQL.getDeleteHub(tableName);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(delete);

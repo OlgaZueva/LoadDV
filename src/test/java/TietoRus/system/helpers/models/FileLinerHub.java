@@ -1,13 +1,13 @@
 package TietoRus.system.helpers.models;
 
-public class FileLiner {
+public class FileLinerHub {
 
     private String serviceCode;
     private int fileLinerNr;
     private int accessCompanyId;
     private int srcSystemId;
 
-    public FileLiner(String serviceCode, int fileLinerNr, int accessCompanyId, int srcSystemId) {
+    public FileLinerHub(String serviceCode, int fileLinerNr, int accessCompanyId, int srcSystemId) {
         this.serviceCode = serviceCode;
         this.fileLinerNr = fileLinerNr;
         this.accessCompanyId = accessCompanyId;
@@ -20,12 +20,12 @@ public class FileLiner {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        FileLiner fileLiner = (FileLiner) o;
+        FileLinerHub fileLinerHub = (FileLinerHub) o;
 
-        if (fileLinerNr != fileLiner.fileLinerNr) return false;
-        if (accessCompanyId != fileLiner.accessCompanyId) return false;
-        if (srcSystemId != fileLiner.srcSystemId) return false;
-        return serviceCode != null ? serviceCode.equals(fileLiner.serviceCode) : fileLiner.serviceCode == null;
+        if (fileLinerNr != fileLinerHub.fileLinerNr) return false;
+        if (accessCompanyId != fileLinerHub.accessCompanyId) return false;
+        if (srcSystemId != fileLinerHub.srcSystemId) return false;
+        return serviceCode != null ? serviceCode.equals(fileLinerHub.serviceCode) : fileLinerHub.serviceCode == null;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FileLiner {
 
     @Override
     public String toString() {
-        return "FileLiner{" +
+        return "FileLinerHub{" +
                 "serviceCode='" + serviceCode + '\'' +
                 ", fileLinerNr=" + fileLinerNr +
                 ", accessCompanyId=" + accessCompanyId +

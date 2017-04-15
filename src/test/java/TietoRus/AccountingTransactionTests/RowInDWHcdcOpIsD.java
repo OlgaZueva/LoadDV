@@ -1,5 +1,6 @@
-package TietoRus.FileLinerTests;
+package TietoRus.AccountingTransactionTests;
 
+import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -11,24 +12,24 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Тест проверяет поведение системы в случае, когда запись в SA имеет statusHub = 0 и при этом существует запись в DWH
+ * Тест проверяет поведение системы в случае, когда запись в SA имеет cdcOperation = 'D ' и существует запись в DWH
  */
 
 /**
- * Тест проверяет поведение системы в случае, когда в SA statusHub = 0 и при этом в DWH существует запись
- * В результате должны установить в SA statusHub = 1 и ничего не делать с записью в DWH
+ * Тест проверяет поведение системы в случае, когда в SA cdcOperation = 'D ' и при этом в DWH существует запись
+ * В результате должны установить в SA statusHub = 1 и ничего не делать с записью хаба в DWH
  * Предусловия:
  * 1. Запись в SA должна существовать.
- * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
+ * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = 'D ',  остальные значения любые
  * 2. В DWH существует запись с этими же ключами
  * Действия:
- * 1. Вставить в SA запись с statusHub = 0 и  cdcOperation = null
+ * 1. Вставить в SA запись с cdcOperation = 'D '
  * 2. Вставить в DWH запись с теми же ключами
  * 3. Запустить пакет загрузки хаба
  * 4. Запустить тест
  * 5. После анализа результатов теста зачистить тестовые данные
  */
-public class RowInDWHcdcOpIsNull {
+public class RowInDWHcdcOpIsD {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
     private Properties properties = new Properties();
@@ -38,14 +39,14 @@ public class RowInDWHcdcOpIsNull {
 
     @Test
     public void rowInDWHcdcOpIsNull() throws SQLException, IOException {
-
-
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
-        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
-        String viewForDWH = properties.getProperty("fileLiner.hub.view");
+        tableForTestDataInSA = properties.getProperty("accountingTransaction.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("accountingTransaction.hub.table");
+        String satHubStatusTable = properties.getProperty("accountingTransaction.SatStatus.table");
+        String viewForDWH = properties.getProperty("accountingTransaction.hub.view");
+        String fieldNameForHubId = properties.getProperty("accountingTransaction.fieldNameForHubIdInSatHubStatus");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
-        String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
+        String dwhSQL = SQL.getSelectHub(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
         if (hubStatus == null) {
@@ -69,6 +70,23 @@ public class RowInDWHcdcOpIsNull {
                 System.err.println("In DWH more then one record for these keys It's fail!");
             }
         }
+
+        Integer dwhHubId = dh.getDWHHubId(dwhSQL);
+        if (dwhHubId == null) {
+            System.err.println("HubId in DWH not found! It's fail!");
+        } else {
+            Integer satHubStatus = dh.getSatHubStatus(satHubStatusTable, fieldNameForHubId, dwhHubId);
+            if (satHubStatus == null) {
+                System.err.println("Record for HubId in staHubStatus not found or more one! It's fail");
+            } else {
+                if (satHubStatus != 0) {
+                    System.err.println("SatHubStatus is not 0! It's fail!");
+                } else {
+                    System.out.println("SatNubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
+                }
+            }
+        }
+
     }
 
 

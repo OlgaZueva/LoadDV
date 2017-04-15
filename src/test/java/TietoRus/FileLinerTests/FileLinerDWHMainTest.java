@@ -2,8 +2,8 @@ package TietoRus.FileLinerTests;
 
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
-import TietoRus.system.helpers.models.FileLiner;
-import TietoRus.system.helpers.objects.FileLinerObjects;
+import TietoRus.system.helpers.models.FileLinerHub;
+import TietoRus.system.helpers.objects.FileLinerHubObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -32,7 +32,7 @@ public class FileLinerDWHMainTest {
      */
 
     private GetDataHelper dh = new GetDataHelper();
-    private FileLinerObjects objects = new FileLinerObjects();
+    private FileLinerHubObjects objects = new FileLinerHubObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
@@ -48,8 +48,7 @@ public class FileLinerDWHMainTest {
         tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
         int tryCtnPrecondition = 0;
         String saSQL = SQL.getSelectFromSA(tableForTestDataInSA);
-        String dwhSQL = SQL.getSelectFromDWH(tableForTestDataInDWH);
-        String satHubStatusTable = "SELECT *  FROM sat.satFileLinerStatus where dwhIdHubFileLiner = ";
+        String dwhSQL = SQL.getSelectHub(tableForTestDataInDWH);
 
         Integer tryCtn = dh.getTryCtnFromSA(saSQL);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
@@ -60,25 +59,9 @@ public class FileLinerDWHMainTest {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else if (hubStatus != 0 || (tryCtn <= Integer.parseInt(properties.getProperty("system.MaxTryCount")))) {
             if (dh.getCountRowOfHub(dwhSQL) == 1) {
-                FileLiner hubfromSA = objects.getHubFromSA(saSQL);
-                FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
+                FileLinerHub hubfromSA = objects.getHubFromSA(saSQL);
+                FileLinerHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
                 asserts.assertFileLinerHubs(hubfromSA, hubfromDWH);
-
-                /* Запись в HubStaStatus statellit table появиться только если загружаем сат.
-                * //Когда только хаб, без сата -  ее не будет, поэтому проверку отключила
-
-                Integer dwhIdHub = dh.getDWHidHub(dwhSQL);
-                Integer satHubStatus = dh.getSatHubStatus(satHubStatusTable + dwhIdHub);
-                if (satHubStatus == null) {
-                    System.err.println("SatHubStatus is null! Maybe record not found or more then one record in SA with identical keys.");
-                } else {
-                    if (satHubStatus == 1) {
-                        System.out.println("SatHubStatus have valid value! SatHubStatus [" + satHubStatus + "]");
-                    } else {
-                        System.err.println("SatHubStatus have not valid value! SatHubStatus [" + satHubStatus + "]");
-                    }
-                }
-               */
 
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
                 if (tryCtnAfter == tryCtnPrecondition) {
@@ -109,7 +92,7 @@ public class FileLinerDWHMainTest {
                 System.err.println("Record in DWH not found or they are more one!");
             }
         } else {
-            FileLiner hubfromDWH = objects.getHubFromDWH(dwhSQL);
+            FileLinerHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
             if (hubfromDWH != null) {
                 System.err.println("Hub was created, but hubStatus or tryCtn out of valid values!");
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);

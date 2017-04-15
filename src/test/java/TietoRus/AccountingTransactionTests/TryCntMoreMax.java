@@ -1,4 +1,4 @@
-package TietoRus.FileLinerTests;
+package TietoRus.AccountingTransactionTests;
 
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
@@ -39,17 +39,17 @@ public class TryCntMoreMax {
     @Test
     public void tryCntMoreMax() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
-        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
-        String viewForDWH = properties.getProperty("fileLiner.hub.view");
+        tableForTestDataInSA = properties.getProperty("accountingTransaction.UNITY.table");
+        tableForTestDataInDWH = properties.getProperty("accountingTransaction.hub.table");
+        String viewForDWH = properties.getProperty("accountingTransaction.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
-        String dwhSQL = SQL.getSelectHub(tableForTestDataInDWH);
+        String dwhSQL = SQL.getSelectHubFromDWH(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else if (hubStatus != 0) {
-            System.err.println("HubStatus have not valid values! HubStatus [" + hubStatus + "]");
+            System.err.println("HubStatus have not valid values! HubStatus [" + hubStatus + "] , but must be 0");
         } else {
             System.out.println("HubStatus have expected values! HubStatus [" + hubStatus + "]");
         }

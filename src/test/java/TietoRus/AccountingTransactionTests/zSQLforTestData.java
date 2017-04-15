@@ -43,15 +43,15 @@ public class zSQLforTestData {
     }
 
     @Test
-    public void getDWHSQLs() throws IOException {
+    public void getHubSQLs() throws IOException {
         getPropertiesFile();
         System.err.println("DataVault");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoDWH(properties.getProperty("accountingTransaction.hub.table")));
+        System.out.println(getInsertHubIntoDWH(properties.getProperty("accountingTransaction.hub.table")));
         System.out.println("------");
-        System.out.println(getDeleteFromDWH(properties.getProperty("accountingTransaction.hub.table")));
+        System.out.println(getDeleteHubFromDWH(properties.getProperty("accountingTransaction.hub.table")));
         System.out.println("------");
-        System.out.println(getSelectFromDWH(properties.getProperty("accountingTransaction.hub.table")));
+        System.out.println(getSelectHubFromDWH(properties.getProperty("accountingTransaction.hub.table")));
         System.out.println("---------------------------");
     }
 
@@ -65,7 +65,7 @@ public class zSQLforTestData {
         return insert;
     }
 
-    public String getInsertIntoDWH(String tableName) {
+    public String getInsertHubIntoDWH(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (itemNr, sequenceNr, accessCompanyId, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[6] + ")";
@@ -82,7 +82,7 @@ public class zSQLforTestData {
         return delete;
     }
 
-    public String getDeleteFromDWH(String tableName) {
+    public String getDeleteHubFromDWH(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE itemNr = " + keys[1] + " and sequenceNr = " + keys[2]
                + " and accessCompanyId = " + keys[3] + " and SrcSystemId = " + keys[4];
@@ -99,7 +99,7 @@ public class zSQLforTestData {
     }
 
 
-    public String getSelectFromDWH(String tableName) {
+    public String getSelectHubFromDWH(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE itemNr = " + keys[1] + " and sequenceNr = " + keys[2]
                 + " and accessCompanyId = " + keys[3] + " and SrcSystemId = " + keys[4];
