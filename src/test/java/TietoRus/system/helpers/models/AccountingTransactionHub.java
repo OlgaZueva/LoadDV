@@ -1,12 +1,12 @@
 package TietoRus.system.helpers.models;
 
-public class AccountingTransaction {
+public class AccountingTransactionHub {
     private int itemNr;
     private int sequenceNr;
     private int accessCompanyId;
     private int srcSystemId;
 
-    public AccountingTransaction(int itemNr, int sequenceNr, int accessCompanyId, int srcSystemId) {
+    public AccountingTransactionHub(int itemNr, int sequenceNr, int accessCompanyId, int srcSystemId) {
         this.itemNr = itemNr;
         this.sequenceNr = sequenceNr;
         this.accessCompanyId = accessCompanyId;
@@ -18,7 +18,7 @@ public class AccountingTransaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AccountingTransaction that = (AccountingTransaction) o;
+        AccountingTransactionHub that = (AccountingTransactionHub) o;
 
         if (itemNr != that.itemNr) return false;
         if (sequenceNr != that.sequenceNr) return false;
@@ -37,7 +37,7 @@ public class AccountingTransaction {
 
     @Override
     public String toString() {
-        return "AccountingTransaction{" +
+        return "AccountingTransactionHub{" +
                 "itemNr=" + itemNr +
                 ", sequenceNr=" + sequenceNr +
                 ", accessCompanyId=" + accessCompanyId +

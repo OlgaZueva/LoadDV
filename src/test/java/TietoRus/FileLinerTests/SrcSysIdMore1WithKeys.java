@@ -55,7 +55,7 @@ public class SrcSysIdMore1WithKeys {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
 
     private void getPropertiesFile() throws IOException {

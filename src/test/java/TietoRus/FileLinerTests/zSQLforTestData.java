@@ -23,7 +23,7 @@ public class zSQLforTestData {
         keys[5] = String.valueOf(0); //TryCnt
         keys[6] = String.valueOf(0); //PartitionId
         keys[7] = String.valueOf(0);// statusHub
-        keys[8] = "D ";// cdcOperation
+        keys[8] = null;// cdcOperation
         keys[9] = String.valueOf(1); //CALL_ID decimal(1,0)
         keys[10] = "01-10-1999"; //EXP_AFG_DATO datetime
         keys[11] = "02-10-1999"; //IMP_ANK_DATO datetime
@@ -101,6 +101,12 @@ public class zSQLforTestData {
         return delete;
     }
 
+    public String getDeleteSat(String tableName, String fieldNameForHubId, int dwhHubId) {
+        String delete = "DELETE FROM " + tableName + " WHERE " + fieldNameForHubId + " = " + dwhHubId;
+        System.out.println(delete);
+        return delete;
+    }
+
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
@@ -114,6 +120,12 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
                 + " and serviceCode = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
+        //System.out.println(select);
+        return select;
+    }
+
+    public String getSelectSat(String tableName, String fieldNameForHubId, int dwhHubId) {
+        String select = "SELECT * from " + tableName + " WHERE " + fieldNameForHubId + " = " + dwhHubId;
         //System.out.println(select);
         return select;
     }

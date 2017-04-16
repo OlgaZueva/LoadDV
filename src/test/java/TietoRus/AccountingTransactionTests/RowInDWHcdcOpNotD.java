@@ -72,7 +72,7 @@ public class RowInDWHcdcOpNotD {
                 System.err.println("In DWH more then one record for these keys It's fail!");
             }
 
-            Integer dwhHubId = dh.getDWHHubId(dwhSQL);
+            Integer dwhHubId = dh.getDWHHubId(dwhSQL, fieldNameForHubId);
             if (dwhHubId == null) {
                 System.err.println("HubId in DWH not found! It's fail!");
             } else {
@@ -91,7 +91,7 @@ public class RowInDWHcdcOpNotD {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
 
     private void getPropertiesFile() throws IOException {

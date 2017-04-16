@@ -35,7 +35,7 @@ public class FileLinerSatObjects {
             }
         }
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("FileLinerHub from SA: " + fileLinerSat);
+        System.out.println("FileLinerSat from SA: " + fileLinerSat);
         return fileLinerSat;
     }
 
@@ -65,7 +65,7 @@ public class FileLinerSatObjects {
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("FileLinerHub from DWH: " + fileLinerSat);
+        System.out.println("FileLinerSat from DWH: " + fileLinerSat);
         return fileLinerSat;
     }
 

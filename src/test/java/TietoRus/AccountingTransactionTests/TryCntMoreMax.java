@@ -67,7 +67,7 @@ public class TryCntMoreMax {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));

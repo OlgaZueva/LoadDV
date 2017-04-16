@@ -63,7 +63,6 @@ public class GetDataHelper {
     }
 
 
-
     public int getCountRowOfHub(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -78,7 +77,7 @@ public class GetDataHelper {
         return countRowHub;
     }
 
-    public Integer getDWHHubId(String hubSQL) throws SQLException {
+    public Integer getDWHHubId(String hubSQL, String fieldNameForHubId) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
@@ -86,7 +85,7 @@ public class GetDataHelper {
         Integer dwhHubId = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
-                dwhHubId = rsFromDWH.getInt("dwhHubId");
+                dwhHubId = rsFromDWH.getInt(fieldNameForHubId);
             } else {
                 System.err.println("dwhHubId. Record not found or more one!");
                 return dwhHubId;
@@ -117,7 +116,6 @@ public class GetDataHelper {
     }
 
 
-
     public int getCountRowInSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
@@ -135,7 +133,7 @@ public class GetDataHelper {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         stForSA.execute(insert);
-        System.out.println("SQL for Insert in SA: " + insert);
+       // System.out.println("SQL for Insert in SA: " + insert);
         System.out.println("Insert test row complete!");
         db.closeConnecions(null, stForSA, connectionToSA);
     }
@@ -145,7 +143,7 @@ public class GetDataHelper {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(insert);
-        System.out.println("SQL for Insert in DWH: " + insert);
+        //System.out.println("SQL for Insert in DWH: " + insert);
         System.out.println("Insert test row complete!");
         db.closeConnecions(null, stForDWH, connectionToDWH);
     }
@@ -155,20 +153,41 @@ public class GetDataHelper {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         stForSA.execute(delete);
-        System.out.println("SQL for Delete from SA: " + delete);
+        //System.out.println("SQL for Delete from SA: " + delete);
         System.out.println("Delete test row in SA complete!");
         db.closeConnecions(null, stForSA, connectionToSA);
     }
 
-    public void deleteTestRowFromDWH(String tableName) throws SQLException {
+    public void deleteHub(String tableName) throws SQLException {
         String delete = SQL.getDeleteHub(tableName);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(delete);
-        System.out.println("SQL for Delete from DWH: " + delete);
-        System.out.println("Delete test row in DWH complete!");
+        //System.out.println("SQL for Delete from DWH: " + delete);
+        System.out.println("Delete Hub in DWH complete!");
         db.closeConnecions(null, stForDWH, connectionToDWH);
     }
+
+    public void deleteSat(String tableName, String fieldNameForHubId, Integer dwhHubId) throws SQLException {
+        String delete = SQL.getDeleteSat(tableName, fieldNameForHubId, dwhHubId);
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        stForDWH.execute(delete);
+        //System.out.println("SQL for Delete from DWH: " + delete);
+        System.out.println("Delete Sat in DWH complete!");
+        db.closeConnecions(null, stForDWH, connectionToDWH);
+    }
+
+    public void deleteSatHubStatus(String tableName, String fieldNameForHubId, Integer dwhHubId) throws SQLException {
+        String delete = SQL.getDeleteSat(tableName, fieldNameForHubId, dwhHubId);
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        stForDWH.execute(delete);
+        //System.out.println("SQL for Delete from DWH: " + delete);
+        System.out.println("Delete HubSatStatus in DWH complete!");
+        db.closeConnecions(null, stForDWH, connectionToDWH);
+    }
+
 
     public Map<String, Object> getMapFromSA(String sql) throws SQLException {
         Connection connectionToSA = db.connToSA();

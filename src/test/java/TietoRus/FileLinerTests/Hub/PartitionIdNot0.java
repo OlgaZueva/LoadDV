@@ -1,5 +1,6 @@
-package TietoRus.FileLinerTests;
+package TietoRus.FileLinerTests.Hub;
 
+import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -29,14 +30,14 @@ public class PartitionIdNot0 {
     private zSQLforTestData SQL = new zSQLforTestData();
     private Properties properties = new Properties();
 
-    private String tableForTestDataInSA;
+    private String tableInSA;
 
 
     @BeforeMethod
     public void insertTestData() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
-        dh.insertTestRowInSA(tableForTestDataInSA);
+        tableInSA = properties.getProperty("fileLiner.UNITY.table");
+        dh.insertTestRowInSA(tableInSA);
     }
 
     @Test
@@ -53,7 +54,7 @@ public class PartitionIdNot0 {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestDataInSA);
+        dh.deleteTestRowFromSA(tableInSA);
     }
 
     private void getPropertiesFile() throws IOException {

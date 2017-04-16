@@ -44,7 +44,7 @@ public class HubStatusIs1 {
         String dwhSQL = SQL.getSelectHubFromDWH(tableForTestDataInDWH);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
 
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
@@ -69,7 +69,7 @@ public class HubStatusIs1 {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
 
 

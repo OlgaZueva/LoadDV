@@ -1,5 +1,6 @@
-package TietoRus.FileLinerTests;
+package TietoRus.FileLinerTests.Hub;
 
+import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -30,26 +31,26 @@ public class HubStatusIs1 {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
     private Properties properties = new Properties();
-    private String tableForTestDataInSA;
-    private String tableForTestDataInDWH;
+    private String tableInSA;
+    private String tableHub;
 
 
     @Test
     public void HubStatusIs1() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("fileLiner.UNITY.table");
-        tableForTestDataInDWH = properties.getProperty("fileLiner.hub.table");
+        tableInSA = properties.getProperty("fileLiner.UNITY.table");
+        tableHub = properties.getProperty("fileLiner.hub.table");
         String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
-        String dwhSQL = SQL.getSelectHub(tableForTestDataInDWH);
+        String hubSQL = SQL.getSelectHub(tableHub);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableHub);
 
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else {
-            if (dh.getCountRowOfHub(dwhSQL) == 1) {
+            if (dh.getCountRowOfHub(hubSQL) == 1) {
                 System.err.println("In DWH present record! It's not valid!");
             } else {
                 System.out.println("Record in DWH doesn't created. It's expected result! Check package log!");
@@ -68,8 +69,8 @@ public class HubStatusIs1 {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteTestRowFromSA(tableInSA);
+        dh.deleteHub(tableHub);
     }
 
 

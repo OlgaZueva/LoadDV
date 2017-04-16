@@ -2,8 +2,8 @@ package TietoRus.AccountingTransactionTests;
 
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
-import TietoRus.system.helpers.models.AccountingTransaction;
-import TietoRus.system.helpers.objects.AccountingTransactionObjects;
+import TietoRus.system.helpers.models.AccountingTransactionHub;
+import TietoRus.system.helpers.objects.AccountingTransactionHubObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -31,7 +31,7 @@ public class CreateNewHub {
      */
 
     private GetDataHelper dh = new GetDataHelper();
-    private AccountingTransactionObjects objects = new AccountingTransactionObjects();
+    private AccountingTransactionHubObjects objects = new AccountingTransactionHubObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
@@ -58,8 +58,8 @@ public class CreateNewHub {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else if (hubStatus != 0 || (tryCtn <= Integer.parseInt(properties.getProperty("system.MaxTryCount")))) {
             if (dh.getCountRowOfHub(dwhSQL) == 1) {
-                AccountingTransaction hubfromSA = objects.getHubFromSA(saSQL);
-                AccountingTransaction hubfromDWH = objects.getHubFromDWH(dwhSQL);
+                AccountingTransactionHub hubfromSA = objects.getHubFromSA(saSQL);
+                AccountingTransactionHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
                 asserts.assertAccountingTransactionHubs(hubfromSA, hubfromDWH);
 
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
@@ -79,13 +79,13 @@ public class CreateNewHub {
                 System.err.println("Record in DWH not found or they are more one!");
             }
         } else {
-            AccountingTransaction hubfromDWH = objects.getHubFromDWH(dwhSQL);
+            AccountingTransactionHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
             if (hubfromDWH != null) {
                 System.err.println("Hub was created, but hubStatus or tryCtn out of valid values!");
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
                 Integer hubStatusAfter = dh.getHubStatusFromSA(saSQL);
                 if (tryCtnAfter.equals(tryCtn) || hubStatusAfter.equals(hubStatus)) {
-                    System.err.println("Package change tryCtn or nubStatus in SA!");
+                    System.err.println("Package change tryCtn or nubStatus in SA! It's wrong!");
                 }
             } else {
                 System.out.println("HubStatus in SA =0. Do nothing. Check package log");
@@ -96,7 +96,7 @@ public class CreateNewHub {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
 
     private void getPropertiesFile() throws IOException {

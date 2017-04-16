@@ -71,7 +71,7 @@ public class RowInDWHcdcOpIsD {
             }
         }
 
-        Integer dwhHubId = dh.getDWHHubId(dwhSQL);
+        Integer dwhHubId = dh.getDWHHubId(dwhSQL, fieldNameForHubId);
         if (dwhHubId == null) {
             System.err.println("HubId in DWH not found! It's fail!");
         } else {
@@ -93,7 +93,7 @@ public class RowInDWHcdcOpIsD {
     @AfterMethod
     public void deleteTestData() throws SQLException {
         dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteTestRowFromDWH(tableForTestDataInDWH);
+        dh.deleteHub(tableForTestDataInDWH);
     }
 
     private void getPropertiesFile() throws IOException {
