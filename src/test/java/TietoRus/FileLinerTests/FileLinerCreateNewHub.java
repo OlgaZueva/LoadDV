@@ -28,7 +28,7 @@ public class FileLinerCreateNewHub {
      * 3. Зафиксировать значение tryCtn в SA-таблице, присвоить это значение переменной tryCtnPrecondition
      * Действия:
      * 1. Добавить запись в SA таблицу
-     * 2. Запустить пакет загрузки хаба
+     * 2. Запустить пакеты загрузки hub'а, sat'а и satHubStatus'а
      * 3. Запустить тест
      */
 
@@ -128,8 +128,10 @@ public class FileLinerCreateNewHub {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableInSA);
-        dh.deleteHub(tableHub);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        String deleteFromHub = SQL.getDeleteHub(tableHub);
+        dh.deleteTestRowFromSA(deleteFromSA);
+        dh.deleteHub(deleteFromHub);
         if (dwhHubId == null) {
             System.out.println("dwhHubId is null. No rows for delete in SatHub Status and Sat. Return.");
             return;

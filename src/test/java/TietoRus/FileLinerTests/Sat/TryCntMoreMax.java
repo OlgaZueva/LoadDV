@@ -1,4 +1,4 @@
-package TietoRus.FileLinerTests.Hub;
+package TietoRus.FileLinerTests.Sat;
 
 import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.GetDataHelper;
@@ -12,22 +12,23 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Тест проверяет поведение системы при загрузке hub'ов в случае, когда число попыток загрузки >= MaxTryCount
+ * Тест проверяет поведение системы при загрузке sat'ов в случае, когда satStatus = 0 и число попыток загрузки >= MaxTryCount
  */
 
 /**
- * Тест проверяет поведение системы при загрузке hub'ов в случае, когда число попыток загрузки >= MaxTryCount
- * Обрабатывать должны только записи, у которых tryCnt <= MaxTryCount
+ * Тест проверяет поведение системы при sat'ов в случае, когда satStatus = 0 и число попыток загрузки >= MaxTryCount
+ * Обрабатывать должны только записи, у которых satStatus = 0 и tryCnt <= MaxTryCount
  * Значение MaxTryCount в системе задается у пакета загрузки. Для тестов дублируется в system.properties
  *
  * Предусловия:
  * 1. Запись в SA должна существовать.
- * У нее: srcSysId =1, tryCnt = MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
+ * У нее: srcSysId =1, tryCnt = MaxTryCount, PartitionId = 0, statusHub = 0, statusSat = 0, cdcOperation = null,  остальные значения любые
  * Действия:
  * 1. Вставить в SA запись с tryCnt = MaxTryCount
- * 2. Запустить пакет загрузки хаба
- * 3. Запустить тест
- * 4. После анализа результатов теста зачистить тестовые данные
+ * 2. Запустить пакет загрузки хаба (при выполненых предусловиях шаг можно пропустить)
+ * 3. Запустить пакет загрузки sat'a
+ * 4. Запустить тест
+ * 5. После анализа результатов теста зачистить тестовые данные
  */
 public class TryCntMoreMax {
     private GetDataHelper dh = new GetDataHelper();
@@ -46,6 +47,7 @@ public class TryCntMoreMax {
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String dwhSQL = SQL.getSelectHub(tableHub);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
+        Integer satStatus = dh.getSatStatusFromSA(saSQL);
 
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
@@ -55,22 +57,21 @@ public class TryCntMoreMax {
             System.out.println("HubStatus have expected values! HubStatus [" + hubStatus + "]");
         }
 
+        if (satStatus != 0) {
+            System.err.println("SatStatus have not valid values! it was update, it's fail! SatStatus [" + satStatus + "]");
+        } else {
+            System.out.println("SatStatus was not update! It's expected. SatStatus [" + satStatus + "]");
+        }
+
         Integer tryCtn = dh.getTryCtnFromSA(saSQL);
         System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
-
-        if (dh.getCountRowOfHub(dwhSQL) == 1) {
-            System.err.println("In DWH present record! It's not valid!");
-        } else {
-            System.out.println("Record in DWH doesn't created. It's expected result! Check package log (it operation is valid flow, errors do not be fixed!)!");
-        }
+        System.err.println("Check all log Tables! They are not have an error!");
     }
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
-        String deleteFromHub = SQL.getDeleteHub(tableHub);
-        dh.deleteTestRowFromSA(deleteFromSA);
-        dh.deleteHub(deleteFromHub);
+        dh.deleteTestRowFromSA(tableInSA);
+        dh.deleteHub(tableHub);
     }
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));

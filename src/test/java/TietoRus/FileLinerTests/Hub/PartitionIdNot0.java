@@ -54,7 +54,9 @@ public class PartitionIdNot0 {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableInSA);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        dh.deleteTestRowFromSA(deleteFromSA);
+
     }
 
     private void getPropertiesFile() throws IOException {

@@ -13,7 +13,7 @@ import java.util.Properties;
 public class GetDataHelper {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
-    private zSQLforTestData SQL = new zSQLforTestData();
+    //private zSQLforTestData SQL = new zSQLforTestData();
 
     private Map<String, Object> mapAllFromSA = new HashMap<String, Object>();
     private Map<String, Object> mapHubFromDWH = new HashMap<String, Object>();
@@ -62,6 +62,27 @@ public class GetDataHelper {
         return hubStatus;
     }
 
+    public Integer getSatStatusFromSA(String sql) throws SQLException {
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        //System.out.println("SQL из SA: " + sql);
+        ResultSet rsFromSA = db.rsFromDB(stForSA, sql);
+        Integer satStatus = null;
+        while (rsFromSA.next()) {
+            if (rsFromSA.getRow() < 1) {
+                System.err.println("SatStatus. Record in SA not found!");
+            } else {
+                if (rsFromSA.getRow() > 1) {
+                    System.err.println("SatStatus. More then one record in SA. Check query!");
+                } else {
+                    satStatus = Integer.valueOf(rsFromSA.getString("statusSat"));
+                    //System.out.println("statusSat in SA: " + satStatus);
+                }
+            }
+        }
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
+        return satStatus;
+    }
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
@@ -129,6 +150,7 @@ public class GetDataHelper {
     }
 
     public void insertTestRowInSA(String tableName) throws SQLException {
+        zSQLforTestData SQL = new zSQLforTestData();
         String insert = SQL.getInsertIntoSA(tableName);
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
@@ -139,6 +161,7 @@ public class GetDataHelper {
     }
 
     public void insertTestRowInDWH(String tableName) throws SQLException {
+        zSQLforTestData SQL = new zSQLforTestData();
         String insert = SQL.getInsertHub(tableName);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -148,27 +171,26 @@ public class GetDataHelper {
         db.closeConnecions(null, stForDWH, connectionToDWH);
     }
 
-    public void deleteTestRowFromSA(String tableName) throws SQLException {
-        String delete = SQL.getDeleteFromSA(tableName);
+    public void deleteTestRowFromSA(String delete) throws SQLException {
+        System.out.println("SQL for Delete from SA: " + delete);
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         stForSA.execute(delete);
-        //System.out.println("SQL for Delete from SA: " + delete);
         System.out.println("Delete test row in SA complete!");
         db.closeConnecions(null, stForSA, connectionToSA);
     }
 
-    public void deleteHub(String tableName) throws SQLException {
-        String delete = SQL.getDeleteHub(tableName);
+    public void deleteHub(String delete) throws SQLException {
+        System.out.println("SQL for Delete from DWH: " + delete);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(delete);
-        //System.out.println("SQL for Delete from DWH: " + delete);
         System.out.println("Delete Hub in DWH complete!");
         db.closeConnecions(null, stForDWH, connectionToDWH);
     }
 
     public void deleteSat(String tableName, String fieldNameForHubId, Integer dwhHubId) throws SQLException {
+        zSQLforTestData SQL = new zSQLforTestData();
         String delete = SQL.getDeleteSat(tableName, fieldNameForHubId, dwhHubId);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -179,6 +201,7 @@ public class GetDataHelper {
     }
 
     public void deleteSatHubStatus(String tableName, String fieldNameForHubId, Integer dwhHubId) throws SQLException {
+        zSQLforTestData SQL = new zSQLforTestData();
         String delete = SQL.getDeleteSat(tableName, fieldNameForHubId, dwhHubId);
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);

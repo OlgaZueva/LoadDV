@@ -1,9 +1,12 @@
 package TietoRus.AccountingTransactionTests;
 
+
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import TietoRus.system.helpers.models.AccountingTransactionHub;
+import TietoRus.system.helpers.models.AccountingTransactionSat;
 import TietoRus.system.helpers.objects.AccountingTransactionHubObjects;
+import TietoRus.system.helpers.objects.AccountingTransactionSatObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -16,7 +19,7 @@ import java.util.Properties;
 /**
  * Проверка правильного формирования HUB'ов, SAT'ов и LINK'ов после первоначальной загрузки данных
  */
-public class CreateNewHub {
+public class AccountingTransactionCreateNewHub {
     /**
      * тест проверяет общий положительный сценарий по добавлению записи
      * Предусловия:
@@ -26,28 +29,38 @@ public class CreateNewHub {
      * 3. Зафиксировать значение tryCtn в SA-таблице, присвоить это значение переменной tryCtnPrecondition
      * Действия:
      * 1. Добавить запись в SA таблицу
-     * 2. Запустить пакет загрузки хаба
+     * 2. Запустить пакеты загрузки hub'а, sat'а и satHubStatus'а
      * 3. Запустить тест
      */
 
     private GetDataHelper dh = new GetDataHelper();
-    private AccountingTransactionHubObjects objects = new AccountingTransactionHubObjects();
+    private AccountingTransactionHubObjects hubObjects = new AccountingTransactionHubObjects();
+    private AccountingTransactionSatObjects satObjects = new AccountingTransactionSatObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
-    private String tableForTestDataInSA;
-    private String tableForTestDataInDWH;
+    private String tableInSA;
+    private String tableHub;
+    private String tableSat;
+    private String tableSatHubStatus;
+    private String fieldNameForHubId;
+    private Integer dwhHubId;
 
     //Подготовь данные в SQLforTestData -> получи запрос на добавление записи -> используй его для добавления тестовой записи!
     // Добавь запись в SA перед выполнением теста!
     @Test
     public void HubCreatedValidFlow() throws SQLException, IOException {
         getPropertiesFile();
-        tableForTestDataInSA = properties.getProperty("accountingTransaction.UNITY.table");
-        tableForTestDataInDWH = properties.getProperty("accountingTransaction.hub.table");
+        tableInSA = properties.getProperty("accountingTransaction.UNITY.table");
+        tableHub = properties.getProperty("accountingTransaction.hub.table");
+        tableSat = properties.getProperty("accountingTransaction.sat.table");
+        fieldNameForHubId = properties.getProperty("accountingTransaction.fieldNameForHubIdInSatHubStatus");
+        tableSatHubStatus = properties.getProperty("accountingTransaction.SatStatus.table");
+        String viewForDWH = properties.getProperty("accountingTransaction.hub.view");
         int tryCtnPrecondition = 0;
-        String saSQL = SQL.getSelectFromSA(tableForTestDataInSA);
-        String dwhSQL = SQL.getSelectHubFromDWH(tableForTestDataInDWH);
+        String saSQL = SQL.getSelectFromSA(viewForDWH);
+        //String saSQL = SQL.getSelectFromSA(tableInSA);
+        String hubSQL = SQL.getSelectHub(tableHub);
 
         Integer tryCtn = dh.getTryCtnFromSA(saSQL);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
@@ -57,9 +70,9 @@ public class CreateNewHub {
         } else if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else if (hubStatus != 0 || (tryCtn <= Integer.parseInt(properties.getProperty("system.MaxTryCount")))) {
-            if (dh.getCountRowOfHub(dwhSQL) == 1) {
-                AccountingTransactionHub hubfromSA = objects.getHubFromSA(saSQL);
-                AccountingTransactionHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
+            if (dh.getCountRowOfHub(hubSQL) == 1) {
+                AccountingTransactionHub hubfromSA = hubObjects.getHubFromSA(saSQL);
+                AccountingTransactionHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
                 asserts.assertAccountingTransactionHubs(hubfromSA, hubfromDWH);
 
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
@@ -79,7 +92,7 @@ public class CreateNewHub {
                 System.err.println("Record in DWH not found or they are more one!");
             }
         } else {
-            AccountingTransactionHub hubfromDWH = objects.getHubFromDWH(dwhSQL);
+            AccountingTransactionHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
             if (hubfromDWH != null) {
                 System.err.println("Hub was created, but hubStatus or tryCtn out of valid values!");
                 Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
@@ -91,12 +104,42 @@ public class CreateNewHub {
                 System.out.println("HubStatus in SA =0. Do nothing. Check package log");
             }
         }
+// Проверка Sat'а
+        dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
+        if (dwhHubId == null) {
+            System.err.println("HubId in DWH not found! It's fail!");
+        } else {
+            String satSQL = SQL.getSelectSat(tableSat, fieldNameForHubId, dwhHubId);
+            AccountingTransactionSat satfromSA = satObjects.getSatFromSA(saSQL);
+            AccountingTransactionSat satFromDWH = satObjects.getSatFromDWH(satSQL);
+            asserts.assertAccountingTransactionSat(satfromSA, satFromDWH);
+// Проверка SatHubStatus'а
+            Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
+            if (satHubStatus == null) {
+                System.err.println("Record for HubId in satHubStatus not found or more one! It's fail");
+            } else {
+                if (satHubStatus != 1) {
+                    System.err.println("SatHubStatus is not valid! SatHubStatus: [" + satHubStatus + "]");
+                } else {
+                    System.out.println("SatHubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
+                }
+            }
+        }
     }
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableForTestDataInSA);
-        dh.deleteHub(tableForTestDataInDWH);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        String deleteFromHub = SQL.getDeleteHub(tableHub);
+        dh.deleteTestRowFromSA(deleteFromSA);
+        dh.deleteHub(deleteFromHub);
+        if (dwhHubId == null) {
+            System.out.println("dwhHubId is null. No rows for delete in SatHub Status and Sat. Return.");
+            return;
+        } else {
+            dh.deleteSat(tableSat, fieldNameForHubId, dwhHubId);
+            dh.deleteSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
+        }
     }
 
     private void getPropertiesFile() throws IOException {

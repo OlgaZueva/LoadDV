@@ -28,7 +28,7 @@ import java.util.Properties;
  * Действия:
  * 1. Вставить в SA запись с statusHub = 0 и  cdcOperation = null
  * 2. Вставить в DWH запись с теми же ключами
- * 3. Запустить пакет загрузки хаба
+ * 3. Запустить пакет загрузки hub'a, sat'a и satHubStatus'a
  * 4. Запустить тест
  * 5. После анализа результатов теста зачистить тестовые данные
  */
@@ -89,10 +89,10 @@ public class RowInDWHcdcOpNotD {
                 System.err.println("HubId in DWH not found! It's fail!");
             } else {
                 Integer satHubStatus = dh.getSatHubStatus(satHubStatusTable, fieldNameForHubId, dwhHubId);
-                if (satHubStatus != null) {
-                    System.err.println("Record for HubId in staHubStatus found! It's fail");
+                if (satHubStatus != 1) {
+                    System.err.println("SatHubStatus have not valid values! SatHubStatus: [" + satHubStatus + "]");
                 } else {
-                    System.out.println("Record for HubId in staHubStatus  not found! It's expected!");
+                    System.out.println("SatHubStatus have valid values! SatHubStatus: [" + satHubStatus + "]");
                 }
             }
         }
@@ -123,8 +123,10 @@ public class RowInDWHcdcOpNotD {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableInSA);
-        dh.deleteHub(tableHub);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        String deleteFromHub = SQL.getDeleteHub(tableHub);
+        dh.deleteTestRowFromSA(deleteFromSA);
+        dh.deleteHub(deleteFromHub);
         if (dwhHubId == null) {
             System.out.println("dwhHubId is null. No rows for delete in SatHub Status and Sat. Return.");
             return;

@@ -28,7 +28,7 @@ import java.util.Properties;
  * Действия:
  * 1. Вставить в SA запись с cdcOperation = 'D '
  * 2. Вставить в DWH запись с теми же ключами
- * 3. Запустить пакет загрузки хаба
+ * 3. Запустить пакет загрузки hub'a, sat'a и satHubStatus'a
  * 4. Запустить тест
  * 5. После анализа результатов теста зачистить тестовые данные
  */
@@ -108,8 +108,10 @@ public class RowInDWHcdcOpIsD {
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableInSA);
-        dh.deleteHub(tableHub);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        String deleteFromHub = SQL.getDeleteHub(tableHub);
+        dh.deleteTestRowFromSA(deleteFromSA);
+        dh.deleteHub(deleteFromHub);
         if (dwhHubId == null) {
             System.out.println("dwhHubId is null. No rows for delete in SatHub Status and Sat. Return.");
             return;

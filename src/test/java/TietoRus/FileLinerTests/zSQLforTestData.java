@@ -14,7 +14,7 @@ public class zSQLforTestData {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[20];
+        String[] keys = new String[22];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //SELSKAB
         keys[2] = String.valueOf(999001); //SAGSNR
@@ -23,18 +23,20 @@ public class zSQLforTestData {
         keys[5] = String.valueOf(0); //TryCnt
         keys[6] = String.valueOf(0); //PartitionId
         keys[7] = String.valueOf(0);// statusHub
-        keys[8] = null;// cdcOperation
-        keys[9] = String.valueOf(1); //CALL_ID decimal(1,0)
-        keys[10] = "01-10-1999"; //EXP_AFG_DATO datetime
-        keys[11] = "02-10-1999"; //IMP_ANK_DATO datetime
-        keys[12] = "03-10-1999"; //PROFORMA_DATE datetime
-        keys[13] = "TEST rej"; //REJSE_NR nvarchar(10 CHAR)
-        keys[14] = String.valueOf(9977); //S_WEEK decimal(4,0)
-        keys[15] = "TEst SKIBS_NAVN"; //SKIBS_NAVN nvarchar(35 CHAR)
-        keys[16] = "04-10-1999"; //SLUT_DATO datetime
-        keys[17] = "05-10-1999"; //START_DATO datetime
-        keys[18] = "R"; //STAT nvarchar(1 CHAR);
-        keys[19] = "Y"; //TEMPORARY_FLAG nvarchar(1 CHAR)
+        keys[8] = String.valueOf(0);// statusSat
+        keys[9] = String.valueOf(0);// statusLnk
+        keys[10] = "UN";// cdcOperation
+        keys[11] = String.valueOf(1); //CALL_ID decimal(1,0)
+        keys[12] = "01-10-1999"; //EXP_AFG_DATO datetime
+        keys[13] = "02-10-1999"; //IMP_ANK_DATO datetime
+        keys[14] = "03-10-1999"; //PROFORMA_DATE datetime
+        keys[15] = "TEST rej"; //REJSE_NR nvarchar(10 CHAR)
+        keys[16] = String.valueOf(9977); //S_WEEK decimal(4,0)
+        keys[17] = "TEst SKIBS_NAVN"; //SKIBS_NAVN nvarchar(35 CHAR)
+        keys[18] = "04-10-1999"; //SLUT_DATO datetime
+        keys[19] = "05-10-1999"; //START_DATO datetime
+        keys[20] = "R"; //STAT nvarchar(1 CHAR);
+        keys[21] = "Y"; //TEMPORARY_FLAG nvarchar(1 CHAR)
         return keys;
     }
 
@@ -67,11 +69,11 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (SELSKAB, SAGSNR, AFDELING, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation, CALL_ID, EXP_AFG_DATO, " +
+        String insert = "Insert into " + keys[0] + " (SELSKAB, SAGSNR, AFDELING, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, CALL_ID, EXP_AFG_DATO, " +
                 "IMP_ANK_DATO, PROFORMA_DATE, REJSE_NR, S_WEEK, SKIBS_NAVN, SLUT_DATO, START_DATO, STAT, TEMPORARY_FLAG) Values ("
                 + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
-                + ", '" + keys[10] + "', '" + keys[11] + "', '" + keys[12] + "', '" + keys[13] + "', " + keys[14] + ", '" + keys[15] + "', '" + keys[16] + "', '" + keys[17]
-                + "', '" + keys[18] + "', '" + keys[19] + "')";
+                + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', " + keys[16] + ", '" + keys[17]
+                + "', '" + keys[18] + "', '" + keys[19] + "', '" + keys[20] + "', '" + keys[21] + "')";
         //System.out.println(insert);
         return insert;
     }

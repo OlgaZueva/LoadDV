@@ -1,6 +1,7 @@
 package TietoRus.system.helpers.helpers;
 
 import TietoRus.system.helpers.models.AccountingTransactionHub;
+import TietoRus.system.helpers.models.AccountingTransactionSat;
 import TietoRus.system.helpers.models.FileLinerHub;
 import TietoRus.system.helpers.models.FileLinerSat;
 
@@ -11,6 +12,10 @@ public class Asserts {
 
     public void assertAccountingTransactionHubs(AccountingTransactionHub hubfromSA, AccountingTransactionHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertAccountingTransactionSat(AccountingTransactionSat satfromSA, AccountingTransactionSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
     }
 
     public void assertFileLinerHubs(FileLinerHub hubfromSA, FileLinerHub hubFromDWH) {
