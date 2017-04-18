@@ -29,7 +29,7 @@ public class GetDataHelper {
                 System.err.println("TryCtn. Record in SA not found!");
             } else {
                 if (rsFromSA.getRow() > 1) {
-                    System.err.println("TryCtn. More then one record in SA. Check query!");
+                    System.err.println("TryCtn. More then one record in SA. Check query if it's not expected!");
                 } else {
                     tryCnt = Integer.valueOf(rsFromSA.getString("tryCnt"));
                     //System.out.println("tryCnt in SA: " + tryCnt);
@@ -51,7 +51,7 @@ public class GetDataHelper {
                 System.err.println("HubStatus. Record in SA not found!");
             } else {
                 if (rsFromSA.getRow() > 1) {
-                    System.err.println("HubStatus. More then one record in SA. Check query!");
+                    System.err.println("HubStatus. More then one record in SA. Check query if it's not expected!");
                 } else {
                     hubStatus = Integer.valueOf(rsFromSA.getString("statusHub"));
                     //System.out.println("statusHub in SA: " + hubStatus);

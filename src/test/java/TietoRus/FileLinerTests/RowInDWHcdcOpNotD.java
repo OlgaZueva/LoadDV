@@ -23,7 +23,7 @@ import java.util.Properties;
  * (В общем случае, если хаб создавался бы системой, то в satHubStatus-таблице должна быть запись со статусом = 1 и он измениться не должен)
  * Предусловия:
  * 1. Запись в SA должна существовать.
- * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
+ * У нее: srcSysId = ID_SA-источника, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
  * 2. В DWH существует запись с этими же ключами
  * Действия:
  * 1. Вставить в SA запись с statusHub = 0 и  cdcOperation = null
@@ -72,8 +72,7 @@ public class RowInDWHcdcOpNotD {
                 System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
             }
 
-            Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-            System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+            System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
 
             int countRowOfHub = dh.getCountRowOfHub(hubSQL);
             if (countRowOfHub == 1) {

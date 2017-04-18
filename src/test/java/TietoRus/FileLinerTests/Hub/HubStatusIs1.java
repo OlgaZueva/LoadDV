@@ -19,11 +19,11 @@ import java.util.Properties;
  * Тест проверяет поведение системы в случае, когда в SA statusHub = 1
  * Обрабатывать должны только записи, у которых statusHub = 0, если иначе, то ничего делать не должны
  * Предусловия:
- * 1. Запись в SA должна существовать. У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 1, cdcOperation = null,  остальные значения любые
+ * 1. Запись в SA должна существовать. У нее: srcSysId =ID_SA-источника, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 1, cdcOperation = null,  остальные значения любые
  * 2. В DWH записи с этими же ключами быть не должно
  * Действия:
  * 1. Вставить в SA запись с statusHub = 1
- * 2. Запустить пакет загрузки хаба
+ * 2. Запустить только пакет загрузки хаба
  * 3. Запустить тест
  * 4. После анализа результатов теста зачистить тестовые данные
  */
@@ -45,8 +45,6 @@ public class HubStatusIs1 {
         String hubSQL = SQL.getSelectHub(tableHub);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
 
-        dh.deleteHub(tableHub);
-
         if (hubStatus == null) {
             System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
         } else {
@@ -60,8 +58,7 @@ public class HubStatusIs1 {
             } else {
                 System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
             }
-            Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-            System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+            System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
         }
 
     }

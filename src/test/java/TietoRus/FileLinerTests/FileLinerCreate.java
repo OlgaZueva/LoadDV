@@ -16,15 +16,15 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Проверка правильного формирования HUB'ов, SAT'ов и LINK'ов после первоначальной загрузки данных
+ * Проверка правильного формирования HUB'ов, SatHubStatus'ов, SAT'ов и LINK'ов после первоначальной загрузки данных
  */
-public class FileLinerCreateNewHub {
+public class FileLinerCreate {
     /**
-     * тест проверяет общий положительный сценарий по добавлению записи
+     * Тест проверяет общий положительный сценарий по добавлению записей в hub, sat и hubSatStatus
      * Предусловия:
      * 1. Запись в SA должна существовать.
-     * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
-     * 2. Запись в DWH не должна существовать
+     * У нее: srcSysId = ID_SA-источника, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, statusSat = 0, cdcOperation = null,  остальные значения любые
+     * 2. Записей в DWH не должно существовать
      * 3. Зафиксировать значение tryCtn в SA-таблице, присвоить это значение переменной tryCtnPrecondition
      * Действия:
      * 1. Добавить запись в SA таблицу
@@ -56,74 +56,59 @@ public class FileLinerCreateNewHub {
         fieldNameForHubId = properties.getProperty("fileLiner.fieldNameForHubIdInSatHubStatus");
         tableSatHubStatus = properties.getProperty("fileLiner.SatStatus.table");
         String viewForDWH = properties.getProperty("fileLiner.hub.view");
-        int tryCtnPrecondition = 0;
         String saSQL = SQL.getSelectFromSA(viewForDWH);
-        //String saSQL = SQL.getSelectFromSA(tableInSA);
         String hubSQL = SQL.getSelectHub(tableHub);
-
-        Integer tryCtn = dh.getTryCtnFromSA(saSQL);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
+        Integer satStatus = dh.getSatStatusFromSA(saSQL);
 
-        if (tryCtn == null) {
-            System.err.println("TryCtn is null! Maybe record not found or more then one record in SA with identical keys. ");
-        } else if (hubStatus == null) {
-            System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
-        } else if (hubStatus != 0 || (tryCtn <= Integer.parseInt(properties.getProperty("system.MaxTryCount")))) {
+        if (hubStatus == null) {
+            System.err.println("HubStatus is null! Maybe record in SA not found or more then one record with identical keys. ");
+        } else
+//Проверка hub'а
             if (dh.getCountRowOfHub(hubSQL) == 1) {
                 FileLinerHub hubfromSA = hubObjects.getHubFromSA(saSQL);
                 FileLinerHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
-                asserts.assertFileLinerHubs(hubfromSA, hubfromDWH);
+                asserts.assertFileLinerHub(hubfromSA, hubfromDWH);
 
-                Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
-                if (tryCtnAfter == tryCtnPrecondition) {
-                    System.out.println("TryCount not update. It's valid. TryCtn [" + tryCtnAfter + "]");
+                System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
+
+                if (hubStatus == 1) {
+                    System.out.println("HubStatus set valid values! HubStatus [" + hubStatus + "]");
                 } else {
-                    System.err.println("TryCtn was updated,  but it's wrong! TryCtn [" + tryCtnAfter + "]");
+                    System.err.println("HubStatus have not valid values! HubStatus [" + hubStatus + "]");
                 }
 
-                Integer hubStatusAfter = dh.getHubStatusFromSA(saSQL);
-                if (hubStatusAfter == 1) {
-                    System.out.println("HubStatus set valid values! HubStatus [" + hubStatusAfter + "]");
+                if (satStatus == 3) {
+                    System.out.println("SatStatus set valid values! SatStatus [" + hubStatus + "]");
                 } else {
-                    System.err.println("HubStatus have not valid values! HubStatus [" + hubStatusAfter + "]");
+                    System.err.println("SatStatus have not valid values! SatStatus [" + hubStatus + "]");
                 }
+
+// Проверка Sat'а
+                dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
+                if (dwhHubId == null) {
+                    System.err.println("HubId in DWH not found! It's fail!");
+                } else {
+                    String satSQL = SQL.getSelectSat(tableSat, fieldNameForHubId, dwhHubId);
+                    FileLinerSat satfromSA = satObjects.getSatFromSA(saSQL);
+                    FileLinerSat satFromDWH = satObjects.getSatFromDWH(satSQL);
+                    asserts.assertFileLinerSat(satfromSA, satFromDWH);
+// Проверка SatHubStatus'а
+                    Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
+                    if (satHubStatus == null) {
+                        System.err.println("Record for HubId in satHubStatus not found or more one! It's fail");
+                    } else {
+                        if (satHubStatus != 1) {
+                            System.err.println("SatHubStatus is not valid! SatHubStatus: [" + satHubStatus + "]");
+                        } else {
+                            System.out.println("SatHubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
+                        }
+                    }
+                }
+                System.err.println("Check package log!");
             } else {
                 System.err.println("Record in DWH not found or they are more one!");
             }
-        } else {
-            FileLinerHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
-            if (hubfromDWH != null) {
-                System.err.println("Hub was created, but hubStatus or tryCtn out of valid values!");
-                Integer tryCtnAfter = dh.getTryCtnFromSA(saSQL);
-                Integer hubStatusAfter = dh.getHubStatusFromSA(saSQL);
-                if (tryCtnAfter.equals(tryCtn) || hubStatusAfter.equals(hubStatus)) {
-                    System.err.println("Package change tryCtn or nubStatus in SA! It's wrong!");
-                }
-            } else {
-                System.out.println("HubStatus in SA =0. Do nothing. Check package log");
-            }
-        }
-// Проверка Sat'а
-        dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
-        if (dwhHubId == null) {
-            System.err.println("HubId in DWH not found! It's fail!");
-        } else {
-            String satSQL = SQL.getSelectSat(tableSat, fieldNameForHubId, dwhHubId);
-            FileLinerSat satfromSA = satObjects.getSatFromSA(saSQL);
-            FileLinerSat satFromDWH = satObjects.getSatFromDWH(satSQL);
-            asserts.assertFileLinerSat(satfromSA, satFromDWH);
-// Проверка SatHubStatus'а
-            Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
-            if (satHubStatus == null) {
-                System.err.println("Record for HubId in satHubStatus not found or more one! It's fail");
-            } else {
-                if (satHubStatus != 1) {
-                    System.err.println("SatHubStatus is not valid! SatHubStatus: [" + satHubStatus + "]");
-                } else {
-                    System.out.println("SatHubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
-                }
-            }
-        }
     }
 
     @AfterMethod

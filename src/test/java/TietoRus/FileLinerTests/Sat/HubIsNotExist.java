@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
+/*
  * Тест проверяет поведение системы при загрузке sat'ов в случае, когда записи, с ключами записи в SA-таблице в hub'ах нет
  */
 
@@ -19,12 +19,12 @@ import java.util.Properties;
  * Тест проверяет поведение системы при загрузке sat'ов в случае, когда в SA statusHub = 1 и hab загружен не будет, что порождает отсутсвие записи в hub при загрузке sat'a
  * В данной ситуации sat'a создано быть не должно, а в таблице [logDataLoadError] зафиксирована ошибка.
  * Предусловия:
- * 1. Запись в SA должна существовать. У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 1, statusSat = 0,  остальные значения любые
+ * 1. Запись в SA должна существовать. У нее: srcSysId =ID_SA-источника, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 1, statusSat = 0,  остальные значения любые
  * 2. В в таблице hub'ов записи с этими же ключами быть не должно
  * Действия:
  * 1. Вставить в SA запись с statusHub = 1
  * 2. Запустить пакет загрузки хаба (при выполненых предусловиях шаг можно пропустить)
- * 3. Запустить пакет загрузки sat'a
+ * 3. Запустить только пакет загрузки sat'a
  * 4. Запустить тест
  * 5. После анализа результатов теста зачистить тестовые данные
  */
@@ -47,38 +47,31 @@ public class HubIsNotExist {
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
         Integer satStatus = dh.getSatStatusFromSA(saSQL);
 
-        dh.deleteHub(tableHub);
-
-        if (hubStatus == null) {
-            System.err.println("HubStatus is null! Maybe record not found or more then one record in SA with identical keys. ");
+        if (dh.getCountRowOfHub(hubSQL) >= 1) {
+            System.err.println("In DWH present record! It's not valid!");
         } else {
-            if (dh.getCountRowOfHub(hubSQL) == 1) {
-                System.err.println("In DWH present record! It's not valid!");
-            } else {
-                System.out.println("Record in DWH doesn't created. It's expected result!");
-            }
-            if (hubStatus == 1) {
-                System.out.println("HubStatus set valid values! It's expected. HubStatus [" + hubStatus + "]");
-            } else {
+            System.out.println("Record in DWH doesn't created. It's expected result!");
+            if (hubStatus != 0) {
                 System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
-            }
-            if (satStatus == 0) {
-                System.out.println("SatStatus was not update! It's expected. SatStatus [" + satStatus + "]");
             } else {
-                System.err.println("SatStatus have not valid values! it was update, it's fail! SatStatus [" + satStatus + "]");
+                System.out.println("HubStatus does'not uptaded! It's expected. HubStatus [" + hubStatus + "]");
             }
-            Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-            System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+            if (satStatus != 0) {
+                System.err.println("SatStatus have not valid values! it was update, it's fail! SatStatus [" + satStatus + "]");
+            } else {
+                System.out.println("SatStatus was not update! It's expected. SatStatus [" + satStatus + "]");
+            }
+            System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
             System.err.println("Check all log Tables! In [logDataLoadError] must be fixed error!");
         }
-
     }
-
 
     @AfterMethod
     public void deleteTestData() throws SQLException {
-        dh.deleteTestRowFromSA(tableInSA);
-        dh.deleteHub(tableHub);
+        String deleteFromSA = SQL.getDeleteFromSA(tableInSA);
+        String deleteFromHub = SQL.getDeleteHub(tableHub);
+        dh.deleteTestRowFromSA(deleteFromSA);
+        dh.deleteHub(deleteFromHub);
     }
 
 

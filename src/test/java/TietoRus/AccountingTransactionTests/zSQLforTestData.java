@@ -14,7 +14,7 @@ public class zSQLforTestData {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[24];
+        String[] keys = new String[26];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //BILAGSNR
         keys[2] = String.valueOf(999001); //LOBE_NR
@@ -23,22 +23,24 @@ public class zSQLforTestData {
         keys[5] = String.valueOf(0); //TryCnt
         keys[6] = String.valueOf(0); //PartitionId
         keys[7] = String.valueOf(0);// statusHub
-        keys[8] = null;// cdcOperation
-        keys[9] = "qwe";// AFDELING nvarchar(3 CHAR)
-        keys[10] = "asd";// AKTIVITET nvarchar(3 CHAR)
-        keys[11] = String.valueOf(1234567.09);// BELOBDKK decimal(18,2)
-        keys[12] = String.valueOf(12345.01);// BELOBVAL decimal(18,2)
-        keys[13] = String.valueOf(5);// DAGBOG int
-        keys[14] = String.valueOf(4);// FP_ID int
-        keys[15] = "T";// GRUPPE nvarchar(1 CHAR)
-        keys[16] = "TEst";// INIT nvarchar(6 CHAR)
-        keys[17] = String.valueOf(12345678);// KONTONR decimal(8,0)
-        keys[18] = String.valueOf(3);// KONTOR smallint
-        keys[19] = String.valueOf(2);// PERIODE int
-        keys[20] = String.valueOf(1);// REF_NR bigint
-        keys[21] = String.valueOf(0);// SAGSNR bigint
-        keys[22] = "Test text in field TEKST";// TEKST nvarchar(240 CHAR)
-        keys[23] = "Y";// TRANSTYPE nvarchar(1 CHAR)
+        keys[8] = String.valueOf(0);// statusSat
+        keys[9] = String.valueOf(0);// statusLnk
+        keys[10] = null;// cdcOperation
+        keys[11] = "qwe";// AFDELING nvarchar(3 CHAR)
+        keys[12] = "asd";// AKTIVITET nvarchar(3 CHAR)
+        keys[13] = String.valueOf(1234567.09);// BELOBDKK decimal(18,2)
+        keys[14] = String.valueOf(12345.01);// BELOBVAL decimal(18,2)
+        keys[15] = String.valueOf(5);// DAGBOG int
+        keys[16] = String.valueOf(4);// FP_ID int
+        keys[17] = "T";// GRUPPE nvarchar(1 CHAR)
+        keys[18] = "TEst";// INIT nvarchar(6 CHAR)
+        keys[19] = String.valueOf(12345678);// KONTONR decimal(8,0)
+        keys[20] = String.valueOf(3);// KONTOR smallint
+        keys[21] = String.valueOf(2);// PERIODE int
+        keys[22] = String.valueOf(1);// REF_NR bigint
+        keys[23] = String.valueOf(0);// SAGSNR bigint
+        keys[24] = "Test text in field TEKST";// TEKST nvarchar(240 CHAR)
+        keys[25] = "Y";// TRANSTYPE nvarchar(1 CHAR)
         return keys;
     }
 
@@ -73,11 +75,12 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (BILAGSNR, LOBE_NR, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation," +
+        String insert = "Insert into " + keys[0] + " (BILAGSNR, LOBE_NR, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation," +
                 "AFDELING, AKTIVITET, BELOBDKK, BELOBVAL, DAGBOG, FP_ID, GRUPPE, INIT, KONTONR, KONTOR, PERIODE, REF_NR, SAGSNR, TEKST, TRANSTYPE) Values ("
                 + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8]
-                + ", '" + keys[9] + "', '" + keys[10] + "', " + keys[11] + ", " + keys[12] + ", " + keys[13] + ", " + keys[14] + ", '" + keys[15] + "', '" + keys[16]
-                + "', " + keys[17] + ", " + keys[18] + ", " + keys[19] + ", " + keys[20] + ", " + keys[21] + ", '" + keys[22] + "', '" + keys[23] +  "')";
+                + ", " + keys[9] + ", " + keys[10] + ", '" + keys[11] + "', '" + keys[12] + "', " + keys[13] + ", " + keys[14] + ", " + keys[15] + ", " + keys[16]
+                + ", '" + keys[17] + "', '" + keys[18] + "', " + keys[19] + ", " + keys[20] + ", " + keys[21] + ", " + keys[22] + ", " + keys[23]
+                + ", '" + keys[24] + "', '" + keys[25]+  "')";
         //System.out.println(insert);
         return insert;
     }

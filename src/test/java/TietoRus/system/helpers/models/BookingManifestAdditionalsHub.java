@@ -1,14 +1,14 @@
 package TietoRus.system.helpers.models;
 
 
-public class BookingManifestAdditionals {
+public class BookingManifestAdditionalsHub {
     private int bookingNumber;
     private String segmentCode;
     private int accessCompanyId;
     private int sequenceNr;
     private int srcSystemId;
 
-    public BookingManifestAdditionals(int bookingNumber, String segmentCode, int accessCompanyId, int sequenceNr, int srcSystemId ){
+    public BookingManifestAdditionalsHub(int bookingNumber, String segmentCode, int accessCompanyId, int sequenceNr, int srcSystemId ){
         this.bookingNumber = bookingNumber;
         this.segmentCode = segmentCode;
         this.accessCompanyId = accessCompanyId;
@@ -21,7 +21,7 @@ public class BookingManifestAdditionals {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BookingManifestAdditionals that = (BookingManifestAdditionals) o;
+        BookingManifestAdditionalsHub that = (BookingManifestAdditionalsHub) o;
 
         if (bookingNumber != that.bookingNumber) return false;
         if (accessCompanyId != that.accessCompanyId) return false;
@@ -42,7 +42,7 @@ public class BookingManifestAdditionals {
 
     @Override
     public String toString() {
-        return "BookingManifestAdditionals{" +
+        return "BookingManifestAdditionalsHub{" +
                 "bookingNumber=" + bookingNumber +
                 ", segmentCode='" + segmentCode + '\'' +
                 ", accessCompanyId=" + accessCompanyId +

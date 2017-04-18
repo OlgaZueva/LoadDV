@@ -22,10 +22,10 @@ import java.util.Properties;
  *
  * Предусловия:
  * 1. Запись в SA должна существовать.
- * У нее: srcSysId =1, tryCnt = MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
+ * У нее: srcSysId =ID_SA-источника, tryCnt = MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = null,  остальные значения любые
  * Действия:
  * 1. Вставить в SA запись с tryCnt = MaxTryCount
- * 2. Запустить пакет загрузки хаба
+ * 2. Запустить только пакет загрузки хаба
  * 3. Запустить тест
  * 4. После анализа результатов теста зачистить тестовые данные
  */
@@ -55,8 +55,7 @@ public class TryCntMoreMax {
             System.out.println("HubStatus have expected values! HubStatus [" + hubStatus + "]");
         }
 
-        Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-        System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+        System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
 
         if (dh.getCountRowOfHub(dwhSQL) == 1) {
             System.err.println("In DWH present record! It's not valid!");

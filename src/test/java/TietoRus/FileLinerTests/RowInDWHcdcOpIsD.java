@@ -1,6 +1,5 @@
 package TietoRus.FileLinerTests;
 
-import TietoRus.FileLinerTests.zSQLforTestData;
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import TietoRus.system.helpers.models.FileLinerSat;
@@ -23,7 +22,7 @@ import java.util.Properties;
  * В результате должны в таблице satHubStatus добавить запись, у которой  status = 0, а в SA_table у записи выставить statusHub = 1
  * Предусловия:
  * 1. Запись в SA должна существовать.
- * У нее: srcSysId =1, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = 'D ',  остальные значения любые
+ * У нее: srcSysId = ID_SA-источника, tryCnt < MaxTryCount, PartitionId = 0, statusHub = 0, cdcOperation = 'D ',  остальные значения любые
  * 2. В DWH существует запись с этими же ключами
  * Действия:
  * 1. Вставить в SA запись с cdcOperation = 'D '
@@ -69,8 +68,7 @@ public class RowInDWHcdcOpIsD {
                 System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
             }
 
-            Integer tryCtn = dh.getTryCtnFromSA(saSQL);
-            System.out.println("Check this tryCnt. It not can be update. TryCtn [" + tryCtn + "]");
+            System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
 
             int contRowInDWH = dh.getCountRowOfHub(hubSQL);
             if (contRowInDWH == 1) {

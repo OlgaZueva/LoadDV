@@ -14,7 +14,7 @@ public class zSQLforTestData {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[11];
+        String[] keys = new String[13];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //BOOK_NR
         keys[2] = String.valueOf(999001); //SEGMENT_CODE
@@ -24,7 +24,10 @@ public class zSQLforTestData {
         keys[6] = String.valueOf(0); //TryCnt
         keys[7] = String.valueOf(0); //PartitionId
         keys[8] = String.valueOf(0);// statusHub
-        keys[9] = null;// cdcOperation
+        keys[9] = String.valueOf(0);// statusSat
+        keys[10] = String.valueOf(0);// statusLnk
+        keys[11] = null;// cdcOperation
+        keys[12] = "Test valueCode";// VALUE_CODE nvarchar(100 CHAR)
         return keys;
     }
 
@@ -60,9 +63,9 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (BOOK_NR, SEGMENT_CODE, SELSKAB, SEQ_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9] + ")";
-        //System.out.println(insert);
+        String insert = "Insert into " + keys[0] + " (BOOK_NR, SEGMENT_CODE, SELSKAB, SEQ_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, VALUE_CODE) Values ("
+                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
+                + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "')";
         return insert;
     }
 
@@ -70,7 +73,6 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (bookingNumber, segmentCode, accessCompanyId, sequenceNr, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", '" + keys[2] + "', " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
-        //System.out.println(insert);
         return insert;
     }
 
@@ -79,7 +81,6 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = '" + keys[2]
                 + "' and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] +  " and SrcSystemId = " + keys[5];
-        //System.out.println(delete);
         return delete;
     }
 
@@ -87,7 +88,6 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
                 + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
-        //System.out.println(delete);
         return delete;
     }
 
@@ -95,7 +95,6 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = '" + keys[2]
                 + "' and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] + " and SrcSystemId = " + keys[5];
-        //System.out.println(select);
         return select;
     }
 
@@ -104,7 +103,6 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
                 + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
-        //System.out.println(select);
         return select;
     }
 
