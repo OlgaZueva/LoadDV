@@ -15,11 +15,27 @@ public class Asserts {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 
+    public void assertBookingCargoHub(BookingCargoHub hubfromSA, BookingCargoHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertBookingCargoSat(BookingCargoSat satfromSA, BookingCargoSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
     public void assertBookingManifestAdditionalsHub(BookingManifestAdditionalsHub hubfromSA, BookingManifestAdditionalsHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
 
     public void assertBookingManifestAdditionalsSat(BookingManifestAdditionalsSat satfromSA, BookingManifestAdditionalsSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertCurrencyHub(CurrencyHub hubfromSA, CurrencyHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertCurrencySat(CurrencySat satfromSA, CurrencySat satFromDWH) {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 

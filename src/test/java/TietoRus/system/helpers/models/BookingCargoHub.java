@@ -1,8 +1,6 @@
 package TietoRus.system.helpers.models;
 
-/**
- * Created by zuevaolg on 24.04.2017.
- */
+
 public class BookingCargoHub {
     private int bookingNumber;
     private int accessCompanyId;

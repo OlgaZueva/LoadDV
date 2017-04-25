@@ -18,10 +18,28 @@ public class BookingCargoSat {
     private String imoClass;
     private String imsTransportCode;
     private String typeOfPackages;
+    private String manualTemperatureFlag;
+    private Double manualTemperatureValue;
+    private String marksNumbers;
+    private String isOperatingReefer;
+    private String partLoadFlag;
+    private String precarriageVessel;
+    private String sealNumber;
+    private int tareWeight;
+    private String temperatureUnits;
+    private Double minTemperature;
+    private Double maxTemperature;
+    private String unNumber;
+    private String cargoDescr;
+    private Double volume;
+    private String volumeUnits;
 
     public BookingCargoSat(String agencyHarmonizedCode, String atmosphereControl, String automaticTemperatureFlag, Double automaticTemperatureValue,
                            Double cargoWeight, String bulbMode, String coldTreatment, int containerCount, String containerNr, String containerTypeName, String containerTypeCode,
-                           String dehumidificationFlag, Double dehumidificationValue, String imoClass, String imsTransportCode, String typeOfPackages) {
+                           String dehumidificationFlag, Double dehumidificationValue, String imoClass, String imsTransportCode, String typeOfPackages,
+                           String manualTemperatureFlag, Double manualTemperatureValue, String marksNumbers, String isOperatingReefer, String partLoadFlag,
+                           String precarriageVessel, String sealNumber, int tareWeight, String temperatureUnits, Double minTemperature, Double maxTemperature,
+                           String unNumber, String cargoDescr, Double volume, String volumeUnits) {
         this.agencyHarmonizedCode = agencyHarmonizedCode;
         this.atmosphereControl = atmosphereControl;
         this.automaticTemperatureFlag = automaticTemperatureFlag;
@@ -38,6 +56,21 @@ public class BookingCargoSat {
         this.imoClass = imoClass;
         this.imsTransportCode = imsTransportCode;
         this.typeOfPackages = typeOfPackages;
+        this.manualTemperatureFlag =manualTemperatureFlag;
+        this.manualTemperatureValue = manualTemperatureValue;
+        this.marksNumbers = marksNumbers;
+        this.isOperatingReefer = isOperatingReefer;
+        this.partLoadFlag = partLoadFlag;
+        this.precarriageVessel =precarriageVessel;
+        this.sealNumber = sealNumber;
+        this.tareWeight = tareWeight;
+        this.temperatureUnits =temperatureUnits;
+        this.minTemperature = minTemperature;
+        this.maxTemperature =maxTemperature;
+        this.unNumber = unNumber;
+        this.cargoDescr =cargoDescr;
+        this.volume =volume;
+        this.volumeUnits = volumeUnits;
     }
 
     @Override
@@ -48,6 +81,7 @@ public class BookingCargoSat {
         BookingCargoSat that = (BookingCargoSat) o;
 
         if (containerCount != that.containerCount) return false;
+        if (tareWeight != that.tareWeight) return false;
         if (agencyHarmonizedCode != null ? !agencyHarmonizedCode.equals(that.agencyHarmonizedCode) : that.agencyHarmonizedCode != null)
             return false;
         if (atmosphereControl != null ? !atmosphereControl.equals(that.atmosphereControl) : that.atmosphereControl != null)
@@ -72,7 +106,29 @@ public class BookingCargoSat {
         if (imoClass != null ? !imoClass.equals(that.imoClass) : that.imoClass != null) return false;
         if (imsTransportCode != null ? !imsTransportCode.equals(that.imsTransportCode) : that.imsTransportCode != null)
             return false;
-        return typeOfPackages != null ? typeOfPackages.equals(that.typeOfPackages) : that.typeOfPackages == null;
+        if (typeOfPackages != null ? !typeOfPackages.equals(that.typeOfPackages) : that.typeOfPackages != null)
+            return false;
+        if (manualTemperatureFlag != null ? !manualTemperatureFlag.equals(that.manualTemperatureFlag) : that.manualTemperatureFlag != null)
+            return false;
+        if (manualTemperatureValue != null ? !manualTemperatureValue.equals(that.manualTemperatureValue) : that.manualTemperatureValue != null)
+            return false;
+        if (marksNumbers != null ? !marksNumbers.equals(that.marksNumbers) : that.marksNumbers != null) return false;
+        if (isOperatingReefer != null ? !isOperatingReefer.equals(that.isOperatingReefer) : that.isOperatingReefer != null)
+            return false;
+        if (partLoadFlag != null ? !partLoadFlag.equals(that.partLoadFlag) : that.partLoadFlag != null) return false;
+        if (precarriageVessel != null ? !precarriageVessel.equals(that.precarriageVessel) : that.precarriageVessel != null)
+            return false;
+        if (sealNumber != null ? !sealNumber.equals(that.sealNumber) : that.sealNumber != null) return false;
+        if (temperatureUnits != null ? !temperatureUnits.equals(that.temperatureUnits) : that.temperatureUnits != null)
+            return false;
+        if (minTemperature != null ? !minTemperature.equals(that.minTemperature) : that.minTemperature != null)
+            return false;
+        if (maxTemperature != null ? !maxTemperature.equals(that.maxTemperature) : that.maxTemperature != null)
+            return false;
+        if (unNumber != null ? !unNumber.equals(that.unNumber) : that.unNumber != null) return false;
+        if (cargoDescr != null ? !cargoDescr.equals(that.cargoDescr) : that.cargoDescr != null) return false;
+        if (volume != null ? !volume.equals(that.volume) : that.volume != null) return false;
+        return volumeUnits != null ? volumeUnits.equals(that.volumeUnits) : that.volumeUnits == null;
     }
 
     @Override
@@ -93,6 +149,21 @@ public class BookingCargoSat {
         result = 31 * result + (imoClass != null ? imoClass.hashCode() : 0);
         result = 31 * result + (imsTransportCode != null ? imsTransportCode.hashCode() : 0);
         result = 31 * result + (typeOfPackages != null ? typeOfPackages.hashCode() : 0);
+        result = 31 * result + (manualTemperatureFlag != null ? manualTemperatureFlag.hashCode() : 0);
+        result = 31 * result + (manualTemperatureValue != null ? manualTemperatureValue.hashCode() : 0);
+        result = 31 * result + (marksNumbers != null ? marksNumbers.hashCode() : 0);
+        result = 31 * result + (isOperatingReefer != null ? isOperatingReefer.hashCode() : 0);
+        result = 31 * result + (partLoadFlag != null ? partLoadFlag.hashCode() : 0);
+        result = 31 * result + (precarriageVessel != null ? precarriageVessel.hashCode() : 0);
+        result = 31 * result + (sealNumber != null ? sealNumber.hashCode() : 0);
+        result = 31 * result + tareWeight;
+        result = 31 * result + (temperatureUnits != null ? temperatureUnits.hashCode() : 0);
+        result = 31 * result + (minTemperature != null ? minTemperature.hashCode() : 0);
+        result = 31 * result + (maxTemperature != null ? maxTemperature.hashCode() : 0);
+        result = 31 * result + (unNumber != null ? unNumber.hashCode() : 0);
+        result = 31 * result + (cargoDescr != null ? cargoDescr.hashCode() : 0);
+        result = 31 * result + (volume != null ? volume.hashCode() : 0);
+        result = 31 * result + (volumeUnits != null ? volumeUnits.hashCode() : 0);
         return result;
     }
 
@@ -115,6 +186,21 @@ public class BookingCargoSat {
                 ", imoClass='" + imoClass + '\'' +
                 ", imsTransportCode='" + imsTransportCode + '\'' +
                 ", typeOfPackages='" + typeOfPackages + '\'' +
+                ", manualTemperatureFlag='" + manualTemperatureFlag + '\'' +
+                ", manualTemperatureValue=" + manualTemperatureValue +
+                ", marksNumbers='" + marksNumbers + '\'' +
+                ", isOperatingReefer='" + isOperatingReefer + '\'' +
+                ", partLoadFlag='" + partLoadFlag + '\'' +
+                ", precarriageVessel='" + precarriageVessel + '\'' +
+                ", sealNumber='" + sealNumber + '\'' +
+                ", tareWeight=" + tareWeight +
+                ", temperatureUnits='" + temperatureUnits + '\'' +
+                ", minTemperature=" + minTemperature +
+                ", maxTemperature=" + maxTemperature +
+                ", unNumber='" + unNumber + '\'' +
+                ", cargoDescr='" + cargoDescr + '\'' +
+                ", volume=" + volume +
+                ", volumeUnits='" + volumeUnits + '\'' +
                 '}';
     }
 }
