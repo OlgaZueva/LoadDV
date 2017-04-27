@@ -15,6 +15,10 @@ public class Asserts {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 
+    public void assertBookingCargoChargesSat(BookingCargoChargesSat satfromSA, BookingCargoChargesSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
     public void assertBookingCargoHub(BookingCargoHub hubfromSA, BookingCargoHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
@@ -31,6 +35,30 @@ public class Asserts {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 
+    public void assertCompanyHub(CompanyHub hubfromSA, CompanyHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertCompanySat(CompanySat satfromSA, CompanySat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertContainerTypeSpecEquipHub(ContainerTypeSpecEquipHub hubfromSA, ContainerTypeSpecEquipHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertContainerTypeSpecEquipSat(ContainerTypeSpecEquipSat satfromSA, ContainerTypeSpecEquipSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertContainerTypeHub(ContainerTypeHub hubfromSA, ContainerTypeHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertContainerTypeSat(ContainerTypeSat satfromSA, ContainerTypeSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
     public void assertCurrencyHub(CurrencyHub hubfromSA, CurrencyHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
@@ -44,6 +72,22 @@ public class Asserts {
     }
 
     public void assertFileLinerSat(FileLinerSat satfromSA, FileLinerSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertOceanVesselStatusHub(OceanVesselStatusHub hubfromSA, OceanVesselStatusHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertOceanVesselStatusSat(OceanVesselStatusSat satfromSA, OceanVesselStatusSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertVesselRegistryHub(VesselRegistryHub hubfromSA, VesselRegistryHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertVesselRegistrySat(VesselRegistrySat satfromSA, VesselRegistrySat satFromDWH) {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 }

@@ -13,7 +13,6 @@ import java.util.Properties;
 public class GetDataHelper {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
-    //private zSQLforTestData SQL = new zSQLforTestData();
 
     private Map<String, Object> mapAllFromSA = new HashMap<String, Object>();
     private Map<String, Object> mapHubFromDWH = new HashMap<String, Object>();
@@ -82,6 +81,28 @@ public class GetDataHelper {
         }
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
         return satStatus;
+    }
+
+    public Integer getLnkStatusFromSA(String sql) throws SQLException {
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        //System.out.println("SQL из SA: " + sql);
+        ResultSet rsFromSA = db.rsFromDB(stForSA, sql);
+        Integer lnkStatus = null;
+        while (rsFromSA.next()) {
+            if (rsFromSA.getRow() < 1) {
+                System.err.println("LnkStatus. Record in SA not found!");
+            } else {
+                if (rsFromSA.getRow() > 1) {
+                    System.err.println("LnkStatus. More then one record in SA. Check query if it's not expected!");
+                } else {
+                    lnkStatus = Integer.valueOf(rsFromSA.getString("statusLnk"));
+                    //System.out.println("statusLnk in SA: " + lnkStatus);
+                }
+            }
+        }
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
+        return lnkStatus;
     }
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {
@@ -155,7 +176,7 @@ public class GetDataHelper {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         stForSA.execute(insert);
-       // System.out.println("SQL for Insert in SA: " + insert);
+        // System.out.println("SQL for Insert in SA: " + insert);
         System.out.println("Insert test row complete!");
         db.closeConnecions(null, stForSA, connectionToSA);
     }
@@ -251,4 +272,5 @@ public class GetDataHelper {
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         return mapHubFromDWH;
     }
+
 }
