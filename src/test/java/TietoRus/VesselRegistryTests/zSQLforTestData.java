@@ -74,7 +74,7 @@ public class zSQLforTestData {
 
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, feederCode, sequenctNumber, dictionaryType, SrcSystemId, PartitionId) Values ("
+        String insert = "Insert into " + keys[0] + " (accessCompanyId, dictionaryType, feederCode, sequenceNumber, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
         //System.out.println(insert);
         return insert;
@@ -91,8 +91,8 @@ public class zSQLforTestData {
 
     public String getDeleteHub(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and feederCode = '" + keys[2]
-                + "' and sequenctNumber = '" + keys[3] + "' and dictionaryType = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and dictionaryType = '" + keys[2]
+                + "' and feederCode = '" + keys[3] + "' and sequenceNumber = " + keys[4] + " and SrcSystemId = " + keys[5];
         //System.out.println(delete);
         return delete;
     }
@@ -114,8 +114,8 @@ public class zSQLforTestData {
 
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and feederCode = '" + keys[2]
-                + "' and sequenctNumber = '" + keys[3] + "' and dictionaryType = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and dictionaryType = '" + keys[2]
+                + "' and feederCode = '" + keys[3] + "' and sequenceNumber = " + keys[4] + " and SrcSystemId = " + keys[5];
         //System.out.println(select);
         return select;
     }

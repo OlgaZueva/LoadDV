@@ -1,11 +1,14 @@
-package TietoRus.FileLinerTests;
+package TietoRus.OceanVesselStatusTests;
+
 
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
 import TietoRus.system.helpers.models.FileLinerHub;
 import TietoRus.system.helpers.models.FileLinerSat;
+import TietoRus.system.helpers.models.OceanVesselStatusHub;
 import TietoRus.system.helpers.objects.FileLinerHubObjects;
 import TietoRus.system.helpers.objects.FileLinerSatObjects;
+import TietoRus.system.helpers.objects.OceanVesselStatusHubObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
@@ -18,7 +21,7 @@ import java.util.Properties;
 /**
  * Проверка правильного формирования HUB'ов, SatHubStatus'ов, SAT'ов и LINK'ов после первоначальной загрузки данных
  */
-public class FileLinerCreate {
+public class OceanVesselStatusCreate {
     /**
      * Тест проверяет общий положительный сценарий по добавлению записей в hub, sat и hubSatStatus
      * Предусловия:
@@ -33,8 +36,8 @@ public class FileLinerCreate {
      */
 
     private GetDataHelper dh = new GetDataHelper();
-    private FileLinerHubObjects hubObjects = new FileLinerHubObjects();
-    private FileLinerSatObjects satObjects = new FileLinerSatObjects();
+    private OceanVesselStatusHubObjects hubObjects = new OceanVesselStatusHubObjects();
+    //private FileLinerSatObjects satObjects = new FileLinerSatObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
@@ -50,12 +53,12 @@ public class FileLinerCreate {
     @Test
     public void HubCreatedValidFlow() throws SQLException, IOException {
         getPropertiesFile();
-        tableInSA = properties.getProperty("fileLiner.UNITY.table");
-        tableHub = properties.getProperty("fileLiner.hub.table");
-        tableSat = properties.getProperty("fileLiner.sat.table");
-        fieldNameForHubId = properties.getProperty("fileLiner.fieldNameForHubIdInSatHubStatus");
-        tableSatHubStatus = properties.getProperty("fileLiner.SatStatus.table");
-        String viewForDWH = properties.getProperty("fileLiner.hub.view");
+        tableInSA = properties.getProperty("oceanVesselStatus.UNITY.table");
+        tableHub = properties.getProperty("oceanVesselStatus.hub.table");
+        tableSat = properties.getProperty("oceanVesselStatus.sat.table");
+        fieldNameForHubId = properties.getProperty("oceanVesselStatus.fieldNameForHubIdInSatHubStatus");
+        tableSatHubStatus = properties.getProperty("oceanVesselStatus.SatStatus.table");
+        String viewForDWH = properties.getProperty("oceanVesselStatus.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String hubSQL = SQL.getSelectHub(tableHub);
         Integer hubStatus = dh.getHubStatusFromSA(saSQL);
@@ -66,9 +69,9 @@ public class FileLinerCreate {
         } else
 //Проверка hub'а
             if (dh.getCountRowOfHub(hubSQL) == 1) {
-                FileLinerHub hubfromSA = hubObjects.getHubFromSA(saSQL);
-                FileLinerHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
-                asserts.assertFileLinerHub(hubfromSA, hubfromDWH);
+                OceanVesselStatusHub hubfromSA = hubObjects.getHubFromSA(saSQL);
+                OceanVesselStatusHub hubfromDWH = hubObjects.getHubFromDWH(hubSQL);
+                asserts.assertOceanVesselStatusHub(hubfromSA, hubfromDWH);
 
                 System.err.println("Check TryCtn! It must been not update! TryCtn [" + dh.getTryCtnFromSA(saSQL) + "]");
 
@@ -85,7 +88,7 @@ public class FileLinerCreate {
                 }
 
 // Проверка Sat'а
-                dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
+     /*           dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
                 if (dwhHubId == null) {
                     System.err.println("HubId in DWH not found! It's fail!");
                 } else {
@@ -93,6 +96,7 @@ public class FileLinerCreate {
                     FileLinerSat satfromSA = satObjects.getSatFromSA(saSQL);
                     FileLinerSat satFromDWH = satObjects.getSatFromDWH(satSQL);
                     asserts.assertFileLinerSat(satfromSA, satFromDWH);
+                    */
 // Проверка SatHubStatus'а
                     Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
                     if (satHubStatus == null) {
@@ -106,9 +110,10 @@ public class FileLinerCreate {
                     }
                 }
                 System.err.println("Check package log!");
-            } else {
+            /*} else {
                 System.err.println("Record in DWH not found or they are more one!");
             }
+            */
     }
 
     @AfterMethod

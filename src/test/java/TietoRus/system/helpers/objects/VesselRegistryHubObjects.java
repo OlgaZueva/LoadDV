@@ -22,10 +22,10 @@ public class VesselRegistryHubObjects {
             if (rsFromSA.getRow() == 1) {
                 String dictionaryType = rsFromSA.getString("ART");
                 String feederCode = rsFromSA.getString("KODE");
-                int sequenctNumber = rsFromSA.getInt("LOBE_NR");
+                int sequenceNumber = rsFromSA.getInt("LOBE_NR");
                 int accessCompanyId = rsFromSA.getInt("SELSKAB");
                 int srcSystemId = rsFromSA.getInt("srcSystemId");
-                vesselRegistryHub = new VesselRegistryHub(dictionaryType, feederCode, sequenctNumber, accessCompanyId, srcSystemId);
+                vesselRegistryHub = new VesselRegistryHub(dictionaryType, feederCode, sequenceNumber, accessCompanyId, srcSystemId);
             } else {
                 System.err.println("Record nor found or more one!");
                 return null;
@@ -46,10 +46,10 @@ public class VesselRegistryHubObjects {
             if (rsFromDWH.getRow() == 1) {
                 String dictionaryType = rsFromDWH.getString("dictionaryType");
                 String feederCode = rsFromDWH.getString("feederCode");
-                int sequenctNumber = rsFromDWH.getInt("sequenctNumber");
+                int sequenceNumber = rsFromDWH.getInt("sequenctNumber");
                 int accessCompanyId = rsFromDWH.getInt("accessCompanyId");
                 int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                vesselRegistryHub = new VesselRegistryHub(dictionaryType, feederCode, sequenctNumber, accessCompanyId, srcSystemId);
+                vesselRegistryHub = new VesselRegistryHub(dictionaryType, feederCode, sequenceNumber, accessCompanyId, srcSystemId);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;

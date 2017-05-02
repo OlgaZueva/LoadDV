@@ -83,7 +83,7 @@ public class zSQLforTestData {
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and AGENT = " + keys[2]
-                + " and FELT = '" + keys[3] + " and FRA = '" + keys[4] + " and TIL = '" + keys[5] + "' and SrcSystemId = " + keys[6];
+                + " and FELT = '" + keys[3] + "' and FRA = '" + keys[4] + "' and TIL = '" + keys[5] + "' and SrcSystemId = " + keys[6];
         //System.out.println(delete);
         return delete;
     }
@@ -104,8 +104,8 @@ public class zSQLforTestData {
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and AGENT = " + keys[2]
-                + " and FELT = '" + keys[3] + " and FRA = '" + keys[4] + " and TIL = '" + keys[5] + "' and SrcSystemId = " + keys[6];
+        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and AGENT = '" + keys[2]
+                + "' and FELT = '" + keys[3] + "' and FRA = '" + keys[4] + "' and TIL = '" + keys[5] + "' and SrcSystemId = " + keys[6];
         //System.out.println(select);
         return select;
     }
