@@ -17,9 +17,9 @@ public class zSQLforTestData {
         String[] keys = new String[20];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //CONT_FEET tinyint
-        keys[2] = "SIZE 99'"; //CONT_SIZE nvarchar(6 CHAR)
+        keys[2] = "SIZE 99"; //CONT_SIZE nvarchar(6 CHAR)
         keys[3] = "CONT_TYPE value"; //CONT_TYPE nvarchar(6 CHAR)
-        keys[4] = "40' HIGH CUBE REEFER CONTAINER S.T.C.:"; //TEKST nvarchar(42 CHAR)
+        keys[4] = "40 HIGH CUBE REEFER CONTAINER S.T.C.:"; //TEKST nvarchar(42 CHAR)
         keys[5] = String.valueOf(4); //SrcSystemId
         // ВНИМАНИЕ! значение SrcSystemId должно быть  = 4 - это соотвествует файлу CNTR_TYPE_SPEC_EQUIP.xls из котрого грузятся в SA данные
         keys[6] = String.valueOf(0); //TryCnt
@@ -69,7 +69,7 @@ public class zSQLforTestData {
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (CONT_FEET, CONT_SIZE, CONT_TYPE, TEKST, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation," +
-                " MasterContType, TANK, SpecialEqpInclREF, SpecialEqpWoREF, FLATRACK, PLATFORM, OPENTOP) Values ("
+                " MasterContType, TANK, SpecialEqpInclREF, SpecialEqpWoREF, FLATRACK, PLATFORM, OPENTOP, VALID_FROM) Values ("
                 + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', '" + keys[4] + "', " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
                 + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', '" + keys[16] + "', '" + keys[17]
                 + "', '" + keys[18] + "', '" + keys[19]  + "')";
@@ -91,7 +91,7 @@ public class zSQLforTestData {
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE CONT_FEET = " + keys[1] + " and CONT_SIZE = '" + keys[2]
-                + "' and CONT_TYPE = '" + keys[3]  + "' and TEKST = '" + keys[4] + "' and SrcSystemId = " + keys[4];
+                + "' and CONT_TYPE = '" + keys[3]  + "' and TEKST = '" + keys[4] + "' and SrcSystemId = " + keys[5];
         //System.out.println(delete);
         return delete;
     }
@@ -112,8 +112,8 @@ public class zSQLforTestData {
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE CONT_FEET = " + keys[1] + " and CONT_SIZE = " + keys[2]
-                + "' and CONT_TYPE = '" + keys[3]  + "' and TEKST = '" + keys[4] + "' and SrcSystemId = " + keys[4];
+        String select = "SELECT * from " + keys[0] + " WHERE CONT_FEET = " + keys[1] + " and CONT_SIZE = '" + keys[2]
+                + "' and CONT_TYPE = '" + keys[3]  + "' and TEKST = '" + keys[4] + "' and SrcSystemId = " + keys[5];
         //System.out.println(select);
         return select;
     }

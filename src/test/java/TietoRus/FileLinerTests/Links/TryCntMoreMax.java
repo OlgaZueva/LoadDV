@@ -35,13 +35,18 @@ import java.util.Properties;
 public class TryCntMoreMax {
     private GetDataHelper dh = new GetDataHelper();
     private zSQLforTestData SQL = new zSQLforTestData();
+    private TietoRus.CompanyTests.zSQLforTestData companySQL = new TietoRus.CompanyTests.zSQLforTestData();
     private FileLinerSatObjects satObjects = new FileLinerSatObjects();
     private Properties properties = new Properties();
     private String tableInSA;
+    private String tableCompanyHub;
     private String tableHub;
     private String tableSat;
+    private String tableLink;
     private String fieldNameForHubId;
     private Integer dwhHubId;
+    private String fieldNameForCompanyHubId;
+    private Integer dwhHubIdInCompany;
 
 
     @Test
@@ -49,31 +54,37 @@ public class TryCntMoreMax {
         getPropertiesFile();
         tableInSA = properties.getProperty("fileLiner.UNITY.table");
         tableHub = properties.getProperty("fileLiner.hub.table");
+        tableCompanyHub = properties.getProperty("company.hub.table");
+        tableLink = properties.getProperty("fileLiner.lnkCompany.table");
+        fieldNameForHubId = properties.getProperty("fileLiner.fieldNameForHubIdInSatHubStatus");
+        fieldNameForCompanyHubId = properties.getProperty("company.fieldNameForHubIdInSatHubStatus");
         String viewForDWH = properties.getProperty("fileLiner.hub.view");
         String saSQL = SQL.getSelectFromSA(viewForDWH);
         String hubSQL = SQL.getSelectHub(tableHub);
+        String companyHubSQL = companySQL.getSelectHub(tableCompanyHub);
         Integer lnkStatus = dh.getLnkStatusFromSA(saSQL);
-        Integer hubStatus = dh.getHubStatusFromSA(saSQL);
+        //Integer hubStatus = dh.getHubStatusFromSA(saSQL);
         Integer satStatus = dh.getSatStatusFromSA(saSQL);
 
 
-        if (hubStatus == null) {
-            System.err.println("HubStatus is null! Maybe record in SA not found or more then one record with identical keys. ");
+        if (lnkStatus == null) {
+            System.err.println("LnkStatus is null! Maybe record in SA not found or more then one record with identical keys. ");
         } else {
-// Проверка Sat'а
+// Проверка Link'а
             dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
             if (dwhHubId == null) {
                 System.err.println("HubId in DWH not found! It's fail! May be record in hub not found!");
             } else {
+                dwhHubIdInCompany = dh.getDWHHubId(companyHubSQL, fieldNameForCompanyHubId);
                 String satSQL = SQL.getSelectSat(tableSat, fieldNameForHubId, dwhHubId);
                 FileLinerSat satFromDWH = satObjects.getSatFromDWH(satSQL);
                 if (satFromDWH != null) {
                     System.err.println("In Sat present record! It's not valid!");
                 } else {
-                    if (hubStatus != 1) {
-                        System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + hubStatus + "]");
+                    if (lnkStatus != 1) {
+                        System.err.println("HubStatus have not valid values! It'fail! HubStatus [" + lnkStatus + "]");
                     } else {
-                        System.out.println("HubStatus does'not uptaded! It's expected. HubStatus [" + hubStatus + "]");
+                        System.out.println("HubStatus does'not uptaded! It's expected. HubStatus [" + lnkStatus + "]");
                     }
                     if (satStatus != 0) {
                         System.err.println("SatStatus have not valid values! it was update, it's fail! SatStatus [" + satStatus + "]");
