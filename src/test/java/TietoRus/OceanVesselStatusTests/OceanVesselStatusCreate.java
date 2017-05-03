@@ -3,11 +3,7 @@ package TietoRus.OceanVesselStatusTests;
 
 import TietoRus.system.helpers.helpers.Asserts;
 import TietoRus.system.helpers.helpers.GetDataHelper;
-import TietoRus.system.helpers.models.FileLinerHub;
-import TietoRus.system.helpers.models.FileLinerSat;
 import TietoRus.system.helpers.models.OceanVesselStatusHub;
-import TietoRus.system.helpers.objects.FileLinerHubObjects;
-import TietoRus.system.helpers.objects.FileLinerSatObjects;
 import TietoRus.system.helpers.objects.OceanVesselStatusHubObjects;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
@@ -37,7 +33,6 @@ public class OceanVesselStatusCreate {
 
     private GetDataHelper dh = new GetDataHelper();
     private OceanVesselStatusHubObjects hubObjects = new OceanVesselStatusHubObjects();
-    //private FileLinerSatObjects satObjects = new FileLinerSatObjects();
     private Properties properties = new Properties();
     private Asserts asserts = new Asserts();
     private zSQLforTestData SQL = new zSQLforTestData();
@@ -87,33 +82,25 @@ public class OceanVesselStatusCreate {
                     System.err.println("SatStatus have not valid values! SatStatus [" + satStatus + "]");
                 }
 
-// Проверка Sat'а
-     /*           dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
-                if (dwhHubId == null) {
-                    System.err.println("HubId in DWH not found! It's fail!");
-                } else {
-                    String satSQL = SQL.getSelectSat(tableSat, fieldNameForHubId, dwhHubId);
-                    FileLinerSat satfromSA = satObjects.getSatFromSA(saSQL);
-                    FileLinerSat satFromDWH = satObjects.getSatFromDWH(satSQL);
-                    asserts.assertFileLinerSat(satfromSA, satFromDWH);
-                    */
+
 // Проверка SatHubStatus'а
-                    Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
-                    if (satHubStatus == null) {
-                        System.err.println("Record for HubId in satHubStatus not found or more one! It's fail");
+                dwhHubId = dh.getDWHHubId(hubSQL, fieldNameForHubId);
+                Integer satHubStatus = dh.getSatHubStatus(tableSatHubStatus, fieldNameForHubId, dwhHubId);
+                if (satHubStatus == null) {
+                    System.err.println("Record for HubId in satHubStatus not found or more one! It's fail");
+                } else {
+                    if (satHubStatus != 1) {
+                        System.err.println("SatHubStatus is not valid! SatHubStatus: [" + satHubStatus + "]");
                     } else {
-                        if (satHubStatus != 1) {
-                            System.err.println("SatHubStatus is not valid! SatHubStatus: [" + satHubStatus + "]");
-                        } else {
-                            System.out.println("SatHubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
-                        }
+                        System.out.println("SatHubStatus is valid! SatHubStatus: [" + satHubStatus + "]");
                     }
                 }
+
                 System.err.println("Check package log!");
-            /*} else {
+            } else {
                 System.err.println("Record in DWH not found or they are more one!");
             }
-            */
+
     }
 
     @AfterMethod

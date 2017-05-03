@@ -17,8 +17,8 @@ public class zSQLforTestData {
         String[] keys = new String[20];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //CONT_FEET tinyint
-        keys[2] = "SIZE 99"; //CONT_SIZE nvarchar(6 CHAR)
-        keys[3] = "CONT_TYPE value"; //CONT_TYPE nvarchar(6 CHAR)
+        keys[2] = "SIZE06"; //CONT_SIZE nvarchar(6 CHAR)
+        keys[3] = "6chaar"; //CONT_TYPE nvarchar(6 CHAR)
         keys[4] = "40 HIGH CUBE REEFER CONTAINER S.T.C.:"; //TEKST nvarchar(42 CHAR)
         keys[5] = String.valueOf(4); //SrcSystemId
         // ВНИМАНИЕ! значение SrcSystemId должно быть  = 4 - это соотвествует файлу CNTR_TYPE_SPEC_EQUIP.xls из котрого грузятся в SA данные
