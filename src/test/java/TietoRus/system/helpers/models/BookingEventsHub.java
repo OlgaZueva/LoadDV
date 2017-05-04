@@ -1,12 +1,12 @@
 package TietoRus.system.helpers.models;
 
 
-public class BookingEvents {
+public class BookingEventsHub {
     private int bookingEventId;
     private int accessCompanyId;
     private int srcSystemId;
 
-    public BookingEvents (int bookingEventId, int accessCompanyId, int srcSystemId){
+    public BookingEventsHub(int bookingEventId, int accessCompanyId, int srcSystemId){
         this.bookingEventId = bookingEventId;
         this.accessCompanyId =accessCompanyId;
         this.srcSystemId =srcSystemId;
@@ -17,7 +17,7 @@ public class BookingEvents {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BookingEvents that = (BookingEvents) o;
+        BookingEventsHub that = (BookingEventsHub) o;
 
         if (bookingEventId != that.bookingEventId) return false;
         if (accessCompanyId != that.accessCompanyId) return false;
@@ -34,7 +34,7 @@ public class BookingEvents {
 
     @Override
     public String toString() {
-        return "BookingEvents{" +
+        return "BookingEventsHub{" +
                 "bookingEventId=" + bookingEventId +
                 ", accessCompanyId=" + accessCompanyId +
                 ", srcSystemId=" + srcSystemId +
