@@ -1,8 +1,7 @@
-
 package TietoRus.system.helpers.objects;
 
 import TietoRus.system.helpers.helpers.DBHelper;
-import TietoRus.system.helpers.models.BookingEMCRemarksHub;
+import TietoRus.system.helpers.models.TransportModeHub;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,53 +9,57 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class BookingEMCRemarksHubObjects {
+public class TransportModeHubObjects {
     private DBHelper db = new DBHelper();
 
-    public BookingEMCRemarksHub getHubFromSA(String saSQL) throws SQLException {
+    public TransportModeHub getHubFromSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         //System.out.println("SQL из SA: " + sql);
         ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
-        BookingEMCRemarksHub bookingEMCRemarksHub = null;
+        TransportModeHub transportModeHub = null;
         while (rsFromSA.next()) {
             if (rsFromSA.getRow() == 1) {
-                int manifestFileId = rsFromSA.getInt("BOOK_MFT_ID");
-                int remarkId = rsFromSA.getInt("SEQ");
+                String carrierCode = rsFromSA.getString("AGENT");
+                String dtxCode = rsFromSA.getString("FELT");
+                String segmentCode = rsFromSA.getString("FRA");
                 int accessCompanyId = rsFromSA.getInt("SELSKAB");
+                String transportModeCode = rsFromSA.getString("TIL");
                 int srcSystemId = rsFromSA.getInt("srcSystemId");
-                bookingEMCRemarksHub = new BookingEMCRemarksHub(manifestFileId, remarkId, accessCompanyId, srcSystemId);
+                transportModeHub = new TransportModeHub(carrierCode, dtxCode, segmentCode, accessCompanyId, transportModeCode, srcSystemId);
             } else {
                 System.err.println("Record nor found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("BookingEMCRemarksHub from SA: " + bookingEMCRemarksHub);
-        return bookingEMCRemarksHub;
+        System.out.println("TransportModeHub from SA: " + transportModeHub);
+        return transportModeHub;
     }
 
-    public BookingEMCRemarksHub getHubFromDWH(String hubSQL) throws SQLException {
+    public TransportModeHub getHubFromDWH(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        BookingEMCRemarksHub bookingEMCRemarksHub = null;
+        TransportModeHub transportModeHub = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
-                int manifestFileId = rsFromDWH.getInt("manifestFileIdId");
-                int remarkId = rsFromDWH.getInt("remarkId");
+                String carrierCode = rsFromDWH.getString("carrierCode");
+                String dtxCode = rsFromDWH.getString("serviceCode");
+                String segmentCode = rsFromDWH.getString("segmentCode");
                 int accessCompanyId = rsFromDWH.getInt("accessCompanyId");
+                String transportModeCode = rsFromDWH.getString("statusCode");
                 int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                bookingEMCRemarksHub = new BookingEMCRemarksHub(manifestFileId, remarkId, accessCompanyId, srcSystemId);
+                transportModeHub = new TransportModeHub(carrierCode, dtxCode, segmentCode, accessCompanyId, transportModeCode, srcSystemId);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("BookingEMCRemarksHub from DWH: " + bookingEMCRemarksHub);
-        return bookingEMCRemarksHub;
+        System.out.println("TransportModeHub from DWH: " + transportModeHub);
+        return transportModeHub;
     }
 
 

@@ -1,8 +1,7 @@
-
 package TietoRus.system.helpers.objects;
 
 import TietoRus.system.helpers.helpers.DBHelper;
-import TietoRus.system.helpers.models.BookingEMCRemarksHub;
+import TietoRus.system.helpers.models.ShipItConstantsHub;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,54 +9,51 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class BookingEMCRemarksHubObjects {
+public class ShipItConstatsHubObjects {
     private DBHelper db = new DBHelper();
 
-    public BookingEMCRemarksHub getHubFromSA(String saSQL) throws SQLException {
+    public ShipItConstantsHub getHubFromSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         //System.out.println("SQL из SA: " + sql);
         ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
-        BookingEMCRemarksHub bookingEMCRemarksHub = null;
+        ShipItConstantsHub shipItConstantsHub = null;
         while (rsFromSA.next()) {
             if (rsFromSA.getRow() == 1) {
-                int manifestFileId = rsFromSA.getInt("BOOK_MFT_ID");
-                int remarkId = rsFromSA.getInt("SEQ");
-                int accessCompanyId = rsFromSA.getInt("SELSKAB");
+                String cName = rsFromSA.getString("C_NAME");
                 int srcSystemId = rsFromSA.getInt("srcSystemId");
-                bookingEMCRemarksHub = new BookingEMCRemarksHub(manifestFileId, remarkId, accessCompanyId, srcSystemId);
+                shipItConstantsHub = new ShipItConstantsHub(cName, srcSystemId);
             } else {
                 System.err.println("Record nor found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("BookingEMCRemarksHub from SA: " + bookingEMCRemarksHub);
-        return bookingEMCRemarksHub;
+        System.out.println("ShipItConstantsHub from SA: " + shipItConstantsHub);
+        return shipItConstantsHub;
     }
 
-    public BookingEMCRemarksHub getHubFromDWH(String hubSQL) throws SQLException {
+    public ShipItConstantsHub getHubFromDWH(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        BookingEMCRemarksHub bookingEMCRemarksHub = null;
+        ShipItConstantsHub shipItConstantsHub = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
-                int manifestFileId = rsFromDWH.getInt("manifestFileIdId");
-                int remarkId = rsFromDWH.getInt("remarkId");
-                int accessCompanyId = rsFromDWH.getInt("accessCompanyId");
+                String cName = rsFromDWH.getString("cName");
                 int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                bookingEMCRemarksHub = new BookingEMCRemarksHub(manifestFileId, remarkId, accessCompanyId, srcSystemId);
+                shipItConstantsHub = new ShipItConstantsHub(cName, srcSystemId);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("BookingEMCRemarksHub from DWH: " + bookingEMCRemarksHub);
-        return bookingEMCRemarksHub;
+        System.out.println("ShipItConstantsHub from DWH: " + shipItConstantsHub);
+        return shipItConstantsHub;
     }
 
 
 }
+
