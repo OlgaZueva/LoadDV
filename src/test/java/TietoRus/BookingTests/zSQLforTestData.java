@@ -16,8 +16,8 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[8];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99); //BOOK_NR
-        keys[2] = String.valueOf(98); //SELSKAB
+        keys[1] = String.valueOf(98); //BOOK_NR
+        keys[2] = String.valueOf(99); //SELSKAB
         keys[3] = String.valueOf(1); //SrcSystemId
         keys[4] = String.valueOf(0); //TryCnt
         keys[5] = String.valueOf(0); //PartitionId

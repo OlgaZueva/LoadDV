@@ -21,7 +21,7 @@ public class zSQLforTestData {
         keys[3] = String.valueOf(8); //K_TYPE
         keys[4] = String.valueOf(900); //KUNDE
         keys[5] = String.valueOf(999001); //LOBE_NR
-        keys[6] = String.valueOf(98); //SELSKAB
+        keys[6] = String.valueOf(99); //SELSKAB
         keys[7] = String.valueOf(1); //SrcSystemId
         keys[8] = String.valueOf(0); //TryCnt
         keys[9] = String.valueOf(0); //PartitionId

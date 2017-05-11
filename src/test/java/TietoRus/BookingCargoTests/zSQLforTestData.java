@@ -144,8 +144,8 @@ public class zSQLforTestData {
 
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
-                + " and serviceCode = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
+        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and bookingNumber = " + keys[2]
+                + " and cargoLineNr = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }

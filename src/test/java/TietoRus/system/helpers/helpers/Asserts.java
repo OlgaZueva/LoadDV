@@ -43,6 +43,14 @@ public class Asserts {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 
+    public void assertContainerMovesHub(ContainerMovesHub hubfromSA, ContainerMovesHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertContainerMovesSat(ContainerMovesSat satfromSA, ContainerMovesSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
     public void assertContainerTypeSpecEquipHub(ContainerTypeSpecEquipHub hubfromSA, ContainerTypeSpecEquipHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
@@ -82,10 +90,14 @@ public class Asserts {
     public void assertLocationsPortsOverviewSat(LocationsPortsOverviewSat satfromSA, LocationsPortsOverviewSat satFromDWH) {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
+    public void assertOceanVesselServiceHub(OceanVesselServiceHub hubfromSA, OceanVesselServiceHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
 
     public void assertOceanVesselStatusHub(OceanVesselStatusHub hubfromSA, OceanVesselStatusHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
+
 
     public void assertVesselRegistryHub(VesselRegistryHub hubfromSA, VesselRegistryHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
