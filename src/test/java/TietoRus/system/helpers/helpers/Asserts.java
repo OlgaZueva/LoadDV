@@ -27,6 +27,29 @@ public class Asserts {
         assertThat(satFromDWH, equalTo(satfromSA));
     }
 
+    public void assertBookingChargesHub(BookingChargesHub hubfromSA, BookingChargesHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertBookingChargesSat(BookingChargesSat satfromSA, BookingChargesSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
+    public void assertBookingEMCRemarksHub(BookingEMCRemarksHub hubfromSA, BookingEMCRemarksHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertBookingEMCRemarksSat(BookingEMCRemarksSat satfromSA, BookingEMCRemarksSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+    public void assertBookingEventsHub(BookingEventsHub hubfromSA, BookingEventsHub hubFromDWH) {
+        assertThat(hubFromDWH, equalTo(hubfromSA));
+    }
+
+    public void assertBookingEventsSat(BookingEventsSat satfromSA, BookingEventsSat satFromDWH) {
+        assertThat(satFromDWH, equalTo(satfromSA));
+    }
+
     public void assertBookingManifestAdditionalsHub(BookingManifestAdditionalsHub hubfromSA, BookingManifestAdditionalsHub hubFromDWH) {
         assertThat(hubFromDWH, equalTo(hubfromSA));
     }
