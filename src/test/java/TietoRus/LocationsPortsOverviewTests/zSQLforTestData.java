@@ -16,7 +16,7 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[22];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99); //locationCode nvarchar(16)
+        keys[1] = "LNK_KodE"; //locationCode nvarchar(16)
         keys[2] = String.valueOf(4); //SrcSystemId
         // ВНИМАНИЕ! значение SrcSystemId должно быть  = 4 - это соотвествует файлу PORTS_overview.xls из котрого грузятся в SA данные
         keys[3] = String.valueOf(0); //TryCnt
