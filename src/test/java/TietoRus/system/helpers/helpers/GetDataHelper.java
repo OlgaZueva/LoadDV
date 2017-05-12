@@ -115,7 +115,7 @@ public class GetDataHelper {
             countRowHub = rsFromDWH.getRow();
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("countRowHub in DWH: " + countRowHub);
+        //System.out.println("countRowHub in DWH: " + countRowHub);
         return countRowHub;
     }
 

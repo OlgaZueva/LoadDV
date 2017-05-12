@@ -16,31 +16,20 @@ public class HubsCounts {
     private Properties properties = new Properties();
     private GetDataHelper dh = new GetDataHelper();
 
-    @Test(enabled = false)
-    public void hubPaymentsDataFromSource() throws SQLException, IOException {
+    @Test(enabled = true)
+    public void hubPaymentsDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
-        String sqlMSCRUS = properties.getProperty("abpost.MSCRUS.CountRow");
-        String sqlUNITY = properties.getProperty("abpost.UNITY.CountRow");
-        String sqlInView = properties.getProperty("abpost.View.CountRow");
-        int countRowInMSCRUS = dh.getCountRowInSA(sqlMSCRUS);
-        int countRowInUNITY = dh.getCountRowInSA(sqlUNITY);
-        int countRowInView = dh.getCountRowInSA(sqlInView);
-        System.out.println("countRowInMSCRUS: " + countRowInMSCRUS);
-        System.out.println("countRowInUNITY: " + countRowInUNITY);
-        System.out.println("countRowInView: " + countRowInView);
-        System.out.println("SUM: " + (countRowInMSCRUS + countRowInUNITY));
+        int countRowInMSCRUS = dh.getCountRowInSA(properties.getProperty("abpost.MSCRUS.CountRows"));
+        int countRowInUNITY = dh.getCountRowInSA(properties.getProperty("abpost.UNITY.CountRows"));
+        int countRowInView = dh.getCountRowInSA(properties.getProperty("abpost.View.CountRows"));
         assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void hubPaymentsDataFromSAtoDWH() throws SQLException, IOException {
         getPropertiesFile();
-        String sqlSAViewDistinct = properties.getProperty("abpost.ViewDistinct.CountRow");
-        String sqlHub = properties.getProperty("abpost.HUB.Payments.CountRow");
-        int countRowInViewDistinct = dh.getCountRowInSA(sqlSAViewDistinct);
-        int countRowInHub = dh.getCountRowOfHub(sqlHub);
-        System.out.println("countRowInViewDistinct: " + countRowInViewDistinct);
-        System.out.println("sqlHub: " + sqlHub);
+        int countRowInViewDistinct = dh.getCountRowInSA(properties.getProperty("abpost.ViewDistinct.CountRows"));
+        int countRowInHub = dh.getCountRowOfHub(properties.getProperty("abpost.HUB.Payments.CountRows"));
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
 
@@ -52,8 +41,8 @@ public class HubsCounts {
         properties.load(new FileReader(new File(String.format("src/test/resources/hubsCount.properties"))));
     }
 
-    public void assertRowCount(int countInSource, int countInSA) {
-        System.out.println("Count rows in Source [" + countInSource + "], in SA [" + countInSA + "]");
-        assertThat(countInSA, equalTo(countInSource));
+    public void assertRowCount(int countInSource, int countInDest) {
+        System.out.println("Count rows in Source [" + countInSource + "], in Destination [" + countInDest + "]");
+        assertThat(countInDest, equalTo(countInSource));
     }
 }
