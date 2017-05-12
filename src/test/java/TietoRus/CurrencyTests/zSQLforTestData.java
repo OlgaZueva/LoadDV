@@ -19,7 +19,7 @@ public class zSQLforTestData {
         keys[1] = String.valueOf(99); //SELSKAB smallint
         keys[2] = "VA"; //ART nvarchar(2 CHAR)
         // ВНИМАНИЕ! значение ART должно быть  = VA - это условие выбора записей для Currency
-        keys[3] = "99998"; //KODE nvarchar(16 CHAR)
+        keys[3] = "MONT_L"; //KODE nvarchar(16 CHAR)
         keys[4] = String.valueOf(1); //LOBE_NR int
         // ВНИМАНИЕ! значение LOBE_NR должно быть  = 1 - это условие выбора записей для Currency
         keys[5] = String.valueOf(1); //SrcSystemId
@@ -84,7 +84,7 @@ public class zSQLforTestData {
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and ART = '" + keys[2]
-                + "' and KODE = '" + keys[3] + "' " + "' and LOBE_NR = " + keys[4]  + " and SrcSystemId = " + keys[5];
+                + "' and KODE = '" + keys[3] + "' " + " and LOBE_NR = " + keys[4]  + " and SrcSystemId = " + keys[5];
         //System.out.println(delete);
         return delete;
     }
