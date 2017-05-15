@@ -76,6 +76,6 @@ public class HubIsNotExist {
 
 
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/systemSQL.properties"))));
     }
 }

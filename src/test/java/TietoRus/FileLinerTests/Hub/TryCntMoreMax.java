@@ -18,7 +18,7 @@ import java.util.Properties;
 /**
  * Тест проверяет поведение системы при загрузке hub'ов в случае, когда число попыток загрузки >= MaxTryCount
  * Обрабатывать должны только записи, у которых tryCnt <= MaxTryCount
- * Значение MaxTryCount в системе задается у пакета загрузки. Для тестов дублируется в system.properties
+ * Значение MaxTryCount в системе задается у пакета загрузки. Для тестов дублируется в systemSQL.properties
  *
  * Предусловия:
  * 1. Запись в SA должна существовать.
@@ -72,6 +72,6 @@ public class TryCntMoreMax {
         dh.deleteHub(deleteFromHub);
     }
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/system.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/systemSQL.properties"))));
     }
 }

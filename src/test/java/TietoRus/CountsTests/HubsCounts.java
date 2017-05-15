@@ -18,7 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class HubsCounts {
     private Properties properties = new Properties();
-    private GetDataHelper dh = new GetDataHelper();
     private DBHelper db = new DBHelper();
 
     @Test(enabled = true)
@@ -486,17 +485,17 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubOceanVesselServiceDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("cceanVesselService.MSCRUS.CountRows"));
-        int countRowInUNITY = getCountRowInSA(properties.getProperty("cceanVesselService.UNITY.CountRows"));
-        int countRowInView = getCountRowInSA(properties.getProperty("cceanVesselService.View.CountRows"));
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("oceanVesselService.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("oceanVesselService.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("oceanVesselService.View.CountRows"));
         assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
     }
 
     @Test(enabled = true)
     public void hubOceanVesselServiceDataFromSAtoDWH() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("cceanVesselService.ViewDistinct.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("cceanVesselService.HUB.CountRows"));
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("oceanVesselService.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("oceanVesselService.HUB.CountRows"));
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
 
@@ -531,6 +530,275 @@ public class HubsCounts {
         getPropertiesFile();
         int countRowInViewDistinct = getCountRowInSA(properties.getProperty("imsChargeLines.ViewDistinct.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("imsChargeLines.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubSpecialContractTypesDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("specialContractTypes.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("specialContractTypes.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("specialContractTypes.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubSpecialContractTypesDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("specialContractTypes.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("specialContractTypes.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCorrectorRemarkTypesDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("correctorRemarkTypes.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("correctorRemarkTypes.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("correctorRemarkTypes.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubCorrectorRemarkTypesDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("correctorRemarkTypes.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("correctorRemarkTypes.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubSublocationDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("sublocation.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("sublocation.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("sublocation.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubSublocationDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("sublocation.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("sublocation.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubTransportModeDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("transportMode.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("transportMode.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("transportMode.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubTransportModeDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("transportMode.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("transportMode.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerLocationDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("containerLocation.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("containerLocation.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("containerLocation.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerLocationDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("containerLocation.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerLocation.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubVesselRegistryDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("vesselRegistry.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("vesselRegistry.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("vesselRegistry.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubVesselRegistryDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("vesselRegistry.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("vesselRegistry.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCountryDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("country.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("country.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("country.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubCountryDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("country.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("country.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubLocationsDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("locations.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("locations.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("locations.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubLocationsDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("locations.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("locations.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCurrencyDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("currency.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("currency.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("currency.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubCurrencyDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("currency.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("currency.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubShipItConstantsDataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("shipItConstants.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("shipItConstants.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("shipItConstants.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubShipItConstantsDataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("shipItConstants.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("shipItConstants.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode4DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode4.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode4.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode4.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode4DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode4.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode4.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+    @Test(enabled = true)
+    public void hubIsoCode6DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode6.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode6.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode6.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode6.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+    @Test(enabled = true)
+    public void hubIsoCode6_2DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode6_2.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode6_2.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode6_2.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_2DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode6_2.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_2.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+    @Test(enabled = true)
+    public void hubIsoCode6_3DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode6_3.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode6_3.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode6_3.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_3DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode6_3.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_3.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_4DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode6_4.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode6_4.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode6_4.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_4DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode6_4.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_4.HUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_5DataFromSAToView() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("isoCode6_5.MSCRUS.CountRows"));
+        int countRowInUNITY = getCountRowInSA(properties.getProperty("isoCode6_5.UNITY.CountRows"));
+        int countRowInView = getCountRowInSA(properties.getProperty("isoCode6_5.View.CountRows"));
+        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCode6_5DataFromSAtoDWH() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("isoCode6_5.ViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_5.HUB.CountRows"));
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
 
@@ -599,8 +867,11 @@ public class HubsCounts {
     }
 
 
+
+
+
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/hubsCount.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/hubsCountsSQL.properties"))));
     }
 
     public void assertRowCount(int countInSource, int countInDest) {
