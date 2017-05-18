@@ -1,14 +1,14 @@
 payments.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_AbPost
 payments.UNITY.CountRows = select count(*) c  from stg.UNITY_AbPost
 payments.View.CountRows = select count(*) c   from stg.v_AbPost
-payments.ViewDistinct.CountRows = select count(DISTINCT convert(char(100),F_TYPE, 100)  + + convert(char(100),FAKTURANR, 100) + convert(char(100),K_TYPE, 100)+ convert(char(100),KUNDE, 100) +convert(char(100),LOBE_NR, 100) + str(SELSKAB, 100) + str(SrcSystemId, 100)) c from stg.v_AbPost
+payments.ViewDistinct.CountRows = select count(DISTINCT convert(char(100),F_TYPE, 100)  + str(FAKTURANR, 100) + convert(char(100),K_TYPE, 100)+ convert(char(100),KUNDE, 100) +convert(char(100),LOBE_NR, 100) + str(SELSKAB, 100) + str(SrcSystemId, 100)) c from stg.v_AbPost
 payments.HUB.CountRows = select count(*) c  from hub.hubPayments
 
-customersAdresse.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Adresse
-customersAdresse.UNITY.CountRows = select count(*) c  from stg.UNITY_Adresse
-customersAdresse.View.CountRows = select count(*) c   from stg.v_Adresse
-customersAdresse.ViewDistinct.CountRows = select count(DISTINCT convert(char(100),NR, 100) + convert(char(100),REF_NR, 100) + convert(char(100),REF_TYPE, 100) + str(SELSKAB, 100)+ str(SrcSystemId, 100)) c from stg.v_Adresse
-customersAdresse.HUB.CountRows = select count(*) c  from hub.hubCustomers
+customers.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Adresse
+customers.UNITY.CountRows = select count(*) c  from stg.UNITY_Adresse
+customers.View.CountRows = select count(*) c   from stg.v_Adresse
+customers.ViewDistinct.CountRows = select count(DISTINCT convert(char(100),NR, 100) + convert(char(100),REF_NR, 100) + convert(char(100),REF_TYPE, 100) + str(SELSKAB, 100)+ str(SrcSystemId, 100)) c from stg.v_Adresse
+customers.HUB.CountRows = select count(*) c  from hub.hubCustomers
 
 accountingTransaction.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_BogfTrans
 accountingTransaction.UNITY.CountRows = select count(*) c  from stg.UNITY_BogfTrans
@@ -91,7 +91,7 @@ weekendsHolidays.HUB.CountRows = select count(*) c  from hub.hubWeekendsHolidays
 controllingOffice.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ControlOffice
 controllingOffice.UNITY.CountRows = select count(*) c  from stg.UNITY_ControlOffice
 controllingOffice.View.CountRows = select count(*) c   from stg.v_ControlOffice
-controllingOffice.ViewDistinct.CountRows = select count(DISTINCT str(COMPANY_ID, 100)+ str(OFFICE_ID, 100)+ str( SrcSystemId, 100)) c from stg.v_ControlOffice
+controllingOffice.ViewDistinct.CountRows = select count(DISTINCT str( COMPANY_ID, 100)+ str( OFFICE_ID, 100)+ str( SrcSystemId, 100)) c from stg.v_ControlOffice
 controllingOffice.HUB.CountRows = select count(*) c  from hub.hubControllingOffice
 
 containerType.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType
@@ -127,31 +127,31 @@ customersKunde.HUB.CountRows = select count(*) c  from hub.hubCustomers
 invoice.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Ordre
 invoice.UNITY.CountRows = select count(*) c  from stg.UNITY_Ordre
 invoice.View.CountRows = select count(*) c   from stg.v_Ordre
-invoice.ViewDistinct.CountRows = select count(DISTINCT str( ORDRE_NR, 100)+ str( SELSKAB, 100)+ str(SrcSystemId, 100)) c from stg.v_Ordre
+invoice.ViewDistinct.CountRows = select count(DISTINCT str( ORDRE_NR, 100)+ str( SELSKAB, 100)+ str( SrcSystemId, 100)) c from stg.v_Ordre
 invoice.HUB.CountRows = select count(*) c  from hub.hubInvoice
 
 invoiceLines.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_OrdreLin
 invoiceLines.UNITY.CountRows = select count(*) c  from stg.UNITY_OrdreLin
 invoiceLines.View.CountRows = select count(*) c   from stg.v_OrdreLin
-invoiceLines.ViewDistinct.CountRows = select count(DISTINCT str( LINIE_NR, 100)+ str( ORDRE_NR, 100)+ str(SELSKAB, 100)+ str(SrcSystemId, 100)) c from stg.v_OrdreLin
+invoiceLines.ViewDistinct.CountRows = select count(DISTINCT str( LINIE_NR, 100)+ str( ORDRE_NR, 100)+ str( SELSKAB, 100)+ str( SrcSystemId, 100)) c from stg.v_OrdreLin
 invoiceLines.HUB.CountRows = select count(*) c  from hub.hubInvoiceLines
 
 fileLiner.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Sag
 fileLiner.UNITY.CountRows = select count(*) c  from stg.UNITY_Sag
 fileLiner.View.CountRows = select count(*) c   from stg.v_Sag
-fileLiner.ViewDistinct.CountRows = select count(DISTINCT + convert(char(100),AFDELING, 100)+ + convert(char(100),SAGSNR, 100)+ str(SELSKAB, 100)+ str(SrcSystemId, 100)) c from stg.v_Sag
+fileLiner.ViewDistinct.CountRows = select count(DISTINCT str(AFDELING, 100)+ str(SAGSNR, 100)+ str( SELSKAB, 100)+ str( SrcSystemId, 100)) c from stg.v_Sag
 fileLiner.HUB.CountRows = select count(*) c  from hub.hubFileLiner
 
 fileROE.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_SagKurs
 fileROE.UNITY.CountRows = select count(*) c  from stg.UNITY_SagKurs
 fileROE.View.CountRows = select count(*) c   from stg.v_SagKurs
-fileROE.ViewDistinct.CountRows = select count(DISTINCT str(AFDELING, 100)+ str(SAGSNR, 100)+ str(SELSKAB, 100)+ convert(char(100), VALUTA, 100)+ str(SrcSystemId, 100)) c from stg.v_SagKurs
+fileROE.ViewDistinct.CountRows = select count(DISTINCT str(AFDELING, 100)+ str(SAGSNR, 100)+ str(SELSKAB, 100)+ convert(char(100), VALUTA, 100)+ str( SrcSystemId, 100)) c from stg.v_SagKurs
 fileROE.HUB.CountRows = select count(*) c  from hub.hubFileROE
 
 dailyRoe.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ShipKurs
 dailyRoe.UNITY.CountRows = select count(*) c  from stg.UNITY_ShipKurs
 dailyRoe.View.CountRows = select count(*) c   from stg.v_ShipKurs
-dailyRoe.ViewDistinct.CountRows = select count(DISTINCT convert(char(100), DATO, 100)+ str( LOBE_NR, 100)+ str(SELSKAB, 100)+ str( SrcSystemId, 100)) c from stg.v_ShipKurs
+dailyRoe.ViewDistinct.CountRows = select count(DISTINCT convert(char(100), DATO, 100)+ str( LOBE_NR, 100)+ str( SELSKAB, 100)+ str( SrcSystemId, 100)) c from stg.v_ShipKurs
 dailyRoe.HUB.CountRows = select count(*) c  from hub.hubDailyRoe
 
 company.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Selskab
@@ -163,107 +163,116 @@ company.HUB.CountRows = select count(*) c  from hub.hubCompany
 oceanVesselService.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='SRDR' and AGENT='MSC'
 oceanVesselService.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='SRDR' and AGENT='MSC'
 oceanVesselService.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='SRDR' and AGENT='MSC'
-oceanVesselService.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='SRDR' and AGENT='MSC'
-oceanVesselService.HUB.CountRows = select count(*) c  from hub.hubOceanVesselService 
+oceanVesselService.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+oceanVesselService.HUB.CountRows = select count(*) c  from hub.hubOceanVesselService where serviceCode='SRDR' and carrierCode='MSC'
 
 oceanVesselStatus.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DYPL' and AGENT='MSC' and FRA='BOOK_VESSEL_STATUS'
 oceanVesselStatus.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DYPL' and AGENT='MSC' and FRA='BOOK_VESSEL_STATUS'
 oceanVesselStatus.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DYPL' and AGENT='MSC' and FRA='BOOK_VESSEL_STATUS'
-oceanVesselStatus.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='DYPL' and AGENT='MSC' and FRA='BOOK_VESSEL_STATUS'
-oceanVesselStatus.HUB.CountRows = select count(*) c  from hub.hubOceanVesselStatus
+oceanVesselStatus.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+oceanVesselStatus.HUB.CountRows = select count(*) c  from hub.hubOceanVesselStatus where serviceCode='DYPL' and carrierCode='MSC' and segmentCode='BOOK_VESSEL_STATUS'
 
 imsChargeLines.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='IMSC' and AGENT='MSC'
 imsChargeLines.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='IMSC' and AGENT='MSC'
 imsChargeLines.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='IMSC' and AGENT='MSC'
-imsChargeLines.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='IMSC' and AGENT='MSC'
-imsChargeLines.HUB.CountRows = select count(*) c  from hub.hubImsChargeLines
+imsChargeLines.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+imsChargeLines.HUB.CountRows = select count(*) c  from hub.hubImsChargeLines where imsCode='IMSC' and carrierCode='MSC'
 
 specialContractTypes.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SCT'
 specialContractTypes.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SCT'
 specialContractTypes.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SCT'
-specialContractTypes.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SCT'
-specialContractTypes.HUB.CountRows = select count(*) c  from hub.hubSpecialContractTypes
+specialContractTypes.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+specialContractTypes.HUB.CountRows = select count(*) c  from hub.hubSpecialContractTypes where dtxCode='DTX' and carrierCode='MSC' and segmentCode ='SCT'
 
 correctorRemarkTypes.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MCK02'
 correctorRemarkTypes.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MCK02'
 correctorRemarkTypes.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MCK02'
-correctorRemarkTypes.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MCK02'
-correctorRemarkTypes.HUB.CountRows = select count(*) c  from hub.hubCorrectorRemarkTypes
+correctorRemarkTypes.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+correctorRemarkTypes.HUB.CountRows = select count(*) c  from hub.hubCorrectorRemarkTypes where dtxCode='DTX' and carrierCode='MSC' and segmentCode ='MCK02'
 
 sublocation.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SUB03'
 sublocation.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SUB03'
 sublocation.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SUB03'
-sublocation.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='SUB03'
-sublocation.HUB.CountRows = select count(*) c  from hub.hubSublocation
+sublocation.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+sublocation.HUB.CountRows = select count(*) c  from hub.hubSublocation where dtxCode='DTX' and carrierCode='MSC' and segmentCode ='SUB03'
 
-transportMode.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MOF02'
-transportMode.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MOF02'
-transportMode.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MOF02'
-transportMode.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='MOF02'
-transportMode.HUB.CountRows = select count(*) c  from hub.hubTransportMode
+transportMode.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='’MOF02'
+transportMode.UNITY.CountRows = select count(*) c  from stg.UNITY_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='’MOF02'
+transportMode.View.CountRows = select count(*) c   from stg.v_EdiKonv where FELT='DTX' and AGENT='MSC' and FRA='’MOF02'
+transportMode.ViewDistinct.CountRows =  select count(DISTINCT  convert(char(100), AGENT, 100)  + convert(char(100), FELT, 100)  + convert(char(100), FRA, 100)  + str( SELSKAB, 100) + convert(char(100), TIL, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+transportMode.HUB.CountRows = select count(*) c  from hub.hubTransportMode where dtxCode='DTX' and carrierCode='MSC' and segmentCode ='’MOF02'
 
 containerLocation.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='CL' and LOBE_NR=1
 containerLocation.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='CL' and LOBE_NR=1
 containerLocation.View.CountRows = select count(*) c   from stg.v_Henvis where ART='CL' and LOBE_NR=1
-containerLocation.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_Henvis where ART='CL' and LOBE_NR=1
-containerLocation.HUB.CountRows = select count(*) c  from hub.hubContainerLocation
+containerLocation.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+containerLocation.HUB.CountRows = select count(*) c  from hub.hubContainerLocation where dictionaryType='CL' and sequenceNumber=1
 
 vesselRegistry.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='FE' and LOBE_NR=1
 vesselRegistry.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='FE' and LOBE_NR=1
 vesselRegistry.View.CountRows = select count(*) c   from stg.v_Henvis where ART='FE' and LOBE_NR=1
-vesselRegistry.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_Henvis where ART='FE' and LOBE_NR=1
-vesselRegistry.HUB.CountRows = select count(*) c  from hub.hubVesselRegistry
+vesselRegistry.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+vesselRegistry.HUB.CountRows = select count(*) c  from hub.hubVesselRegistry where dictionaryType='FE' and sequenceNumber=1
 
 country.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='LA' and LOBE_NR=1
 country.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='LA' and LOBE_NR=1
 country.View.CountRows = select count(*) c   from stg.v_Henvis where ART='LA' and LOBE_NR=1
-country.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_Henvis where ART='LA' and LOBE_NR=1
-country.HUB.CountRows = select count(*) c  from hub.hubCountry
+country.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+country.HUB.CountRows = select count(*) c  from hub.hubCountry where dictionaryType='LA' and sequenceNumber=1
 
-locations.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='LO' and LOBE_NR=1
-locations.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='LO' and LOBE_NR=1
-locations.View.CountRows = select count(*) c   from stg.v_Henvis where ART='LO' and LOBE_NR=1
-locations.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_Henvis where ART='LO' and LOBE_NR=1
-locations.HUB.CountRows = select count(*) c  from hub.hubLocations
+locations.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='LA' and LOBE_NR=1
+locations.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='LA' and LOBE_NR=1
+locations.View.CountRows = select count(*) c   from stg.v_Henvis where ART='LA' and LOBE_NR=1
+locations.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+locations.HUB.CountRows = select count(*) c  from hub.hubLocations where dictionaryType='LA' and sequenceNumber=1
 
 currency.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_Henvis where ART='VA' and LOBE_NR=1
 currency.UNITY.CountRows = select count(*) c  from stg.UNITY_Henvis where ART='VA' and LOBE_NR=1
 currency.View.CountRows = select count(*) c   from stg.v_Henvis where ART='VA' and LOBE_NR=1
-currency.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_Henvis where ART='VA' and LOBE_NR=1
-currency.HUB.CountRows = select count(*) c  from hub.hubCurrency
+currency.ViewDistinct.CountRows =select count(DISTINCT  convert(char(100), ART, 100)  + convert(char(100), KODE, 100)  + convert(char(100), LOBE_NR, 100)  + str( SELSKAB, 100) + str( SrcSystemId, 100)) c from stg.v_EdiKonv
+currency.HUB.CountRows = select count(*) c  from hub.hubCurrency where dictionaryType='VA' and sequenceNumber=1
 
 shipItConstants.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where C_NAME='CPH_SELSKAB'
 shipItConstants.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where C_NAME='CPH_SELSKAB'
 shipItConstants.View.CountRows = select count(*) c   from stg.v_UtsConstants where C_NAME='CPH_SELSKAB'
-shipItConstants.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), C_NAME, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants where C_NAME='CPH_SELSKAB'
-shipItConstants.HUB.CountRows = select count(*) c  from hub.hubShipItConstants
+shipItConstants.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), C_NAME, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+shipItConstants.HUB.CountRows = select count(*) c  from hub.hubShipItConstants where cName='CPH_SELSKAB'
 
-bookingManifestedHaulage.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_BookDetailsMof
-bookingManifestedHaulage.UNITY.CountRows = select count(*) c  from stg.UNITY_BookDetailsMof
-bookingManifestedHaulage.View.CountRows = select count(*) c   from stg.v_BookDetailsMof
-bookingManifestedHaulage.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), BOOK_NR, 100) + convert(char(100), SEQ_NR, 100) +  str( SELSKAB, 100) + str(SrcSystemId, 100)) c from stg.v_BookDetailsMof
-bookingManifestedHaulage.HUB.CountRows = select count(*) c  from hub.hubBookingManifestedHaulage
+isoCode4.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE4 in not null
+isoCode4.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE4 in not null
+isoCode4.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE4 in not null
+isoCode4.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE4, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode4.HUB.CountRows = select count(*) c  from hub.hubIsoCode4
 
-isoCode4.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE4 is not null
-isoCode4.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE4 is not null
-isoCode6.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE6 is not null
-isoCode6.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE6 is not null
-isoCode6_2.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE6_2 is not null
-isoCode6_2.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE6_2 is not null
-isoCode6_3.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE6_3 is not null
-isoCode6_3.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE6_3 is not null
-isoCode6_4.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE6_4 is not null
-isoCode6_4.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE6_4 is not null
-isoCode6_5.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_ContType where ISO_KODE6_5 is not null
-isoCode6_5.UNITY.CountRows = select count(*) c  from stg.UNITY_ContType where ISO_KODE6_5 is not null
-isoCode4.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE4 is not null
-isoCode6.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE6 is not null
-isoCode6_2.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE6_2 is not null
-isoCode6_3.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE6_3 is not null
-isoCode6_4.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE6_4 is not null
-isoCode6_5.View.CountRows = select count(*) c   from stg.v_ContType where ISO_KODE6_5 is not null
-isoCode.ViewDistinct.CountRows = SELECT COUNT(*) c FROM ( SELECT DISTINCT [ISO_KODE], [SELSKAB], [srcSystemId] FROM ( SELECT [ISO_KODE4] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType UNION SELECT [ISO_KODE6] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType UNION SELECT [ISO_KODE6_2] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType UNION SELECT [ISO_KODE6_3] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType UNION SELECT [ISO_KODE6_4] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType UNION SELECT [ISO_KODE6_5] AS [ISO_KODE], [SELSKAB], [srcSystemId] FROM StagingAreaTest.stg.v_ContType ) T ) T
-isoCode.HUB.CountRows = select count(*) c  from hub.hubIsoCode
+isoCode6.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE6 in not null
+isoCode6.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE6 in not null
+isoCode6.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE6 in not null
+isoCode6.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE6, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode6.HUB.CountRows = select count(*) c  from hub.hubIsoCode6
+
+isoCode6_2.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE6_2 in not null
+isoCode6_2.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE6_2 in not null
+isoCode6_2.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE6_2 in not null
+isoCode6_2.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE6_2, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode6_2.HUB.CountRows = select count(*) c  from hub.hubIsoCode6_2
+
+isoCode6_3.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE6_3 in not null
+isoCode6_3.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE6_3 in not null
+isoCode6_3.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE6_3 in not null
+isoCode6_3.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE6_3, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode6_3.HUB.CountRows = select count(*) c  from hub.hubIsoCode6_3
+
+isoCode6_4.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE6_4 in not null
+isoCode6_4.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE6_4 in not null
+isoCode6_4.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE6_4 in not null
+isoCode6_4.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE6_4, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode6_4.HUB.CountRows = select count(*) c  from hub.hubIsoCode6_4
+
+isoCode6_5.MSCRUS.CountRows = select count(*) c  from stg.MSCRUS_UtsConstants where ISO_KODE6_5 in not null
+isoCode6_5.UNITY.CountRows = select count(*) c  from stg.UNITY_UtsConstants where ISO_KODE6_5 in not null
+isoCode6_5.View.CountRows = select count(*) c   from stg.v_UtsConstants where ISO_KODE6_5 in not null
+isoCode6_5.ViewDistinct.CountRows = select count(DISTINCT  convert(char(100), ISO_KODE6_5, 100) + str(SrcSystemId, 100)) c from stg.v_UtsConstants
+isoCode6_5.HUB.CountRows = select count(*) c  from hub.hubIsoCode6_5
 
 containerTypeSpecEquip.EXCEL.CountRows = select count(*) c  from stg.Excel_CntrTypeSpecEquip
 containerTypeSpecEquip.View.CountRows = select count(*) c   from stg.v_CntrTypeSpecEquip
@@ -279,3 +288,8 @@ bookingReportingCustomer.EXCEL.CountRows = select count(*) c  from stg.Excel_Cle
 bookingReportingCustomer.View.CountRows = select count(*) c   from stg.v_CleanUp
 bookingReportingCustomer.ViewDistinct.CountRows = select count(DISTINCT convert(char(100), BL_NUMBER, 100)+ str( SrcSystemId, 100)) c from stg.v_CleanUp
 bookingReportingCustomer.HUB.CountRows = select count(*) c  from hub.hubBookingReportingCustomer
+
+excelControllingOffice.EXCEL.CountRows = select count(*) c  from stg.Excel_ControllingOfficeLocationCode
+excelControllingOffice.View.CountRows = select count(*) c   from stg.v_ControllingOfficeLocationCode
+excelControllingOffice.ViewDistinct.CountRows = select count(DISTINCT str( COMPANY_ID, 100)+ str( OFFICE_ID, 100)+ str( SrcSystemId, 100)) c from stg.v_ControllingOfficeLocationCode
+excelControllingOffice.HUB.CountRows = select count(*) c  from hub.hubControllingOffice
