@@ -119,9 +119,9 @@ public class SatsAndSatStatusesCounts {
     @Test(enabled = true)
     public void BookingNonManifestedHaulageSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingNonManifestedHaulage.HUB.CountRows"));
+        int countRowsInSATable = getCountRowInSA(properties.getProperty("bookingNonManifestedHaulage.SAViewDistinct.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("bookingNonManifestedHaulage.sat.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
+        assertRowCount(countRowsInSATable, countRowInSat);
     }
 
     @Test(enabled = true)
@@ -529,21 +529,6 @@ public class SatsAndSatStatusesCounts {
         assertRowCount(countRowInHub, countRowInSatHubStatus);
     }
 
-    @Test(enabled = true)
-    public void CustomersKundeSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("customersKunde.HUB.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("customersKunde.sat.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void CustomersKundeStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("customersKunde.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customersKunde.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
 
     @Test(enabled = true)
     public void InvoiceSat() throws SQLException, IOException {
@@ -657,62 +642,7 @@ public class SatsAndSatStatusesCounts {
         assertRowCount(countRowInHub, countRowInSatHubStatus);
     }
 
-    // SAT для IsoCode не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCodeStatus() throws SQLException, IOException {
-        System.err.println("Уточнить нужен ли для IsoCode  satStatus");
-        /* getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-        */
-    }
-/*
-    // SAT для IsoCode6 не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCode6Status() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode6.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
-    // SAT для IsoCode6_2 не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCode6_2Status() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_2.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode6_2.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
-    // SAT для IsoCode6_3 не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCode6_3Status() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_3.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode6_3.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
-    // SAT для IsoCode6_4 не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCode6_4Status() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_4.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode6_4.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
-    // SAT для IsoCode6_5 не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void IsoCode6_5Status() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode6_5.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("isoCode6_5.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-*/
+    //У ContainerTypeSpecEquip SatStatus'а нет. HUB грузится из EXCEL'я
     @Test(enabled = true)
     public void ContainerTypeSpecEquipSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -721,30 +651,18 @@ public class SatsAndSatStatusesCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
+
+    //У ControllingOfficeAuxLocation нет SatStatus'а. HUB'ом является hubControllingOffice, satStatus которому проставляется satControllingOfficeStatus
     @Test(enabled = true)
-    public void ContainerTypeSpecEquipStatus() throws SQLException, IOException {
+    public void ControllingOfficeAuxLocationSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("containerTypeSpecEquip.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerTypeSpecEquip.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
+        //int countRowInHub = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.HUB.CountRows"));
+        int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.SAViewDistinct.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.sat.CountRows"));
+        assertRowCount(countRowsInSA, countRowInSat);
     }
 
-    @Test(enabled = true)
-    public void ControllingOfficeExcelSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("controllingOfficeExcel.HUB.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeExcel.sat.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void ControllingOfficeExcelStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("controllingOfficeExcel.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("controllingOfficeExcel.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
+    // у LocationsPortsOverviewSat SatStatus'а нет. Hub грузится из EXCEL'я
     @Test(enabled = true)
     public void LocationsPortsOverviewSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -753,14 +671,7 @@ public class SatsAndSatStatusesCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    @Test(enabled = true)
-    public void LocationsPortsOverviewStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("locationsPortsOverview.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("locationsPortsOverview.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
-
+    // у BookingReportingCustomerSat SatStatus'а нет. Hub грузится из EXCEL'я
     @Test(enabled = true)
     public void BookingReportingCustomerSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -769,13 +680,6 @@ public class SatsAndSatStatusesCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    @Test(enabled = true)
-    public void BookingReportingCustomerStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingReportingCustomer.HUB.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingReportingCustomer.satStatus.CountRows"));
-        assertRowCount(countRowInHub, countRowInSatHubStatus);
-    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsAndSatStatusesCountsSQL.properties"))));
