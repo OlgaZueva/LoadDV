@@ -656,7 +656,7 @@ public class SatsAndSatStatusesCounts {
     @Test(enabled = true)
     public void ControllingOfficeAuxLocationSat() throws SQLException, IOException {
         getPropertiesFile();
-        //int countRowInHub = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.HUB.CountRows"));
+        //int countRowInHub = getDataFromDWH(properties.getProperty("controllingOfficeAuxLocation.HUB.CountRows"));
         int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.SAViewDistinct.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.sat.CountRows"));
         assertRowCount(countRowsInSA, countRowInSat);
@@ -679,6 +679,16 @@ public class SatsAndSatStatusesCounts {
         int countRowInSat = getCountRowOfHub(properties.getProperty("bookingReportingCustomer.sat.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
+
+    //Sat вспомогательный, для того чтобы собрать доп инфу по кастомерам из бука. Формируется по таблице Book. SatStatus' нет, он формируется при создании satBooking
+    @Test(enabled = true)
+    public void BookingCustomersSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("booking.HUB.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCustomers.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
 
 
     private void getPropertiesFile() throws IOException {

@@ -72,7 +72,7 @@ public class zSQLforTestData {
                 " AFDELING, BOOK_NR, EVENT_ID, EVENT_STAT, EVENT_TIME, EVENT_USER, REMARK, REMARK2, REMARK3, SAGSNR) Values ("
                 + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
                 + ", '" + keys[10] + "', " + keys[11] + ", " + keys[12] + ", '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', '" + keys[16] + "', '" + keys[17]
-                + "', '" + keys[18] + "', " + keys[19]  + "')";
+                + "', '" + keys[18] + "', " + keys[19]  + ")";
         //System.out.println(insert);
         return insert;
     }
