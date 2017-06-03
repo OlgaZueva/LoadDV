@@ -656,7 +656,6 @@ public class SatsAndSatStatusesCounts {
     @Test(enabled = true)
     public void ControllingOfficeAuxLocationSat() throws SQLException, IOException {
         getPropertiesFile();
-        //int countRowInHub = getDataFromDWH(properties.getProperty("controllingOfficeAuxLocation.HUB.CountRows"));
         int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.SAViewDistinct.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.sat.CountRows"));
         assertRowCount(countRowsInSA, countRowInSat);

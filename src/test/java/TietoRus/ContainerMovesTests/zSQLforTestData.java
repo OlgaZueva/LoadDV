@@ -53,11 +53,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoSA(properties.getProperty("fileLiner.UNITY.table")));
+        System.out.println(getInsertIntoSA(properties.getProperty("containerMoves.UNITY.table")));
         System.out.println("------");
-        System.out.println(getDeleteFromSA(properties.getProperty("fileLiner.UNITY.table")));
+        System.out.println(getDeleteFromSA(properties.getProperty("containerMoves.UNITY.table")));
         System.out.println("------");
-        System.out.println(getSelectFromSA(properties.getProperty("fileLiner.UNITY.table")));
+        System.out.println(getSelectFromSA(properties.getProperty("containerMoves.UNITY.table")));
         System.out.println("---------------------------");
 
     }
@@ -67,11 +67,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("DataVault");
         System.out.println("---------------------------");
-        System.out.println(getInsertHub(properties.getProperty("fileLiner.hub.table")));
+        System.out.println(getInsertHub(properties.getProperty("containerMoves.hub.table")));
         System.out.println("------");
-        System.out.println(getDeleteHub(properties.getProperty("fileLiner.hub.table")));
+        System.out.println(getDeleteHub(properties.getProperty("containerMoves.hub.table")));
         System.out.println("------");
-        System.out.println(getSelectHub(properties.getProperty("fileLiner.hub.table")));
+        System.out.println(getSelectHub(properties.getProperty("containerMoves.hub.table")));
         System.out.println("---------------------------");
     }
 
