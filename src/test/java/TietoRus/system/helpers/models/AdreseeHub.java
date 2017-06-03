@@ -1,13 +1,13 @@
 package TietoRus.system.helpers.models;
 
-public class Customers {
+public class AdreseeHub {
     private int number;
     private int bookingNumber;
     private String refType;
     private int accessCompanyId;
     private int srcSystemId;
 
-    public Customers (int number,  int bookingNumber,  String refType, int accessCompanyId, int srcSystemId){
+    public AdreseeHub(int number, int bookingNumber, String refType, int accessCompanyId, int srcSystemId){
         this.number = number;
         this.bookingNumber = bookingNumber;
         this.refType = refType;
@@ -20,7 +20,7 @@ public class Customers {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Customers customers = (Customers) o;
+        AdreseeHub customers = (AdreseeHub) o;
 
         if (number != customers.number) return false;
         if (bookingNumber != customers.bookingNumber) return false;
@@ -41,7 +41,7 @@ public class Customers {
 
     @Override
     public String toString() {
-        return "Customers{" +
+        return "AdreseeHub{" +
                 "number=" + number +
                 ", bookingNumber=" + bookingNumber +
                 ", refType='" + refType + '\'' +

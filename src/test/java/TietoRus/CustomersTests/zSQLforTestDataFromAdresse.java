@@ -10,11 +10,11 @@ import java.util.Properties;
 /**
  * Получение готовых запросов для вставки, редактирования и удаления тестовых записей в БД
  */
-public class zSQLforTestData {
+public class zSQLforTestDataFromAdresse {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[11];
+        String[] keys = new String[22];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //NR
         keys[2] = String.valueOf(999001); //REF_NR
@@ -25,7 +25,18 @@ public class zSQLforTestData {
         keys[7] = String.valueOf(0); //PartitionId
         keys[8] = String.valueOf(0);// statusHub
         keys[9] = null;// cdcOperation
-        keys[10] = String.valueOf(1);//customerType (not null in DB, because it's here)
+        keys[10] = "ADRESSE1"; //ADRESSE1 nvarchar(60 char)
+        keys[11] = "ADRESSE2"; //ADRESSE2 nvarchar(60 char)
+        keys[12] = "ADRESSE3"; //ADRESSE3 nvarchar(100 char)
+        keys[13] = "BYNAVN"; //BYNAVN nvarchar(60 char)
+        keys[14] = "TEST1"; //CITY_CODE nvarchar(5 char)
+        keys[15] = "65464"; //CUSTOMER_NUMBER nvarchar(8 char)
+        keys[16] = "DEB"; //DEB_LAND nvarchar(6 char)
+        keys[17] = "EMAILADR"; //EMAILADR nvarchar(100 char)
+        keys[18] = "NAVN"; //NAVN nvarchar(10 char)
+        keys[19] = "TELEFAX"; //TELEFAX nvarchar(20 char)
+        keys[20] = "TELEFON"; //TELEFON nvarchar(30 char)
+        keys[21] = "A";//customerType (not null in DB, because it's here)
         return keys;
     }
 
@@ -35,17 +46,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoSA(properties.getProperty("customers.UNITY.table")));
+        System.out.println(getInsertIntoSA(properties.getProperty("adresse.UNITY.table")));
         System.out.println("------");
-        /*
-        System.out.println("UPDATE " + keys[0] + " SET SrcSystemId = " + keys[4] + ", " + "TryCnt = " + keys[5] + ", "
-                + "PartitionId = " + keys[6] + ", " + "statusHub = " + keys[7] + ", " + "cdcOperation = " + keys[8]  + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3] + "' " + " and SrcSystemId = " + keys[4]);
+        System.out.println(getDeleteFromSA(properties.getProperty("adresse.UNITY.table")));
         System.out.println("------");
-        */
-        System.out.println(getDeleteFromSA(properties.getProperty("customers.UNITY.table")));
-        System.out.println("------");
-        System.out.println(getSelectFromSA(properties.getProperty("customers.UNITY.table")));
+        System.out.println(getSelectFromSA(properties.getProperty("adresse.UNITY.table")));
         System.out.println("---------------------------");
 
     }
@@ -67,8 +72,11 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (NR, REF_NR, REF_TYPE, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9] + ")";
+        String insert = "Insert into " + keys[0] + " (NR, REF_NR, REF_TYPE, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation, " +
+        "ADRESSE1, ADRESSE2, ADRESSE3, BYNAVN, CITY_CODE, CUSTOMER_NUMBER, DEB_LAND, EMAILADR,  NAVN, TELEFAX,TELEFON ) Values ("
+                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
+                + ", '" + keys[10] + "', '" + keys[11] + "', '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', '" + keys[16] + "', '" + keys[17]
+                + "', '" + keys[18] + "', '" + keys[19] + "', '" + keys[20]  + "')";
         //System.out.println(insert);
         return insert;
     }
