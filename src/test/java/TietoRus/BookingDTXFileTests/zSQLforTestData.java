@@ -17,7 +17,7 @@ public class zSQLforTestData {
         String[] keys = new String[11];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //SELSKAB smallint
-        keys[2] = String.valueOf(999002); //MFT_FILE_ID bigint
+        keys[2] = String.valueOf(999001); //MFT_FILE_ID bigint
         keys[3] = String.valueOf(1); //SrcSystemId
         keys[4] = String.valueOf(0); //TryCnt
         keys[5] = String.valueOf(0); //PartitionId
