@@ -31,7 +31,7 @@ public class zSQLforTestData {
         keys[13] = String.valueOf(11.2); //ANTAL decimal(11,3)
         keys[14] = "DISTINCT_BET_KODE"; //DISTINCT_BET_KODE nvarchar(2000 CHAR)
         keys[15] = "ENHE"; //ENHED nvarchar(4 CHAR)
-        keys[16] = String.valueOf(12; //FRG_BT_NR smallint
+        keys[16] = String.valueOf(12); //FRG_BT_NR smallint
         keys[17] = "GRUPPE"; //GRUPPE nvarchar(6 CHAR)
         keys[18] = String.valueOf(13.2); //OMR_KURS decimal(18,6)
         keys[19] = String.valueOf(14.2); //TOTAL_BEL decimal(12,2)
@@ -79,7 +79,7 @@ public class zSQLforTestData {
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (accessCompanyId, bookingNumber, cargoLineNr , SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[6] + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", '" + keys[5] + "', " + keys[7] + ")";
         //System.out.println(insert);
         return insert;
     }
@@ -96,7 +96,7 @@ public class zSQLforTestData {
     public String getDeleteHub(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and bookingNumber = " + keys[2]
-                + " and cargoLineNr = '" + keys[3]  + "' and SrcSystemId = " + keys[4];
+                + " and cargoLineNr = " + keys[3]  + " and SrcSystemId = " + keys[4];
         //System.out.println(delete);
         return delete;
     }
