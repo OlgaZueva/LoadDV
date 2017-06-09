@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class BookingObjects {
+public class BookingHubObjects {
     private DBHelper db = new DBHelper();
 
     public BookingHub getHubFromSA(String saSQL) throws SQLException {
