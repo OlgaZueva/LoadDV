@@ -1,10 +1,11 @@
-package TietoRus.FileROETests;
+package TietoRus.ExportVesselsTests;
 
 import org.testng.annotations.Test;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.Properties;
 
 /**
@@ -14,20 +15,24 @@ public class zSQLforTestData {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[13];
+        String[] keys = new String[17];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //SELSKAB smallint
-        keys[2] = String.valueOf(999001); //SAGSNR bigint
-        keys[3] = "98"; //AFDELING nvarchar(3 CHAR)
-        keys[4] = "VALUTA"; //VALUTA nvarchar(6 CHAR)
-        keys[5] = String.valueOf(1); //SrcSystemId
-        keys[6] = String.valueOf(0); //TryCnt
-        keys[7] = String.valueOf(0); //PartitionId
-        keys[8] = String.valueOf(0);// statusHub
-        keys[9] = String.valueOf(0);// statusSat
-        keys[10] = String.valueOf(0);// statusLnk
-        keys[11] = null;// cdcOperation
-        keys[12] = String.valueOf(17777.65); //KURS decimal(18,6)
+        keys[2] = String.valueOf(999001); //EXP_VESSEL_ID bigint
+        keys[3] = String.valueOf(1); //SrcSystemId
+        keys[4] = String.valueOf(0); //TryCnt
+        keys[5] = String.valueOf(0); //PartitionId
+        keys[6] = String.valueOf(0);// statusHub
+        keys[7] = String.valueOf(0);// statusSat
+        keys[8] = String.valueOf(0);// statusLnk
+        keys[9] = null;// cdcOperation
+        keys[10] = "01-10-1999"; //ACTUAL_SAIL_DATE datetime
+        keys[11] = "GVA_TRADE"; //GVA_TRADE nvarchar(16 CHAR)
+        keys[12] = "QWE"; //OLD_TRADE nvarchar(3 CHAR)
+        keys[13] = "VESSEL_CODE"; //VESSEL_CODE nvarchar(16 CHAR)
+        keys[14] = "VESSEL_NAME"; //VESSEL_NAME nvarchar(35 CHAR)
+        keys[15] = "VOY_NR"; //VOY_NR nvarchar(10 CHAR)
+        keys[16] = String.valueOf(7); //WEEK tinyint
         return keys;
     }
 
@@ -36,11 +41,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoSA(properties.getProperty("fileROE.UNITY.table")));
+        System.out.println(getInsertIntoSA(properties.getProperty("exportVessels.UNITY.table")));
         System.out.println("------");
-        System.out.println(getDeleteFromSA(properties.getProperty("fileROE.UNITY.table")));
+        System.out.println(getDeleteFromSA(properties.getProperty("exportVessels.UNITY.table")));
         System.out.println("------");
-        System.out.println(getSelectFromSA(properties.getProperty("fileROE.UNITY.table")));
+        System.out.println(getSelectFromSA(properties.getProperty("exportVessels.UNITY.table")));
         System.out.println("---------------------------");
 
     }
@@ -50,28 +55,28 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("DataVault");
         System.out.println("---------------------------");
-        System.out.println(getInsertHub(properties.getProperty("fileROE.hub.table")));
+        System.out.println(getInsertHub(properties.getProperty("exportVessels.hub.table")));
         System.out.println("------");
-        System.out.println(getDeleteHub(properties.getProperty("fileROE.hub.table")));
+        System.out.println(getDeleteHub(properties.getProperty("exportVessels.hub.table")));
         System.out.println("------");
-        System.out.println(getSelectHub(properties.getProperty("fileROE.hub.table")));
+        System.out.println(getSelectHub(properties.getProperty("exportVessels.hub.table")));
         System.out.println("---------------------------");
     }
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (SELSKAB, SAGSNR, AFDELING, VALUTA, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, " +
-                "KURS) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', '" + keys[4] + "', " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
-                + ", " + keys[10] + ", " + keys[11] + ", " + keys[12] + ")";
+        String insert = "Insert into " + keys[0] + " (SELSKAB, EXP_VESSEL_ID, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation," +
+                 "ACTUAL_SAIL_DATE, GVA_TRADE, OLD_TRADE, VESSEL_CODE, VESSEL_NAME, VOY_NR, WEEK) Values ("
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
+                + ", '" + keys[10] + "', '" + keys[11] + "', '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', " + keys[16]  + ")";
         //System.out.println(insert);
         return insert;
     }
 
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, fileLinerNr, serviceCode, currencyCode,  SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "',' " + keys[4] + "', " + keys[5]+ ", " + keys[7] + ")";
+        String insert = "Insert into " + keys[0] + " (accessCompanyId, expVesselId, SrcSystemId, PartitionId) Values ("
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[5] + ")";
         //System.out.println(insert);
         return insert;
     }
@@ -79,16 +84,16 @@ public class zSQLforTestData {
 
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3]  + "' and VALUTA = '" + keys[4]  + "' and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and EXP_VESSEL_ID = " + keys[2]
+                + " and SrcSystemId = " + keys[3];
         //System.out.println(delete);
         return delete;
     }
 
     public String getDeleteHub(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
-                + " and serviceCode = '" + keys[3]  + "' and currencyCode = '" + keys[4] + "' and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and expVesselId = " + keys[2]
+                + " and SrcSystemId = " + keys[3];
         //System.out.println(delete);
         return delete;
     }
@@ -101,8 +106,8 @@ public class zSQLforTestData {
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = " + keys[2]
-                + " and AFDELING = '" + keys[3]  + "' and VALUTA = '" + keys[4]  + "' and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and EXP_VESSEL_ID = " + keys[2]
+                + " and SrcSystemId = " + keys[3];
         //System.out.println(select);
         return select;
     }
@@ -110,8 +115,8 @@ public class zSQLforTestData {
 
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = " + keys[2]
-                + " and serviceCode = '" + keys[3]  + "' and currencyCode = '" + keys[4] + "' and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and expVesselId = " + keys[2]
+                +" and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }

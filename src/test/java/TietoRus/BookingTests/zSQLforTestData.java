@@ -59,7 +59,7 @@ public class zSQLforTestData {
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (BOOK_NR, SELSKAB, SrcSystemId, TryCnt,  PartitionId, statusHub, cdcOperation) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ")";
         //System.out.println(insert);
         return insert;
     }
@@ -67,7 +67,7 @@ public class zSQLforTestData {
     public String getInsertIntoDWH(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (bookingNumber, accessCompanyId, SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[5]  + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[5]  + ")";
         //System.out.println(insert);
         return insert;
     }

@@ -1,7 +1,7 @@
 package TietoRus.system.helpers.models;
 
 
-public class Payments {
+public class PaymentsHub {
 
     private String invoiceType;
     private String invoiceNr;
@@ -12,7 +12,7 @@ public class Payments {
     private int srcSystemId;
 
 
-    public Payments (String invoiceType, String invoiceNr, String debitCredit, double customerCode, int sequenceNr, int accessCompanyId, int srcSystemId){
+    public PaymentsHub(String invoiceType, String invoiceNr, String debitCredit, double customerCode, int sequenceNr, int accessCompanyId, int srcSystemId){
         this.invoiceType = invoiceType;
         this.invoiceNr = invoiceNr;
         this.debitCredit = debitCredit;
@@ -27,7 +27,7 @@ public class Payments {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Payments payments = (Payments) o;
+        PaymentsHub payments = (PaymentsHub) o;
 
         if (Double.compare(payments.customerCode, customerCode) != 0) return false;
         if (sequenceNr != payments.sequenceNr) return false;
@@ -56,7 +56,7 @@ public class Payments {
 
     @Override
     public String toString() {
-        return "Payments{" +
+        return "PaymentsHub{" +
                 "invoiceType='" + invoiceType + '\'' +
                 ", invoiceNr='" + invoiceNr + '\'' +
                 ", debitCredit='" + debitCredit + '\'' +

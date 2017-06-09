@@ -1,7 +1,7 @@
 package TietoRus.system.helpers.objects;
 
 import TietoRus.system.helpers.helpers.DBHelper;
-import TietoRus.system.helpers.models.Payments;
+import TietoRus.system.helpers.models.PaymentsHub;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class PaymentsObjects {
+public class PaymentsHubObjects {
     private DBHelper db = new DBHelper();
 
-    public Payments getHubFromSA(String saSQL) throws SQLException {
+    public PaymentsHub getHubFromSA(String saSQL) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
         //System.out.println("SQL из SA: " + sql);
         ResultSet rsFromSA = db.rsFromDB(stForSA, saSQL);
-        Payments payments = null;
+        PaymentsHub payments = null;
         while (rsFromSA.next()) {
             if (rsFromSA.getRow() == 1) {
                 String invoiceType = rsFromSA.getString("F_TYPE");
@@ -27,23 +27,23 @@ public class PaymentsObjects {
                 int sequenceNr = rsFromSA.getInt("LOBE_NR");
                 int  accessCompanyId = rsFromSA.getInt("SELSKAB");
                 int srcSystemId = rsFromSA.getInt("srcSystemId");
-                payments = new Payments(invoiceType, invoiceNr, debitCredit, customerCode,  sequenceNr, accessCompanyId, srcSystemId);
+                payments = new PaymentsHub(invoiceType, invoiceNr, debitCredit, customerCode,  sequenceNr, accessCompanyId, srcSystemId);
             } else {
                 System.err.println("Record nor found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
-        System.out.println("Payments from SA: " + payments);
+        System.out.println("PaymentsHub from SA: " + payments);
         return payments;
     }
 
-    public Payments getHubFromDWH(String hubSQL) throws SQLException {
+    public PaymentsHub getHubFromDWH(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         //System.out.println("SQL из DWH: " + hubSQL);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
-        Payments payments = null;
+        PaymentsHub payments = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
                 String invoiceType = rsFromDWH.getString("invoiceType");
@@ -53,14 +53,14 @@ public class PaymentsObjects {
                 int sequenceNr = rsFromDWH.getInt("sequenceNr");
                 int  accessCompanyId = rsFromDWH.getInt("accessCompanyId");
                 int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                payments = new Payments(invoiceType, invoiceNr, debitCredit, customerCode,  sequenceNr, sequenceNr, srcSystemId);
+                payments = new PaymentsHub(invoiceType, invoiceNr, debitCredit, customerCode,  sequenceNr, sequenceNr, srcSystemId);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;
             }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        System.out.println("Payments from DWH: " + payments);
+        System.out.println("PaymentsHub from DWH: " + payments);
         return payments;
     }
 

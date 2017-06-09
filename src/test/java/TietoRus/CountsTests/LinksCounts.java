@@ -1654,7 +1654,7 @@ public class LinksCounts {
     @Test(enabled = true)
     public void BookingCargoChargesSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCargoCharges.sat.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }

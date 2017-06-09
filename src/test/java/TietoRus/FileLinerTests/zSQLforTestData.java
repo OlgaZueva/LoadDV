@@ -25,7 +25,7 @@ public class zSQLforTestData {
         keys[7] = String.valueOf(0);// statusHub
         keys[8] = String.valueOf(0);// statusSat
         keys[9] = String.valueOf(0);// statusLnk
-        keys[10] = "UN";// cdcOperation
+        keys[10] = null;// cdcOperation
         keys[11] = String.valueOf(1); //CALL_ID decimal(1,0)
         keys[12] = "01-10-1999"; //EXP_AFG_DATO datetime
         keys[13] = "02-10-1999"; //IMP_ANK_DATO datetime
