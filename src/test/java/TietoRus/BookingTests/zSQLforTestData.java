@@ -16,7 +16,7 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[54];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99991); //BOOK_NR
+        keys[1] = String.valueOf(999001); //BOOK_NR
         keys[2] = String.valueOf(99); //SELSKAB
         keys[3] = String.valueOf(1); //SrcSystemId
         keys[4] = String.valueOf(0); //TryCnt
@@ -109,14 +109,14 @@ public class zSQLforTestData {
                 "KONTOR, LOC, LOC_REF, LOC2, LOC2_REF, MANIFEST_TYPE, OCEAN_AFDELING, PL_O_DELIVER, PL_O_RECEIPT, PLD_HAULAGE_AT_DESTINATION," +
                 " PLD_SUBLOCATION_CODE1, PLD_ZIPCODE, PLR_HAULAGE_AT_ORIGIN, PLR_SUBLOCATION_CODE1,PLR_ZIPCODE, POD_DATO, POR_DATO, QUOTATION_REF_NR," +
                 " REF_NR, SPEC_REF_NUMBER, SPECIAL_CONTRACT_REF, STAT, TIDL_GODS, UDF_ANG2) Values ("
-                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " +
-                keys[8] + ", " + keys[9] + ", " + keys[10] + ", " + keys[11] + ", " + keys[12] + ", " + keys[13] + ", " + keys[14] + ", " +
-                keys[15] + ", " + keys[16] + ", " + keys[17] + ", " + keys[18] + ", " + keys[19] + ", " + keys[20] + ", " + keys[21] + ", " +
-                keys[22] + ", " + keys[23] + ", " + keys[24] + ", " + keys[25] + ", " + keys[26] + ", " + keys[27] + ", " + keys[28] + ", " +
-                keys[29] + ", " + keys[30] + ", " + keys[31] + ", " + keys[32] + ", " + keys[33] + ", " + keys[34] + ", " + keys[35] + ", " +
-                keys[36] + ", " + keys[37] + ", " + keys[38] + ", " + keys[39] + ", " + keys[40] + ", " + keys[41] + ", " + keys[42] + ", " +
-                keys[43] + ", " + keys[44] + ", " + keys[45] + ", " + keys[46] + ", " + keys[47] + ", " + keys[48] + ", " + keys[49] + ", " +
-                keys[50] + ", " + keys[51] + ", " + keys[52] + ", " + keys[53] + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", '" +
+                keys[8] + "', '" + keys[9] + "', '" + keys[10] + "', '" + keys[11] + "', " + keys[12] + ", '" + keys[13] + "', '" + keys[14] + "', '" +
+                keys[15] + "', '" + keys[16] + "', " + keys[17] + ", " + keys[18] + ", '" + keys[19] + "', '" + keys[20] + "', '" + keys[21] + "', '" +
+                keys[22] + "', '" + keys[23] + "', '" + keys[24] + "', '" + keys[25] + "', '" + keys[26] + "', '" + keys[27] + "', '" + keys[28] + "', '" +
+                keys[29] + "', " + keys[30] + ", '" + keys[31] + "', '" + keys[32] + "', '" + keys[33] + "', '" + keys[34] + "', '" + keys[35] + "', '" +
+                keys[36] + "', '" + keys[37] + "', '" + keys[38] + "', '" + keys[39] + "', '" + keys[40] + "', '" + keys[41] + "', '" + keys[42] + "', '" +
+                keys[43] + "', '" + keys[44] + "', '" + keys[45] + "', '" + keys[46] + "', '" + keys[47] + "', '" + keys[48] + "', '" + keys[49] + "', '" +
+                keys[50] + "', '" + keys[51] + "', '" + keys[52] + "', '" + keys[53] + "')";
         //System.out.println(insert);
         return insert;
     }
