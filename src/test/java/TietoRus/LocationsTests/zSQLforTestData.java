@@ -14,7 +14,7 @@ public class zSQLforTestData {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
-        String[] keys = new String[17];
+        String[] keys = new String[18];
         keys[0] = tableName; //table name
         keys[1] = String.valueOf(99); //SELSKAB smallint
         keys[2] = "LO"; //ART nvarchar(2 CHAR)
@@ -29,11 +29,12 @@ public class zSQLforTestData {
         keys[9] = String.valueOf(0);// statusSat
         keys[10] = String.valueOf(0);// statusLnk
         keys[11] = null;// cdcOperation
-        keys[12] = "32Characteeeeeer"; //CHAR_ATRIBUTE1 nvarchar(32 CHAR)
-        keys[13] = "64Characteeeeeer"; //CHAR_ATRIBUTE2 nvarchar(64 CHAR)
-        keys[14] = "64Characteeeeeer"; //CHAR_ATRIBUTE9 nvarchar(100 CHAR)
-        keys[15] = "16Characteeeeeer"; //MONT_ENHED nvarchar(6 CHAR)
-        keys[16] = "50CharacteeeeeerLooooooooooooooooooooooooooooooong"; //TEKST_1 nvarchar(50 CHAR)
+        keys[12] = "CHAR_ATRIBUTE1"; //CHAR_ATRIBUTE1 nvarchar(32 CHAR)
+        keys[13] = "CHAR_ATRIBUTE4"; //CHAR_ATRIBUTE4 nvarchar(32 CHAR)
+        keys[14] = "CHAR_ATRIBUTE2"; //CHAR_ATRIBUTE2 nvarchar(64 CHAR)
+        keys[15] = "CHAR_ATRIBUTE9"; //CHAR_ATRIBUTE9 nvarchar(100 CHAR)
+        keys[16] = "MONT"; //MONT_ENHED nvarchar(6 CHAR)
+        keys[17] = "50CharacteeeeeerLooooooooooooooooooooooooooooooong"; //TEKST_1 nvarchar(50 CHAR)
         return keys;
     }
 
@@ -67,9 +68,9 @@ public class zSQLforTestData {
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (SELSKAB, ART, KODE, LOBE_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, " +
-                "CHAR_ATRIBUTE1, CHAR_ATRIBUTE2, CHAR_ATRIBUTE9, MONT_ENHED, TEKST_1) Values ("
+                "CHAR_ATRIBUTE1, CHAR_ATRIBUTE4, CHAR_ATRIBUTE2, CHAR_ATRIBUTE9, MONT_ENHED, TEKST_1) Values ("
                 + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
-                + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', '" + keys[16] + "')";
+                + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "', '" + keys[13] + "', '" + keys[14] + "', '" + keys[15] + "', '" + keys[16] + "', '" + keys[17]+ "')";
         //System.out.println(insert);
         return insert;
     }

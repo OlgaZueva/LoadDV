@@ -67,7 +67,7 @@ public class zSQLforTestData {
 
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (SELSKAB, F_TYPE, FAKTURANR, K_TYPE, KUNDE,  LOBE_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, CALL_ID, EXP_AFG_DATO, " +
+        String insert = "Insert into " + keys[0] + " (SELSKAB, F_TYPE, FAKTURANR, K_TYPE, KUNDE,  LOBE_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, " +
                 "BELOBDKK, BELOBVAL, BILAGSNR, DATO, TEKST, VALUTA) Values ("
                 + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', '" + keys[4] + "', " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
                 + ", " + keys[10] + ", " + keys[11] + ", " + keys[12] + ", " + keys[13] + ", " + keys[14] + ", " + keys[15] + ", " + keys[16] + ", '" + keys[17]
@@ -88,7 +88,7 @@ public class zSQLforTestData {
     public String getDeleteFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and F_TYPE =' " + keys[2]
-                + "' and FAKTURANR = '" + keys[3]   + "' and K_TYPE = '" + keys[4]   + "' and KUNDE = " + keys[5]   + " and LOBE_NR = " + keys[6]  + " and SrcSystemId = " + keys[4];
+                + "' and FAKTURANR = '" + keys[3]   + "' and K_TYPE = '" + keys[4]   + "' and KUNDE = " + keys[5]   + " and LOBE_NR = " + keys[6]  + " and SrcSystemId = " + keys[7];
         //System.out.println(delete);
         return delete;
     }

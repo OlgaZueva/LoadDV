@@ -1,4 +1,4 @@
-package TietoRus.BookingChargesLinesTests;
+package TietoRus.BookingChargeLinesTests;
 
 import org.testng.annotations.Test;
 
@@ -45,11 +45,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("Staging Area");
         System.out.println("---------------------------");
-        System.out.println(getInsertIntoSA(properties.getProperty("bookingChargesLines.UNITY.table")));
+        System.out.println(getInsertIntoSA(properties.getProperty("bookingChargeLines.UNITY.table")));
         System.out.println("------");
-        System.out.println(getDeleteFromSA(properties.getProperty("bookingChargesLines.UNITY.table")));
+        System.out.println(getDeleteFromSA(properties.getProperty("bookingChargeLines.UNITY.table")));
         System.out.println("------");
-        System.out.println(getSelectFromSA(properties.getProperty("bookingChargesLines.UNITY.table")));
+        System.out.println(getSelectFromSA(properties.getProperty("bookingChargeLines.UNITY.table")));
         System.out.println("---------------------------");
 
     }
@@ -59,11 +59,11 @@ public class zSQLforTestData {
         getPropertiesFile();
         System.err.println("DataVault");
         System.out.println("---------------------------");
-        System.out.println(getInsertHub(properties.getProperty("bookingChargesLines.hub.table")));
+        System.out.println(getInsertHub(properties.getProperty("bookingChargeLines.hub.table")));
         System.out.println("------");
-        System.out.println(getDeleteHub(properties.getProperty("bookingChargesLines.hub.table")));
+        System.out.println(getDeleteHub(properties.getProperty("bookingChargeLines.hub.table")));
         System.out.println("------");
-        System.out.println(getSelectHub(properties.getProperty("bookingChargesLines.hub.table")));
+        System.out.println(getSelectHub(properties.getProperty("bookingChargeLines.hub.table")));
         System.out.println("---------------------------");
     }
 

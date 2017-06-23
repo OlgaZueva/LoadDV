@@ -71,7 +71,7 @@ public class zSQLforTestData {
 
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, bookingNumber, sequenceNr, SrcSystemId, PartitionId) Values ("
+        String insert = "Insert into " + keys[0] + " (accessCompanyId, bookingNumber, sequenceNumber, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[6] + ")";
         //System.out.println(insert);
         return insert;
@@ -89,7 +89,7 @@ public class zSQLforTestData {
     public String getDeleteHub(String tableName) {
         String[] keys = getValues(tableName);
         String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and bookingNumber = " + keys[2]
-                + " and sequenceNr = " + keys[3]  + " and SrcSystemId = " + keys[4];
+                + " and sequenceNumber = " + keys[3]  + " and SrcSystemId = " + keys[4];
         //System.out.println(delete);
         return delete;
     }
@@ -112,7 +112,7 @@ public class zSQLforTestData {
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and bookingNumber = " + keys[2]
-                + " and sequenceNr = " + keys[3] + " and SrcSystemId = " + keys[4];
+                + " and sequenceNumber = " + keys[3] + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }

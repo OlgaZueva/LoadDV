@@ -3,13 +3,13 @@ package TietoRus.system.helpers.models;
 
 public class BookingHaulageDetailsHub {
     private int bookingNumber;
-    private int sequenceNr;
+    private int sequenceNumber;
     private int accessCompanyId;
     private int srcSystemId;
 
     public BookingHaulageDetailsHub(int bookingNumber, int sequenceNr, int accessCompanyId, int srcSystemId) {
         this.bookingNumber = bookingNumber;
-        this.sequenceNr = sequenceNr;
+        this.sequenceNumber = sequenceNr;
         this.accessCompanyId = accessCompanyId;
         this.srcSystemId = srcSystemId;
     }
@@ -22,7 +22,7 @@ public class BookingHaulageDetailsHub {
         BookingHaulageDetailsHub that = (BookingHaulageDetailsHub) o;
 
         if (bookingNumber != that.bookingNumber) return false;
-        if (sequenceNr != that.sequenceNr) return false;
+        if (sequenceNumber != that.sequenceNumber) return false;
         if (accessCompanyId != that.accessCompanyId) return false;
         return srcSystemId == that.srcSystemId;
     }
@@ -30,7 +30,7 @@ public class BookingHaulageDetailsHub {
     @Override
     public int hashCode() {
         int result = bookingNumber;
-        result = 31 * result + sequenceNr;
+        result = 31 * result + sequenceNumber;
         result = 31 * result + accessCompanyId;
         result = 31 * result + srcSystemId;
         return result;
@@ -40,7 +40,7 @@ public class BookingHaulageDetailsHub {
     public String toString() {
         return "BookingHaulageDetailsHub{" +
                 "bookingNumber=" + bookingNumber +
-                ", sequenceNr=" + sequenceNr +
+                ", sequenceNumber=" + sequenceNumber +
                 ", accessCompanyId=" + accessCompanyId +
                 ", srcSystemId=" + srcSystemId +
                 '}';

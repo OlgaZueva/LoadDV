@@ -16,9 +16,9 @@ public class zSQLforTestData {
     private String[] getValues(String tableName) {
         String[] keys = new String[13];
         keys[0] = tableName; //table name
-        keys[1] = String.valueOf(99); //BOOK_NR
-        keys[2] = String.valueOf(999001); //SEGMENT_CODE
-        keys[3] = String.valueOf(9); //SELSKAB
+        keys[1] = String.valueOf(999001); //BOOK_NR
+        keys[2] = String.valueOf(9); //SEGMENT_CODE
+        keys[3] = String.valueOf(99); //SELSKAB
         keys[4] = String.valueOf(98); //SEQ_NR
         keys[5] = String.valueOf(1); //SrcSystemId
         keys[6] = String.valueOf(0); //TryCnt
@@ -64,7 +64,7 @@ public class zSQLforTestData {
     public String getInsertIntoSA(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (BOOK_NR, SEGMENT_CODE, SELSKAB, SEQ_NR, SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation, VALUE_CODE) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[6] + ", " + keys[7] + ", " + keys[8] + ", " + keys[9]
                 + ", " + keys[10] + ", " + keys[11] + ", '" + keys[12] + "')";
         return insert;
     }
@@ -72,7 +72,7 @@ public class zSQLforTestData {
     public String getInsertIntoDWH(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (bookingNumber, segmentCode, accessCompanyId, sequenceNr, SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", '" + keys[2] + "', " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[4] + ", " + keys[5] + ", " + keys[7] + ")";
         return insert;
     }
 
@@ -86,23 +86,23 @@ public class zSQLforTestData {
 
     public String getDeleteFromDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
-                + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String delete = "DELETE FROM " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = " + keys[2]
+                + " and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
         return delete;
     }
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = '" + keys[2]
-                + "' and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE BOOK_NR = " + keys[1] + " and SEGMENT_CODE = " + keys[2]
+                + " and SELSKAB = " + keys[3] + " and SEQ_NR = " + keys[4] + " and SrcSystemId = " + keys[5];
         return select;
     }
 
 
     public String getSelectFromDWH(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = '" + keys[2]
-                + "' and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
+        String select = "SELECT * from " + keys[0] + " WHERE bookingNumber = " + keys[1] + " and segmentCode = " + keys[2]
+                + " and accessCompanyId = " + keys[3] + " " + " and sequenceNr = " + keys[4] + " and SrcSystemId = " + keys[5];
         return select;
     }
 

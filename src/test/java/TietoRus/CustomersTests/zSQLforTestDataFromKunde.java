@@ -24,7 +24,7 @@ public class zSQLforTestDataFromKunde {
         keys[6] = String.valueOf(0);// statusHub
         keys[7] = String.valueOf(0);// statusSat
         keys[8] = String.valueOf(0);// statusLnk
-        keys[9] = "UN";// cdcOperation
+        keys[9] = null;// cdcOperation
         keys[10] = "ADRESSE1"; //ADRESSE1 nvarchar(60 char)
         keys[11] = "ADRESSE2"; //ADRESSE2 nvarchar(60 char)
         keys[12] = "ADRESSE3"; //ADRESSE3 nvarchar(100 char)
@@ -82,7 +82,7 @@ public class zSQLforTestDataFromKunde {
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (accessCompanyId, customerNr, SrcSystemId, PartitionId) Values ("
-                + keys[1] + ", " + keys[2] + ", '" + keys[3] + ", " + keys[5] + ")";
+                + keys[1] + ", " + keys[2] + ", " + keys[3] + ", " + keys[5] + ")";
         //System.out.println(insert);
         return insert;
     }

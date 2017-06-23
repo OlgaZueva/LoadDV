@@ -18,12 +18,13 @@ public class LocationsSatObjects {
         LocationsSat locationsSat = null;
         while (rsFromSA.next()) {
             if (rsFromSA.getRow() == 1) {
-                String ovTradeNumber = rsFromSA.getString("CHAR_ATRIBUTE1");
+                String ovTradeNumberExp = rsFromSA.getString("CHAR_ATRIBUTE1");
+                String ovTradeNumberImp = rsFromSA.getString("CHAR_ATRIBUTE4");
                 String ovTradeName = rsFromSA.getString("CHAR_ATRIBUTE2");
                 String gvaTrade = rsFromSA.getString("CHAR_ATRIBUTE9");
                 String countryCode = rsFromSA.getString("MONT_ENHED");
                 String locationName = rsFromSA.getString("TEKST_1");
-                locationsSat = new LocationsSat(ovTradeNumber, ovTradeName, gvaTrade,  countryCode, locationName);
+                locationsSat = new LocationsSat(ovTradeNumberExp, ovTradeNumberImp, ovTradeName, gvaTrade,  countryCode, locationName);
             } else {
                 System.err.println("Record nor found or more one!");
                 return null;
@@ -42,12 +43,13 @@ public class LocationsSatObjects {
         LocationsSat locationsSat = null;
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
-                String ovTradeNumber = rsFromDWH.getString("ovTradeNumber");
+                String ovTradeNumberExp = rsFromDWH.getString("ovTradeNumberExp");
+                String ovTradeNumberImp = rsFromDWH.getString("ovTradeNumberImp");
                 String ovTradeName = rsFromDWH.getString("ovTradeName");
                 String gvaTrade = rsFromDWH.getString("gvaTrade");
                 String countryCode = rsFromDWH.getString("countryCode");
                 String locationName = rsFromDWH.getString("locationName");
-                locationsSat = new LocationsSat(ovTradeNumber, ovTradeName, gvaTrade, countryCode, locationName);
+                locationsSat = new LocationsSat(ovTradeNumberExp, ovTradeNumberImp, ovTradeName, gvaTrade, countryCode, locationName);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;

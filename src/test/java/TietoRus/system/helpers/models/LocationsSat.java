@@ -2,15 +2,17 @@ package TietoRus.system.helpers.models;
 
 
 public class LocationsSat {
-    private String ovTradeNumber;
+    private String ovTradeNumberExp;
+    private String ovTradeNumberImp;
     private String ovTradeName;
     private String gvaTrade;
 
     private String countryCode;
     private String locationName;
 
-    public LocationsSat(String ovTradeNumber, String ovTradeName, String gvaTrade,  String countryCode, String locationName) {
-        this.ovTradeNumber = ovTradeNumber;
+    public LocationsSat(String ovTradeNumberExp, String ovTradeNumberImp, String ovTradeName, String gvaTrade, String countryCode, String locationName) {
+        this.ovTradeNumberExp = ovTradeNumberExp;
+        this.ovTradeNumberImp = ovTradeNumberImp;
         this.ovTradeName = ovTradeName;
         this.gvaTrade = gvaTrade;
         this.countryCode = countryCode;
@@ -24,7 +26,9 @@ public class LocationsSat {
 
         LocationsSat that = (LocationsSat) o;
 
-        if (ovTradeNumber != null ? !ovTradeNumber.equals(that.ovTradeNumber) : that.ovTradeNumber != null)
+        if (ovTradeNumberExp != null ? !ovTradeNumberExp.equals(that.ovTradeNumberExp) : that.ovTradeNumberExp != null)
+            return false;
+        if (ovTradeNumberImp != null ? !ovTradeNumberImp.equals(that.ovTradeNumberImp) : that.ovTradeNumberImp != null)
             return false;
         if (ovTradeName != null ? !ovTradeName.equals(that.ovTradeName) : that.ovTradeName != null) return false;
         if (gvaTrade != null ? !gvaTrade.equals(that.gvaTrade) : that.gvaTrade != null) return false;
@@ -34,7 +38,8 @@ public class LocationsSat {
 
     @Override
     public int hashCode() {
-        int result = ovTradeNumber != null ? ovTradeNumber.hashCode() : 0;
+        int result = ovTradeNumberExp != null ? ovTradeNumberExp.hashCode() : 0;
+        result = 31 * result + (ovTradeNumberImp != null ? ovTradeNumberImp.hashCode() : 0);
         result = 31 * result + (ovTradeName != null ? ovTradeName.hashCode() : 0);
         result = 31 * result + (gvaTrade != null ? gvaTrade.hashCode() : 0);
         result = 31 * result + (countryCode != null ? countryCode.hashCode() : 0);
@@ -45,7 +50,8 @@ public class LocationsSat {
     @Override
     public String toString() {
         return "LocationsSat{" +
-                "ovTradeNumber='" + ovTradeNumber + '\'' +
+                "ovTradeNumberExp='" + ovTradeNumberExp + '\'' +
+                ", ovTradeNumberImp='" + ovTradeNumberImp + '\'' +
                 ", ovTradeName='" + ovTradeName + '\'' +
                 ", gvaTrade='" + gvaTrade + '\'' +
                 ", countryCode='" + countryCode + '\'' +

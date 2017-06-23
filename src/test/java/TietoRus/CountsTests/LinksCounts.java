@@ -279,7 +279,13 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingCrossBookingType() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition.CountRows"));
+        int countRowByCondition_RefTypeIsNull = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsNull.CountRows"));
+        System.out.println("RefTypeIsNull: " + countRowByCondition_RefTypeIsNull);
+        int countRowByCondition_RefTypeRefTypeIsNotInHub = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsNotInHub.CountRows"));
+        System.out.println("RefTypeRefTypeIsNotInHub: " + countRowByCondition_RefTypeRefTypeIsNotInHub);
+        int condition_RefTypeIsInHub = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsInHub.CountRows"));
+        System.out.println("RefTypeIsInHub: " + condition_RefTypeIsInHub);
+        int countRowByCondition = countRowByCondition_RefTypeIsNull + countRowByCondition_RefTypeRefTypeIsNotInHub + condition_RefTypeIsInHub;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }
@@ -1381,6 +1387,22 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    public void Henvis_lnkCurrencyCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = false)
+    public void Henvis_satLnkCurrencyCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
     public void lnkCustomersLocations() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByConditionFromKunde = getCountRowOfHub(properties.getProperty("lnkCustomersLocations_Kunde.condition.CountRows"));
@@ -1614,7 +1636,7 @@ public class LinksCounts {
     public void SagKurs_lnkFileROECompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkFileROECompany.condition.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerLocations.lnk.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileROECompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
@@ -1667,6 +1689,21 @@ public class LinksCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
+    @Test(enabled = true)
+    public void lnkShipItConstantsCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void satLnkShipItConstantsCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.lnk.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.satLnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));

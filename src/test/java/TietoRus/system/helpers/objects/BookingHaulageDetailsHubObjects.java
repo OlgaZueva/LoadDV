@@ -44,10 +44,10 @@ public class BookingHaulageDetailsHubObjects {
         while (rsFromDWH.next()) {
             if (rsFromDWH.getRow() == 1) {
                 int bookingNumber = rsFromDWH.getInt("bookingNumber");
-                int sequenceNr = rsFromDWH.getInt("sequenceNr");
+                int sequenceNumber = rsFromDWH.getInt("sequenceNumber");
                 int accessCompanyId = rsFromDWH.getInt("accessCompanyId");
                 int srcSystemId = rsFromDWH.getInt("srcSystemId");
-                bookingHaulageDetailsHub = new BookingHaulageDetailsHub(bookingNumber, sequenceNr, accessCompanyId, srcSystemId);
+                bookingHaulageDetailsHub = new BookingHaulageDetailsHub(bookingNumber, sequenceNumber, accessCompanyId, srcSystemId);
             } else {
                 System.err.println("Record not found or more one!");
                 return null;

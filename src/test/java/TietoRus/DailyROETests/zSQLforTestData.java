@@ -27,7 +27,7 @@ public class zSQLforTestData {
         keys[9] = String.valueOf(0);// statusLnk
         keys[10] = null ;// cdcOperation
         keys[11] = String.valueOf(18.6); //KURS decimal(18,6)
-        keys[12] = "01-10-1999"; //VALUTA nvarchar(6 CHAR)
+        keys[12] = "VAL"; //VALUTA nvarchar(6 CHAR)
         return keys;
     }
 

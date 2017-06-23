@@ -10,7 +10,7 @@ import java.util.Properties;
 /**
  * Получение готовых запросов для вставки, редактирования и удаления тестовых записей в БД
  */
-public class zSQLforTestData {
+public class zSQLforTestDataBook {
     private Properties properties = new Properties();
 
     private String[] getValues(String tableName) {
@@ -31,7 +31,7 @@ public class zSQLforTestData {
         keys[13] = "AiC";//AIRLINECODE_3	nvarchar(3 CHAR)
         keys[14] = "ANK_BY";//ANK_BY	nvarchar(50 CHAR)
         keys[15] = "02-01-2017";//ANK_DATO	datetime
-        keys[16] = "ANKZONE";//ANK_ZONE	nvarchar(6 CHAR)
+        keys[16] = "ANKZON";//ANK_ZONE	nvarchar(6 CHAR)
         keys[17] = String.valueOf(71);//CONTROL_KONTOR	smallint
         keys[18] = String.valueOf(72); //CONTROL_SELSKAB	decimal(38,0)
         keys[19] = "CR_BY";//CREATED_BY	nvarchar(6 CHAR)
