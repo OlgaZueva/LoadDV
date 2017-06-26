@@ -301,8 +301,12 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingCustomers() throws SQLException, IOException {
         getPropertiesFile();
-        System.err.println("Отдельно где то описано надо условия посомтреть");
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition.CountRows"));
+        int countRowByCondition_NAMED_ACCOUNT_Adresse = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_NAMED_ACCOUNT_Adresse.CountRows"));
+        int countRowByCondition_NAMED_ACCOUNT_Kunde = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_NAMED_ACCOUNT_Kunde.CountRows"));
+        System.out.println("countRowByCondition_NAMED_ACCOUNT_Adresse: " + countRowByCondition_NAMED_ACCOUNT_Adresse);
+        System.out.println("countRowByCondition_NAMED_ACCOUNT_Kunde: " + countRowByCondition_NAMED_ACCOUNT_Kunde);
+
+        int countRowByCondition = countRowByCondition_NAMED_ACCOUNT_Adresse +countRowByCondition_NAMED_ACCOUNT_Kunde;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }

@@ -17,10 +17,10 @@ public class DBHelper {
 
     public Connection connToDWH() throws SQLException {
         //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataVaultTest;user=ssis;password=ssis");
-       //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;data0baseName=DataVaultTest;user=ssis;password=ssis");
-      //  return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;data0baseName=DataVaultSmallTest;user=ssis;password=ssis");
+       //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;databaseName=DataVaultTest;user=ssis;password=ssis");
+      //  return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;databaseName=DataVaultSmallTest;user=ssis;password=ssis");
        // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTest;user=ssis;password=ssis");
-        return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTestCDC;user=ssis;password=ssis");
+       return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTestCDC;user=ssis;password=ssis");
 
     }
 
