@@ -12,7 +12,7 @@ import java.sql.Statement;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
+//Тесты пригодны для проверки после первоначлаьной загрузки. После загрузки из CDC уже даты разъедутся.
 public class validFromInSatTest {
     private DBHelper db = new DBHelper();
 

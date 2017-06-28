@@ -49,8 +49,6 @@ public class HubsCounts {
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
 
-
-
     @Test(enabled = false)
     public void hubAccountingTransactionDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
@@ -358,8 +356,6 @@ public class HubsCounts {
         int countRowInHub = getCountRowOfHub(properties.getProperty("invoicePosting.HUB.CountRows"));
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
-
-
 
     @Test(enabled = false)
     public void hubInvoiceDataFromSAToView() throws SQLException, IOException {

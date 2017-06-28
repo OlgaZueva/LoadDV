@@ -656,7 +656,8 @@ public class SatsAndSatStatusesCounts {
     @Test(enabled = true)
     public void ControllingOfficeAuxLocationSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.SAViewDistinct.CountRows"));
+        System.err.println("Если число не сходится см баг 5548. Нужно отдельно смотреть число записей, у которых officeID is null и officeID is not null. Из контрольного запроса можно взять");
+        int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.ViewDistinct.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.sat.CountRows"));
         assertRowCount(countRowsInSA, countRowInSat);
     }
@@ -665,9 +666,12 @@ public class SatsAndSatStatusesCounts {
     @Test(enabled = true)
     public void LocationsPortsOverviewSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("locationsPortsOverview.HUB.CountRows"));
+        System.err.println("Для Узбекистана и Казахстана размножили записи в файле - у них теперь один и тот же LOCATION_CODE, но разные AGENCY_ID,");
+        System.err.println("поэтому на один хаб для таких будет по два сата сразу, при первоначальной загрузке.");
+        System.err.println("С учетом этого надо и искать различия, если число не совпадет. Контрольный запрос поможет");
         int countRowInSat = getCountRowOfHub(properties.getProperty("locationsPortsOverview.sat.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
+        int countRowSAByConditionForSat = getCountRowInSA(properties.getProperty("locationsPortsOverview.satCondition.CountRows"));
+        assertRowCount(countRowSAByConditionForSat, countRowInSat);
     }
 
     // у BookingReportingCustomerSat SatStatus'а нет. Hub грузится из EXCEL'я
@@ -687,7 +691,6 @@ public class SatsAndSatStatusesCounts {
         int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCustomers.sat.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
-
 
 
     private void getPropertiesFile() throws IOException {

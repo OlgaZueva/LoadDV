@@ -1697,7 +1697,7 @@ public class LinksCounts {
     public void lnkShipItConstantsCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.sat.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.lnk.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
 

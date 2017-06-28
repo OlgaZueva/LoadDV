@@ -88,7 +88,7 @@ public class zSQLforTestData {
 
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, fileLinerNr, serviceCode, SrcSystemId, PartitionId) Values ("
+        String insert = "Insert into " + keys[0] + " (accessCompanyId,  serviceCode, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", " + keys[2] + ", '" + keys[3] + "', " + keys[4] + ", " + keys[6] + ")";
         //System.out.println(insert);
         return insert;

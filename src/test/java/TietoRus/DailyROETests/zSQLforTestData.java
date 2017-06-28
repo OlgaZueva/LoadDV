@@ -69,7 +69,7 @@ public class zSQLforTestData {
 
     public String getInsertHub(String tableName) {
         String[] keys = getValues(tableName);
-        String insert = "Insert into " + keys[0] + " (accessCompanyId, rate, currencyCode, SrcSystemId, PartitionId) Values ("
+        String insert = "Insert into " + keys[0] + " (accessCompanyId, roeDate, sequenceNr, SrcSystemId, PartitionId) Values ("
                 + keys[1] + ", '" + keys[2] + "', " + keys[3] + ", " + keys[4] + ", " + keys[6] + ")";
         //System.out.println(insert);
         return insert;
@@ -86,8 +86,8 @@ public class zSQLforTestData {
 
     public String getDeleteHub(String tableName) {
         String[] keys = getValues(tableName);
-        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and rate = '" + keys[2]
-                + "' and currencyCode = " + keys[3]  + " and SrcSystemId = " + keys[4];
+        String delete = "DELETE FROM " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and roeDate = '" + keys[2]
+                + "' and sequenceNr = " + keys[3]  + " and SrcSystemId = " + keys[4];
         //System.out.println(delete);
         return delete;
     }
@@ -100,7 +100,7 @@ public class zSQLforTestData {
 
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and SAGSNR = '" + keys[2]
+        String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and DATO = '" + keys[2]
                 + "' and LOBE_NR = " + keys[3]  + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
@@ -109,8 +109,8 @@ public class zSQLforTestData {
 
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = '" + keys[2]
-                + "' and currencyCode = " + keys[3]  + " and SrcSystemId = " + keys[4];
+        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and roeDate = '" + keys[2]
+                + "' and sequenceNr = " + keys[3]  + " and SrcSystemId = " + keys[4];
         //System.out.println(select);
         return select;
     }

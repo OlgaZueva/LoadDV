@@ -110,7 +110,7 @@ public class zSQLforTestData {
     public String getSelectFromSA(String tableName) {
         String[] keys = getValues(tableName);
         String select = "SELECT * from " + keys[0] + " WHERE SELSKAB = " + keys[1] + " and F_TYPE = '" + keys[2]
-                + "' and FAKTURANR = '" + keys[3]   + "' and K_TYPE = '" + keys[4]   + "' and KUNDE = " + keys[5]   + " and LOBE_NR = " + keys[6]  + " and SrcSystemId = " + keys[4];
+                + "' and FAKTURANR = '" + keys[3]   + "' and K_TYPE = '" + keys[4]   + "' and KUNDE = " + keys[5]   + " and LOBE_NR = " + keys[6]  + " and SrcSystemId = " + keys[7];
         //System.out.println(select);
         return select;
     }
@@ -118,7 +118,7 @@ public class zSQLforTestData {
 
     public String getSelectHub(String tableName) {
         String[] keys = getValues(tableName);
-        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and fileLinerNr = '" + keys[2]
+        String select = "SELECT * from " + keys[0] + " WHERE accessCompanyId = " + keys[1] + " and invoiceType = '" + keys[2]
                 + "' and invoiceNr = '" + keys[3]  + "' and debitCredit = '" + keys[4]  + "' " + " and customerCode = " + keys[5]   + " and sequenceNr = " + keys[6] + " and SrcSystemId = " + keys[7];
         //System.out.println(select);
         return select;
