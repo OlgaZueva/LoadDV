@@ -71,7 +71,7 @@ public class zSQLforTestData {
         String[] keys = getValues(tableName);
         String insert = "Insert into " + keys[0] + " (SELSKAB, ISO_KODE4, ISO_KODE6, ISO_KODE6_2, ISO_KODE6_3, ISO_KODE6_4, ISO_KODE6_5," +
                 " SrcSystemId, TryCnt,  PartitionId, statusHub, statusSat, statusLnk, cdcOperation) Values ("
-                + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', '" + keys[4] + "', '" + keys[5] + "', '" + keys[6] + "', " + keys[7] + ", " + keys[8]
+                + keys[1] + ", '" + keys[2] + "', '" + keys[3] + "', '" + keys[4] + "', '" + keys[5] + "', '" + keys[6] + "', '" + keys[7] + "', " + keys[8]
                 + ", " + keys[9] + ", " + keys[10] + ", " + keys[11] + ", " + keys[12] + ", " + keys[13] + ", " + keys[14] + ")";
         //System.out.println(insert);
         return insert;

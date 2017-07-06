@@ -271,6 +271,111 @@ public class HubsCDCCounts {
         assertRowCount(countRowInViewDistinct, countRowInHub);
     }
 
+    @Test(enabled = true)
+    public void hubSublocationCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("sublocation.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("sublocation.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubTransportModeCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("transportMode.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("transportMode.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerLocationCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("containerLocation.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerLocation.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubVesselRegistryCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("vesselRegistry.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("vesselRegistry.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCountryCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("country.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("country.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubLocationsCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("locations.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("locations.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCurrencyCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("currency.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("currency.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubShipItConstantsCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("shipItConstants.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("shipItConstants.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubBookingManifestedHaulageCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("bookingManifestedHaulage.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubIsoCodeCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct =  getCountRowInSA(properties.getProperty("isoCode.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerTypeSpecEquipCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("containerTypeSpecEquip.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerTypeSpecEquip.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubLocationsPortsOverviewCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("locationsPortsOverview.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("locationsPortsOverview.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubBookingReportingCustomerCDC() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("bookingReportingCustomer.CDCViewDistinct.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingReportingCustomer.CDCHUB.CountRows"));
+        assertRowCount(countRowInViewDistinct, countRowInHub);
+    }
+
+
 
 
     private void getPropertiesFile() throws IOException {

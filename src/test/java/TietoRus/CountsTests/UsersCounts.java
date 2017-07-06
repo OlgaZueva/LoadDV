@@ -20,7 +20,7 @@ public class UsersCounts {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void usersInSAView() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInMSCRUS = getCountRowInSA(properties.getProperty("users.MSCRUS.CountRows"));
@@ -32,16 +32,21 @@ public class UsersCounts {
     @Test(enabled = true)
     public void usersInDWH() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInViewDistinct = getCountRowInSA(properties.getProperty("users.ViewDistinct.CountRows"));
-        int countRowInHub = getCountRowInDWH(properties.getProperty("users.DestinationTable.CountRows"));
-        assertRowCount(countRowInViewDistinct, countRowInHub);
+        int countRowInSA = getCountRowInSA(properties.getProperty("users.union.CountRows"));
+        int countRowInDWH = getCountRowInDWH(properties.getProperty("users.destinationTable.CountRows"));
+        assertRowCount(countRowInSA, countRowInDWH);
     }
 
     @Test(enabled = true)
     public void usersCompanyInDWH() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInDWH(properties.getProperty("usersCompany.Condition.CountRows"));
-        int countRowInDestination = getCountRowInDWH(properties.getProperty("usersCompany.DestinationTable.CountRows"));
+        int countRowFromAdgangLinOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangLinOnly.CountRows"));
+        int countRowFromAdgangOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangOnly.CountRows"));
+        int countRowByCondition = getCountRowInDWH(properties.getProperty("usersCompany.condition.CountRows"));
+        System.out.println("Столько должно быть записей из AdgangLin: " + countRowFromAdgangLinOnly);
+        System.out.println("Столько записей д.б. создано из Adgang: " + countRowFromAdgangOnly);
+        System.out.println("Столько записей д.б. в stUserCompany с учетом загруженого из Adgand: " + countRowByCondition);
+        int countRowInDestination = getCountRowInDWH(properties.getProperty("usersCompany.destinationTable.CountRows"));
         assertRowCount(countRowByCondition, countRowInDestination);
     }
 
