@@ -305,60 +305,158 @@ public class LinksCounts {
         int countRowByCondition_S_NAMED_ACCOUNT_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_NAMED_ACCOUNT_Null.CountRows"));
         System.out.println("countRowByCondition_S_NAMED_ACCOUNT_NotNull: " + countRowByCondition_S_NAMED_ACCOUNT_NotNull);
         System.out.println("countRowByCondition_S_NAMED_ACCOUNT_Null: " + countRowByCondition_S_NAMED_ACCOUNT_Null);
-        System.out.println("Summa S_NAMED_ACCOUNT: " + countRowByCondition_S_NAMED_ACCOUNT_NotNull + countRowByCondition_S_NAMED_ACCOUNT_Null);
+        System.out.println("Summa S_NAMED_ACCOUNT: " + (countRowByCondition_S_NAMED_ACCOUNT_NotNull + countRowByCondition_S_NAMED_ACCOUNT_Null));
         int countRowByCondition_S_BOOK_PARTY_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_BOOK_PARTY_NotNull.CountRows"));
         int countRowByCondition_S_BOOK_PARTY_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_BOOK_PARTY_Null.CountRows"));
         System.out.println("countRowByCondition_S_BOOK_PARTY_NotNull: " + countRowByCondition_S_BOOK_PARTY_NotNull);
         System.out.println("countRowByCondition_S_BOOK_PARTY_Null: " + countRowByCondition_S_BOOK_PARTY_Null);
-        System.out.println("Summa S_BOOK_PARTY: " + countRowByCondition_S_BOOK_PARTY_NotNull + countRowByCondition_S_BOOK_PARTY_Null);
+        System.out.println("Summa S_BOOK_PARTY: " + (countRowByCondition_S_BOOK_PARTY_NotNull + countRowByCondition_S_BOOK_PARTY_Null));
         int countRowByCondition_S_CARE_OF_FWD_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_CARE_OF_FWD_NotNull.CountRows"));
         int countRowByCondition_S_CARE_OF_FWD_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_CARE_OF_FWD_Null.CountRows"));
         System.out.println("countRowByCondition_S_CARE_OF_FWD_NotNull: " + countRowByCondition_S_CARE_OF_FWD_NotNull);
         System.out.println("countRowByCondition_S_CARE_OF_FWD_Null: " + countRowByCondition_S_CARE_OF_FWD_Null);
-        System.out.println("Summa S_CARE_OF_FWD: " + countRowByCondition_S_CARE_OF_FWD_NotNull + countRowByCondition_S_CARE_OF_FWD_Null);
+        System.out.println("Summa S_CARE_OF_FWD: " + (countRowByCondition_S_CARE_OF_FWD_NotNull + countRowByCondition_S_CARE_OF_FWD_Null));
         int countRowByCondition_S_AFSENDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_AFSENDER_NotNull.CountRows"));
         int countRowByCondition_S_AFSENDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_AFSENDER_Null.CountRows"));
         System.out.println("countRowByCondition_S_AFSENDER_NotNull: " + countRowByCondition_S_AFSENDER_NotNull);
         System.out.println("countRowByCondition_S_AFSENDER_Null: " + countRowByCondition_S_AFSENDER_Null);
-        System.out.println("Summa S_AFSENDER: " + countRowByCondition_S_AFSENDER_NotNull + countRowByCondition_S_AFSENDER_Null);
+        System.out.println("Summa S_AFSENDER: " + (countRowByCondition_S_AFSENDER_NotNull + countRowByCondition_S_AFSENDER_Null));
         int countRowByCondition_S_MODTAGER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_MODTAGER_NotNull.CountRows"));
         int countRowByCondition_S_MODTAGER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_MODTAGER_Null.CountRows"));
         System.out.println("countRowByCondition_S_MODTAGER_NotNull: " + countRowByCondition_S_MODTAGER_NotNull);
         System.out.println("countRowByCondition_S_MODTAGER_Null: " + countRowByCondition_S_MODTAGER_Null);
-        System.out.println("Summa S_MODTAGER: " + countRowByCondition_S_MODTAGER_NotNull + countRowByCondition_S_MODTAGER_Null);
+        System.out.println("Summa S_MODTAGER: " + (countRowByCondition_S_MODTAGER_NotNull + countRowByCondition_S_MODTAGER_Null));
         int countRowByCondition_S_SLUTSPED_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_SLUTSPED_NotNull.CountRows"));
         int countRowByCondition_S_SLUTSPED_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_SLUTSPED_Null.CountRows"));
         System.out.println("countRowByCondition_S_SLUTSPED_NotNull: " + countRowByCondition_S_SLUTSPED_NotNull);
         System.out.println("countRowByCondition_S_SLUTSPED_Null: " + countRowByCondition_S_SLUTSPED_Null);
-        System.out.println("Summa S_SLUTSPED: " + countRowByCondition_S_SLUTSPED_NotNull + countRowByCondition_S_SLUTSPED_Null);
+        System.out.println("Summa S_SLUTSPED: " + (countRowByCondition_S_SLUTSPED_NotNull + countRowByCondition_S_SLUTSPED_Null));
         int countRowByCondition_S_NOTIFY2_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_NOTIFY2_NotNull.CountRows"));
         int countRowByCondition_S_NOTIFY2_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_NOTIFY2_Null.CountRows"));
         System.out.println("countRowByCondition_S_NOTIFY2_NotNull: " + countRowByCondition_S_NOTIFY2_NotNull);
         System.out.println("countRowByCondition_S_NOTIFY2_Null: " + countRowByCondition_S_NOTIFY2_Null);
-        System.out.println("Summa S_NOTIFY2: " + countRowByCondition_S_NOTIFY2_NotNull + countRowByCondition_S_NOTIFY2_Null);
+        System.out.println("Summa S_NOTIFY2: " + (countRowByCondition_S_NOTIFY2_NotNull + countRowByCondition_S_NOTIFY2_Null));
         int countRowByCondition_S_NOTIFY3_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_NOTIFY3_NotNull.CountRows"));
         int countRowByCondition_S_NOTIFY3_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_NOTIFY3_Null.CountRows"));
         System.out.println("countRowByCondition_S_NOTIFY3_NotNull: " + countRowByCondition_S_NOTIFY3_NotNull);
         System.out.println("countRowByCondition_S_NOTIFY3_Null: " + countRowByCondition_S_NOTIFY3_Null);
-        System.out.println("Summa S_NOTIFY3: " + countRowByCondition_S_NOTIFY3_NotNull + countRowByCondition_S_NOTIFY3_Null);
+        System.out.println("Summa S_NOTIFY3: " + (countRowByCondition_S_NOTIFY3_NotNull + countRowByCondition_S_NOTIFY3_Null));
         int countRowByCondition_S_KUNDE_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_KUNDE_NotNull.CountRows"));
         int countRowByCondition_S_KUNDE_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_KUNDE_Null.CountRows"));
         System.out.println("countRowByCondition_S_KUNDE_NotNull: " + countRowByCondition_S_KUNDE_NotNull);
         System.out.println("countRowByCondition_S_KUNDE_Null: " + countRowByCondition_S_KUNDE_Null);
-        System.out.println("Summa S_KUNDE: " + countRowByCondition_S_KUNDE_NotNull + countRowByCondition_S_KUNDE_Null);
+        System.out.println("Summa S_KUNDE: " + (countRowByCondition_S_KUNDE_NotNull + countRowByCondition_S_KUNDE_Null));
+        int countRowByCondition_S_CONTRACT_HOLDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_CONTRACT_HOLDER_NotNull.CountRows"));
+        int countRowByCondition_S_CONTRACT_HOLDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_CONTRACT_HOLDER_Null.CountRows"));
+        System.out.println("countRowByCondition_S_CONTRACT_HOLDER_NotNull: " + countRowByCondition_S_CONTRACT_HOLDER_NotNull);
+        System.out.println("countRowByCondition_S_CONTRACT_HOLDER_Null: " + countRowByCondition_S_CONTRACT_HOLDER_Null);
+        System.out.println("Summa S_CONTRACT_HOLDER: " + (countRowByCondition_S_CONTRACT_HOLDER_NotNull + countRowByCondition_S_CONTRACT_HOLDER_Null));
+        int countRowByCondition_S_IC_ELSEWHERE_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_IC_ELSEWHERE_NotNull.CountRows"));
+        int countRowByCondition_S_IC_ELSEWHERE_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_IC_ELSEWHERE_Null.CountRows"));
+        System.out.println("countRowByCondition_S_IC_ELSEWHERE_NotNull: " + countRowByCondition_S_IC_ELSEWHERE_NotNull);
+        System.out.println("countRowByCondition_S_IC_ELSEWHERE_Null: " + countRowByCondition_S_IC_ELSEWHERE_Null);
+        System.out.println("Summa S_IC_ELSEWHERE: " + (countRowByCondition_S_IC_ELSEWHERE_NotNull + countRowByCondition_S_IC_ELSEWHERE_Null));
+        int countRowByCondition_S_FREIGHT_FWD_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_FREIGHT_FWD_NotNull.CountRows"));
+        int countRowByCondition_S_FREIGHT_FWD_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_FREIGHT_FWD_Null.CountRows"));
+        System.out.println("countRowByCondition_S_FREIGHT_FWD_NotNull: " + countRowByCondition_S_FREIGHT_FWD_NotNull);
+        System.out.println("countRowByCondition_S_FREIGHT_FWD_Null: " + countRowByCondition_S_FREIGHT_FWD_Null);
+        System.out.println("Summa S_FREIGHT_FWD: " + (countRowByCondition_S_FREIGHT_FWD_NotNull + countRowByCondition_S_FREIGHT_FWD_Null));
+//Блок для роли StatCustomer
+        int countRowByCondition_StatCustomer_S_KUNDE_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_KUNDE_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_KUNDE_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_KUNDE_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_KUNDE_NotNull: " + countRowByCondition_StatCustomer_S_KUNDE_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_KUNDE_Null: " + countRowByCondition_StatCustomer_S_KUNDE_Null);
+        System.out.println("Summa StatCustomer_S_KUNDE: " + (countRowByCondition_StatCustomer_S_KUNDE_NotNull + countRowByCondition_StatCustomer_S_KUNDE_Null));
+        int countRowByCondition_StatCustomer_S_AFSENDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_AFSENDER_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_AFSENDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_AFSENDER_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_AFSENDER_NotNull: " + countRowByCondition_StatCustomer_S_AFSENDER_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_AFSENDER_Null: " + countRowByCondition_StatCustomer_S_AFSENDER_Null);
+        System.out.println("Summa StatCustomer_S_AFSENDER: " + (countRowByCondition_StatCustomer_S_AFSENDER_NotNull + countRowByCondition_StatCustomer_S_AFSENDER_Null));
+        int countRowByCondition_StatCustomer_S_MODTAGER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_MODTAGER_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_MODTAGER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_MODTAGER_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_MODTAGER_NotNull: " + countRowByCondition_StatCustomer_S_MODTAGER_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_MODTAGER_Null: " + countRowByCondition_StatCustomer_S_MODTAGER_Null);
+        System.out.println("Summa StatCustomer_S_MODTAGER: " + (countRowByCondition_StatCustomer_S_MODTAGER_NotNull + countRowByCondition_StatCustomer_S_MODTAGER_Null));
+        int countRowByCondition_StatCustomer_S_SLUTSPED_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_SLUTSPED_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_SLUTSPED_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_SLUTSPED_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_SLUTSPED_NotNull: " + countRowByCondition_StatCustomer_S_SLUTSPED_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_SLUTSPED_Null: " + countRowByCondition_StatCustomer_S_SLUTSPED_Null);
+        System.out.println("Summa StatCustomer_S_MODTAGER: " + (countRowByCondition_StatCustomer_S_SLUTSPED_NotNull + countRowByCondition_StatCustomer_S_SLUTSPED_Null));
+        int countRowByCondition_StatCustomer_S_NOTIFY2_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_NOTIFY2_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_NOTIFY2_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_NOTIFY2_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_NOTIFY2_NotNull: " + countRowByCondition_StatCustomer_S_NOTIFY2_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_NOTIFY2_Null: " + countRowByCondition_StatCustomer_S_NOTIFY2_Null);
+        System.out.println("Summa StatCustomer_S_NOTIFY2: " +(countRowByCondition_StatCustomer_S_NOTIFY2_NotNull + countRowByCondition_StatCustomer_S_NOTIFY2_Null));
+        int countRowByCondition_StatCustomer_S_NOTIFY3_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_NOTIFY3_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_NOTIFY3_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_NOTIFY3_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_NOTIFY3_NotNull: " + countRowByCondition_StatCustomer_S_NOTIFY3_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_NOTIFY3_Null: " + countRowByCondition_StatCustomer_S_NOTIFY3_Null);
+        System.out.println("Summa StatCustomer_S_NOTIFY3: " + (countRowByCondition_StatCustomer_S_NOTIFY3_NotNull + countRowByCondition_StatCustomer_S_NOTIFY3_Null));
+        int countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_CONTRACT_HOLDER_NotNull.CountRows"));
+        int countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_S_CONTRACT_HOLDER_Null.CountRows"));
+        System.out.println("countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_NotNull: " + countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_NotNull);
+        System.out.println("countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_Null: " + countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_Null);
+        System.out.println("Summa StatCustomer_S_CONTRACT_HOLDER: " + (countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_NotNull + countRowByCondition_StatCustomer_S_CONTRACT_HOLDER_Null));
 
+        //Блок для роли FreightPayer
+        int countRowByCondition_FreightPayer_S_KUNDE_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_KUNDE_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_KUNDE_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_KUNDE_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_KUNDE_NotNull: " + countRowByCondition_FreightPayer_S_KUNDE_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_KUNDE_Null: " + countRowByCondition_FreightPayer_S_KUNDE_Null);
+        System.out.println("Summa FreightPayer_S_KUNDE: " + (countRowByCondition_FreightPayer_S_KUNDE_NotNull + countRowByCondition_FreightPayer_S_KUNDE_Null));
+        int countRowByCondition_FreightPayer_S_AFSENDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_AFSENDER_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_AFSENDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_AFSENDER_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_AFSENDER_NotNull: " + countRowByCondition_FreightPayer_S_AFSENDER_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_AFSENDER_Null: " + countRowByCondition_FreightPayer_S_AFSENDER_Null);
+        System.out.println("Summa FreightPayer_S_AFSENDER: " + (countRowByCondition_FreightPayer_S_AFSENDER_NotNull + countRowByCondition_FreightPayer_S_AFSENDER_Null));
+        int countRowByCondition_FreightPayer_S_MODTAGER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_MODTAGER_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_MODTAGER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_MODTAGER_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_MODTAGER_NotNull: " + countRowByCondition_FreightPayer_S_MODTAGER_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_MODTAGER_Null: " + countRowByCondition_FreightPayer_S_MODTAGER_Null);
+        System.out.println("Summa FreightPayer_S_MODTAGER: " + (countRowByCondition_FreightPayer_S_MODTAGER_NotNull + countRowByCondition_FreightPayer_S_MODTAGER_Null));
+        int countRowByCondition_FreightPayer_S_SLUTSPED_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_SLUTSPED_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_SLUTSPED_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_SLUTSPED_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_SLUTSPED_NotNull: " + countRowByCondition_FreightPayer_S_SLUTSPED_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_SLUTSPED_Null: " + countRowByCondition_FreightPayer_S_SLUTSPED_Null);
+        System.out.println("Summa FreightPayer_S_MODTAGER: " + (countRowByCondition_FreightPayer_S_SLUTSPED_NotNull + countRowByCondition_FreightPayer_S_SLUTSPED_Null));
+        int countRowByCondition_FreightPayer_S_NOTIFY2_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_NOTIFY2_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_NOTIFY2_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_NOTIFY2_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_NOTIFY2_NotNull: " + countRowByCondition_FreightPayer_S_NOTIFY2_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_NOTIFY2_Null: " + countRowByCondition_FreightPayer_S_NOTIFY2_Null);
+        System.out.println("Summa FreightPayer_S_NOTIFY2: " + (countRowByCondition_FreightPayer_S_NOTIFY2_NotNull + countRowByCondition_FreightPayer_S_NOTIFY2_Null));
+        int countRowByCondition_FreightPayer_S_NOTIFY3_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_NOTIFY3_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_NOTIFY3_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_NOTIFY3_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_NOTIFY3_NotNull: " + countRowByCondition_FreightPayer_S_NOTIFY3_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_NOTIFY3_Null: " + countRowByCondition_FreightPayer_S_NOTIFY3_Null);
+        System.out.println("Summa FreightPayer_S_NOTIFY3: " + (countRowByCondition_FreightPayer_S_NOTIFY3_NotNull + countRowByCondition_FreightPayer_S_NOTIFY3_Null));
+        int countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_NotNull = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_CONTRACT_HOLDER_NotNull.CountRows"));
+        int countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_S_CONTRACT_HOLDER_Null.CountRows"));
+        System.out.println("countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_NotNull: " + countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_NotNull);
+        System.out.println("countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_Null: " + countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_Null);
+        System.out.println("Summa FreightPayer_S_CONTRACT_HOLDER: " + (countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_NotNull + countRowByCondition_FreightPayer_S_CONTRACT_HOLDER_Null));
 
-        int countRowByCondition = countRowByCondition_S_NAMED_ACCOUNT_NotNull + countRowByCondition_S_NAMED_ACCOUNT_Null +
-                countRowByCondition_S_BOOK_PARTY_NotNull + countRowByCondition_S_BOOK_PARTY_Null +
-                countRowByCondition_S_CARE_OF_FWD_NotNull + countRowByCondition_S_CARE_OF_FWD_Null +
-                countRowByCondition_S_AFSENDER_NotNull + countRowByCondition_S_AFSENDER_Null +
-                countRowByCondition_S_MODTAGER_NotNull + countRowByCondition_S_MODTAGER_Null +
-                countRowByCondition_S_SLUTSPED_NotNull + countRowByCondition_S_SLUTSPED_Null +
-                countRowByCondition_S_NOTIFY2_NotNull + countRowByCondition_S_NOTIFY2_Null +
-                countRowByCondition_S_NOTIFY3_NotNull + countRowByCondition_S_NOTIFY3_Null +
-                countRowByCondition_S_KUNDE_NotNull + countRowByCondition_S_KUNDE_Null;
+        int countRowsByUNIONConditionsForStatCustomer = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_StatCustomer_Union.CountRows"));
+        System.out.println("Summa All StatCustomer with UNION: " + countRowsByUNIONConditionsForStatCustomer);
+
+        int countRowsByUNIONConditionsForFreightPayer = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_FreightPayer_Union.CountRows"));
+        System.out.println("Summa All FreightPayer with UNION: " + countRowsByUNIONConditionsForFreightPayer);
+
+        int countRowsByConditionsAll =
+                        countRowByCondition_S_NAMED_ACCOUNT_NotNull + countRowByCondition_S_NAMED_ACCOUNT_Null +
+                        countRowByCondition_S_BOOK_PARTY_NotNull + countRowByCondition_S_BOOK_PARTY_Null +
+                        countRowByCondition_S_CARE_OF_FWD_NotNull + countRowByCondition_S_CARE_OF_FWD_Null +
+                        countRowByCondition_S_AFSENDER_NotNull + countRowByCondition_S_AFSENDER_Null +
+                        countRowByCondition_S_MODTAGER_NotNull + countRowByCondition_S_MODTAGER_Null +
+                        countRowByCondition_S_SLUTSPED_NotNull + countRowByCondition_S_SLUTSPED_Null +
+                        countRowByCondition_S_NOTIFY2_NotNull + countRowByCondition_S_NOTIFY2_Null +
+                        countRowByCondition_S_NOTIFY3_NotNull + countRowByCondition_S_NOTIFY3_Null +
+                        countRowByCondition_S_KUNDE_NotNull + countRowByCondition_S_KUNDE_Null +
+                        countRowByCondition_S_CONTRACT_HOLDER_NotNull + countRowByCondition_S_CONTRACT_HOLDER_Null +
+                        countRowByCondition_S_IC_ELSEWHERE_NotNull + countRowByCondition_S_IC_ELSEWHERE_Null +
+                        countRowByCondition_S_FREIGHT_FWD_NotNull + countRowByCondition_S_FREIGHT_FWD_Null +
+                        countRowsByUNIONConditionsForStatCustomer + countRowsByUNIONConditionsForFreightPayer;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.lnk.CountRows"));
-        assertRowCount(countRowByCondition, countRowInLink);
+        assertRowCount(countRowsByConditionsAll, countRowInLink);
     }
 
     @Test(enabled = true)
@@ -1724,9 +1822,9 @@ public class LinksCounts {
     public void BookingCargoChargesLnk() throws SQLException, IOException {
         getPropertiesFile();
         //int countRowInCondition_ValutaIsNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_ValutaIsNull.CountRows"));
-       // int countRowInCondition_ValutaIsNotNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_ValutaIsNotNull.CountRows"));
+        // int countRowInCondition_ValutaIsNotNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_ValutaIsNotNull.CountRows"));
         //System.out.println("countRowInCondition_ValutaIsNull: " + countRowInCondition_ValutaIsNull);
-       // System.out.println("countRowInCondition_ValutaIsNotNull: " + countRowInCondition_ValutaIsNotNull);
+        // System.out.println("countRowInCondition_ValutaIsNotNull: " + countRowInCondition_ValutaIsNotNull);
         int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
         //int countRowInLnkByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
         int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
@@ -1737,7 +1835,7 @@ public class LinksCounts {
     public void BookingCargoChargesSatLnk() throws SQLException, IOException {
         getPropertiesFile();
         System.out.println("getCharges будут перписаны полностью. Линков не будет, будет таблица фактов и формироваться будет по другому. Исправить запрос.");
-        int countRowInLnk= getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
+        int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
         int countRowInSatLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satLnk.CountRows"));
         assertRowCount(countRowInLnk, countRowInSatLnk);
     }
@@ -1750,7 +1848,7 @@ public class LinksCounts {
 
         int countRowInCondition_ValutaIsNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_ValutaIsNull.CountRows"));
         int countRowInCondition_ValutaIsNotNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_ValutaIsNotNull.CountRows"));
-       // int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_Union.CountRows"));
+        // int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_Union.CountRows"));
         System.out.println("countRowInCondition_ValutaIsNull: " + countRowInCondition_ValutaIsNull);
         System.out.println("countRowInCondition_ValutaIsNotNull: " + countRowInCondition_ValutaIsNotNull);
         int countRowISatByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
