@@ -20,12 +20,17 @@ public class SatsLogsTest {
     private Properties properties = new Properties();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 /*
- Для каждой сущности ( = хабу) должно быть создано по 2 записи - для sat'а и  satStatus'а, исключением являются EXCEL-таблицы или таблицы /сущности по которым SatStatus'ов 
-не создается и таблицы (или сущности), по которым нет сатов, но есть сатСтатусы).
+Перед тестов надо очистит DWH (хабов быть не должно), затем запустить пакет загрузки сатов, затем вставить тестовые данные, затем тест
+ Для каждой сущности ( = хабу) должно быть создано по 2 записи - для sat'а и  satStatus'а, исключения:
+  1. Три EXCEL-таблицы - по одной записи (SatStatus'ов не создается), а для EXCEL_ControllingOfficeLocationCode две записи (для srcSystemId in (1,2)), т.к. из-за srcSystemId во вьюхе записи множатся
+  2. Для book - три записи (satBooking, satBookingStatus, satBookingCustomers (дополнительный сат по буку, сатСтатуса нет для него)
+  3. bookDryPort - одна запись (для satBookingNonManifestedHaulage) -  satStatus'а нет т.к. хаб создается по book
+  4. contHolliday, ediKonv_ImsChargeLines, ediKonv_OceanVesselService,  ediKonv_OceanVesselStatus и ediKonv_CompanyAgentCode -  по одной записи -  нет sat'ов
+  5 Для Kunde и Adresse не посчитать как для остальных - хабы и с саты для них создаются отдельным пакетом и все сразу, т.е. сымулировать ситуацию попытки загрузки сатов безз хабов нереально
 */
     @Test(enabled = true)
     public void SatsLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[46];
+        String[] select = new String[47];
         select[0] = "cleanUp.sat.select";
         select[1] = "cntrTypeSpecEquip.sat.select";
         select[2] = "controllingOffice.sat.select";
@@ -72,6 +77,7 @@ public class SatsLogsTest {
         select[43] = "selskab.sat.select";
         select[44] = "shipKurs.sat.select";
         select[45] = "utsConstants.sat.select";
+        select[46] = "ediKonv_CompanyAgentCode.sat.select";
 
 
         getPropertiesFile();
@@ -84,7 +90,7 @@ public class SatsLogsTest {
     }
 
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/testDataQuery.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/LogsTestDataQuery.properties"))));
     }
 
     public Map<String, Object> selectTestRowFromDWH(String query, String s) throws SQLException {

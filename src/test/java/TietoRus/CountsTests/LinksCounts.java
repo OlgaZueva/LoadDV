@@ -1819,12 +1819,16 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
-    public void BookingCargoChargesLnk() throws SQLException, IOException {
+    public void BookingCargoChargesFct_InitialLoad() throws SQLException, IOException {
         getPropertiesFile();
-        //int countRowInCondition_ValutaIsNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_ValutaIsNull.CountRows"));
-        // int countRowInCondition_ValutaIsNotNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_ValutaIsNotNull.CountRows"));
-        //System.out.println("countRowInCondition_ValutaIsNull: " + countRowInCondition_ValutaIsNull);
-        // System.out.println("countRowInCondition_ValutaIsNotNull: " + countRowInCondition_ValutaIsNotNull);
+        int countRowInConditionForInitialLoad = getCountRowOfHub(properties.getProperty("bookingCargoCharges.fctCondition_InitialLoad.CountRows"));
+        int countRowInFct = getCountRowOfHub(properties.getProperty("bookingCargoCharges.fct.CountRows"));
+        assertRowCount(countRowInConditionForInitialLoad, countRowInFct);
+    }
+
+    @Test(enabled = true)
+    public void BookingCargoChargesFct() throws SQLException, IOException {
+        getPropertiesFile();
         int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
         //int countRowInLnkByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
         int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
@@ -1832,44 +1836,10 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
-    public void BookingCargoChargesSatLnk() throws SQLException, IOException {
-        getPropertiesFile();
-        System.out.println("getCharges будут перписаны полностью. Линков не будет, будет таблица фактов и формироваться будет по другому. Исправить запрос.");
-        int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
-        int countRowInSatLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satLnk.CountRows"));
-        assertRowCount(countRowInLnk, countRowInSatLnk);
-    }
-
-    //Sat создается пакетом GET_CHARGES - загрузка чарджерс из SA в DWH.
-    //06.07.2017 -  getCharges будут перписаны полностью, сатов не будет там совсем
-    @Test(enabled = false)
-    public void BookingCargoChargesSat() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInCondition_ValutaIsNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_ValutaIsNull.CountRows"));
-        int countRowInCondition_ValutaIsNotNull = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_ValutaIsNotNull.CountRows"));
-        // int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.satCondition_Union.CountRows"));
-        System.out.println("countRowInCondition_ValutaIsNull: " + countRowInCondition_ValutaIsNull);
-        System.out.println("countRowInCondition_ValutaIsNotNull: " + countRowInCondition_ValutaIsNotNull);
-        int countRowISatByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCargoCharges.sat.CountRows"));
-        assertRowCount(countRowISatByCondition, countRowInSat);
-    }
-
-
-    @Test(enabled = true)
     public void lnkShipItConstantsCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.lnk.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void satLnkShipItConstantsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.lnk.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkShipItConstantsCompany.satLnk.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
 

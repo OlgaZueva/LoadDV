@@ -43,7 +43,7 @@ public class UsersCounts {
         int countRowFromAdgangLinOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangLinOnly.CountRows"));
         int countRowFromAdgangOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangOnly.CountRows"));
         int countRowByCondition = getCountRowInDWH(properties.getProperty("usersCompany.condition.CountRows"));
-        System.out.println("Столько должно быть записей из AdgangLin: " + countRowFromAdgangLinOnly);
+        System.out.println("Столько должно быть записей из AdgangLin (без учета уже существующих в stUserCompany): " + countRowFromAdgangLinOnly);
         System.out.println("Столько записей д.б. создано из Adgang: " + countRowFromAdgangOnly);
         System.out.println("Столько записей д.б. в stUserCompany с учетом загруженого из Adgand: " + countRowByCondition);
         int countRowInDestination = getCountRowInDWH(properties.getProperty("usersCompany.destinationTable.CountRows"));

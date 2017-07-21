@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="LoadDataTestsSuit" verbose="1" >
+    <test name="InitialLoadTests" >
+        <classes>
+            <class name="TietoRus.CountsTests.HubsCounts" />
+            <class name="TietoRus.CountsTests.SatsAndSatStatusesCounts" />
+            <class name="TietoRus.CountsTests.LinksCounts" />
+            <class name="TietoRus.CountsTests.UsersCounts" />
+            <class name="TietoRus.CountsTests.SomeFieldsInSATests" />
+            <class name="TietoRus.CountsTests.validFromInSatTest" />
+        </classes>
+    </test>
+
+</suite>

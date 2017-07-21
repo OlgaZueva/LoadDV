@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Properties;
 
 /*
-Перед проверкой хабов нужно выполнить ALTER_TABLE и заменить в файле с запросами для тестовых данных число 99 на 77777 (на любое, больше чем smallint)
+
  */
 public class InsAndDelTestData {
     private DBHelper db = new DBHelper();
@@ -21,7 +21,7 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void InsertTestDataTest() throws SQLException, IOException {
-        String[] inserts = new String[46];
+        String[] inserts = new String[48];
         inserts[0] = "cleanUp.insert";
         inserts[1] = "cntrTypeSpecEquip.insert";
         inserts[2] = "controllingOffice.insert";
@@ -55,19 +55,21 @@ public class InsAndDelTestData {
         inserts[30] = "ediKonv_SpecialContractTypes.insert";
         inserts[31] = "expVessels.insert";
         inserts[32] = "faktPost.insert";
-        inserts[33] = "henvis_ContainerLocation.insert";
-        inserts[34] = "henvis_Country.insert";
-        inserts[35] = "henvis_Locations.insert";
-        inserts[36] = "henvis_VesselRegistry.insert";
-        inserts[37] = "henvis_Currency.insert";
-        inserts[38] = "kunde.insert";
-        inserts[39] = "ordre.insert";
-        inserts[40] = "ordreLin.insert";
-        inserts[41] = "sag.insert";
-        inserts[42] = "sagKurs.insert";
-        inserts[43] = "selskab.insert";
-        inserts[44] = "shipKurs.insert";
-        inserts[45] = "utsConstants.insert";
+        inserts[33] = "getCharges.insert";
+        inserts[34] = "henvis_ContainerLocation.insert";
+        inserts[35] = "henvis_Country.insert";
+        inserts[36] = "henvis_Locations.insert";
+        inserts[37] = "henvis_VesselRegistry.insert";
+        inserts[38] = "henvis_Currency.insert";
+        inserts[39] = "kunde.insert";
+        inserts[40] = "ordre.insert";
+        inserts[41] = "ordreLin.insert";
+        inserts[42] = "sag.insert";
+        inserts[43] = "sagKurs.insert";
+        inserts[44] = "selskab.insert";
+        inserts[45] = "shipKurs.insert";
+        inserts[46] = "utsConstants.insert";
+        inserts[47] = "ediKonv_CompanyAgentCode.insert";
 
         getPropertiesFile();
         for (int i = 0; i < inserts.length; i++) {
@@ -78,7 +80,7 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void DeleteTestDataTest() throws SQLException, IOException {
-        String[] delete = new String[46];
+        String[] delete = new String[48];
         delete[0] = "cleanUp.delete";
         delete[1] = "cntrTypeSpecEquip.delete";
         delete[2] = "controllingOffice.delete";
@@ -112,19 +114,22 @@ public class InsAndDelTestData {
         delete[30] = "ediKonv_SpecialContractTypes.delete";
         delete[31] = "expVessels.delete";
         delete[32] = "faktPost.delete";
-        delete[33] = "henvis_ContainerLocation.delete";
-        delete[34] = "henvis_Country.delete";
-        delete[35] = "henvis_Locations.delete";
-        delete[36] = "henvis_VesselRegistry.delete";
-        delete[37] = "henvis_Currency.delete";
-        delete[38] = "kunde.delete";
-        delete[39] = "ordre.delete";
-        delete[40] = "ordreLin.delete";
-        delete[41] = "sag.delete";
-        delete[42] = "sagKurs.delete";
-        delete[43] = "selskab.delete";
-        delete[44] = "shipKurs.delete";
-        delete[45] = "utsConstants.delete";
+        delete[33] = "getCharges.delete";
+        delete[34] = "henvis_ContainerLocation.delete";
+        delete[35] = "henvis_Country.delete";
+        delete[36] = "henvis_Locations.delete";
+        delete[37] = "henvis_VesselRegistry.delete";
+        delete[38] = "henvis_Currency.delete";
+        delete[39] = "kunde.delete";
+        delete[40] = "ordre.delete";
+        delete[41] = "ordreLin.delete";
+        delete[42] = "sag.delete";
+        delete[43] = "sagKurs.delete";
+        delete[44] = "selskab.delete";
+        delete[45] = "shipKurs.delete";
+        delete[46] = "utsConstants.delete";
+        delete[47] = "ediKonv_CompanyAgentCode.delete";
+
 
         getPropertiesFile();
         for (int i = 0; i < delete.length; i++) {
@@ -133,11 +138,8 @@ public class InsAndDelTestData {
         }
     }
 
-
-
-
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/testDataQuery.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/LogsTestDataQuery.properties"))));
     }
 
     public void insertTestRowInSA(String query, String tableName) throws SQLException {

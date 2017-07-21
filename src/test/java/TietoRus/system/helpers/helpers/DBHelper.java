@@ -5,20 +5,27 @@ import java.sql.*;
 
 public class DBHelper {
 
+    public Connection connToITest() throws SQLException {
+        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.101.220:1551:ITEST");
+    }
+
+    public Connection connToRTest() throws SQLException {
+        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.1.223:1566:RTEST");
+    }
+
      public Connection connToSA() throws SQLException {
 
       //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=StagingAreaTest;user=ssis;password=ssis");
-       // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;databaseName=StagingAreaTest;user=ssis;password=ssis");
-       //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
-       return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTestCDC;user=ssis;password=ssis");
+       return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=StagingAreaTest;user=ssis;password=ssis");
+      //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
+
 
     }
 
     public Connection connToDWH() throws SQLException {
        // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataVaultTest;user=ssis;password=ssis");
-       //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15\\SQL2016;databaseName=DataVaultTest;user=ssis;password=ssis");
-       // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTest;user=ssis;password=ssis");
-       return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTestCDC;user=ssis;password=ssis");
+   return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=DataVaultTest;user=ssis;password=ssis");
+//       return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTest;user=ssis;password=ssis");
 
     }
 

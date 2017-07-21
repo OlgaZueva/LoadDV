@@ -85,7 +85,7 @@ public class HubsLogsTest {
     }
 
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/testDataQuery.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/LogsTestDataQuery.properties"))));
     }
 
     public Map<String, Object> selectTestRowFromDWH(String query, String s) throws SQLException {

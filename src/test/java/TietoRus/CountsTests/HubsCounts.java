@@ -78,7 +78,7 @@ public class HubsCounts {
         System.out.println("В данном случае перегрузили всю таблицу");
         System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("containerType.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("containerType.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("containerType.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -99,8 +99,8 @@ public class HubsCounts {
         System.out.println("В данном случае перегрузили всю таблицу");
         System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("company.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("company.hub.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("company.union.CountRows")) +1);
+        int countRowInHub =getCountRowOfHub(properties.getProperty("company.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
 
@@ -151,7 +151,7 @@ public class HubsCounts {
         System.out.println("countRowInKundeInSA: " + countRowInKundeInSA);
         int countRowInAdresseInSA =  getCountRowInSA(properties.getProperty("customersAdresse.union.CountRows"));
         System.out.println("countRowInAdresseInSA:" + countRowInAdresseInSA);
-        int countRowInSA = countRowInKundeInSA + countRowInAdresseInSA;
+        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("customers.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -270,7 +270,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubBookingHaulageDetails() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("bookingHaulageDetails.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("bookingHaulageDetails.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("bookingHaulageDetails.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -508,7 +508,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubOceanVesselService() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("oceanVesselService.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("oceanVesselService.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("oceanVesselService.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -525,7 +525,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubOceanVesselStatus() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("oceanVesselStatus.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("oceanVesselStatus.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("oceanVesselStatus.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -542,7 +542,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubImsChargeLines() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("imsChargeLines.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("imsChargeLines.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("imsChargeLines.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -559,7 +559,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubSpecialContractTypes() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("specialContractTypes.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("specialContractTypes.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("specialContractTypes.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -576,7 +576,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubCorrectorRemarkTypes() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("correctorRemarkTypes.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("correctorRemarkTypes.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("correctorRemarkTypes.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -593,7 +593,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubSublocation() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("sublocation.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("sublocation.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("sublocation.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -610,7 +610,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubTransportMode() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("transportMode.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("transportMode.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("transportMode.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -627,7 +627,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubContainerLocation() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("containerLocation.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("containerLocation.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("containerLocation.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -661,7 +661,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubCountry() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("country.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("country.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("country.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -678,7 +678,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubLocations() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("locations.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("locations.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("locations.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -695,7 +695,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubCurrency() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("currency.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("currency.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("currency.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -768,7 +768,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubContainerTypeSpecEquip() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("containerTypeSpecEquip.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("containerTypeSpecEquip.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("containerTypeSpecEquip.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -784,7 +784,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubLocationsPortsOverview() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("locationsPortsOverview.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("locationsPortsOverview.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("locationsPortsOverview.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }

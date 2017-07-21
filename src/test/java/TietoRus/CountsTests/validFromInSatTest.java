@@ -12,7 +12,7 @@ import java.sql.Statement;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-//Тесты пригодны для проверки после первоначлаьной загрузки. После загрузки из CDC уже даты разъедутся.
+//Тесты пригодны для проверки после первоначальной загрузки. После загрузки из CDC уже даты разъедутся.
 public class validFromInSatTest {
     private DBHelper db = new DBHelper();
 
@@ -21,9 +21,8 @@ public class validFromInSatTest {
         String[] keys = new String[35];
         keys[0] = "sat.satAccountingTransaction";
         keys[1] = "sat.satBooking";
-        //keys[2] = "sat.satBookingAuxReportingCustomer";//delete table
         keys[2] = "sat.satBookingCargo";
-        keys[3] = "sat.satBookingCargoCharges";
+        keys[3] = "fct.fctBookingCargoCharges";
         keys[4] = "sat.satBookingChargeLines";
         keys[5] = "sat.satBookingCharges";
         keys[6] = "sat.satBookingCustomers";
@@ -32,17 +31,14 @@ public class validFromInSatTest {
         keys[9] = "sat.satBookingNonManifestedHaulage";
         keys[10] = "sat.satBookingOceanVessel";
         keys[11] = "sat.satCompany";
-        //keys[18] = "sat.satCompanyAgentCode";
         keys[12] = "sat.satContainerLocation";
         keys[13] = "sat.satContainerMoves";
         keys[14] = "sat.satContainerType";
-        //keys[22] = "sat.satContainerTypeAuxSpecEquip"; // delete table
         keys[15] = "sat.satControllingOffice";
         keys[16] = "sat.satControllingOfficeAuxLocation";
         keys[17] = "sat.satCorrectorRemarkTypes";
         keys[18] = "sat.satCountry";
         keys[19] = "sat.satCurrency";
-        //keys[34] = "sat.satCustomerParty";
         keys[20] = "sat.satCustomers";
         keys[21] = "sat.satDailyRoe";
         keys[22] = "sat.satExportVessels";
@@ -52,14 +48,13 @@ public class validFromInSatTest {
         keys[26] = "sat.satInvoice";
         keys[27] = "sat.satInvoiceLines";
         keys[28] = "sat.satLocations";
-        //keys[38] = "sat.satLocationsAuxPortsOverview";// delete table
         keys[29] = "sat.satPayments";
         keys[30] = "sat.satShipItConstants";
         keys[31] = "sat.satSpecialContractTypes";
         keys[32] = "sat.satSublocation";
         keys[33] = "sat.satTransportMode";
         keys[34] = "sat.satVesselRegistry";
-        // sat.satOceanVesselStatus delete
+
 
         for (int i = 0; i < keys.length; i++) {
             String sql = "select distinct validFrom c from " + keys[i];
@@ -110,6 +105,7 @@ public class validFromInSatTest {
 
     @Test(enabled = true)
     public void ValidFromInDeletedSatsTest() throws SQLException, IOException {
+        //удаляемые саты (т.н. "без версионирования")
         String[] keys = new String[6];
         keys[0] = "sat.satBookingEvents";
         keys[1] = "sat.satBookingManifest";
