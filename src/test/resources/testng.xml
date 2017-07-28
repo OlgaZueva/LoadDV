@@ -3,6 +3,7 @@
 <suite name="LoadDataTestsSuit" verbose="1" >
     <test name="InitialLoadTests" >
         <classes>
+            <class name="TietoRus.CountsTests.DelSelskabCountsTests" />
             <class name="TietoRus.CountsTests.HubsCounts" />
             <class name="TietoRus.CountsTests.SatsAndSatStatusesCounts" />
             <class name="TietoRus.CountsTests.LinksCounts" />

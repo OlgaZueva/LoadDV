@@ -752,9 +752,34 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubIsoCodeData() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("isoCode.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("isoCode.hub.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
+        int countRowInSA_isoCode4 = getCountRowInSA(properties.getProperty("isoCode4.union.CountRows"));
+        int countRowInSA_isoCode6 = getCountRowInSA(properties.getProperty("isoCode6.union.CountRows"));
+        int countRowInSA_isoCode6_2 = getCountRowInSA(properties.getProperty("isoCode6_2.union.CountRows"));
+        int countRowInSA_isoCode6_3 = getCountRowInSA(properties.getProperty("isoCode6_3.union.CountRows"));
+        int countRowInSA_isoCode6_4 = getCountRowInSA(properties.getProperty("isoCode6_4.union.CountRows"));
+        int countRowInSA_isoCode6_5 = getCountRowInSA(properties.getProperty("isoCode6_5.union.CountRows"));
+        int countRowInSA = countRowInSA_isoCode4 + countRowInSA_isoCode6 + countRowInSA_isoCode6_2 + countRowInSA_isoCode6_3 +
+                countRowInSA_isoCode6_4 + countRowInSA_isoCode6_5;
+        int countRowInHub_isoCode4 = getCountRowOfHub(properties.getProperty("isoCode4.hub.CountRows"));
+        int countRowInHub_isoCode6 = getCountRowOfHub(properties.getProperty("isoCode6.hub.CountRows"));
+        int countRowInHub_isoCode6_2 = getCountRowOfHub(properties.getProperty("isoCode6_2.hub.CountRows"));
+        int countRowInHub_isoCode6_3 = getCountRowOfHub(properties.getProperty("isoCode6_3.hub.CountRows"));
+        int countRowInHub_isoCode6_4 = getCountRowOfHub(properties.getProperty("isoCode6_4.hub.CountRows"));
+        int countRowInHub_isoCode6_5 = getCountRowOfHub(properties.getProperty("isoCode6_5.hub.CountRows"));
+        System.out.println("isoCode4 count rows in SA [" + countRowInSA_isoCode4 +  "] in DWH [" + countRowInHub_isoCode4 + "]");
+        System.out.println("isoCode6 count rows in SA [" + countRowInSA_isoCode6 +  "] in DWH [" + countRowInHub_isoCode6 + "]");
+        System.out.println("isoCode6_2 count rows in SA [" + countRowInSA_isoCode6_2 +  "] in DWH [" + countRowInHub_isoCode6_2 + "]");
+        System.out.println("isoCode6_3 count rows in SA [" + countRowInSA_isoCode6_3 +  "] in DWH [" + countRowInHub_isoCode6_3 + "]");
+        System.out.println("isoCode6_4 count rows in SA [" + countRowInSA_isoCode6_4 +  "] in DWH [" + countRowInHub_isoCode6_4 + "]");
+        System.out.println("isoCode6_5 count rows in SA [" + countRowInSA_isoCode6_5 +  "] in DWH [" + countRowInHub_isoCode6_5 + "]");
+        assertRowCount(countRowInSA_isoCode4, countRowInHub_isoCode4);
+        assertRowCount(countRowInSA_isoCode6, countRowInHub_isoCode6);
+        assertRowCount(countRowInSA_isoCode6_2, countRowInHub_isoCode6_2);
+        assertRowCount(countRowInSA_isoCode6_3, countRowInHub_isoCode6_3);
+        assertRowCount(countRowInSA_isoCode6_4, countRowInHub_isoCode6_4);
+        assertRowCount(countRowInSA_isoCode6_5, countRowInHub_isoCode6_5);
+        int countAllRowInHub = getCountRowOfHub(properties.getProperty("isoCodeAll.hub.CountRows"));
+        assertRowCount(countRowInSA, countAllRowInHub);
     }
 
     @Test(enabled = false)
