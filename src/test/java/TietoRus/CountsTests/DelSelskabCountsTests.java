@@ -37,7 +37,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Sag_Del_UNITY() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowInSA(properties.getProperty("sag.UNITY.counts"));
@@ -45,7 +45,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInDelTable);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Sag_Del_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowInSA(properties.getProperty("sag.MSCRUS.counts"));
@@ -89,7 +89,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Book_Del_UNITY() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition_book1Step = getCountRowInSA(properties.getProperty("book1Step.UNITY.counts"));
@@ -99,7 +99,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInDelTable);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Book_Del_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition_book1Step = getCountRowInSA(properties.getProperty("book1Step.MSCRUS.counts"));
@@ -125,7 +125,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void BookManifests_Del_UNITY() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowInSA(properties.getProperty("bookManifests.UNITY.counts"));
@@ -133,7 +133,7 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInDelTable);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void BookManifests_Del_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowInSA(properties.getProperty("bookManifests.MSCRUS.counts"));
@@ -324,7 +324,7 @@ public class DelSelskabCountsTests {
 
 
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/DelSelskab_validAgency.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/DelSelskab.properties"))));
     }
 
     public void assertRowCount(int countInSource, int countInDest) {

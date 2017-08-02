@@ -830,6 +830,13 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
+    @Test(enabled = true)
+    public void hubWorkingTime() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("workingTime.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("workingTime.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/hubsCountsSQL.properties"))));

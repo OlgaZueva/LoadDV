@@ -117,44 +117,22 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    /*
-        @Test(enabled = true)
-        public void Adresse_lnkCustomersLocations() throws SQLException, IOException {
-            getPropertiesFile();
-            int countRowByConditionAdresse = getDataFromDWH(properties.getProperty("lnkCustomersLocations.conditionAdresse.CountRows"));
-            System.out.println("countRowByConditionAdresse: " + countRowByConditionAdresse);
-            int countRowByConditionKunde = getDataFromDWH(properties.getProperty("lnkCustomersLocations.conditionKunde.CountRows"));
-            System.out.println("countRowByConditionKunde: " + countRowByConditionKunde);
-            int countRowByCondition = countRowByConditionAdresse + countRowByConditionKunde;
-            int countRowInLink = getDataFromDWH(properties.getProperty("lnkCustomersLocations.lnk.CountRows"));
-            assertRowCount(countRowByCondition, countRowInLink);
-        }
-
-        @Test(enabled = true)
-        public void Adresse_satLnkCustomersLocations() throws SQLException, IOException {
-            getPropertiesFile();
-            int countRowInLink = getDataFromDWH(properties.getProperty("lnkCustomersLocations.lnk.CountRows"));
-            int countRowInSatLink = getDataFromDWH(properties.getProperty("lnkCustomersLocations.satLnk.CountRows"));
-            assertRowCount(countRowInLink, countRowInSatLink);
-        }
-
-    */
     @Test(enabled = true)
-    public void Adresse_lnkCustomersCompany() throws SQLException, IOException {
+    public void lnkCustomersCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByConditionAdresse = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.conditionAdresse.CountRows"));
         System.out.println("countRowByConditionAdresse: " + countRowByConditionAdresse);
         int countRowByConditionKunde = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.conditionKunde.CountRows"));
         System.out.println("countRowByConditionKunde: " + countRowByConditionKunde);
-        //int countRowByCondition = countRowByConditionAdresse + countRowByConditionKunde;
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.condition.CountRows"));
+        int countRowByCondition = countRowByConditionAdresse + countRowByConditionKunde;
+        //int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.condition.CountRows"));
         ;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
     @Test(enabled = false)
-    public void Adresse_satLnkCustomersCompany() throws SQLException, IOException {
+    public void satLnkCustomersCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.lnk.CountRows"));
         int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.satLnk.CountRows"));
@@ -262,6 +240,8 @@ public class LinksCounts {
     @Test(enabled = false)
     public void Book_lnkBookingCountry() throws SQLException, IOException {
         getPropertiesFile();
+        System.out.println("Описания не нашла в эксельке с линками. Переделала запрос по тому, что у меня было");
+        System.out.println("В той версии не было сравнения по srcSystemId в hubCountry - добавила. если разойдутся каунты посмотерть почему было так.");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCountry.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCountry.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -279,13 +259,7 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingCrossBookingType() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition_RefTypeIsNull = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsNull.CountRows"));
-        System.out.println("RefTypeIsNull: " + countRowByCondition_RefTypeIsNull);
-        int countRowByCondition_RefTypeRefTypeIsNotInHub = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsNotInHub.CountRows"));
-        System.out.println("RefTypeRefTypeIsNotInHub: " + countRowByCondition_RefTypeRefTypeIsNotInHub);
-        int condition_RefTypeIsInHub = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition_RefTypeIsInHub.CountRows"));
-        System.out.println("RefTypeIsInHub: " + condition_RefTypeIsInHub);
-        int countRowByCondition = countRowByCondition_RefTypeIsNull + countRowByCondition_RefTypeRefTypeIsNotInHub + condition_RefTypeIsInHub;
+        int countRowByCondition =  getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }
@@ -295,7 +269,7 @@ public class LinksCounts {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.lnk.CountRows"));
         int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInLink);
+        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -642,13 +616,13 @@ public class LinksCounts {
         int countRowByCondition_AFG_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_AFG_ZONE.CountRows"));
         int countRowByCondition_ANK_ZONE_notNull = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_notNull.CountRows"));
         int countRowByCondition_ANK_ZONE_Null = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_Null.CountRows"));
-        int countRowByCondition_ANK_ZONE_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_AllInBook.CountRows")) -
-                 countRowByCondition_ANK_ZONE_notNull - countRowByCondition_ANK_ZONE_Null);
+        int countRowByCondition_ANK_ZONE_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_Null_ForBothNull.CountRows")) -
+                countRowByCondition_ANK_ZONE_Null);
         int countRowByCondition_POD = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POD.CountRows"));
         int countRowByCondition_POR_notNull = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_notNull.CountRows"));
         int countRowByCondition_POR_Null = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_Null.CountRows"));
-        int countRowByCondition_POR_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_AllInBook.CountRows")) -
-                countRowByCondition_POR_notNull - countRowByCondition_POR_Null);
+        int countRowByCondition_POR_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_Null_ForBothNull.CountRows")) -
+                countRowByCondition_POR_Null);
         int countRowByCondition_PORT_TRANS = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS.CountRows"));
         int countRowByCondition_PORT_TRANS2 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS2.CountRows"));
         int countRowByCondition_PORT_TRANS3 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS3.CountRows"));

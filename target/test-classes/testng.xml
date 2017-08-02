@@ -5,11 +5,11 @@
         <classes>
             <class name="TietoRus.CountsTests.DelSelskabCountsTests" />
             <class name="TietoRus.CountsTests.HubsCounts" />
-            <class name="TietoRus.CountsTests.SatsAndSatStatusesCounts" />
+            <class name="TietoRus.CountsTests.SatsCounts" />
             <class name="TietoRus.CountsTests.LinksCounts" />
             <class name="TietoRus.CountsTests.UsersCounts" />
-            <class name="TietoRus.CountsTests.SomeFieldsInSATests" />
             <class name="TietoRus.CountsTests.validFromInSatTest" />
+            <class name="TietoRus.CountsTests.PartitionTests" />
         </classes>
     </test>
 

@@ -14,6 +14,7 @@ public class SomeFieldsInSATests {
     private DBHelper db = new DBHelper();
 
 
+
     @Test(enabled = true)
     public void StatusInSATablesTest() throws SQLException, IOException {
         /*

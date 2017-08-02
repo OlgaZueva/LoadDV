@@ -15,7 +15,7 @@ import java.util.Properties;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class SatsAndSatStatusesCounts {
+public class SatsCounts {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
@@ -135,6 +135,16 @@ public class SatsAndSatStatusesCounts {
         int countRowInSat = getCountRowOfHub(properties.getProperty("companyAgentCode.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
     }
+
+    @Test(enabled = true)
+    //SatStatus'а нет -  строится на hubContainerLocation + EdiKonv
+    public void ContainerLocationClocSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("containerLocationCloc.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerLocationCloc.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
 
     @Test(enabled = true)
     public void CustomersSat() throws SQLException, IOException {
@@ -728,8 +738,24 @@ public class SatsAndSatStatusesCounts {
     }
 
 
+    @Test(enabled = true)
+    public void WorkingTimeSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("workingTime.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("workingTime.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void WorkingTimeStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("workingTime.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("workingTime.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/satsAndSatStatusesCountsSQL.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
 
     public void assertRowCount(int countInSource, int countInDest) {
