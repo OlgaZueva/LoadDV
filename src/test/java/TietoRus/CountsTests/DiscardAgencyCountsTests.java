@@ -171,7 +171,7 @@ public class DiscardAgencyCountsTests {
         getPropertiesFile();
         int countRowByCommonCondition = getCountRowInSA(properties.getProperty("ediKonv.union.counts"));
         int countRowBySelskab20Condition = getCountRowInSA(properties.getProperty("ediKonv.selskab20.counts"));
-        int countRowByCondition = countRowByCommonCondition + countRowBySelskab20Condition;
+        int countRowByCondition = countRowByCommonCondition - countRowBySelskab20Condition;
         int countRowInSA = getCountRowInSA(properties.getProperty("ediKonv.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
