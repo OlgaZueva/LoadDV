@@ -1855,7 +1855,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void BookingCargoChargesFct_InitialLoad() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInConditionForInitialLoad = getCountRowOfHub(properties.getProperty("bookingCargoCharges.fctCondition_InitialLoad.CountRows"));
