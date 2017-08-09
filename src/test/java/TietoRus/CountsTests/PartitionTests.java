@@ -306,7 +306,37 @@ public class PartitionTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void EXCEL_CleanUp() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CleanUp.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CleanUp.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
+    @Test(enabled = true)
+    public void EXCEL_CntrTypeSpecEquip() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CntrTypeSpecEquip.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CntrTypeSpecEquip.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void EXCEL_ControllingOfficeLocationCode() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_ControllingOfficeLocationCode.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_ControllingOfficeLocationCode.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void EXCEL_PortsOverview() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_PortsOverview.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_PortsOverview.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/Partition.properties"))));
