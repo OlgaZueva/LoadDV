@@ -12,8 +12,14 @@ import java.util.Map;
 import java.util.Properties;
 
 /*
-
+Класс для добавления и удаления суррогатных данных для проверки логгирования. Тесты в нем доожны выполняться по-отдельности.
+Сценарий использования нижеприведеных тестов:
+1. Запустить тест InsertTestDataTest
+2. запустить загрузку проверямых пакетов
+3. Запустить тест (в отдельном классе реализован), проверяющий работу пакетов
+4. Запустить тест DeleteTestDataTest для зачистки тестовых данных
  */
+
 public class InsAndDelTestData {
     private DBHelper db = new DBHelper();
     private Properties properties = new Properties();

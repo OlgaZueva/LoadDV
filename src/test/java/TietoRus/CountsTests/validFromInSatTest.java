@@ -12,7 +12,8 @@ import java.sql.Statement;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-//Тесты пригодны для проверки после первоначальной загрузки. После загрузки из CDC уже даты разъедутся.
+//Тесты пригодны для запуска ТОЛЬКО после первоначальной загрузки. После загрузки данных из CDC  даты разъедутся и тест не выдаст требуемого результата.
+
 public class validFromInSatTest {
     private DBHelper db = new DBHelper();
 

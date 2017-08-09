@@ -21,8 +21,18 @@ public class LnkLogsTest {
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
     /*
-
+Класс для проверки механизма логгирования линков при условии что первый хаб не найден.
+ВНИМАНИЕ! Тест НЕ ПРЕДНАЗНАЧЕН для запуска на "боевой" схеме заказчика -  только локальная тестовая схема на стенде Тието.
+Сценарий использования:
+1. Зачистить DWH (не должно существовать хабов)
+2. Запустить тест InsertTestDataTest (в классе InsAndDelTestData)
+3. Запустить загрузку линков (всех)
+4. Запустить тест
+5. В консоли проследить, чтобы не было текста, выделенного красным (тест выдает такие записи, если запись для какого то линка не создана в etl.errLogLnkDataVault
+или значение какого-либо из полей ключа хаба в таблице etl.errLogLnkDataVault is null)
+6. Для зачистки тестовых данных запустить тест DeleteTestDataTest (в классе InsAndDelTestData)
     */
+
     @Test(enabled = true)
     public void LinksLogsTestDataTest() throws SQLException, IOException {
         String[] select = new String[99];

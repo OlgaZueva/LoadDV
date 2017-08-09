@@ -15,6 +15,12 @@ import java.util.Properties;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/*
+Класс, содержащий тесты для проверки механизма "Фильтрация записей для недействующих агентсв".
+Каждый тест "считает" кол-во записей, которые должны быть удалены согласно условиям и сравнивает это кол-во с фактическим.
+Перед выполнением теста необходимо убедиться, что загружены данные в таблицы UNITY_ValidAgency  и  MSCRUS_ValidAgency
+*/
+
 
 public class DelSelskabCountsTests {
     private Properties properties = new Properties();

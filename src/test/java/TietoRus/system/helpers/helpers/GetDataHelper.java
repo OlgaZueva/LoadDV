@@ -1,6 +1,6 @@
 package TietoRus.system.helpers.helpers;
 
-import TietoRus.FileLinerTests.zSQLforTestData;
+import TietoRus.Entity.FileLinerTests.zSQLforTestData;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

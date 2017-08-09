@@ -13,28 +13,19 @@ import java.sql.Statement;
 public class SomeFieldsInSATests {
     private DBHelper db = new DBHelper();
 
-
+/*
+Класс содержит разные вспогательные тесты,  как правило используемы один-два раза
+ */
 
     @Test(enabled = true)
     public void StatusInSATablesTest() throws SQLException, IOException {
         /*
-Тест для проверки секционирования.
-В главном пакете загрузки из SA в DWH (т.н."мейне мейнов") после запуска всех пакетов вызывает код, который для всех записей в SA-таблицах,
-у которых StatusHub =1, StatusSat =1 и  StatusLnk = 1 проставляет значение PartitionId=1, т.е. меняет секцию.
-Исключение - таблица getCharges- там партиция меняется у записей, у которых statusHub=1 (таблица особенная, никакие другие статусы не проставляются в ней)
-Процесс описан в EA в Loading Staging Area - DWH -> main package load
+Тест для генерации запросов во все таблицы SA
  */
         String[] keys = getTableNames();
         for (int i = 0; i < keys.length; i++) {
             String sql = "select count (*) c from " + keys[i] + "where StatusLnk != 1 and isDeleted = 0 ";
             System.out.println(sql);
-            /*
-            String countRows = getDataFromSA(sql);
-           if (!countRows.equals("0")) {
-               System.err.println("In " + keys[i] + " exist rows with StatusLin <> 1: [" + countRows + "]");
-                         } else
-               System.out.println(keys[i] + " [Succeeded]");
-*/
 
         }
     }

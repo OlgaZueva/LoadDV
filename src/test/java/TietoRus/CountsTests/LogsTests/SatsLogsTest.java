@@ -20,13 +20,27 @@ public class SatsLogsTest {
     private Properties properties = new Properties();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 /*
-Перед тестов надо очистит DWH (хабов быть не должно), затем запустить пакет загрузки сатов, затем вставить тестовые данные, затем тест
+Класс для проверки механизма логгирования сатов при условии что хаб не найден.
+
+ВНИМАНИЕ! Тест НЕ ПРЕДНАЗНАЧЕН для запуска на "боевой" схеме заказчика -  только локальная тестовая схема на стенде Тието.
+
+Сценарий использования:
+1. Зачистить DWH (не должно существовать хабов)
+2. Запустить тест InsertTestDataTest (в классе InsAndDelTestData)
+3. Запустить загрузку сатов (всех)
+4. Запустить тест
  Для каждой сущности ( = хабу) должно быть создано по 2 записи - для sat'а и  satStatus'а, исключения:
   1. Три EXCEL-таблицы - по одной записи (SatStatus'ов не создается), а для EXCEL_ControllingOfficeLocationCode две записи (для srcSystemId in (1,2)), т.к. из-за srcSystemId во вьюхе записи множатся
   2. Для book - три записи (satBooking, satBookingStatus, satBookingCustomers (дополнительный сат по буку, сатСтатуса нет для него)
   3. bookDryPort - одна запись (для satBookingNonManifestedHaulage) -  satStatus'а нет т.к. хаб создается по book
   4. contHolliday, ediKonv_ImsChargeLines, ediKonv_OceanVesselService,  ediKonv_OceanVesselStatus и ediKonv_CompanyAgentCode -  по одной записи -  нет sat'ов
-  5 Для Kunde и Adresse не посчитать как для остальных - хабы и с саты для них создаются отдельным пакетом и все сразу, т.е. сымулировать ситуацию попытки загрузки сатов безз хабов нереально
+  5 Для Kunde и Adresse не посчитать как для остальных - хабы и с саты для них создаются отдельным пакетом и все сразу,
+   т.е. сэмулировать ситуацию попытки загрузки сатов без хабов нереально
+
+   Вся информация выводится на консоль. Проследить, чтобы не было текста, выделенного красным (тест выдает такие записи, если запись для какого то сата  не создана
+   в etl.errLogSatDataVault или значение какого-либо из полей ключа хаба в таблице etl.errLogSatDataVault is null)
+5. Для зачистки тестовых данных запустить тест DeleteTestDataTest (в классе InsAndDelTestData)
+
 */
     @Test(enabled = true)
     public void SatsLogsTestDataTest() throws SQLException, IOException {

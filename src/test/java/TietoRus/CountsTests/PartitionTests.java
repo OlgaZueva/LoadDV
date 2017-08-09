@@ -15,7 +15,12 @@ import java.util.Properties;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-
+/*
+Класс, содержащий тесты для проверки механизма "Секционирование".
+Каждый тест "считает" кол-во записей, которые должны быть перемещены в партицию =1 (все, у которых StatusHub=1 and StatusSat =1 and StatusLnk =1,
+исключение  -  таблицы saGetCharges -  там должны быть перемещены в партицию =1  запииь, у которых только StatusHub=1)
+и сравнивает это кол-во с фактическим.
+*/
 public class PartitionTests {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();

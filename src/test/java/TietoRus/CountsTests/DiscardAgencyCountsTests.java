@@ -17,6 +17,19 @@ import java.util.Properties;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/*
+Класс, содержащий тесты для проверки механизма "Обработка записей не попадающих под условия отбора".
+Каждый тест "считает" кол-во записей, которые должны быть удалены согласно условиям и сравнивает это кол-во с фактическим.
+
+Описание функциональности: В SA должны быть логически удалены записи, которые не соотвествуют условиям. У каждой таблицы, к которой применимо, свои условия отбора.
+Все условия касаются либо одного параметра, либо двух, есть исключения.
+Значения параметров, учавствующих в условиях, по которым записи должны быть найдены и логически удалены:
+SET_OF_SELSKAB: select SELSKAB from EDI_KONV where AGENT = 'MSC' and FELT = 'ID' and FRA = 'DWH_LOAD_SELSKAB' and TIL = 'Y'
+DWH_START_DATE: SELECT to_date(c_val, 'dd.mm.yyyy') FROM uts_constants WHERE c_name = 'DWH_START_DATE'
+Выбраны они должны быть пакетом в источниках (не в SA).
+Тесты выбирают значения параметров в SA (не в источниках). И применимы могут быть при ненарушеной целостности данных (данные в таблицах, по которым выбираются параметры
+должны соотвествовать основным данным в SA (особое внимание к DWH_START_DATE))
+ */
 
 public class DiscardAgencyCountsTests {
     private Properties properties = new Properties();
