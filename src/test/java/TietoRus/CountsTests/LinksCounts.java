@@ -1855,7 +1855,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void BookingCargoChargesFct_InitialLoad() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInConditionForInitialLoad = getCountRowOfHub(properties.getProperty("bookingCargoCharges.fctCondition_InitialLoad.CountRows"));
@@ -1863,10 +1863,10 @@ public class LinksCounts {
         assertRowCount(countRowInConditionForInitialLoad, countRowInFct);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void BookingCargoChargesFct() throws SQLException, IOException {
         // getPropertiesFile();
-        System.out.println("тест доделать. Примуать как сделать для проверки загрузки изменений");
+        System.out.println("тест доделать. Придуать как сделать запрос для проверки загрузки изменений");
         //int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
         //int countRowInLnkByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
         // int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));

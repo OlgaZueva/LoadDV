@@ -55,12 +55,6 @@ public class DiscardAgencyCountsTests {
     @Test(enabled = true)
     public void BogfTrans() throws SQLException, IOException, ParseException {
         getPropertiesFile();
-/*
-        String countRowMSCRUS = properties.getProperty("bogfTrans.MSCRUS.counts");
-        int countRowByCondition = getCountRowInSA((countRowMSCRUS + "'"+ getDWH_START_DATE() + "'"));
-        System.out.println(countRowByCondition);
-*/
-
         int countRowByCondition = getCountRowInSA(properties.getProperty("bogfTrans.union.counts"));
         int countRowInSA = getCountRowInSA(properties.getProperty("bogfTrans.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
@@ -208,7 +202,11 @@ public class DiscardAgencyCountsTests {
     @Test(enabled = true)
     public void Henvis() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInSA(properties.getProperty("henvis.union.counts"));
+        System.err.println("Пакет должен быть переделан -  обработка Henvis должна стать аналогичной обработке EdiKonv (оставляем записи с SELSKAB=20)");
+        System.err.println("Если пакет, которым загружены данные без описанных изменений - тест упадет");
+        int countRowByCommonCondition = getCountRowInSA(properties.getProperty("henvis.union.counts"));
+        int countRowBySelskab20Condition = getCountRowInSA(properties.getProperty("henvis.selskab20.counts"));
+        int countRowByCondition = countRowByCommonCondition - countRowBySelskab20Condition;
         int countRowInSA = getCountRowInSA(properties.getProperty("henvis.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
