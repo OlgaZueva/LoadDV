@@ -190,6 +190,7 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingBookingReportingCustomer() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("Контрольный запрос переделан под измененные условия. См task 5858 и 5859 ");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingReportingCustomer.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingReportingCustomer.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -240,8 +241,6 @@ public class LinksCounts {
     @Test(enabled = false)
     public void Book_lnkBookingCountry() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("Описания не нашла в эксельке с линками. Переделала запрос по тому, что у меня было");
-        System.out.println("В той версии не было сравнения по srcSystemId в hubCountry - добавила. если разойдутся каунты посмотерть почему было так.");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCountry.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCountry.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -259,7 +258,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingCrossBookingType() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("В линке должно быть столько записей, сколько найдено hubBooking. А вот какие именно какие помогут запросы");
         int countRowFoundedFor_REF_TYPE =  getCountRowOfHub(properties.getProperty("lnkBookingCrossBookingType.foundedForREF_TYPE.CountRows"));
         System.out.println("Столько д.б. записей для REF_TYPE is not null и найденых в hubCrossBooking и для REF_TYPE is null,");
         System.out.println( "которые связываются с hubCrossBooking.bookTypeCode = 'NA': " + countRowFoundedFor_REF_TYPE);
@@ -711,7 +709,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void BookFak_lnkBookingBookingCharges() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("Странно описаны условия в эксельке. Проверить подробно вручную дополнительно этот линк");
         int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingBookingCharges.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingCharges.lnk.CountRows"));
         assertRowCount(countRowInHub1, countRowInLink);
@@ -892,7 +889,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void BookLin_lnkBookingChargesBookingChargeLines() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("Странно описаны условия в эксельке. если что проверить руками");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingChargesBookingChargeLines.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingChargesBookingChargeLines.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -1866,7 +1862,6 @@ public class LinksCounts {
     @Test(enabled = false)
     public void BookingCargoChargesFct() throws SQLException, IOException {
         // getPropertiesFile();
-        System.out.println("тест доделать. Придуать как сделать запрос для проверки загрузки изменений");
         //int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
         //int countRowInLnkByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
         // int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
@@ -1886,7 +1881,7 @@ public class LinksCounts {
     }
 
     public void assertRowCount(int countInSource, int countInDest) {
-        System.out.println("Count rows in HubTable1 [" + countInSource + "], in LinkTable [" + countInDest + "]");
+        System.out.println("Count rows by condition [" + countInSource + "], in LinkTable [" + countInDest + "]");
         assertThat(countInDest, equalTo(countInSource));
     }
 

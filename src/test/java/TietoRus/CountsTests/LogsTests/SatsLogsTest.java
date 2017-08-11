@@ -35,7 +35,7 @@ public class SatsLogsTest {
   3. bookDryPort - одна запись (для satBookingNonManifestedHaulage) -  satStatus'а нет т.к. хаб создается по book
   4. contHolliday, ediKonv_ImsChargeLines, ediKonv_OceanVesselService,  ediKonv_OceanVesselStatus и ediKonv_CompanyAgentCode -  по одной записи -  нет sat'ов
   5 Для Kunde и Adresse не посчитать как для остальных - хабы и с саты для них создаются отдельным пакетом и все сразу,
-   т.е. сэмулировать ситуацию попытки загрузки сатов без хабов нереально
+   т.е. сымулировать ситуацию попытки загрузки сатов без хабов нереально
 
    Вся информация выводится на консоль. Проследить, чтобы не было текста, выделенного красным (тест выдает такие записи, если запись для какого то сата  не создана
    в etl.errLogSatDataVault или значение какого-либо из полей ключа хаба в таблице etl.errLogSatDataVault is null)

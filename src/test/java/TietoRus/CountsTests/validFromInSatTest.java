@@ -81,7 +81,7 @@ public class validFromInSatTest {
         excelTables[0] = "stg.EXCEL_CleanUp";
         excelTables[1] = "stg.EXCEL_CntrTypeSpecEquip";
         excelTables[2] = "stg.EXCEL_PortsOverview";
-//Порядок перечисления таблиц в объявлении массивов имеет значение. Долны соответствовать по порядку
+//Порядок перечисления таблиц в объявлении массивов имеет значение. Должны соответствовать по порядку
         for (int i = 0; i < sats.length; i++) {
             String sql = "select distinct validFrom c from " + sats[i];
             System.out.println("sql: " + sql);

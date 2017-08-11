@@ -385,7 +385,6 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
-
     @Test(enabled = true)
     public void ContainerMovesSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -401,7 +400,6 @@ public class SatsCounts {
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerMoves.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
-
 
     // SAT для OceanVesselService не создается. Только SatStatus проверяем.
     @Test(enabled = true)
@@ -697,11 +695,10 @@ public class SatsCounts {
     }
 
 
-    //У ControllingOfficeAuxLocation нет SatStatus'а. HUB'ом является hubControllingOffice, satStatus которому проставляется satControllingOfficeStatus
+    //У ControllingOfficeAuxLocation нет SatStatus'а. HUB'ом является hubControllingOffice, satStatus которому проставляется пакетом satControllingOfficeStatus
     @Test(enabled = true)
     public void ControllingOfficeAuxLocationSat() throws SQLException, IOException {
         getPropertiesFile();
-        System.err.println("Если число не сходится см баг 5548. Нужно отдельно смотреть число записей, у которых officeID is null и officeID is not null. Из контрольного запроса можно взять");
         int countRowsInSA = getCountRowInSA(properties.getProperty("controllingOfficeAuxLocation.ViewDistinct.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("controllingOfficeAuxLocation.sat.CountRows"));
         assertRowCount(countRowsInSA, countRowInSat);
@@ -728,7 +725,7 @@ public class SatsCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    //Sat вспомогательный, для того чтобы собрать доп инфу по кастомерам из бука. Формируется по таблице Book. SatStatus' нет, он формируется при создании satBooking
+    //Sat вспомогательный, для того чтобы собрать доп инфу по кастомерам из бука. Формируется по таблице Book. SatStatus' (о создается пакетом satBooking)
     @Test(enabled = true)
     public void BookingCustomersSat() throws SQLException, IOException {
         getPropertiesFile();
