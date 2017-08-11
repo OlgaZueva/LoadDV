@@ -190,7 +190,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Book_lnkBookingBookingReportingCustomer() throws SQLException, IOException {
         getPropertiesFile();
-        System.err.println("Контрольный запрос переделан под измененные условия. См task 5858 и 5859 ");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingReportingCustomer.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingReportingCustomer.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);

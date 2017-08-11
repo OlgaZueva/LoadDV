@@ -22,6 +22,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 ВНИМАНИЕ! Подстчет не верен в части подсчета записей с cdcOperation ='D' (запросы SA-table.MSCRUS.InDWithHub.counts (предварительная проверка на существование хаба).
 Запросы будут переделаны (после отпуска моего)
 Запросы SA-table.countMutiMoments.counts и SA-table.MomentsMultiIUD.notD.counts показывают все верно
+
+не написаны тесты проверки EdiKonv и Henvis -  там нужно больше запросов из-за того, что по этим таблицам строится несколько хабов
 */
 
 
