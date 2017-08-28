@@ -328,6 +328,53 @@ public class DelSelskabCountsTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void Demurrage_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("demurrage.UNITY.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Vgm_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("vgm.UNITY.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Vgm_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("vgm.MSCRUS.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookBemInternal_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookBemInternal_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/DelSelskab.properties"))));
