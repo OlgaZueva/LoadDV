@@ -151,7 +151,7 @@ public class HubsCounts {
         System.out.println("countRowInKundeInSA: " + countRowInKundeInSA);
         int countRowInAdresseInSA =  getCountRowInSA(properties.getProperty("customersAdresse.union.CountRows"));
         System.out.println("countRowInAdresseInSA:" + countRowInAdresseInSA);
-        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA) + 1);
+        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA) + 1); //Fake records
         int countRowInHub = getCountRowOfHub(properties.getProperty("customers.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
