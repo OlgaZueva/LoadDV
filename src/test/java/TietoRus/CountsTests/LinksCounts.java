@@ -1460,7 +1460,7 @@ public class LinksCounts {
         int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoicePosting.satLnk.CountRows"));
         assertRowCount(countRowInLink, countRowInSatLink);
     }
-    
+
     @Test(enabled = true)
     public void FaktPost_lnkInvoicePostingAccountingTransaction() throws SQLException, IOException {
         getPropertiesFile();

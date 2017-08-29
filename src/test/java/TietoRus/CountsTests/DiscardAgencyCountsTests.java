@@ -202,8 +202,6 @@ public class DiscardAgencyCountsTests {
     @Test(enabled = true)
     public void Henvis() throws SQLException, IOException {
         getPropertiesFile();
-        System.err.println("Пакет должен быть переделан -  обработка Henvis должна стать аналогичной обработке EdiKonv (оставляем записи с SELSKAB=20)");
-        System.err.println("Если пакет, которым загружены данные без описанных изменений - тест упадет");
         int countRowByCommonCondition = getCountRowInSA(properties.getProperty("henvis.union.counts"));
         int countRowBySelskab20Condition = getCountRowInSA(properties.getProperty("henvis.selskab20.counts"));
         int countRowByCondition = countRowByCommonCondition - countRowBySelskab20Condition;

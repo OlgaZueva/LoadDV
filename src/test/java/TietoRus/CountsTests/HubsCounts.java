@@ -168,6 +168,10 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubAccountingTransaction() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу BogfTrans при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSA = getCountRowInSA(properties.getProperty("accountingTransaction.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("accountingTransaction.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
@@ -185,6 +189,10 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubBooking() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Book при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (некие старые буки, которые нужны для новых сущностей).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSA = getCountRowInSA(properties.getProperty("booking.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("booking.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
@@ -423,6 +431,10 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubInvoice() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSA = getCountRowInSA(properties.getProperty("invoice.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("invoice.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
@@ -457,6 +469,10 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubFileLiner() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Sag при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSA = getCountRowInSA(properties.getProperty("fileLiner.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("fileLiner.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
