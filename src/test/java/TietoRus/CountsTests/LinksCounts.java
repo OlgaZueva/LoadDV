@@ -1901,7 +1901,7 @@ public class LinksCounts {
         int countRowInErrorLogTable = getCountRowOfHub(sql);
         if (countRowInErrorLogTable == 0) {
             System.out.println("No errors in ErrorLogTable. It's expected!");
-            assertThat(0, equalTo(0));
+           // assertThat(0, equalTo(0));
         } else
             System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
                     "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
