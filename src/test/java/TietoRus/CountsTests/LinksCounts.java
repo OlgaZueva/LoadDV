@@ -75,6 +75,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkPaymentsInvoicePosting.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkPaymentsInvoicePosting.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkPaymentsInvoicePosting.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -215,7 +216,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingControllingOffice.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingControllingOffice.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-
+        checkErrors(properties.getProperty("lnkBookingControllingOffice.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -764,6 +765,7 @@ public class LinksCounts {
         int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingCargoBookingHaulageDetails.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoBookingHaulageDetails.lnk.CountRows"));
         assertRowCount(countRowInHub1, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoBookingHaulageDetails.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -976,6 +978,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingManifestBookingDTXFile.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestBookingDTXFile.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingManifestBookingDTXFile.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -1897,9 +1900,11 @@ public class LinksCounts {
         int countRowInErrorLogTable = getCountRowOfHub(sql);
         if (countRowInErrorLogTable == 0) {
             System.out.println("No errors in ErrorLogTable. It's expected!");
+            assertThat(0, equalTo(0));
         } else
             System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
                     "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
+        assertThat(0, equalTo(1));
     }
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {

@@ -84,7 +84,7 @@ public class LnkLogsTest {
         select[45] = "bookManifest.lnkBookingManifestBookingDTXFile.select";
         select[46] = "bookManifest.lnkBookingManifestCompany.select";
         select[47] = "bookMftFile.lnkBookingDTXFileCompany.select";
-        select[48] = "bookMftRemarks.lnkBookingDTXFileBookingEMCRemarks.select";
+        select[48] = "bookMftRemarks.lnkBookingEMCRemarksBookingManifest.select";
         select[49] = "bookMftRemarks.lnkBookingEMCRemarksCompany.select";
         select[50] = "bookVessel.lnkBookingBookingOceanVessel.select";
         select[51] = "bookVessel.lnkBookingOceanVesselExportVessels.select";
