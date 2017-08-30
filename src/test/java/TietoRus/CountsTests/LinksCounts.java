@@ -1717,6 +1717,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoiceLines.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoiceLines.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkInvoiceInvoiceLines.error.CountRows"));
     }
 
     @Test(enabled = true)
