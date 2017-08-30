@@ -145,6 +145,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBooking.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBooking.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingBooking.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -162,6 +163,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingHaulageDetails.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingHaulageDetails.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingBookingHaulageDetails.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -1658,7 +1660,6 @@ public class LinksCounts {
     }
 
 
-
     @Test(enabled = true)
     public void Ordre_lnkInvoiceCurrency() throws SQLException, IOException {
         getPropertiesFile();
@@ -1722,7 +1723,6 @@ public class LinksCounts {
         int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoiceLines.satLnk.CountRows"));
         assertRowCount(countRowInLink, countRowInSatLink);
     }
-
 
 
     @Test(enabled = true)
@@ -1896,10 +1896,10 @@ public class LinksCounts {
     private void checkErrors(String sql) throws SQLException {
         int countRowInErrorLogTable = getCountRowOfHub(sql);
         if (countRowInErrorLogTable == 0) {
-            System.out.println("No errors in ErrorLogTable");
-        } else {
-            System.err.println("В ErrorLogTable есть записи об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный");
-        }
+            System.out.println("No errors in ErrorLogTable. It's expected!");
+        } else
+            System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
+                    "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
     }
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {
