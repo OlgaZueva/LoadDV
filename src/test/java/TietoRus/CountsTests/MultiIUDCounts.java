@@ -508,7 +508,7 @@ public class MultiIUDCounts {
     }
 
     @Test(enabled = true)
-    public void SipKurs_UNITY() throws SQLException, IOException {
+    public void ShipKurs_UNITY() throws SQLException, IOException {
         getPropertiesFile();
         int countMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.UNITY.countMutiMoments.counts"));
         int countAllForMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.UNITY.MomentsMultiIUD.notD.counts"));
