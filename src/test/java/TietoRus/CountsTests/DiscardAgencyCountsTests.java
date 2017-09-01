@@ -281,6 +281,78 @@ public class DiscardAgencyCountsTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void Service() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("service.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("service.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("demurrage.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void ContBev() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("contBev.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("contBev.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void ContRules() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("contRules.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("contRules.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("ctsContEvent.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("ctsContEvent.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookBemInternal() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("bookBemInternal.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Kontor() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("kontor.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("kontor.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Commodity() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("commodity.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("commodity.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Vgm() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInSA(properties.getProperty("vgm.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/DiscardAgency.properties"))));
     }
