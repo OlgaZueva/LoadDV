@@ -518,6 +518,28 @@ public class MultiIUDCounts {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void Vgm_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countMutiMoments = getCountRowInSA(properties.getProperty("vgm.MSCRUS.countMutiMoments.counts"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.MSCRUS.MomentsMultiIUD.notD.counts"));
+        int countDWithHub = getCountRowInSA(properties.getProperty("vgm.MSCRUS.InDWithHub.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + countDWithHub;
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Vgm_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countMutiMoments = getCountRowInSA(properties.getProperty("vgm.UNITY.countMutiMoments.counts"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.UNITY.MomentsMultiIUD.notD.counts"));
+        int countDWithHub = getCountRowInSA(properties.getProperty("vgm.UNITY.InDWithHub.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + countDWithHub;
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/MultiIUD.properties"))));
     }
