@@ -216,7 +216,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingControllingOffice.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingControllingOffice.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-        checkErrors(properties.getProperty("lnkBookingControllingOffice.error.CountRows"));
     }
 
     @Test(enabled = true)
@@ -1900,12 +1899,13 @@ public class LinksCounts {
     private void checkErrors(String sql) throws SQLException {
         int countRowInErrorLogTable = getCountRowOfHub(sql);
         if (countRowInErrorLogTable == 0) {
-            System.out.println("No errors in ErrorLogTable. It's expected!");
+            System.out.println("Link is optional. Checking errorTable. No errors in ErrorLogTable. It's expected!");
            // assertThat(0, equalTo(0));
-        } else
+        } else {
             System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
                     "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
-        assertThat(0, equalTo(1));
+            assertThat(0, equalTo(1));
+        }
     }
 
     public int getCountRowOfHub(String hubSQL) throws SQLException {
