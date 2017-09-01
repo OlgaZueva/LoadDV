@@ -171,6 +171,10 @@ public class SatsCounts {
     @Test(enabled = true)
     public void AccountingTransactionSat() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу BogfTrans при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("accountingTransaction.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("accountingTransaction.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
@@ -607,6 +611,10 @@ public class SatsCounts {
     @Test(enabled = true)
     public void InvoiceSat() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Invoice при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("invoice.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("invoice.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
@@ -639,6 +647,10 @@ public class SatsCounts {
     @Test(enabled = true)
     public void FileLinerSat() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Sag при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("fileLiner.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("fileLiner.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
@@ -729,6 +741,10 @@ public class SatsCounts {
     @Test(enabled = true)
     public void BookingCustomersSat() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("В таблицу Book при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (некие старые буки, которые нужны для новых сущностей).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("booking.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCustomers.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
