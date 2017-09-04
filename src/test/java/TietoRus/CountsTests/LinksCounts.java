@@ -1779,6 +1779,8 @@ public class LinksCounts {
     @Test(enabled = true)
     public void Sag_lnkFileLinerFileROE() throws SQLException, IOException {
         getPropertiesFile();
+        //В таблицу Sag при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkFileLinerFileROE.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerFileROE.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -1794,6 +1796,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Sag_lnkFileLinerLocations() throws SQLException, IOException {
+        //В таблицу Sag при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition_EXP = getCountRowOfHub(properties.getProperty("lnkFileLinerLocations_EXP.condition.CountRows"));
         System.out.println("countRowByCondition_EXP: " + countRowByCondition_EXP);
@@ -1816,6 +1820,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Sag_lnkFileLinerCompany() throws SQLException, IOException {
+        //В таблицу Sag при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkFileLinerCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerCompany.lnk.CountRows"));
