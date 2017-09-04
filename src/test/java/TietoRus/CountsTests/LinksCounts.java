@@ -23,6 +23,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void BogfTrans_lnkAccountingTransactionBooking() throws SQLException, IOException {
+        //В таблицу BogfTrans при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionBooking.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionBooking.lnk.CountRows"));
@@ -38,6 +40,8 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    //В таблицу BogfTrans при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+    // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
     public void BogfTrans_lnkAccountingTransactionCurrency() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionCurrency.condition.CountRows"));
@@ -54,19 +58,13 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    //В таблицу BogfTrans при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+    // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
     public void BogfTrans_lnkAccountingTransactionCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BogfTrans_satLnkAccountingTransactionCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkAccountingTransactionCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1647,6 +1645,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceBooking() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceBooking.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceBooking.lnk.CountRows"));
@@ -1664,6 +1664,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceCurrency() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceCurrency.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceCurrency.lnk.CountRows"));
@@ -1680,6 +1682,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceCustomers() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceCustomers.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceCustomers.lnk.CountRows"));
@@ -1696,6 +1700,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceInvoice() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoice.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoice.lnk.CountRows"));
@@ -1712,6 +1718,8 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceInvoiceLines() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoiceLines.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoiceLines.lnk.CountRows"));
@@ -1730,18 +1738,12 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void Ordre_lnkInvoiceCompany() throws SQLException, IOException {
+        //В таблицу Ordre при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void Ordre_satLnkInvoiceCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkInvoiceCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
