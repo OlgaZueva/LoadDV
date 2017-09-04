@@ -16,7 +16,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class UsersCounts {
-
+    /*
+В Adgang встречаются случаи, когда в обоих таблицах есть записи с одним и тем же VOR_REF, но разными AD_Login
+В AdgangLin для них приходит разное кол-во записей. Контрольный зпрос задваивает такие. Но система создает все верно
+Поэтому падение теста не считать ошибкой;
+      */
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
@@ -39,6 +43,9 @@ public class UsersCounts {
 
     @Test(enabled = true)
     public void usersCompanyInDWH() throws SQLException, IOException {
+        System.err.println("В Adgang встречаются случаи, когда в обоих таблицах есть записи с одним и тем же VOR_REF, но разными AD_Login");
+        System.err.println("В AdgangLin для них приходит разное кол-во записей. Контрольный зпрос задваивает такие. Но система создает все верно");
+        System.err.println("Поэтому падение теста не считать ошибкой");
         getPropertiesFile();
         int countRowFromAdgangLinOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangLinOnly.CountRows"));
         int countRowFromAdgangOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangOnly.CountRows"));
