@@ -87,6 +87,21 @@ public class SomeFieldsInSATests {
         }
     }
 
+
+    @Test(enabled = true)
+    public void TryCountInSATablesTest() throws SQLException, IOException {
+        /*
+Тест для нахождения записей с TryCnt>1 and partitionid=0
+ */
+        String[] keys = getTableNames();
+        for (int i = 0; i < keys.length; i++) {
+            String sql = "select count(*) c from " + keys[i] + " where tryCnt > 1 and PartitionId = 0";
+            int countRows = getCountFromSA(sql);
+            System.out.println(keys[i] + " [" + countRows + "]");
+        }
+    }
+
+
     @Test(enabled = true)
     public void ReasonDeletedInSATablesTest() throws SQLException, IOException {
         /*
@@ -180,6 +195,19 @@ public class SomeFieldsInSATests {
         keys[69] = "stg.UNITY_ShipKurs ";
         keys[70] = "stg.UNITY_UtsConstants ";
         return keys;
+    }
+
+
+    public int getCountFromSA(String hubSQL) throws SQLException {
+        Connection connectionToSA = db.connToSA();
+        Statement stForSA = db.stFromConnection(connectionToSA);
+        ResultSet rsFromSA = db.rsFromDB(stForSA, hubSQL);
+        int count = 0;
+        while (rsFromSA.next()) {
+            count = rsFromSA.getInt("c");
+        }
+        db.closeConnecions(rsFromSA, stForSA, connectionToSA);
+        return count;
     }
 
 
