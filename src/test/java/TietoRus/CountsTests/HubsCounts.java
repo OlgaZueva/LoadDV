@@ -854,6 +854,187 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
+    @Test(enabled = true)
+    public void hubBookingInternalRemarks() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookingInternalRemarks.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("bookingInternalRemarks.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubCommodityHsCodes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("commodityHsCodes.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("commodityHsCodes.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("containerMoveTypes.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerMoveTypes.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContMaster() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("contMaster.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("contMaster.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+
+    @Test(enabled = true)
+    public void hubContainerDemurrageRules() throws SQLException, IOException {
+        System.err.println("В таблицу ContRules при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("containerDemurrageRules.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerDemurrageRules.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerStatusEventsGVA() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubMarketShareTier4() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("marketShareTier4.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("marketShareTier4.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubMarketShareTier5() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("marketShareTier5.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("marketShareTier5.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubDemurrageStorage() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrageStorage.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("demurrageStorage.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubTerminals() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("terminals.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("terminals.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubFemeFeederCosts() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("femeFeederCosts.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("femeFeederCosts.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubExpectedImportGVA() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("expectedImportGVA.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("expectedImportGVA.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubSourceSystemUsers() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("sourceSystemUsers.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("sourceSystemUsers.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubIboxData() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("iboxData.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("iboxData.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubBranch() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("branch.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("branch.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubLoopSearch() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("loopSearch.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubSeagoData() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("seagoData.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("seagoData.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubService() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("service.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("service.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubServiceNames() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("serviceNames.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("serviceNames.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubFeederCosts() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("feederCosts.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("feederCosts.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubContainerVgm() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("containerVgm.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("containerVgm.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubVgmCode() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgmCode.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("vgmCode.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/hubsCountsSQL.properties"))));
     }

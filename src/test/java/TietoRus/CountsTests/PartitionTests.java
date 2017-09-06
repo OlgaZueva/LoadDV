@@ -228,7 +228,16 @@ public class PartitionTests {
     public void EdiKonv() throws SQLException, IOException {
         getPropertiesFile();
         System.out.println("EdiKonv");
-        int countRowByCondition = getCountRowInSA(properties.getProperty("ediKonv.union.counts"));
+        int countRowByConditionCommon = getCountRowInSA(properties.getProperty("ediKonv0.union.counts"));
+        int countRowByCondition1 = getCountRowInSA(properties.getProperty("ediKonv1.union.counts"));
+        int countRowByCondition2 = getCountRowInSA(properties.getProperty("ediKonv2.union.counts"));
+        int countRowByCondition3 = getCountRowInSA(properties.getProperty("ediKonv3.union.counts"));
+        int countRowByCondition4 = getCountRowInSA(properties.getProperty("ediKonv4.union.counts"));
+        int countRowByCondition5 = getCountRowInSA(properties.getProperty("ediKonv5.union.counts"));
+        int countRowByCondition6 = getCountRowInSA(properties.getProperty("ediKonv6.union.counts"));
+        int countRowByCondition7 = getCountRowInSA(properties.getProperty("ediKonv7.union.counts"));
+        int countRowByCondition = countRowByConditionCommon + countRowByCondition1
+                + countRowByCondition2 + countRowByCondition3 + countRowByCondition4 + countRowByCondition5 + countRowByCondition6 + countRowByCondition7;
         int countRowInSA = getCountRowInSA(properties.getProperty("ediKonv.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -264,7 +273,9 @@ public class PartitionTests {
     public void Henvis() throws SQLException, IOException {
         getPropertiesFile();
         System.out.println("Henvis");
-        int countRowByCondition = getCountRowInSA(properties.getProperty("henvis.union.counts"));
+        int countRowByConditionCommon = getCountRowInSA(properties.getProperty("henvis0.union.counts"));
+        int countRowByCondition1 = getCountRowInSA(properties.getProperty("henvis1.union.counts"));
+        int countRowByCondition = countRowByConditionCommon + countRowByCondition1;
         int countRowInSA = getCountRowInSA(properties.getProperty("henvis.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
