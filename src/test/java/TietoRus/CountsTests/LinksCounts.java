@@ -1461,7 +1461,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void FaktPost_lnkInvoiceInvoicePosting() throws SQLException, IOException {
         getPropertiesFile();
-        // если результат не сходится проверить запрос- его писал Виктор и там почему то нет условия поиска по SELSKAB'у в hubInvoce после поиска сата, озможно стоит добавить
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoicePosting.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceInvoicePosting.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
