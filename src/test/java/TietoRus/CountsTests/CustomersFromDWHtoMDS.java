@@ -10,10 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -27,7 +24,8 @@ public class CustomersFromDWHtoMDS {
     public void CustomersTest() throws SQLException, IOException {
         getPropertiesFile();
         //String countRowInSA = 
-        getDataFromMDS(properties.getProperty("dictExcludedSymbols.select"));
+       ArrayList qwe =  getDataFromMDS(properties.getProperty("dictExcludedSymbols.select"));
+        System.out.println(qwe.size());
 
         //assertRowCount(countRowInSA, countRowInDWH);
     }
@@ -41,17 +39,20 @@ public class CustomersFromDWHtoMDS {
         assertThat(countInDest, equalTo(countInSource));
     }
 
-    public String getDataFromMDS(String sql) throws SQLException {
+    public ArrayList getDataFromMDS(String sql) throws SQLException {
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
         ResultSet rsFromMDS = db.rsFromDB(stForMDS, sql);
+        ArrayList catNames = new ArrayList();
+
         String template = null;
         while (rsFromMDS.next()) {
             template = rsFromMDS.getString("name");
+            catNames.add(template);
             System.out.println("Template [" + template + "]");
         }
         db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
-        return template;
+        return catNames;
     }
 
 
