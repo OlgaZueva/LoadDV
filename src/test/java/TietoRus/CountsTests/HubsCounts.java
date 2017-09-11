@@ -963,7 +963,7 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void hubIboxData() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("iboxData.union.CountRows"));
