@@ -309,7 +309,6 @@ public class LinksCounts {
         int countRowByCondition_S_MODTAGER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_S_MODTAGER_Null.CountRows"));
         int countRowByCondition_both_MODTAGER_Null = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_both_MODTAGER_NotNull"));
         int countRowByCondition_MODTAGER_unionAllCondition = getCountRowOfHub(properties.getProperty("lnkBookingCustomers.condition_MODTAGER_unionAllCondition.CountRows"));
-
         System.out.println("countRowByCondition_S_MODTAGER_NotNull: " + countRowByCondition_S_MODTAGER_NotNull);
         System.out.println("countRowByCondition_S_MODTAGER_Null: " + countRowByCondition_S_MODTAGER_Null);
         System.out.println("countRowByCondition_both_MODTAGER_Null: " + countRowByCondition_both_MODTAGER_Null);
