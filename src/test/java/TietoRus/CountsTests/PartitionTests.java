@@ -228,6 +228,9 @@ public class PartitionTests {
     public void EdiKonv() throws SQLException, IOException {
         getPropertiesFile();
         System.out.println("EdiKonv");
+        System.out.println("Если число не сходтся нужно обратить внимание на записи для сатов второго этапа.");
+        System.out.println("Пакеты сатов/хабов для EdiKonv и Henvis выставляют оба статуса в случаях когда создание чего то из них не предусмотрено (при создании того, что предусмотрено)");
+        System.out.println("Поэьтому смена партиции в итоге происходит по условию where statusHub=1 and statusSat=1 and statusLnk=1");
         int countRowByConditionCommon = getCountRowInSA(properties.getProperty("ediKonv0.union.counts"));
         int countRowByCondition1 = getCountRowInSA(properties.getProperty("ediKonv1.union.counts"));
         int countRowByCondition2 = getCountRowInSA(properties.getProperty("ediKonv2.union.counts"));
