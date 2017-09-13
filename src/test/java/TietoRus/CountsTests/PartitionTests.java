@@ -387,6 +387,15 @@ public class PartitionTests {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void EXCEL_SeagoData() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_PortsOverview");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_SeagoData.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_SeagoData.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/Partition.properties"))));
     }
