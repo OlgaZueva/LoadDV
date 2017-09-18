@@ -832,6 +832,79 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
+
+    @Test(enabled = true)
+    public void ContainerDemurrageRulesSat() throws SQLException, IOException {
+        getPropertiesFile();
+        System.err.println("В таблицу ContRule при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerDemurrageRules.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContainerDemurrageRulesStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerDemurrageRules.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void ContainerStatusEventsGVASat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContainerStatusEventsGVAStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    // у MarketShareTier4Sat SatStatus'а нет. Hub грузится из EXCEL'я
+    public void MarketShareTier4Sat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("marketShareTier4.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("marketShareTier4.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    // у MarketShareTier5Sat SatStatus'а нет. Hub грузится из EXCEL'я
+    public void MarketShareTier5Sat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("marketShareTier5.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("marketShareTier5.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void DemurrageStorageSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("demurrageStorage.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("demurrageStorage.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void DemurrageStorageStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("demurrageStorage.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("demurrageStorage.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
