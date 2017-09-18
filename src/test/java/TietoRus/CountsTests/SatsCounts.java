@@ -1017,6 +1017,58 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
+    // у ExpectedImportGVASat SatStatus'а нет. Hub грузится из EXCEL'я
+    @Test(enabled = true)
+    public void ExpectedImportGVASat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowInSA(properties.getProperty("expectedImportGVA.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("expectedImportGVA.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    // у LoopSearchSat SatStatus'а нет. Hub грузится из EXCEL'я
+    @Test(enabled = true)
+    public void LoopSearchSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowInSA(properties.getProperty("loopSearch.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("loopSearch.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    // у FeederCostsSat SatStatus'а нет. Hub грузится из EXCEL'я
+    @Test(enabled = true)
+    public void FeederCostsSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowInSA(properties.getProperty("feederCosts.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("feederCosts.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    // у FemeFeederCostsSat SatStatus'а нет. Hub грузится из EXCEL'я
+    @Test(enabled = true)
+    public void FemeFeederCostsSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowInSA(properties.getProperty("femeFeederCosts.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("femeFeederCosts.sat.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ServiceSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("service.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("service.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ServiceStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("service.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("service.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
