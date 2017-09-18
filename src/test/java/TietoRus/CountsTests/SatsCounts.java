@@ -145,6 +145,14 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSat);
     }
 
+    @Test(enabled = true)
+    //SatStatus'а нет -  строится на hubContainerLocation + EdiKonv
+    public void ContainerLocationLocSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("containerLocationLoc.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerLocationLoc.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
 
     @Test(enabled = true)
     public void CustomersSat() throws SQLException, IOException {
@@ -903,6 +911,47 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
+
+    @Test(enabled = true)
+    public void TerminalsSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("terminals.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("terminals.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void TerminalsStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("terminals.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("terminals.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    //SatStatus'а нет -  строится на hubCompany + EdiKonv
+    public void CompanyDemurrageEurDefaultSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("companyDemurrageEurDefault.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("companyDemurrageEurDefault.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void SourceSystemUsersSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("sourceSystemUsers.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("sourceSystemUsers.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void SourceSystemUsersStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("sourceSystemUsers.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("sourceSystemUsers.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
 
 
     private void getPropertiesFile() throws IOException {
