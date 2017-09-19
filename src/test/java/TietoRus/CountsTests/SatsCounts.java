@@ -167,6 +167,17 @@ public class SatsCounts {
     }
 
     @Test(enabled = true)
+    public void Customers_MasterCustomerNameInSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionKunde.CountRows"));
+        int countRowByCondition_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionAdresse.CountRows"));
+        int countRowInSatByCondition_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.satKunde.CountRows"));
+        int countRowInSatByCondition_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.satAdresse.CountRows"));
+        assertRowCount(countRowByCondition_Kunde, countRowInSatByCondition_Kunde);
+        assertRowCount(countRowByCondition_Adresse, countRowInSatByCondition_Adresse);
+    }
+
+    @Test(enabled = true)
     public void CustomersSatStatus() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
