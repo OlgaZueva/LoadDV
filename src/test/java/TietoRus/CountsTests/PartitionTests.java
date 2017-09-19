@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 Каждый тест "считает" кол-во записей, которые должны быть перемещены в партицию =1 (все, у которых StatusHub=1 and StatusSat =1 and StatusLnk =1,
 исключение  -  таблицы saGetCharges -  там должны быть перемещены в партицию =1  запииь, у которых только StatusHub=1)
 и сравнивает это кол-во с фактическим.
+09.2017 -  появились еще исключения. Контрольные запросы состввлены  учетом исключений.
 */
 public class PartitionTests {
     private Properties properties = new Properties();
@@ -398,6 +399,27 @@ public class PartitionTests {
         int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_SeagoData.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
+
+    @Test(enabled = true)
+    public void EXCEL_CtsTier4() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_PortsOverview");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CtsTier4.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CtsTier4.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void EXCEL_CtsTier5() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_PortsOverview");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CtsTier5.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CtsTier5.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/Partition.properties"))));
