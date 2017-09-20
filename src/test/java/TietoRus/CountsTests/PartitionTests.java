@@ -231,7 +231,7 @@ public class PartitionTests {
         System.out.println("EdiKonv");
         System.out.println("Если число не сходтся нужно обратить внимание на записи для сатов второго этапа.");
         System.out.println("Пакеты сатов/хабов для EdiKonv и Henvis выставляют оба статуса в случаях когда создание чего то из них не предусмотрено (при создании того, что предусмотрено)");
-        System.out.println("Поэьтому смена партиции в итоге происходит по условию where statusHub=1 and statusSat=1 and statusLnk=1");
+        System.out.println("Поэтому смена партиции в итоге происходит по условию where statusHub=1 and statusSat=1 and statusLnk=1");
         int countRowByConditionCommon = getCountRowInSA(properties.getProperty("ediKonv0.union.counts"));
         int countRowByCondition1 = getCountRowInSA(properties.getProperty("ediKonv1.union.counts"));
         int countRowByCondition2 = getCountRowInSA(properties.getProperty("ediKonv2.union.counts"));
@@ -240,8 +240,10 @@ public class PartitionTests {
         int countRowByCondition5 = getCountRowInSA(properties.getProperty("ediKonv5.union.counts"));
         int countRowByCondition6 = getCountRowInSA(properties.getProperty("ediKonv6.union.counts"));
         int countRowByCondition7 = getCountRowInSA(properties.getProperty("ediKonv7.union.counts"));
+        int countRowByCondition8 = getCountRowInSA(properties.getProperty("ediKonv8.union.counts"));
         int countRowByCondition = countRowByConditionCommon + countRowByCondition1
-                + countRowByCondition2 + countRowByCondition3 + countRowByCondition4 + countRowByCondition5 + countRowByCondition6 + countRowByCondition7;
+                + countRowByCondition2 + countRowByCondition3 + countRowByCondition4 + countRowByCondition5 + countRowByCondition6 + countRowByCondition7
+                + countRowByCondition8;
         int countRowInSA = getCountRowInSA(properties.getProperty("ediKonv.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -394,7 +396,7 @@ public class PartitionTests {
     @Test(enabled = true)
     public void EXCEL_SeagoData() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("EXCEL_PortsOverview");
+        System.out.println("EXCEL_SeagoData");
         int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_SeagoData.union.counts"));
         int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_SeagoData.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
@@ -403,7 +405,7 @@ public class PartitionTests {
     @Test(enabled = true)
     public void EXCEL_CtsTier4() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("EXCEL_PortsOverview");
+        System.out.println("EXCEL_CtsTier4");
         int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CtsTier4.union.counts"));
         int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CtsTier4.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
@@ -412,14 +414,155 @@ public class PartitionTests {
     @Test(enabled = true)
     public void EXCEL_CtsTier5() throws SQLException, IOException {
         getPropertiesFile();
-        System.out.println("EXCEL_PortsOverview");
+        System.out.println("EXCEL_CtsTier5");
         int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_CtsTier5.union.counts"));
         int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_CtsTier5.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
+    @Test(enabled = true)
+    public void EXCEL_FemeTrpCosts() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_FemeTrpCosts");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_FemeTrpCosts.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_FemeTrpCosts.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
+    @Test(enabled = true)
+    public void EXCEL_GvaDischargeList() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_GvaDischargeList");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_GvaDischargeList.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_GvaDischargeList.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
+    @Test(enabled = true)
+    public void EXCEL_LoopSearch() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_LoopSearch");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_LoopSearch.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_LoopSearch.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void EXCEL_TrpCosts() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("EXCEL_TrpCosts");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("EXCEL_TrpCosts.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("EXCEL_TrpCosts.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookBemInternal() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("BookBemInternal");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("bookBemInternal.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Commodity() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Commodity");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("commodity.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("commodity.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void ContBev() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("ContBev");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("contBev.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("contBev.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void ContMaster() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("ContMaster");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("contMaster.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("contMaster.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void ContRules() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("ContRules");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("contRules.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("contRules.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("CtsContEvent");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("ctsContEvent.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("ctsContEvent.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Demurrage");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("demurrage.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Kontor() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Kontor");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("kontor.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("kontor.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Service() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Service");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("service.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("service.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void StedBar() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("StedBar");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("stedBar.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("stedBar.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Vgm() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Vgm");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("vgm.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgm.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void VgmCodes() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("VgmCodes");
+        int countRowByCondition = getCountRowInSA(properties.getProperty("vgmCodes.union.counts"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("vgmCodes.destination.counts"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/Partition.properties"))));
