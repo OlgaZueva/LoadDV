@@ -534,6 +534,26 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    public void Book_lnkBookingBookingInternalRemarks() throws SQLException, IOException {
+        //В таблицу Book при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (некие старые буки, которые нужны для новых сущностей).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingInternalRemarks.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingInternalRemarks.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingBookingInternalRemarks.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void Book_satLnkBookingBookingInternalRemarks() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingInternalRemarks.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingBookingInternalRemarks.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+    @Test(enabled = true)
     public void BookDetails_lnkBookingBookingManifestAdditionals() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingManifestAdditionals.condition.CountRows"));

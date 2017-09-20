@@ -865,7 +865,8 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubCommodityHsCodes() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("commodityHsCodes.union.CountRows"));
+        System.out.println("для записей в SA с AFDELING is null в хаб записывается знаеяние = -1 (hubCommodityHsCodes.serviceCode = -1)");
+        int countRowInSA = (getCountRowInSA(properties.getProperty("commodityHsCodes.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("commodityHsCodes.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -934,7 +935,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubTerminals() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("terminals.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("terminals.union.CountRows")) +1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("terminals.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -958,12 +959,12 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubSourceSystemUsers() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("sourceSystemUsers.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("sourceSystemUsers.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("sourceSystemUsers.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void hubIboxData() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("iboxData.union.CountRows"));
@@ -974,7 +975,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubBranch() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("branch.union.CountRows"));
+        int countRowInSA = (getCountRowInSA(properties.getProperty("branch.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("branch.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
