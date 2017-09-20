@@ -92,14 +92,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void AbPost_satLnkPaymentsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkPaymentsCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkPaymentsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Adresse_lnkCustomersCountry() throws SQLException, IOException {
         getPropertiesFile();
@@ -128,14 +120,6 @@ public class LinksCounts {
         ;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void satLnkCustomersCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -554,6 +538,43 @@ public class LinksCounts {
 
 
     @Test(enabled = true)
+    public void Book_lnkBookingBranch() throws SQLException, IOException {
+        //В таблицу Book при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (некие старые буки, которые нужны для новых сущностей).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBranch.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBranch.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Book_satLnkBookingBranch() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingBranch.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingBranch.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+    @Test(enabled = true)
+    public void Book_lnkBookingServiceNames() throws SQLException, IOException {
+        //В таблицу Book при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (некие старые буки, которые нужны для новых сущностей).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingServiceNames.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingServiceNames.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Book_satLnkBookingServiceNames() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingServiceNames.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingServiceNames.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
     public void BookDetails_lnkBookingBookingManifestAdditionals() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingBookingManifestAdditionals.condition.CountRows"));
@@ -575,14 +596,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingManifestAdditionalsCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestAdditionalsCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BookDetails_satLnkBookingManifestAdditionalsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestAdditionalsCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestAdditionalsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -622,14 +635,6 @@ public class LinksCounts {
         getPropertiesFile();
         int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingManifestedHaulageCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestedHaulageCompany.lnk.CountRows"));
-        assertRowCount(countRowInHub1, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BookDetailsMof_satLnkBookingManifestedHaulageCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingManifestedHaulageCompany.lnk.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestedHaulageCompany.satLnk.CountRows"));
         assertRowCount(countRowInHub1, countRowInLink);
     }
 
@@ -715,14 +720,6 @@ public class LinksCounts {
         assertRowCount(countRowInHub1, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookEvent_satLnkBookingEventsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingEventsCompany.lnk.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingEventsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInHub1, countRowInLink);
-    }
-
     @Test(enabled = true)
     public void BookFak_lnkInvoiceBookingCharges() throws SQLException, IOException {
         getPropertiesFile();
@@ -763,15 +760,7 @@ public class LinksCounts {
         assertRowCount(countRowInHub1, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookFak_satLnkBookingChargesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingChargesCompany.lnk.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingChargesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInHub1, countRowInLink);
-    }
-
-    @Test(enabled = true)
+     @Test(enabled = true)
     public void BookGods_lnkBookingBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingBookingCargo.condition.CountRows"));
@@ -864,14 +853,6 @@ public class LinksCounts {
         assertRowCount(countRowInHub1, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookGods_satLnkBookingCargoCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub1 = getCountRowOfHub(properties.getProperty("lnkBookingCargoCompany.lnk.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoCompany.satLnk.CountRows"));
-        assertRowCount(countRowInHub1, countRowInLink);
-    }
-
     @Test(enabled = true)
     public void BookKor_lnkBookingHaulageDetailsCustomers() throws SQLException, IOException {
         getPropertiesFile();
@@ -894,14 +875,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingHaulageDetailsCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingHaulageDetailsCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BookKor_satLnkBookingHaulageDetailsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingHaulageDetailsCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingHaulageDetailsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -960,13 +933,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookLin_satLnkBookingChargeLinesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingChargeLinesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingChargeLinesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
     @Test(enabled = true)
     public void BookManifests_lnkBookingBookingManifest() throws SQLException, IOException {
@@ -1025,28 +991,12 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookManifests_satLnkBookingManifestCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingManifestCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void BookMftFile_lnkBookingDTXFileCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BookMftFile_satLnkBookingDTXFileCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1071,14 +1021,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingEMCRemarksCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingEMCRemarksCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void BookMftRemarks_satLnkBookingEMCRemarksCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingEMCRemarksCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingEMCRemarksCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1137,13 +1079,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void BookVessel_satLnkBookingOceanVesselCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingOceanVesselCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingOceanVesselCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
     @Test(enabled = true)
     public void ContHolliday_lnkWeekendsHolidaysCompany() throws SQLException, IOException {
@@ -1153,13 +1088,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void ContHolliday_satLnkWeekendsHolidaysCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkWeekendsHolidaysCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkWeekendsHolidaysCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
     @Test(enabled = true)
     public void ContRep_lnkContainerMovesBooking() throws SQLException, IOException {
@@ -1200,14 +1128,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerMovesCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void ContRep_satLnkContainerMovesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1292,13 +1212,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void ContType_satLnkIsoCodeCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkIsoCodeCompany.lnk.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkIsoCodeCompany.satLnk.CountRows"));
-        assertRowCount(countRowByCondition, countRowInLink);
-    }
 
     @Test(enabled = true)
     public void ContType_lnkContainerTypeCompany() throws SQLException, IOException {
@@ -1308,13 +1221,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void ContType_satLnkContainerTypeCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerTypeCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerTypeCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
     @Test(enabled = true)
     public void EdiKonv_lnkOceanVesselServiceCompany() throws SQLException, IOException {
@@ -1322,14 +1228,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkOceanVesselServiceCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkOceanVesselServiceCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void EdiKonv_satLnkOceanVesselServiceCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkOceanVesselServiceCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkOceanVesselServiceCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1340,14 +1238,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void EdiKonv_satLnkImsChargeLinesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkImsChargeLinesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkImsChargeLinesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void EdiKonv_lnkSpecialContractTypesCompany() throws SQLException, IOException {
         getPropertiesFile();
@@ -1356,13 +1246,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void EdiKonv_satLnkSpecialContractTypesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkSpecialContractTypesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkSpecialContractTypesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
     @Test(enabled = true)
     public void EdiKonv_lnkSublocationCompany() throws SQLException, IOException {
@@ -1370,14 +1253,6 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkSublocationCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkSublocationCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void EdiKonv_satLnkSublocationCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkSublocationCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkSublocationCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1388,29 +1263,12 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void EdiKonv_satLnkTransportModeCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkTransportModeCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkTransportModeCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void EdiKonv_lnkCorrectorRemarkTypesCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCorrectorRemarkTypesCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCorrectorRemarkTypesCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-
-    @Test(enabled = false)
-    public void EdiKonv_satLnkCorrectorRemarkTypesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCorrectorRemarkTypesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCorrectorRemarkTypesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1469,14 +1327,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void ExpVessels_satLnkExportVesselsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkExportVesselsCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkExportVesselsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void FaktPost_lnkInvoiceInvoicePosting() throws SQLException, IOException {
         getPropertiesFile();
@@ -1533,15 +1383,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-
-    @Test(enabled = false)
-    public void FaktPost_satLnkInvoicePostingCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoicePostingCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkInvoicePostingCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Henvis_lnkLocationsCountry() throws SQLException, IOException {
         getPropertiesFile();
@@ -1583,14 +1424,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void Henvis_satLnkCountryCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCountryCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCountryCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Henvis_lnkLocationsCompany() throws SQLException, IOException {
         getPropertiesFile();
@@ -1599,27 +1432,11 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void Henvis_satLnkLocationsCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkLocationsCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkLocationsCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Henvis_lnkContainerLocationCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerLocationCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerLocationCompany.lnk.CountRows"));
-        assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void Henvis_satLnkContainerLocationCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerLocationCompany.condition.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerLocationCompany.satLnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
@@ -1631,28 +1448,12 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void Henvis_satLnkVesselRegistryCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkVesselRegistryCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkVesselRegistryCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Henvis_lnkCurrencyCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void Henvis_satLnkCurrencyCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCurrencyCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1800,14 +1601,6 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void OrdreLin_satLnkInvoiceLinesCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoiceLinesCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkInvoiceLinesCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void Sag_lnkFileLinerFileROE() throws SQLException, IOException {
         getPropertiesFile();
@@ -1860,28 +1653,12 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void Sag_satLnkFileLinerCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkFileLinerCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
     @Test(enabled = true)
     public void SagKurs_lnkFileROECompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkFileROECompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileROECompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = false)
-    public void SagKurs_satLnkFileROECompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileROECompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkFileROECompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
     }
 
     @Test(enabled = true)
@@ -1892,15 +1669,8 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = false)
-    public void ShipKurs_satLnkDailyRoeCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDailyRoeCompany.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDailyRoeCompany.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void BookingCargoChargesFct_InitialLoad() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInConditionForInitialLoad = getCountRowOfHub(properties.getProperty("bookingCargoCharges.fctCondition_InitialLoad.CountRows"));
@@ -1908,7 +1678,7 @@ public class LinksCounts {
         assertRowCount(countRowInConditionForInitialLoad, countRowInFct);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void BookingCargoChargesFct() throws SQLException, IOException {
         // getPropertiesFile();
         //int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
@@ -1938,7 +1708,7 @@ public class LinksCounts {
         int countRowInErrorLogTable = getCountRowOfHub(sql);
         if (countRowInErrorLogTable == 0) {
             System.out.println("Link is optional. Checking errorTable. No errors in ErrorLogTable. It's expected!");
-           // assertThat(0, equalTo(0));
+            // assertThat(0, equalTo(0));
         } else {
             System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
                     "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
