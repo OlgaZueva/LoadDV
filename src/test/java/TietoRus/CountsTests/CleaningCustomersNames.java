@@ -20,6 +20,11 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/*
+Тест для проверки механизма RealCustomers.
+Перед его запуском необходимо запустить Filling*-тесты (для заполнения всех справчников)
+ */
+
 public class CleaningCustomersNames {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
