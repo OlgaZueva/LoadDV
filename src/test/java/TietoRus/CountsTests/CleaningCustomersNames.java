@@ -26,10 +26,11 @@ public class CleaningCustomersNames {
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
     @Test(enabled = true)
-    public void CustomersTest_TMScustomerNr() throws SQLException, IOException {
+    public void CleaningCustomersNames() throws SQLException, IOException {
         getPropertiesFile();
-        //String countRowInSA = 
-        ArrayList excludedSymbols = getDataFromMDS(properties.getProperty("dictExcludedSymbols.select"));
+        String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
+        executeInDWH(truncate);
+        ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
         System.out.println(excludedSymbols.size());
         String sql = (properties.getProperty("satCustomers.names.select"));
         Connection connectionToDWH = db.connToDWH();
@@ -44,7 +45,7 @@ public class CleaningCustomersNames {
                 originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
             }
             mapForSource.put("customerName", originalCustomerName);
-            String qwe = (properties.getProperty("insert.testTable") + (mapForSource.get("dwhIdHubCustomers")) + ",'" + originalCustomerName.replace("'", "''") + "')");
+            String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers")) + ",'" + originalCustomerName.replace("'", "''") + "')");
             executeInDWH(qwe);
             //executeInDWH(properties.getProperty("truncate.testTable"));
             //assertRowCount(countRowInSA, countRowInDWH);
@@ -53,6 +54,42 @@ public class CleaningCustomersNames {
     }
 
 
+    @Test(enabled = true)
+    public void FillingDictExcludedSymbols() throws SQLException, IOException {
+        getPropertiesFile();
+        String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
+        executeInDWH(truncate);
+        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictExcludedSymbols.MDS.select"));
+        for (int i = 0; i < dictEmptyCustomer.size(); i++) {
+            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+            executeInDWH(qwe);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void FillingDictEmptyCustomer() throws SQLException, IOException {
+        getPropertiesFile();
+        String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
+        executeInDWH(truncate);
+        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictEmptyCustomer.select"));
+        for (int i = 0; i < dictEmptyCustomer.size(); i++) {
+            String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+            executeInDWH(qwe);
+        }
+    }
+
+    @Test(enabled = true)
+    public void FillingDictExceptionalCustomer() throws SQLException, IOException {
+        getPropertiesFile();
+        String truncate = (properties.getProperty("dictExceptionalCustomer.truncate"));
+        executeInDWH(truncate);
+        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictExceptionalCustomer.select"));
+        for (int i = 0; i < dictEmptyCustomer.size(); i++) {
+            String qwe = (properties.getProperty("dictExceptionalCustomer.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+            executeInDWH(qwe);
+        }
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/customersSQL.properties"))));
@@ -63,18 +100,18 @@ public class CleaningCustomersNames {
         assertThat(countInDest, equalTo(countInSource));
     }
 
-    public ArrayList getDataFromMDS(String sql) throws SQLException {
-        Connection connectionToMDS = db.connToMDS();
-        Statement stForMDS = db.stFromConnection(connectionToMDS);
-        ResultSet rsFromMDS = db.rsFromDB(stForMDS, sql);
+    public ArrayList getDataFromDict(String sql) throws SQLException {
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
         ArrayList excludedSymbols = new ArrayList();
         String template = null;
-        while (rsFromMDS.next()) {
-            template = rsFromMDS.getString("name");
+        while (rsFromDWH.next()) {
+            template = rsFromDWH.getString("name");
             excludedSymbols.add(template);
             //System.out.println("Template [" + template + "]");
         }
-        db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         return excludedSymbols;
     }
 
