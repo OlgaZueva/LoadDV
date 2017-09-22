@@ -28,7 +28,7 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void CleaningCustomersNames() throws SQLException, IOException {
         getPropertiesFile();
-        String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
+        String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
         executeInDWH(truncate);
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
         System.out.println(excludedSymbols.size());
