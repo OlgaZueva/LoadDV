@@ -1038,8 +1038,9 @@ public class SatsCounts {
     }
 
     // у LoopSearchSat SatStatus'а нет. Hub грузится из EXCEL'я
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void LoopSearchSat() throws SQLException, IOException {
+        //загрузка данных из EXCEL_LoopSearh будет полностью переделываться. Сата существовать не будет.
         getPropertiesFile();
         int countRowInHub = getCountRowInSA(properties.getProperty("loopSearch.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("loopSearch.sat.CountRows"));

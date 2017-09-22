@@ -980,7 +980,8 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
+    //загрузка данных из EXCEL_LoopSearh будет полностью переделываться. Хаба существовать не будет.
     public void hubLoopSearch() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("loopSearch.union.CountRows"));

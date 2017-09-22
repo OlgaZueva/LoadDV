@@ -20,7 +20,7 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class CustomersFromDWHtoMDS {
+public class CleaningCustomersNames {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
@@ -31,7 +31,7 @@ public class CustomersFromDWHtoMDS {
         //String countRowInSA = 
         ArrayList excludedSymbols = getDataFromMDS(properties.getProperty("dictExcludedSymbols.select"));
         System.out.println(excludedSymbols.size());
-        String sql = (properties.getProperty("TMScustomerNr.isNull.select"));
+        String sql = (properties.getProperty("satCustomers.names.select"));
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
@@ -42,18 +42,11 @@ public class CustomersFromDWHtoMDS {
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 //System.out.println(String.valueOf(excludedSymbols.get(i)));
                 originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
-
-
             }
             mapForSource.put("customerName", originalCustomerName);
-            String qwe = (properties.getProperty("insert.testTable") + (mapForSource.get("dwhIdHubCustomers")) + ",'" + originalCustomerName.replace("'", "''") + "',0)");
-
+            String qwe = (properties.getProperty("insert.testTable") + (mapForSource.get("dwhIdHubCustomers")) + ",'" + originalCustomerName.replace("'", "''") + "')");
             executeInDWH(qwe);
-
-
             //executeInDWH(properties.getProperty("truncate.testTable"));
-
-
             //assertRowCount(countRowInSA, countRowInDWH);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
