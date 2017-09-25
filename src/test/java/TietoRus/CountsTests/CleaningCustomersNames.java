@@ -64,7 +64,7 @@ public class CleaningCustomersNames {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
         executeInDWH(truncate);
-        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictExcludedSymbols.MDS.select"));
+        ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
@@ -77,7 +77,7 @@ public class CleaningCustomersNames {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
         executeInDWH(truncate);
-        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictEmptyCustomer.select"));
+        ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
@@ -89,7 +89,7 @@ public class CleaningCustomersNames {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictExceptionalCustomer.truncate"));
         executeInDWH(truncate);
-        ArrayList dictEmptyCustomer = getDataFromDict(properties.getProperty("dictExceptionalCustomer.select"));
+        ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExceptionalCustomer.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictExceptionalCustomer.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
@@ -120,6 +120,22 @@ public class CleaningCustomersNames {
         return excludedSymbols;
     }
 
+
+    public ArrayList getDataFromMDS(String sql) throws SQLException {
+        Connection connectionToMDS = db.connToMDS();
+        Statement stForMDS = db.stFromConnection(connectionToMDS);
+        ResultSet rsFromMDS = db.rsFromDB(stForMDS, sql);
+        ArrayList excludedSymbols = new ArrayList();
+        String template = null;
+        while (rsFromMDS.next()) {
+            template = rsFromMDS.getString("name");
+                excludedSymbols.add(template);
+                //System.out.println("Template [" + template + "]");
+            }
+            db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+
+            return excludedSymbols;
+        }
 
     public Map<String, Object> getMapFromSource(ResultSet rsFromSource) throws SQLException {
         for (int k = 1; k <= rsFromSource.getMetaData().getColumnCount(); k++) {
