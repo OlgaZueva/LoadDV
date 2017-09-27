@@ -44,15 +44,14 @@ public class CleaningCustomersNames {
         while (rsFromDWH.next()) {
             mapForSource = getMapFromSource(rsFromDWH);
             String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
-
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 //System.out.println(String.valueOf(excludedSymbols.get(i)));
                 originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
             }
             mapForSource.put("customerName", originalCustomerName);
-            String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers")) + ",'" + originalCustomerName.replace("'", "''") + "')");
+            String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers"))
+                    + ",'" + originalCustomerName.replace("'", "''") + "','" +  (mapForSource.get("TMScustomerNr")) + "')");
             executeInDWH(qwe);
-            //executeInDWH(properties.getProperty("truncate.testTable"));
             //assertRowCount(countRowInSA, countRowInDWH);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
@@ -102,14 +101,6 @@ public class CleaningCustomersNames {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictMasterCustomerName.truncate"));
         executeInDWH(truncate);
-        /*
-        ArrayList dictMasterCustomerName = getDataFromMDS(properties.getProperty("dictMasterCustomerName.select"));
-        for (int i = 0; i < dictMasterCustomerName.size(); i++) {
-            String qwe = (properties.getProperty("dictMasterCustomerName.insert") + "'" + String.valueOf(dictMasterCustomerName.get(i)).replace("'", "''") + "')");
-            executeInDWH(qwe);
-        }
-        */
-
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
         ResultSet rsFromMDS = db.rsFromDB(stForMDS, properties.getProperty("dictMasterCustomerName.select"));
@@ -117,8 +108,6 @@ public class CleaningCustomersNames {
             mapForSource = getMapFromSource(rsFromMDS);
             String qwe = (properties.getProperty("dictMasterCustomerName.insert") + "'" + String.valueOf(mapForSource.get("name")).replace("'", "''") + "'," + mapForSource.get("code") + ")");
             executeInDWH(qwe);
-            //executeInDWH(properties.getProperty("truncate.testTable"));
-            //assertRowCount(countRowInSA, countRowInDWH);
         }
         db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
     }
