@@ -46,7 +46,8 @@ public class CleaningCustomersNames {
             String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 //System.out.println(String.valueOf(excludedSymbols.get(i)));
-                originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
+                //originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
+                originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
             }
             mapForSource.put("customerName", originalCustomerName);
             String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers"))
@@ -107,13 +108,32 @@ public class CleaningCustomersNames {
         while (rsFromMDS.next()) {
             mapForSource = getMapFromSource(rsFromMDS);
             String qwe = (properties.getProperty("dictMasterCustomerName.insert") + "'" + String.valueOf(mapForSource.get("name")).replace("'", "''") + "'," + mapForSource.get("code") + ")");
+
+            executeInDWH(qwe);
+        }
+        db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+    }
+
+    @Test(enabled = true)
+    public void FillingDictLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        String truncate = (properties.getProperty("dictLocations.truncate"));
+        executeInDWH(truncate);
+        Connection connectionToMDS = db.connToMDS();
+        Statement stForMDS = db.stFromConnection(connectionToMDS);
+        ResultSet rsFromMDS = db.rsFromDB(stForMDS, properties.getProperty("dictLocations.select"));
+        while (rsFromMDS.next()) {
+            mapForSource = getMapFromSource(rsFromMDS);
+            String qwe = (properties.getProperty("dictLocations.insert") + "'"
+                    + String.valueOf(mapForSource.get("name")).replace("'", "''") + "','" + mapForSource.get("code") + "')");
+            System.out.println(qwe);
             executeInDWH(qwe);
         }
         db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
     }
 
     private void getPropertiesFile() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/customersSQL.properties"))));
+        properties.load(new FileReader(new File(String.format("src/test/resources/DWHtoMDS.properties"))));
     }
 
     public void assertRowCount(int countInSource, int countInDest) {
