@@ -1695,6 +1695,92 @@ public class LinksCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
+    @Test(enabled = true)
+    public void BookBemInternal_lnkBookingInternalRemarksCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkBookingInternalRemarksCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkBookingInternalRemarksCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void Kontor_lnkBranchCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkBranchCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkBranchCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void Commodity_lnkCommodityHsCodesCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkCommodityHsCodesCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkCommodityHsCodesCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContBev_lnkContainerMoveTypesCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkContainerMoveTypesCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkContainerMoveTypesCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent_lnkContainerStatusEventsGVACompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVACompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVACompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+
+    @Test(enabled = true)
+    public void CtsContEvent_lnkContainerStatusEventsGVAFullEmpty() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVAFullEmpty.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVAFullEmpty.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent_satLnkContainerStatusEventsGVAFullEmpty() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVAFullEmpty.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVAFullEmpty.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent_lnkContainerStatusEventsGVALocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_DEST_Condition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.DEST.condition.CountRows"));
+        System.out.println("countRowBy_DEST_Condition: " + countRowBy_DEST_Condition);
+        int countRowBy_EVENT_LOC_Condition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.EVENT_LOC.condition.CountRows"));
+        System.out.println("countRowBy_EVENT_LOC_Condition: " + countRowBy_EVENT_LOC_Condition);
+        int countRowBy_PORT_DISC_Condition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.PORT_DISC.condition.CountRows"));
+        System.out.println("countRowBy_PORT_DISC_Condition: " + countRowBy_PORT_DISC_Condition);
+        int countRowBy_PORT_LOAD_Condition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.PORT_LOAD.condition.CountRows"));
+        System.out.println("countRowBy_PORT_LOAD_Condition: " + countRowBy_PORT_LOAD_Condition);
+        int countRowBy_PORT_TRANS_Condition = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.PORT_TRANS.condition.CountRows"));
+        System.out.println("countRowBy_PORT_TRANS_Condition: " + countRowBy_PORT_TRANS_Condition);
+        int countRowByCondition = countRowBy_DEST_Condition + countRowBy_EVENT_LOC_Condition + countRowBy_PORT_DISC_Condition + countRowBy_PORT_LOAD_Condition
+                + countRowBy_PORT_TRANS_Condition;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void CtsContEvent_satLnkContainerStatusEventsGVALocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));
     }
