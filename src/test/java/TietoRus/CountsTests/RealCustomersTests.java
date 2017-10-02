@@ -59,7 +59,32 @@ public class RealCustomersTests {
         String sqlForFreightPayer_E = (properties.getProperty("realCustomer.exportBooking.FreightPayer.select"));
         insertToTestTable(sqlForFreightPayer_E, "N", getPartyId(properties.getProperty("freightPayer.customerPartyID")), excludedSymbols);
 
+        String sqlForContractHolder_nonE = (properties.getProperty("realCustomer.nonExportBooking.ContractHolder.select"));
+        insertToTestTable(sqlForContractHolder_nonE, "N", getPartyId(properties.getProperty("contractHolder.customerPartyID")), excludedSymbols);
+
+        String sqlForStatCustomer_nonE = (properties.getProperty("realCustomer.nonExportBooking.StatCustomer.select"));
+        insertToTestTable(sqlForStatCustomer_nonE, "N", getPartyId(properties.getProperty("statCustomer.customerPartyID")), excludedSymbols);
+
+        String sqlForFreightPayer_nonE = (properties.getProperty("realCustomer.nonExportBooking.FreightPayer.select"));
+        insertToTestTable(sqlForFreightPayer_nonE, "N", getPartyId(properties.getProperty("freightPayer.customerPartyID")), excludedSymbols);
+
+        String sqlForNotify_nonE = (properties.getProperty("realCustomer.nonExportBooking.Notify.select"));
+        insertToTestTable(sqlForNotify_nonE, "N", getPartyId(properties.getProperty("notify.customerPartyID")), excludedSymbols);
+
+        String sqlForShipper_nonE = (properties.getProperty("realCustomer.nonExportBooking.Shipper.select"));
+        insertToTestTable(sqlForShipper_nonE, "N", getPartyId(properties.getProperty("shipper.customerPartyID")), excludedSymbols);
+
+        String sqlForConsignee_nonE = (properties.getProperty("realCustomer.nonExportBooking.Consignee.select"));
+        insertToTestTable(sqlForConsignee_nonE, "N", getPartyId(properties.getProperty("consignee.customerPartyID")), excludedSymbols);
+
+        String sqlForForwarder_nonE = (properties.getProperty("realCustomer.nonExportBooking.Forwarder.select"));
+        insertToTestTable(sqlForForwarder_nonE, "N", getPartyId(properties.getProperty("forwarder.customerPartyID")), excludedSymbols);
+
+        String sqlForBookingParty_nonE = (properties.getProperty("realCustomer.nonExportBooking.BookingParty.select"));
+        insertToTestTable(sqlForBookingParty_nonE, "N", getPartyId(properties.getProperty("bookingParty.customerPartyID")), excludedSymbols);
+
     }
+
 
     private void insertExceptionalCustToTestTable(String sqlForStatCustomer_E, String isExceptional, Integer role) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
