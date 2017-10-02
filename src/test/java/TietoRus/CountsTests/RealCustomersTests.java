@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -27,74 +28,85 @@ public class RealCustomersTests {
     @Test(enabled = true)
     public void RealCustomersCounts() throws SQLException, IOException {
         getPropertiesFile();
-        String sql = (properties.getProperty("realCustomer.exportBooking.exceptionalCustomers.select"));
+        String sqlForExceptionalCustomers = (properties.getProperty("realCustomer.exportBooking.exceptionalCustomers.select"));
         String truncate = (properties.getProperty("realCustomer.truncate"));
         executeInDWH(truncate);
+        insertExceptionalCustToTestTable(sqlForExceptionalCustomers, "Y", null);
+
+        ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
+
+        String sqlForStatCustomer_E = (properties.getProperty("realCustomer.exportBooking.StatCustomer.select"));
+        insertToTestTable(sqlForStatCustomer_E, "N", getPartyId(properties.getProperty("statCustomer.customerPartyID")), excludedSymbols);
+
+        String sqlForBookingParty_E = (properties.getProperty("realCustomer.exportBooking.BookingParty.select"));
+        insertToTestTable(sqlForBookingParty_E, "N", getPartyId(properties.getProperty("bookingParty.customerPartyID")), excludedSymbols);
+
+        String sqlForContractHolder_E = (properties.getProperty("realCustomer.exportBooking.ContractHolder.select"));
+        insertToTestTable(sqlForContractHolder_E, "N", getPartyId(properties.getProperty("contractHolder.customerPartyID")), excludedSymbols);
+
+        String sqlForForwarder_E = (properties.getProperty("realCustomer.exportBooking.Forwarder.select"));
+        insertToTestTable(sqlForForwarder_E, "N", getPartyId(properties.getProperty("forwarder.customerPartyID")), excludedSymbols);
+
+        String sqlForShipper_E = (properties.getProperty("realCustomer.exportBooking.Shipper.select"));
+        insertToTestTable(sqlForShipper_E, "N", getPartyId(properties.getProperty("shipper.customerPartyID")), excludedSymbols);
+
+        String sqlForNotify_E = (properties.getProperty("realCustomer.exportBooking.Notify.select"));
+        insertToTestTable(sqlForNotify_E, "N", getPartyId(properties.getProperty("notify.customerPartyID")), excludedSymbols);
+
+        String sqlForConsignee_E = (properties.getProperty("realCustomer.exportBooking.Consignee.select"));
+        insertToTestTable(sqlForConsignee_E, "N", getPartyId(properties.getProperty("consignee.customerPartyID")), excludedSymbols);
+
+        String sqlForFreightPayer_E = (properties.getProperty("realCustomer.exportBooking.FreightPayer.select"));
+        insertToTestTable(sqlForFreightPayer_E, "N", getPartyId(properties.getProperty("freightPayer.customerPartyID")), excludedSymbols);
+
+    }
+
+    private void insertExceptionalCustToTestTable(String sqlForStatCustomer_E, String isExceptional, Integer role) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlForStatCustomer_E);
         while (rsFromDWH.next()) {
             mapForSource = getMapFromSource(rsFromDWH);
             String qwe = (properties.getProperty("realCustomer.insert") + (mapForSource.get("dwhIdHubBooking")) + "," + (mapForSource.get("dwhIdHubCustomers"))
-                    + ",'" + mapForSource.get("customerName") + "', 'Y')");
-            System.out.println(qwe);
+                    + ",'" + mapForSource.get("customerName") + "', '" + isExceptional + "'," + role + ")");
             executeInDWH(qwe);
-            //assertRowCount(countRowInSA, countRowInDWH);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-
-
-       /*
-        int partyIdStatCustomer = getPartyId(properties.getProperty("statCustomer.customerPartyID"));
-        int partyIdBookingParty = getPartyId(properties.getProperty("bookingParty.customerPartyID"));
-        int partyIdContractHolder = getPartyId(properties.getProperty("contractHolder.customerPartyID"));
-        int partyIdForwarder = getPartyId(properties.getProperty("forwarder.customerPartyID"));
-        int partyIdShipper = getPartyId(properties.getProperty("shipper.customerPartyID"));
-        int partyIdNotify = getPartyId(properties.getProperty("notify.customerPartyID"));
-        int partyIdConsignee = getPartyId(properties.getProperty("consignee.customerPartyID"));
-        int partyIdFreightPayer = getPartyId(properties.getProperty("freightPayer.customerPartyID"));
-
-        System.out.println(partyIdStatCustomer + " " + partyIdBookingParty + " " + partyIdContractHolder + " " + partyIdForwarder
-                + " " + partyIdShipper + " " + partyIdNotify + " " + partyIdConsignee + " " + partyIdFreightPayer);
-*/
-        int month = 3;
-        String monthString;
-        switch (month) {
-            case 1:  monthString = "Январь";
-                break;
-            case 2:  monthString = "Февраль";
-                break;
-            case 3:  monthString = "Март";
-                break;
-            case 4:  monthString = "Апрель";
-                break;
-            case 5:  monthString = "Май";
-                break;
-            case 6:  monthString = "Июнь";
-                break;
-            case 7:  monthString = "Июль";
-                break;
-            case 8:  monthString = "Август";
-                break;
-            case 9:  monthString = "Сентябрь";
-                break;
-            case 10: monthString = "Октябрь";
-                break;
-            case 11: monthString = "Ноябрь";
-                break;
-            case 12: monthString = "Декабрь";
-                break;
-            default: monthString = "Не знаем такого";
-                break;
-        }
-        System.out.println(monthString);
-        /*
-        int countRowInSA = getPartyId(properties.getProperty("loopSearch.union.CountRows"));
-        int countRowInHub = getPartyId(properties.getProperty("loopSearch.hub.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
-        */
     }
 
+    private void insertToTestTable(String sqlForStatCustomer_E, String isExceptional, int role, ArrayList excludedSymbols) throws SQLException {
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlForStatCustomer_E);
+        while (rsFromDWH.next()) {
+            mapForSource = getMapFromSource(rsFromDWH);
+            String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
+            for (int i = 0; i < excludedSymbols.size(); i++) {
+                originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
+            }
+            mapForSource.put("customerName", originalCustomerName);
+            String qwe = (properties.getProperty("realCustomer.insert") + (mapForSource.get("dwhIdHubBooking")) + "," + (mapForSource.get("dwhIdHubCustomers"))
+                    + ",'" + originalCustomerName.replace("'", "''") + "', '" + isExceptional + "'," + role + ")");
+            executeInDWH(qwe);
+        }
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+    }
+
+
+    public ArrayList getDataFromDict(String sql) throws SQLException {
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
+        ArrayList excludedSymbols = new ArrayList();
+        String template = null;
+        while (rsFromDWH.next()) {
+            template = rsFromDWH.getString("name");
+            excludedSymbols.add(template);
+            //System.out.println("Template [" + template + "]");
+        }
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        return excludedSymbols;
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/DWHtoMDS.properties"))));
