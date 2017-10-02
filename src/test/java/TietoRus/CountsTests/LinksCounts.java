@@ -116,7 +116,7 @@ public class LinksCounts {
         int countRowByConditionKunde = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.conditionKunde.CountRows"));
         System.out.println("countRowByConditionKunde: " + countRowByConditionKunde);
         int countRowByCondition = countRowByConditionAdresse + countRowByConditionKunde;
-        //int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.condition.CountRows"));
+        //int countRowByCondition = getPartyId(properties.getProperty("lnkCustomersCompany.condition.CountRows"));
         ;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
@@ -1681,9 +1681,9 @@ public class LinksCounts {
     @Test(enabled = true)
     public void BookingCargoChargesFct() throws SQLException, IOException {
         // getPropertiesFile();
-        //int countRowInCondition_Union = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
+        //int countRowInCondition_Union = getPartyId(properties.getProperty("bookingCargoCharges.lnkCondition_Union.CountRows"));
         //int countRowInLnkByCondition = countRowInCondition_ValutaIsNull + countRowInCondition_ValutaIsNotNull;
-        // int countRowInLnk = getCountRowOfHub(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
+        // int countRowInLnk = getPartyId(properties.getProperty("bookingCargoCharges.lnk.CountRows"));
         //assertRowCount(countRowInCondition_Union, countRowInLnk);
     }
 
