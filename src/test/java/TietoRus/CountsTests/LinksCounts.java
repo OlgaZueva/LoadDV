@@ -1869,8 +1869,44 @@ public class LinksCounts {
     }
 
 
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageInvoice() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkDemurrageStorageInvoice.error.CountRows"));
+    }
 
+    @Test(enabled = true)
+    public void Demurrage_satLnkDemurrageStorageInvoice() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
 
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageCurrency() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_CLIENT_CURRENCY_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.CLIENT_CURRENCY.condition.CountRows"));
+        System.out.println("countRowBy_CLIENT_CURRENCY_Condition: " + countRowBy_CLIENT_CURRENCY_Condition);
+        int countRowBy_DEMURRAGE_CURRENCY_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.DEMURRAGE_CURRENCY.condition.CountRows"));
+        System.out.println("countRowBy_DEMURRAGE_CURRENCY_Condition: " + countRowBy_DEMURRAGE_CURRENCY_Condition);
+        int countRowBy_STD_CURRENCY_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.STD_CURRENCY.condition.CountRows"));
+        System.out.println("countRowBy_STD_CURRENCY_Condition: " + countRowBy_STD_CURRENCY_Condition);
+        int countRowByCondition = countRowBy_CLIENT_CURRENCY_Condition + countRowBy_DEMURRAGE_CURRENCY_Condition + countRowBy_STD_CURRENCY_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_satLnkDemurrageStorageCurrency() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
 
 
     private void getPropertiesFile() throws IOException {
