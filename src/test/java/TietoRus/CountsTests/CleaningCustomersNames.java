@@ -21,7 +21,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /*
-Тест для проверки механизма RealCustomers.
+Тест для проверки механизма MDS_Customers и заполнение спрввочников (во вспомогательные таблицы DWH из MDS).
 Перед его запуском необходимо запустить Filling*-тесты (для заполнения всех справчников)
  */
 
@@ -45,15 +45,12 @@ public class CleaningCustomersNames {
             mapForSource = getMapFromSource(rsFromDWH);
             String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
             for (int i = 0; i < excludedSymbols.size(); i++) {
-                //System.out.println(String.valueOf(excludedSymbols.get(i)));
-                //originalCustomerName = trim(originalCustomerName.replaceAll("\\b" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + "\\b", ""));
                 originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
             }
             mapForSource.put("customerName", originalCustomerName);
             String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers"))
                     + ",'" + originalCustomerName.replace("'", "''") + "','" +  (mapForSource.get("TMScustomerNr")) + "')");
             executeInDWH(qwe);
-            //assertRowCount(countRowInSA, countRowInDWH);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
     }

@@ -1720,6 +1720,16 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    public void ContRules_lnkContainerDemurrageRulesCompany() throws SQLException, IOException {
+        //В таблицу  ContRules при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).")
+        // мы их прогружаем в DWH, а затем при первом запуске DiscardAgency удаляем. Это нормально. Контрольный запрос составлен с учетом этой особенности;
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkContainerDemurrageRulesCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkContainerDemurrageRulesCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
     public void ContBev_lnkContainerMoveTypesCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("lnkContainerMoveTypesCompany.condition.CountRows"));
@@ -1778,6 +1788,88 @@ public class LinksCounts {
         int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerStatusEventsGVALocations.satLnk.CountRows"));
         assertRowCount(countRowInLink, countRowInSatLink);
     }
+
+    @Test(enabled = true)
+    public void Vgm_lnkContainerVgmCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkContainerVgmCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkContainerVgmCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+
+    @Test(enabled = true)
+    public void Vgm_lnkContainerVgmVgmCode() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_SOURCE_TYPE_Condition = getCountRowOfHub(properties.getProperty("lnkContainerVgmVgmCode.SOURCE_TYPE.condition.CountRows"));
+        System.out.println("countRowBy_SOURCE_TYPE_Condition: " + countRowBy_SOURCE_TYPE_Condition);
+        int countRowBy_GEN_STATUS_Condition = getCountRowOfHub(properties.getProperty("lnkContainerVgmVgmCode.GEN_STATUS.condition.CountRows"));
+        System.out.println("countRowBy_GEN_STATUS_Condition: " + countRowBy_GEN_STATUS_Condition);
+        int countRowByCondition = countRowBy_SOURCE_TYPE_Condition + countRowBy_GEN_STATUS_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerVgmVgmCode.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Vgm_satLnkContainerVgmVgmCode() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerVgmVgmCode.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerVgmVgmCode.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageContainerDemurrageRules() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_STD_RULE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.STD_RULE.condition.CountRows"));
+        System.out.println("countRowBy_STD_RULE_Condition: " + countRowBy_STD_RULE_Condition);
+        int countRowBy_FACT_RULE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.FACT_RULE.condition.CountRows"));
+        System.out.println("countRowBy_FACT_RULE_Condition: " + countRowBy_FACT_RULE_Condition);
+        int countRowByCondition = countRowBy_STD_RULE_Condition + countRowBy_FACT_RULE_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_satLnkDemurrageStorageContainerDemurrageRules() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_START_MOVE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.START_MOVE.condition.CountRows"));
+        System.out.println("countRowBy_START_MOVE_Condition: " + countRowBy_START_MOVE_Condition);
+        int countRowBy_END_MOVE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.END_MOVE.condition.CountRows"));
+        System.out.println("countRowBy_END_MOVE_Condition: " + countRowBy_END_MOVE_Condition);
+        int countRowByCondition = countRowBy_START_MOVE_Condition + countRowBy_END_MOVE_Condition;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_satLnkDemurrageStorageContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+
 
 
 
