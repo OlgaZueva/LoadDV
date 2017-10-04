@@ -1081,6 +1081,16 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
+    @Test(enabled = true)
+    // у IboxSat SatStatus'а нет. Hub грузится из EXCEL'я + дополнительные алгоритмы
+    public void IboxSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("iBox.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("iBox.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
