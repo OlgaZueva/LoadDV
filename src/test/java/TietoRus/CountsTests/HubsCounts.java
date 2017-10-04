@@ -151,8 +151,13 @@ public class HubsCounts {
         System.out.println("countRowInKundeInSA: " + countRowInKundeInSA);
         int countRowInAdresseInSA =  getCountRowInSA(properties.getProperty("customersAdresse.union.CountRows"));
         System.out.println("countRowInAdresseInSA:" + countRowInAdresseInSA);
-        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA) + 1); //Fake records
+        int countRowInIboxInSA =  getCountRowInSA(properties.getProperty("customersIbox.union.CountRows"));
+        System.out.println("countRowInIboxInSA:" + countRowInIboxInSA);
+        int countRowInHubFromIbox = getCountRowOfHub(properties.getProperty("customersIbox.hub.CountRows"));
+        System.out.println("countRowInHubFromIbox:" + countRowInHubFromIbox);
+        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA + countRowInIboxInSA) + 1); //One fake records
         int countRowInHub = getCountRowOfHub(properties.getProperty("customers.hub.CountRows"));
+        assertRowCount(countRowInIboxInSA, countRowInHubFromIbox);
         assertRowCount(countRowInSA, countRowInHub);
     }
 
