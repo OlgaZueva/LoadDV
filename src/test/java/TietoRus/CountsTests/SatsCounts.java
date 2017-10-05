@@ -159,9 +159,11 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
+        int countRowInSAbyCondition_Ibox = getCountRowInSA(properties.getProperty("customers.satConditionIbox.CountRows"));
         System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
         System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
-        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse;
+        System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
+        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox;
         int countRowInSat = getCountRowOfHub(properties.getProperty("customers.sat.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSat);
     }

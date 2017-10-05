@@ -20,6 +20,17 @@ import static org.apache.commons.lang3.StringUtils.trim;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+/*
+Тест предназначен для проверки функциональности "RealCustomers".
+Перед его запуском нужно заполнить справоники dictExcludedSymbols и dictEmptyCustomerTable (см класс CleaningCustomernames)
+ В нем из DWH выбираются записи в порядке, описанном в спеке, очищаются Customersname и вставляются во вспомогательную таблицу.
+ Данные из этой таблицы нужно сравнивать с данными из целевой таблицы (в которую пшет пакет).
+ При анализе различий следует учесть особенности:
+ 1. если при переборе patry (ролей) для dwhIdHubBooking первая оказывается в dictEmptyCustomerTable, то запись д.б. пропущена и система должна перейти к слеющуему party
+ для dwhIdHubBooking и взять имя от туда, так пока не закончатся party для dwhIdHubBooking и, если это последняя party, то в целевую таблицу д.б. вставлена запись с RealCustomer = null
+ 2. Если после очистки имени оно оказалось пустым то запись в целевую таблицу не вставляем.
+ Есть доп файл с запросами подготовленными, который может помочь в анализе данных, там же инсерты для вставик тестовых данных
+ */
 public class RealCustomersTests {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
