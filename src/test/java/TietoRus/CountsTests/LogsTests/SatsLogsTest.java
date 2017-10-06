@@ -36,6 +36,8 @@ public class SatsLogsTest {
   4. contHolliday, ediKonv_ImsChargeLines, ediKonv_OceanVesselService,  ediKonv_OceanVesselStatus и ediKonv_CompanyAgentCode -  по одной записи -  нет sat'ов
   5 Для Kunde и Adresse не посчитать как для остальных - хабы и с саты для них создаются отдельным пакетом и все сразу,
    т.е. сымулировать ситуацию попытки загрузки сатов без хабов нереально
+  6. Для satCompanyDemurrageEurDefault ключом является только поле SELSKAB (хабом для записей по условию сата является hubCompany)
+ 7. Для containerLocationCloc и containerLocationLoc ключом являются FRA и SELSKAB (хабом для записей по условию сата является hubContainerLocation)
 
    Вся информация выводится на консоль. Проследить, чтобы не было текста, выделенного красным (тест выдает такие записи, если запись для какого то сата  не создана
    в etl.errLogSatDataVault или значение какого-либо из полей ключа хаба в таблице etl.errLogSatDataVault is null)
@@ -48,7 +50,7 @@ public class SatsLogsTest {
 
         select[0] = "cleanUp.sat.select";
         select[1] = "cntrTypeSpecEquip.sat.select";
-        select[2] = "controllingOffice.sat.select";
+        select[2] = "ControllingOfficeLocationCode.sat.select";
         select[3] = "portsOverview.sat.select";
         select[4] = "abPost.sat.select";
         select[5] = "adresse.sat.select";

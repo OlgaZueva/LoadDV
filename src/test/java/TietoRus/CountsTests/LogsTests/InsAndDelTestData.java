@@ -31,7 +31,7 @@ public class InsAndDelTestData {
 
         inserts[0] = "cleanUp.insert";
         inserts[1] = "cntrTypeSpecEquip.insert";
-        inserts[2] = "controllingOffice.insert";
+        inserts[2] = "ControllingOfficeLocationCode.insert";
         inserts[3] = "portsOverview.insert";
         inserts[4] = "abPost.insert";
         inserts[5] = "adresse.insert";
@@ -114,7 +114,7 @@ public class InsAndDelTestData {
 
         delete[0] = "cleanUp.delete";
         delete[1] = "cntrTypeSpecEquip.delete";
-        delete[2] = "controllingOffice.delete";
+        delete[2] = "ControllingOfficeLocationCode.delete";
         delete[3] = "portsOverview.delete";
         delete[4] = "abPost.delete";
         delete[5] = "adresse.delete";

@@ -71,16 +71,25 @@ public class validFromInSatTest {
 
     @Test(enabled = true)
     public void ValidFromInExcelSatsTest() throws SQLException, IOException {
-        String[] sats = new String[3];
+        String[] sats = new String[6];
         // в satControllingOficeAuxLocation  поле validFrom заполняется по общему алгоритму, т.к. хаб этого EXCEL-файла не создается (используется hubControllinOffice).
         sats[0] = "sat.satBookingReportingCustomer";
         sats[1] = "sat.satContainerTypeSpecEquip";
         sats[2] = "sat.satLocationsPortsOverview";
+        sats[3] = "sat.satLoopSearch";
+        sats[4] = "sat.satMarketShareTier4";
+        sats[5] = "sat.satMarketShareTier5";
 
-        String[] excelTables = new String[3];
+
+
+        String[] excelTables = new String[6];
         excelTables[0] = "stg.EXCEL_CleanUp";
         excelTables[1] = "stg.EXCEL_CntrTypeSpecEquip";
         excelTables[2] = "stg.EXCEL_PortsOverview";
+        excelTables[3] = "stg.EXCEL_LoopSearch";
+        excelTables[4] = "stg.EXCEL_CtsTier4";
+        excelTables[5] = "stg.EXCEL_CtsTier5";
+
 //Порядок перечисления таблиц в объявлении массивов имеет значение. Должны соответствовать по порядку
         for (int i = 0; i < sats.length; i++) {
             String sql = "select distinct validFrom c from " + sats[i];
