@@ -161,6 +161,17 @@ public class LnkLogsTest {
         select[21] = "book.lnkBookingBookingInternalRemarks.select";
         select[22] = "book.lnkBookingBranch.select";
         select[23] = "book.lnkBookingServiceNames.select";
+        select[24] = "bookGods.lnkBookingCargoContMaster.select";
+        select[25] = "bookGods.lnkBookingCargoContainerMoves.select";
+        select[26] = "bookGods.lnkBookingCargoContainerStatusEventsGVA.select";
+        select[27] = "bookGods.lnkBookingCargoContainerVgm.select";
+        select[28] = "bookGods.lnkBookingCargoDemurrageStorage.select";
+        select[29] = "bookGods.lnkBookingCargoCommodityHsCodes.select";
+
+        
+
+
+
 
 
         getPropertiesFile();

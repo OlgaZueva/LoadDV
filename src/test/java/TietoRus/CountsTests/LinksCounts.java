@@ -1949,6 +1949,107 @@ public class LinksCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoContMaster() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContMaster.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContMaster.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoContMaster.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoContMaster() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContMaster.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContMaster.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoContainerMoves() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoContainerMoves.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoContainerMoves() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoContainerStatusEventsGVA() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerStatusEventsGVA.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerStatusEventsGVA.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoContainerStatusEventsGVA.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoContainerStatusEventsGVA() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerStatusEventsGVA.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerStatusEventsGVA.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoContainerVgm() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerVgm.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerVgm.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoContainerVgm.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoContainerVgm() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerVgm.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerVgm.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoDemurrageStorage() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkBookingCargoDemurrageStorage.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoDemurrageStorage() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_lnkBookingCargoCommodityHsCodes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoCommodityHsCodes.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoCommodityHsCodes.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_satLnkBookingCargoCommodityHsCodes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoCommodityHsCodes.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoCommodityHsCodes.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
 
 
 
