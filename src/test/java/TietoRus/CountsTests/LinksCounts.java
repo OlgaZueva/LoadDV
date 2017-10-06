@@ -1934,14 +1934,6 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
-    public void VgmCodes_lnkVgmCodeCompany() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkVgmCodeCompany.condition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkVgmCodeCompany.lnk.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
-    }
-
-    @Test(enabled = true)
     public void StedBar_lnkServiceNamesCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("lnkServiceNamesCompany.condition.CountRows"));
