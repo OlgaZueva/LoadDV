@@ -35,7 +35,7 @@ public class LnkLogsTest {
 
     @Test(enabled = true)
     public void LinksLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[15];
+        String[] select = new String[16];
         /*
         select[0] = "book.lnkBookingBooking.select";
         select[1] = "book.lnkBookingBookingChargeLines.select";
@@ -157,6 +157,7 @@ public class LnkLogsTest {
         select[12] = "ediKonv.lnkTerminalsCompany.select";
         select[13] = "vgmCodes.lnkVgmCodeCompany.select";
         select[14] = "stedBar.lnkServiceNamesCompany.select";
+        select[15] = "iBox.lnkIboxDataCompany.select";
 
         getPropertiesFile();
         for (int i = 0; i < select.length; i++) {

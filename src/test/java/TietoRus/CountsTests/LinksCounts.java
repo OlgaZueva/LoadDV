@@ -1940,6 +1940,18 @@ public class LinksCounts {
         int countRowInSat = getCountRowOfHub(properties.getProperty("lnkServiceNamesCompany.lnk.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
+
+    @Test(enabled = true)
+    public void Ibox_lnkIboxDataCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkIboxDataCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkIboxDataCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));
     }

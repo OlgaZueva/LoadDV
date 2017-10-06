@@ -27,7 +27,7 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void InsertTestDataTest() throws SQLException, IOException {
-        String[] inserts = new String[69];
+        String[] inserts = new String[70];
 
         inserts[0] = "cleanUp.insert";
         inserts[1] = "cntrTypeSpecEquip.insert";
@@ -98,6 +98,7 @@ public class InsAndDelTestData {
         inserts[66] = "gvaDischargeList.insert";
         inserts[67] = "trpCosts.insert";
         inserts[68] = "femeTrpCosts.insert";
+        inserts[69] = "iBox.insert";
 
 
 
@@ -110,7 +111,7 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void DeleteTestDataTest() throws SQLException, IOException {
-        String[] delete = new String[69];
+        String[] delete = new String[70];
 
         delete[0] = "cleanUp.delete";
         delete[1] = "cntrTypeSpecEquip.delete";
@@ -181,6 +182,7 @@ public class InsAndDelTestData {
         delete[66] = "gvaDischargeList.delete";
         delete[67] = "trpCosts.delete";
         delete[68] = "femeTrpCosts.delete";
+        delete[69] = "iBox.delete";
 
 
 
