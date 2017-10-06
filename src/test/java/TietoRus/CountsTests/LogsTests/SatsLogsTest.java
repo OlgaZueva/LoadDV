@@ -44,8 +44,8 @@ public class SatsLogsTest {
 */
     @Test(enabled = true)
     public void SatsLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[47];
-        /*
+        String[] select = new String[68];
+
         select[0] = "cleanUp.sat.select";
         select[1] = "cntrTypeSpecEquip.sat.select";
         select[2] = "controllingOffice.sat.select";
@@ -93,20 +93,28 @@ public class SatsLogsTest {
         select[44] = "shipKurs.sat.select";
         select[45] = "utsConstants.sat.select";
         select[46] = "ediKonv_CompanyAgentCode.sat.select";
-*/
+        select[47] = "bookBemInternal.sat.select";
+        select[48] = "kontor.sat.select";
+        select[49] = "commodity.sat.select";
+        select[50] = "contRules.sat.select";
+        select[51] = "contBev.sat.select";
+        select[52] = "ctsContEvent.sat.select";
+        select[53] = "vgm.sat.select";
+        select[54] = "demurrage.sat.select";
+        select[55] = "service.sat.select";
+        select[56] = "henvis_SourceSystemUsers.sat.select";
+        select[57] = "ediKonv_Terminals.sat.select";
+        select[58] = "ediKonv_CompanyDemurrageEurDefault.sat.select";
+        select[59] = "ediKonv_ContainerLocationCloc.sat.select";
+        select[60] = "ediKonv_ContainerLocationLoc.sat.select";
+        select[61] = "ediKonv_WorkingTime.sat.select";
+        select[62] = "vgmCodes.sat.select";
+        select[63] = "contMaster.sat.select";
+        select[64] = "stedBar.sat.select";
+        select[65] = "gvaDischargeList.sat.select";
+        select[66] = "trpCosts.sat.select";
+        select[67] = "femeTrpCosts.sat.select";
 
-        select[0] = "bookBemInternal.sat.select";
-        select[1] = "kontor.sat.select";
-        select[2] = "commodity.sat.select";
-        select[3] = "contRules.sat.select";
-        select[4] = "contBev.sat.select";
-        select[5] = "ctsContEvent.sat.select";
-        select[6] = "vgm.sat.select";
-        select[7] = "demurrage.sat.select";
-        select[8] = "service.sat.select";
-        select[9] = "henvis_VorRef.sat.select";
-        select[10] = "ediKonv_Terminals.sat.select";
-        select[11] = "vgmCodes.sat.select";
 
         getPropertiesFile();
         for (int i = 0; i < select.length; i++) {

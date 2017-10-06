@@ -27,8 +27,8 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void InsertTestDataTest() throws SQLException, IOException {
-        String[] inserts = new String[12];
-        /*
+        String[] inserts = new String[69];
+
         inserts[0] = "cleanUp.insert";
         inserts[1] = "cntrTypeSpecEquip.insert";
         inserts[2] = "controllingOffice.insert";
@@ -77,19 +77,29 @@ public class InsAndDelTestData {
         inserts[45] = "shipKurs.insert";
         inserts[46] = "utsConstants.insert";
         inserts[47] = "ediKonv_CompanyAgentCode.insert";
-        */
-        inserts[0] = "bookBemInternal.insert";
-        inserts[1] = "kontor.insert";
-        inserts[2] = "commodity.insert";
-        inserts[3] = "contRules.insert";
-        inserts[4] = "contBev.insert";
-        inserts[5] = "ctsContEvent.insert";
-        inserts[6] = "vgm.insert";
-        inserts[7] = "demurrage.insert";
-        inserts[8] = "service.insert";
-        inserts[9] = "henvis_VorRef.insert";
-        inserts[10] = "ediKonv_Terminals.insert";
-        inserts[11] = "vgmCodes.insert";
+        inserts[48] = "bookBemInternal.insert";
+        inserts[49] = "kontor.insert";
+        inserts[50] = "commodity.insert";
+        inserts[51] = "contRules.insert";
+        inserts[52] = "contBev.insert";
+        inserts[53] = "ctsContEvent.insert";
+        inserts[54] = "vgm.insert";
+        inserts[55] = "demurrage.insert";
+        inserts[56] = "service.insert";
+        inserts[57] = "henvis_SourceSystemUsers.insert";
+        inserts[58] = "ediKonv_Terminals.insert";
+        inserts[59] = "ediKonv_CompanyDemurrageEurDefault.insert";
+        inserts[60] = "ediKonv_ContainerLocationCloc.insert";
+        inserts[61] = "ediKonv_ContainerLocationLoc.insert";
+        inserts[62] = "ediKonv_WorkingTime.insert";
+        inserts[63] = "vgmCodes.insert";
+        inserts[64] = "contMaster.insert";
+        inserts[65] = "stedBar.insert";
+        inserts[66] = "gvaDischargeList.insert";
+        inserts[67] = "trpCosts.insert";
+        inserts[68] = "femeTrpCosts.insert";
+
+
 
         getPropertiesFile();
         for (int i = 0; i < inserts.length; i++) {
@@ -100,8 +110,8 @@ public class InsAndDelTestData {
 
     @Test(enabled = true)
     public void DeleteTestDataTest() throws SQLException, IOException {
-        String[] delete = new String[12];
-        /*
+        String[] delete = new String[69];
+
         delete[0] = "cleanUp.delete";
         delete[1] = "cntrTypeSpecEquip.delete";
         delete[2] = "controllingOffice.delete";
@@ -150,20 +160,29 @@ public class InsAndDelTestData {
         delete[45] = "shipKurs.delete";
         delete[46] = "utsConstants.delete";
         delete[47] = "ediKonv_CompanyAgentCode.delete";
-*/
+        delete[48] = "bookBemInternal.delete";
+        delete[49] = "kontor.delete";
+        delete[50] = "commodity.delete";
+        delete[51] = "contRules.delete";
+        delete[52] = "contBev.delete";
+        delete[53] = "ctsContEvent.delete";
+        delete[54] = "vgm.delete";
+        delete[55] = "demurrage.delete";
+        delete[56] = "service.delete";
+        delete[57] = "henvis_SourceSystemUsers.delete";
+        delete[58] = "edikonv_Terminals.delete";
+        delete[59] = "ediKonv_CompanyDemurrageEurDefault.delete";
+        delete[60] = "ediKonv_ContainerLocationCloc.delete";
+        delete[61] = "ediKonv_ContainerLocationLoc.delete";
+        delete[62] = "ediKonv_WorkingTime.delete";
+        delete[63] = "vgmCodes.delete";
+        delete[64] = "contMaster.delete";
+        delete[65] = "stedBar.delete";
+        delete[66] = "gvaDischargeList.delete";
+        delete[67] = "trpCosts.delete";
+        delete[68] = "femeTrpCosts.delete";
 
-        delete[0] = "bookBemInternal.delete";
-        delete[1] = "kontor.delete";
-        delete[2] = "commodity.delete";
-        delete[3] = "contRules.delete";
-        delete[4] = "contBev.delete";
-        delete[5] = "ctsContEvent.delete";
-        delete[6] = "vgm.delete";
-        delete[7] = "demurrage.delete";
-        delete[8] = "service.delete";
-        delete[9] = "henvis_VorRef.delete";
-        delete[10] = "edikonv_Terminals.delete";
-        delete[11] = "vgmCodes.delete";
+
 
         getPropertiesFile();
         for (int i = 0; i < delete.length; i++) {

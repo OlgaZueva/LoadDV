@@ -1941,7 +1941,13 @@ public class LinksCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-
+    @Test(enabled = true)
+    public void StedBar_lnkServiceNamesCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkServiceNamesCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkServiceNamesCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));
     }
