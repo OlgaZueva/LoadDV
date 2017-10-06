@@ -35,7 +35,8 @@ public class LnkLogsTest {
 
     @Test(enabled = true)
     public void LinksLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[99];
+        String[] select = new String[19];
+        /*
         select[0] = "book.lnkBookingBooking.select";
         select[1] = "book.lnkBookingBookingChargeLines.select";
         select[2] = "book.lnkBookingBookingHaulageDetails.select";
@@ -135,7 +136,26 @@ public class LnkLogsTest {
         select[96] = "sagKurs.lnkFileROECompany.select";
         select[97] = "shipKurs.lnkDailyRoeCompany.select";
         select[98] = "utsConstants.lnkShipItConstantsCompany.select";
-
+*/
+        select[0] = "bookBemInternal.lnkBookingInternalRemarksCompany.select";
+        select[1] = "kontor.lnkBranchCompany.select";
+        select[2] = "commodity.lnkCommodityHsCodesCompany.select";
+        select[3] = "contRules.lnkContainerDemurrageRulesCompany.select";
+        select[4] = "contBev.lnkContainerMoveTypesCompany.select";
+        select[5] = "ctsContEvent.lnkContainerStatusEventsGVACompany.select";
+        select[6] = "ctsContEvent.lnkContainerStatusEventsGVAFullEmpty.select";
+        select[7] = "ctsContEvent.lnkContainerStatusEventsGVALocations.select";
+        select[8] = "vgm.lnkContainerVgmCompany.select";
+        select[9] = "vgm.lnkContainerVgmVgmCode.select";
+        select[10] = "demurrage.lnkDemurrageStorageCompany.select";
+        select[11] = "demurrage.lnkDemurrageStorageContainerDemurrageRules.select";
+        select[12] = "demurrage.lnkDemurrageStorageContainerMoveTypes.select";
+        select[13] = "demurrage.lnkDemurrageStorageInvoice.select";
+        select[14] = "demurrage.lnkDemurrageStorageCurrency.select";
+        select[15] = "service.lnkServiceCompany.select";
+        select[16] = "henvis.lnkSourceSystemUsersCompany.select";
+        select[17] = "ediKonv.lnkTerminalsCompany.select";
+        select[18] = "vgmCodes.lnkVgmCodeCompany.select";
 
         getPropertiesFile();
         for (int i = 0; i < select.length; i++) {

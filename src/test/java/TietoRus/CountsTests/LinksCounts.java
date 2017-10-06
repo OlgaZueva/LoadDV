@@ -1908,6 +1908,39 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
+    @Test(enabled = true)
+    public void Service_lnkServiceCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkServiceCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkServiceCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+
+    @Test(enabled = true)
+    public void Henvis_lnkSourceSystemUsersCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkSourceSystemUsersCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkSourceSystemUsersCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void EdiKonv_lnkTerminalsCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkTerminalsCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkTerminalsCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void VgmCodes_lnkVgmCodeCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInHub = getCountRowOfHub(properties.getProperty("lnkVgmCodeCompany.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("lnkVgmCodeCompany.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));

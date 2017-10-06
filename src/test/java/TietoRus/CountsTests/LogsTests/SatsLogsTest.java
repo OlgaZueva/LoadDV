@@ -45,6 +45,7 @@ public class SatsLogsTest {
     @Test(enabled = true)
     public void SatsLogsTestDataTest() throws SQLException, IOException {
         String[] select = new String[47];
+        /*
         select[0] = "cleanUp.sat.select";
         select[1] = "cntrTypeSpecEquip.sat.select";
         select[2] = "controllingOffice.sat.select";
@@ -92,7 +93,20 @@ public class SatsLogsTest {
         select[44] = "shipKurs.sat.select";
         select[45] = "utsConstants.sat.select";
         select[46] = "ediKonv_CompanyAgentCode.sat.select";
+*/
 
+        select[0] = "bookBemInternal.sat.select";
+        select[1] = "kontor.sat.select";
+        select[2] = "commodity.sat.select";
+        select[3] = "contRules.sat.select";
+        select[4] = "contBev.sat.select";
+        select[5] = "ctsContEvent.sat.select";
+        select[6] = "vgm.sat.select";
+        select[7] = "demurrage.sat.select";
+        select[8] = "service.sat.select";
+        select[9] = "henvis_VorRef.sat.select";
+        select[10] = "ediKonv_Terminals.sat.select";
+        select[11] = "vgmCodes.sat.select";
 
         getPropertiesFile();
         for (int i = 0; i < select.length; i++) {
