@@ -35,7 +35,7 @@ public class LnkLogsTest {
 
     @Test(enabled = true)
     public void LinksLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[16];
+        String[] select = new String[24];
         /*
         select[0] = "book.lnkBookingBooking.select";
         select[1] = "book.lnkBookingBookingChargeLines.select";
@@ -147,17 +147,21 @@ public class LnkLogsTest {
         select[7] = "ctsContEvent.lnkContainerStatusEventsGVALocations.select";
         select[8] = "vgm.lnkContainerVgmCompany.select";
         select[9] = "vgm.lnkContainerVgmVgmCode.select";
-       // select[10] = "demurrage.lnkDemurrageStorageCompany.select";
-        //select[11] = "demurrage.lnkDemurrageStorageContainerDemurrageRules.select";
-        //select[12] = "demurrage.lnkDemurrageStorageContainerMoveTypes.select";
-        //select[13] = "demurrage.lnkDemurrageStorageInvoice.select";
-        //select[14] = "demurrage.lnkDemurrageStorageCurrency.select";
-        select[10] = "service.lnkServiceCompany.select";
-        select[11] = "henvis.lnkSourceSystemUsersCompany.select";
-        select[12] = "ediKonv.lnkTerminalsCompany.select";
-        select[13] = "vgmCodes.lnkVgmCodeCompany.select";
-        select[14] = "stedBar.lnkServiceNamesCompany.select";
-        select[15] = "iBox.lnkIboxDataCompany.select";
+        select[10] = "demurrage.lnkDemurrageStorageCompany.select";
+        select[11] = "demurrage.lnkDemurrageStorageContainerDemurrageRules.select";
+        select[12] = "demurrage.lnkDemurrageStorageContainerMoveTypes.select";
+        select[13] = "demurrage.lnkDemurrageStorageInvoice.select";
+        select[14] = "demurrage.lnkDemurrageStorageCurrency.select";
+        select[15] = "service.lnkServiceCompany.select";
+        select[16] = "henvis.lnkSourceSystemUsersCompany.select";
+        select[17] = "ediKonv.lnkTerminalsCompany.select";
+        select[18] = "vgmCodes.lnkVgmCodeCompany.select";
+        select[19] = "stedBar.lnkServiceNamesCompany.select";
+        select[20] = "iBox.lnkIboxDataCompany.select";
+        select[21] = "book.lnkBookingBookingInternalRemarks.select";
+        select[22] = "book.lnkBookingBranch.select";
+        select[23] = "book.lnkBookingServiceNames.select";
+
 
         getPropertiesFile();
         for (int i = 0; i < select.length; i++) {
