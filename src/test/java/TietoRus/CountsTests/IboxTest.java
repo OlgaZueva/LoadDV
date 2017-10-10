@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /*
 Тест для проверки механизма загрузки IBox
+Сначала данные заливаются во вспомогательную таблицу затем сравснивается кол-во записей вспомогатльной таблице (с условиями) с кол-вом в целевой.
  */
 
 public class IboxTest {
@@ -30,6 +31,7 @@ public class IboxTest {
     @Test(enabled = true)
     public void iBox() throws SQLException, IOException {
         getPropertiesFile();
+
         String truncate = (properties.getProperty("iBox.linkTable.truncate"));
         executeInDWH(truncate);
 
@@ -245,7 +247,7 @@ public class IboxTest {
                 dwhIdHubContainerType = -1;
             } else {
                 String sqlDwhIdHubContainerType = ("select " + nameDwhIdHubContainerType + " " + properties.getProperty("iBox.hubContainerType.select")
-                        + rsFromDWH.getString("CONT_TYPE_CODE") +  "' and accessCompanyId= " + accesCompanyId);
+                        + rsFromDWH.getString("CONT_TYPE_CODE") + "' and accessCompanyId= " + accesCompanyId);
                 dwhIdHubContainerType = getDataFromHub(sqlDwhIdHubContainerType, nameDwhIdHubContainerType);
             }
             mapForSource.put(nameDwhIdHubCONTAINER_TYPE, dwhIdHubContainerType);
@@ -273,7 +275,7 @@ public class IboxTest {
                 dwhIdHubOceanVesselStatus = -1;
             } else {
                 String sqlDwhIdHubOceanVesselStatus = ("select " + nameDwhIdHubOceanVesselStatus + " " + properties.getProperty("iBox.hubOceanVesselStatus.select")
-                        + rsFromDWH.getString("C_OV_STATUS") +  "' and accessCompanyId= " + accesCompanyId);
+                        + rsFromDWH.getString("C_OV_STATUS") + "' and accessCompanyId= " + accesCompanyId);
                 dwhIdHubOceanVesselStatus = getDataFromHub(sqlDwhIdHubOceanVesselStatus, nameDwhIdHubOceanVesselStatus);
             }
             mapForSource.put(nameDwhIdHubOCEAN_VESSEL_STATUS, dwhIdHubOceanVesselStatus);
@@ -307,6 +309,10 @@ public class IboxTest {
         }
 
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+        int countRowAfterSelected = getDataFromHub(properties.getProperty("iBox.condition.countRows"), "c");
+        int countRowInLnk = getDataFromHub(properties.getProperty("iBox.lnk.countRows"), "c");
+        assertRowCount(countRowAfterSelected, countRowInLnk);
     }
 
 
