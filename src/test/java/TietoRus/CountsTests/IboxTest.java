@@ -245,7 +245,7 @@ public class IboxTest {
                 dwhIdHubContainerType = -1;
             } else {
                 String sqlDwhIdHubContainerType = ("select " + nameDwhIdHubContainerType + " " + properties.getProperty("iBox.hubContainerType.select")
-                        + rsFromDWH.getString("CONT_TYPE_CODE") + "\'");
+                        + rsFromDWH.getString("CONT_TYPE_CODE") +  "' and accessCompanyId= " + accesCompanyId);
                 dwhIdHubContainerType = getDataFromHub(sqlDwhIdHubContainerType, nameDwhIdHubContainerType);
             }
             mapForSource.put(nameDwhIdHubCONTAINER_TYPE, dwhIdHubContainerType);
@@ -273,7 +273,7 @@ public class IboxTest {
                 dwhIdHubOceanVesselStatus = -1;
             } else {
                 String sqlDwhIdHubOceanVesselStatus = ("select " + nameDwhIdHubOceanVesselStatus + " " + properties.getProperty("iBox.hubOceanVesselStatus.select")
-                        + rsFromDWH.getString("C_OV_STATUS") + "\'");
+                        + rsFromDWH.getString("C_OV_STATUS") +  "' and accessCompanyId= " + accesCompanyId);
                 dwhIdHubOceanVesselStatus = getDataFromHub(sqlDwhIdHubOceanVesselStatus, nameDwhIdHubOceanVesselStatus);
             }
             mapForSource.put(nameDwhIdHubOCEAN_VESSEL_STATUS, dwhIdHubOceanVesselStatus);
@@ -285,6 +285,9 @@ public class IboxTest {
                 String sqlDwhIdHubCrossBookingType = ("select " + nameDwhIdHubCrossBookingType + " " + properties.getProperty("iBox.hubCrossBookingType.select")
                         + rsFromDWH.getString("C_BL_NR_PREFIX") + "\'");
                 dwhIdHubCrossBookingType = getDataFromHub(sqlDwhIdHubCrossBookingType, nameDwhIdHubCrossBookingType);
+                if (dwhIdHubCrossBookingType == null) {
+                    dwhIdHubCrossBookingType = getDataFromHub(properties.getProperty("iBox.hubCrossBookingType_NA.select"), nameDwhIdHubCrossBookingType);
+                }
             }
             mapForSource.put(nameDwhIdHubCROSS_BOOKING_TYPE, dwhIdHubCrossBookingType);
 
@@ -328,13 +331,6 @@ public class IboxTest {
         return template;
     }
 
-
-    public Map<String, Object> getMapFromSource(ResultSet rsFromSource) throws SQLException {
-        for (int k = 1; k <= rsFromSource.getMetaData().getColumnCount(); k++) {
-            mapForSource.put(rsFromSource.getMetaData().getColumnName(k), rsFromSource.getObject(k));
-        }
-        return mapForSource;
-    }
 
     public void executeInDWH(String sql) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
