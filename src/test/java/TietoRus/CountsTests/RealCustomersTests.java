@@ -119,6 +119,8 @@ public class RealCustomersTests {
             String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
+
+
             }
             mapForSource.put("customerName", originalCustomerName);
             String qwe = (properties.getProperty("realCustomer.insert") + (mapForSource.get("dwhIdHubBooking")) + "," + (mapForSource.get("dwhIdHubCustomers"))

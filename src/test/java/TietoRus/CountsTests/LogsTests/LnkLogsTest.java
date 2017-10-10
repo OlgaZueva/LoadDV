@@ -168,7 +168,7 @@ public class LnkLogsTest {
         select[28] = "bookGods.lnkBookingCargoDemurrageStorage.select";
         select[29] = "bookGods.lnkBookingCargoCommodityHsCodes.select";
 
-        
+
 
 
 
