@@ -31,8 +31,8 @@ public class IboxTest {
     @Test(enabled = true)
     public void iBox() throws SQLException, IOException {
         getPropertiesFile();
-        String create = (properties.getProperty("iBox.linkTable.create"));
-        executeInDWH(create);
+       // String create = (properties.getProperty("iBox.linkTable.create"));
+      //  executeInDWH(create);
         String truncate = (properties.getProperty("iBox.linkTable.truncate"));
         executeInDWH(truncate);
 

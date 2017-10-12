@@ -173,6 +173,30 @@ public class MultiIUDCounts {
     }
 
     @Test(enabled = true)
+    public void BookMftRemarks_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countMutiMoments = getCountRowInSA(properties.getProperty("bookMftRemarks.MSCRUS.countMutiMoments.counts"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftRemarks.MSCRUS.MomentsMultiIUD.notD.counts"));
+        int countDWithHub = getCountRowInSA(properties.getProperty("bookMftRemarks.MSCRUS.InDWithHub.counts"));
+        int countAllD = getCountRowInSA(properties.getProperty("bookMftRemarks.MSCRUS.InDAll.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookMftRemarks.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookMftRemarks_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countMutiMoments = getCountRowInSA(properties.getProperty("bookMftRemarks.UNITY.countMutiMoments.counts"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftRemarks.UNITY.MomentsMultiIUD.notD.counts"));
+        int countDWithHub = getCountRowInSA(properties.getProperty("bookMftRemarks.UNITY.InDWithHub.counts"));
+        int countAllD = getCountRowInSA(properties.getProperty("bookMftRemarks.UNITY.InDAll.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookMftRemarks.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
     public void BookEvent_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countMutiMoments = getCountRowInSA(properties.getProperty("bookEvent.MSCRUS.countMutiMoments.counts"));
