@@ -45,7 +45,6 @@ public class DimsDataMatching {
             db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
             matchMaps(mapFromDV, mapFromDM);
         }
-
     }
 
     @Test(enabled = true)
@@ -71,8 +70,59 @@ public class DimsDataMatching {
             db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
             matchMaps(mapFromDV, mapFromDM);
         }
-
     }
+
+
+    @Test(enabled = true)
+    public void dimControllingOffice_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("controllingOffice.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("controllingOffice.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("controllingOffice.datainDM.RowByKeys") + " where dwhIdHubControllingOffice = " +
+                        rsFromDWH.getInt("dwhIdHubControllingOffice") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimVesselRegistry_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("vesselRegistry.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("vesselRegistry.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("vesselRegistry.datainDM.RowByKeys") + " where dwhIdHubVesselRegistry = " +
+                        rsFromDWH.getInt("dwhIdHubVesselRegistry") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
@@ -92,16 +142,26 @@ public class DimsDataMatching {
 
     public ArrayList getArray(int countRowsInTable) throws IOException {
         getPropertiesFile();
+        ArrayList arrayRows = new ArrayList();
+        int defaultRowsForMatch = Integer.parseInt(properties.getProperty("system.default.RowsForMatch"));
         Double percent = Double.valueOf((properties.getProperty("system.PercentOfRows")));
         int countRowsForMatch = (int) Math.round(((countRowsInTable * percent) / 100));
-        int increment = Math.round(countRowsInTable / countRowsForMatch);
-        ArrayList arrayRows = new ArrayList();
-        for (int i = 1; i < (countRowsInTable - increment); i = i + increment) {
-            arrayRows.add(i);
-        }
-        System.out.println("Кол-во записей пула, которые будут сравниваться: " + arrayRows.size());
+        if (countRowsForMatch != 0) {
+            int increment = Math.round(countRowsInTable / countRowsForMatch);
+            for (int i = 1; i < (countRowsInTable - increment); i = i + increment) {
+                arrayRows.add(i);
+            }
+            System.out.println("Кол-во записей пула, которые будут сравниваться: " + arrayRows.size());
+            return arrayRows;
+        } else
+            for (int i = 0; i < (defaultRowsForMatch); i++) {
+                arrayRows.add(i);
+            }
+
+        System.out.println("В DV мало записей, будет сравниваться " + arrayRows.size());
         return arrayRows;
     }
+
 
     public Map<String, Object> getMapFromDV(ResultSet rsFromSource) throws SQLException {
         for (int k = 1; k <= rsFromSource.getMetaData().getColumnCount(); k++) {
@@ -133,8 +193,8 @@ public class DimsDataMatching {
 
 
     public void matchMaps(Map<String, Object> mapDV, Map<String, Object> mapDM) {
-        System.out.println("Map from DV = " + mapDV);
-        System.out.println("Map from DM = " + mapDM);
+        // System.out.println("Map from DV = " + mapDV);
+        // System.out.println("Map from DM = " + mapDM);
 
         if (mapDM.size() == 0) {
             System.err.println("Record in DataMart not found!");

@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -31,7 +29,6 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
     @Test(enabled = true)
     public void dimFileLiner() throws SQLException, IOException {
         getPropertiesFile();
@@ -47,6 +44,19 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("controllingOffice.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
+
+    @Test(enabled = true)
+    public void dimVesselRegistry() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("vesselRegistry.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("vesselRegistry.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
+
+
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
