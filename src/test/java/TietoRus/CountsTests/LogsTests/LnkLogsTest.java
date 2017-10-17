@@ -35,7 +35,7 @@ public class LnkLogsTest {
 
     @Test(enabled = true)
     public void LinksLogsTestDataTest() throws SQLException, IOException {
-        String[] select = new String[24];
+        String[] select = new String[13];
         /*
         select[0] = "book.lnkBookingBooking.select";
         select[1] = "book.lnkBookingBookingChargeLines.select";
@@ -137,6 +137,7 @@ public class LnkLogsTest {
         select[97] = "shipKurs.lnkDailyRoeCompany.select";
         select[98] = "utsConstants.lnkShipItConstantsCompany.select";
 */
+        /*
         select[0] = "bookBemInternal.lnkBookingInternalRemarksCompany.select";
         select[1] = "kontor.lnkBranchCompany.select";
         select[2] = "commodity.lnkCommodityHsCodesCompany.select";
@@ -155,21 +156,43 @@ public class LnkLogsTest {
         select[15] = "service.lnkServiceCompany.select";
         select[16] = "henvis.lnkSourceSystemUsersCompany.select";
         select[17] = "ediKonv.lnkTerminalsCompany.select";
-        select[18] = "vgmCodes.lnkVgmCodeCompany.select";
-        select[19] = "stedBar.lnkServiceNamesCompany.select";
-        select[20] = "iBox.lnkIboxDataCompany.select";
-        select[21] = "book.lnkBookingBookingInternalRemarks.select";
-        select[22] = "book.lnkBookingBranch.select";
-        select[23] = "book.lnkBookingServiceNames.select";
-        select[24] = "bookGods.lnkBookingCargoContMaster.select";
-        select[25] = "bookGods.lnkBookingCargoContainerMoves.select";
-        select[26] = "bookGods.lnkBookingCargoContainerStatusEventsGVA.select";
-        select[27] = "bookGods.lnkBookingCargoContainerVgm.select";
-        select[28] = "bookGods.lnkBookingCargoDemurrageStorage.select";
-        select[29] = "bookGods.lnkBookingCargoCommodityHsCodes.select";
+        select[18] = "stedBar.lnkServiceNamesCompany.select";
+        select[19] = "iBox.lnkIboxDataCompany.select";
+        select[20] = "book.lnkBookingBookingInternalRemarks.select";
+        select[21] = "book.lnkBookingBranch.select";
+        select[22] = "book.lnkBookingServiceNames.select";
+        select[23] = "bookGods.lnkBookingCargoContMaster.select";
+        select[24] = "bookGods.lnkBookingCargoContainerMoves.select";
+        select[25] = "bookGods.lnkBookingCargoContainerStatusEventsGVA.select";
+        select[26] = "bookGods.lnkBookingCargoContainerVgm.select";
+        select[27] = "bookGods.lnkBookingCargoDemurrageStorage.select";
+        select[28] = "bookGods.lnkBookingCargoCommodityHsCodes.select";
+*/
+        select[0] = "bookBemInternal.select";
+        select[1] = "kontor.select";
+        select[2] = "commodity.select";
+        select[3] = "contRules.select";
+        select[4] = "contBev.select";
+        select[5] = "ctsContEvent.select";
+        select[6] = "vgm.select";
+        select[7] = "demurrage.select";
+        select[8] = "service.select";
+        select[9] = "henvis.select";
+        select[10] = "ediKonv.select";
+        select[11] = "stedBar.select";
+        select[12] = "iBox.select";
+        /*
+        select[20] = "book.lnkBookingBookingInternalRemarks.select";
+        select[21] = "book.lnkBookingBranch.select";
+        select[22] = "book.lnkBookingServiceNames.select";
+        select[23] = "bookGods.lnkBookingCargoContMaster.select";
+        select[24] = "bookGods.lnkBookingCargoContainerMoves.select";
+        select[25] = "bookGods.lnkBookingCargoContainerStatusEventsGVA.select";
+        select[26] = "bookGods.lnkBookingCargoContainerVgm.select";
+        select[27] = "bookGods.lnkBookingCargoDemurrageStorage.select";
+        select[28] = "bookGods.lnkBookingCargoCommodityHsCodes.select";
 
-
-
+*/
 
 
 
