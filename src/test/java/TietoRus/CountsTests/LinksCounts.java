@@ -2051,6 +2051,24 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
+    @Test(enabled = true)
+    public void ContRep_lnkContainerMovesContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+        checkErrors(properties.getProperty("lnkContainerMovesContainerMoveTypes.error.CountRows"));
+    }
+
+    @Test(enabled = true)
+    public void ContRep_satLnkContainerMovesContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
 
 
     private void getPropertiesFile() throws IOException {
