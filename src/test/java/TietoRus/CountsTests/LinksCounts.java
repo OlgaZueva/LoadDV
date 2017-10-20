@@ -2069,6 +2069,29 @@ public class LinksCounts {
     }
 
 
+    @Test(enabled = true)
+    public void Kunde_lnkCustomersSourceSystemUsers() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_KAM_Condition = getCountRowOfHub(properties.getProperty("lnkCustomersSourceSystemUsers.KAM.condition.CountRows"));
+        System.out.println("countRowBy_KAM_Condition: " + countRowBy_KAM_Condition);
+        int countRowBy_KAM2_Condition = getCountRowOfHub(properties.getProperty("lnkCustomersSourceSystemUsers.KAM2.condition.CountRows"));
+        System.out.println("countRowBy_KAM2_Condition: " + countRowBy_KAM2_Condition);
+        int countRowByCondition = countRowBy_KAM_Condition + countRowBy_KAM2_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersSourceSystemUsers.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Kunde_satLnkCustomersSourceSystemUsers() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkCustomersSourceSystemUsers.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkCustomersSourceSystemUsers.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+
+
 
 
     private void getPropertiesFile() throws IOException {
@@ -2081,13 +2104,14 @@ public class LinksCounts {
     }
 
     private void checkErrors(String sql) throws SQLException {
-        int countRowInErrorLogTable = getCountRowOfHub(sql);
+        int countRowInErrorLogTable = getCountRowInSA(sql);
         if (countRowInErrorLogTable == 0) {
             System.out.println("Link is optional. Checking errorTable. No errors in ErrorLogTable. It's expected!");
-            // assertThat(0, equalTo(0));
+
         } else {
             System.err.println("В ErrorLogTable есть [" + countRowInErrorLogTable +
-                    "] записей об ошибках. Проверить их! Не должно быть записей о ненахождении записей во втором хабе - линк опциональный.");
+                    "] записей об ошибках. Проверить их! если линк опциональный - не должно быть записей о ненахождении записей во втором хабе.");
+            System.err.println(" Или не должно быть записей о ненахождении хаба для полей - участников условия построение линка = null. См спеку. ");
             assertThat(0, equalTo(1));
         }
     }
@@ -2095,14 +2119,12 @@ public class LinksCounts {
     public int getCountRowOfHub(String hubSQL) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
-        //System.out.println("SQL из DWH: " + hubSQL);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, hubSQL);
         int countRowHub = 0;
         while (rsFromDWH.next()) {
             countRowHub = Integer.parseInt(rsFromDWH.getString("c"));
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        //System.out.println("countRowHub in DWH: " + countRowHub);
         return countRowHub;
     }
 
