@@ -2106,6 +2106,46 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
+    @Test(enabled = true)
+    public void TrpCosts_lnkFeederCostsLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_POL_Condition = getCountRowOfHub(properties.getProperty("lnkFeederCostsLocations.POL.condition.CountRows"));
+        System.out.println("countRowBy_POL_Condition: " + countRowBy_POL_Condition);
+        int countRowBy_POD_Condition = getCountRowOfHub(properties.getProperty("lnkFeederCostsLocations.POD.condition.CountRows"));
+        System.out.println("countRowBy_POD_Condition: " + countRowBy_POD_Condition);
+        int countRowByCondition = countRowBy_POL_Condition + countRowBy_POD_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFeederCostsLocations.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void TrpCosts_satLnkFeederCostsLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFeederCostsLocations.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkFeederCostsLocations.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+    @Test(enabled = true)
+    public void FemeTrpCosts_lnkFemeFeederCostsLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowBy_POL_Condition = getCountRowOfHub(properties.getProperty("lnkFemeFeederCostsLocations.POL.condition.CountRows"));
+        System.out.println("countRowBy_POL_Condition: " + countRowBy_POL_Condition);
+        int countRowBy_POD_Condition = getCountRowOfHub(properties.getProperty("lnkFemeFeederCostsLocations.POD.condition.CountRows"));
+        System.out.println("countRowBy_POD_Condition: " + countRowBy_POD_Condition);
+        int countRowByCondition = countRowBy_POL_Condition + countRowBy_POD_Condition ;
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFemeFeederCostsLocations.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void FemeTrpCosts_satLnkFemeFeederCostsLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFemeFeederCostsLocations.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkFemeFeederCostsLocations.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
 
 
     private void getPropertiesFile() throws IOException {
