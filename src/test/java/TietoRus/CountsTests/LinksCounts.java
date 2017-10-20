@@ -2090,7 +2090,21 @@ public class LinksCounts {
     }
 
 
+    @Test(enabled = true)
+    public void Sag_lnkFileLinerService() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkFileLinerService.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerService.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
 
+    @Test(enabled = true)
+    public void Sag_satLnkFileLinerService() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkFileLinerService.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkFileLinerService.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
 
 
 
