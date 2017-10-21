@@ -19,7 +19,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /*
-Тест для проверки механизма загрузки IBox
+Тест для проверки механизма загрузки IBox satLink
 Сначала данные заливаются во вспомогательную таблицу затем сравснивается кол-во записей вспомогатльной таблице (с условиями) с кол-вом в целевой.
  */
 
