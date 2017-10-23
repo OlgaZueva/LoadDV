@@ -62,7 +62,7 @@ public class DimsDataMatching {
             ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
             while (rsFromDWH.next()) {
                 mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("fileLiner.datainDM.RowByKeys") + " where dwhIdHubFileLiner = " +
+                String sqlForDM = (properties.getProperty("fileLiner.dataInDM.RowByKeys") + " where dwhIdHubFileLiner = " +
                         rsFromDWH.getInt("dwhIdHubFileLiner") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
@@ -123,6 +123,116 @@ public class DimsDataMatching {
         }
     }
 
+    @Test(enabled = true)
+    public void dimCountry_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("country.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("country.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("country.dataInDM.RowByKeys") + " where dwhIdHubCountry = " +
+                        rsFromDWH.getInt("dwhIdHubCountry") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimBookingManifest_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingManifest.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("bookingManifest.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("bookingManifest.dataInDM.RowByKeys") + " where dwhIdHubBookingManifest = " +
+                        rsFromDWH.getInt("dwhIdHubBookingManifest") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimOvTradeName_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.union.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("ovTradeName.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                mapFromDV.put("dmStatus", 1);
+                mapFromDV.put("srcSystemId", 0);
+                mapFromDV.put("validFrom", "2000-01-01");
+                mapFromDV.put("validTo", "2100-01-01");
+
+                String sqlForDM = (properties.getProperty("ovTradeName.dataInDM.RowByKeys") + " where ovTradeName = '" +
+                        rsFromDWH.getString("ovTradeName") + "' and accessCompanyId = '" + rsFromDWH.getInt("accessCompanyId") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimGvaTrade_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.union.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("gvaTrade.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                mapFromDV.put("dmStatus", 1);
+                mapFromDV.put("srcSystemId", 0);
+                mapFromDV.put("validFrom", "2000-01-01");
+                mapFromDV.put("validTo", "2100-01-01");
+
+                String sqlForDM = (properties.getProperty("gvaTrade.dataInDM.RowByKeys") + " where gvaTrade = '" +
+                        rsFromDWH.getString("gvaTrade") + "' and accessCompanyId = '" + rsFromDWH.getInt("accessCompanyId") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
@@ -148,7 +258,7 @@ public class DimsDataMatching {
         int countRowsForMatch = (int) Math.round(((countRowsInTable * percent) / 100));
         if (countRowsForMatch != 0) {
             int increment = Math.round(countRowsInTable / countRowsForMatch);
-            for (int i = 1; i < (countRowsInTable - increment); i = i + increment) {
+            for (int i = 0; i < (countRowsInTable - increment); i = i + increment) {
                 arrayRows.add(i);
             }
             System.out.println("Кол-во записей пула, которые будут сравниваться: " + arrayRows.size());

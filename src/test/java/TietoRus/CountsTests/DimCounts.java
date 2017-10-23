@@ -53,8 +53,37 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
+    @Test(enabled = true)
+    public void dimBookingManifest() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingManifest.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingManifest.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
+    @Test(enabled = true)
+    public void dimCountry() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("country.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("country.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
+    @Test(enabled = true)
+    public void dimGvaTrade() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimOvTradeName() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.union.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeName.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
 
 
