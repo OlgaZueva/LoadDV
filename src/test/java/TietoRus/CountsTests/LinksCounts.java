@@ -2146,6 +2146,24 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
+    @Test(enabled = true)
+    public void Demurrage_lnkDemurrageStorageCustomer() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.condition.CountRows"));
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.lnk.CountRows"));
+        assertRowCount(countRowByCondition, countRowInLink);
+    }
+
+    @Test(enabled = true)
+    public void Demurrage_satLnkDemurrageStorageCustomer() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.lnk.CountRows"));
+        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.satLnk.CountRows"));
+        assertRowCount(countRowInLink, countRowInSatLink);
+    }
+
+
+
 
 
     private void getPropertiesFile() throws IOException {

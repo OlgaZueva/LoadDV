@@ -20,7 +20,6 @@ public class DimCounts {
     private DBHelper db = new DBHelper();
 
 
-
     @Test(enabled = true)
     public void dimCustomers() throws SQLException, IOException {
         getPropertiesFile();
@@ -68,6 +67,8 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("country.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
+
+
 
     @Test(enabled = true)
     public void dimGvaTrade() throws SQLException, IOException {

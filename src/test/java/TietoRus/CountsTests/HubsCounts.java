@@ -985,12 +985,19 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = false)
-    //загрузка данных из EXCEL_LoopSearh будет полностью переделываться. Хаба существовать не будет.
-    public void hubLoopSearch() throws SQLException, IOException {
+    @Test(enabled = true)
+    public void hubLoopSearchLiveScheduleName() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("loopSearch.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.hub.CountRows"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("loopSearchLiveScheduleName.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLiveScheduleName.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    public void hubLoopSearchLoopLeg() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("loopSearchLoopLeg.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLoopLeg.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
 
