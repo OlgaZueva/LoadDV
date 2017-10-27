@@ -2057,7 +2057,7 @@ public class LinksCounts {
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkContainerMovesContainerMoveTypes.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
-        checkErrors(properties.getProperty("lnkContainerMovesContainerMoveTypes.error.CountRows"));
+
     }
 
     @Test(enabled = true)
