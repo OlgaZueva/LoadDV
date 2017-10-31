@@ -86,7 +86,13 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
+    @Test(enabled = true)
+    public void dimBookingCargo() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingCargo.union.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingCargo.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
