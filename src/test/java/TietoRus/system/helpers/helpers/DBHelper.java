@@ -30,7 +30,7 @@ public class DBHelper {
     }
 
     public Connection connToDWH() throws SQLException {
-       // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataVaultTest;user=ssis;password=ssis");
+       //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataVaultTest;user=ssis;password=ssis");
         // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=DataVaultTest;user=ssis;password=ssis");
         return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTest;user=ssis;password=ssis");
         // return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataVault;user=sa;password=JGdedf&#fsqwhdc");
@@ -38,8 +38,8 @@ public class DBHelper {
     }
 
     public Connection connToMDS() throws SQLException {
-        //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.12;databaseName=MSC_MDS_TEST;user=ssis;password=ssis");
-        return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=MSC_MDS_TEST;user=ssis;password=ssis");
+        return DriverManager.getConnection("jdbc:sqlserver://10.21.11.12;databaseName=MSC_MDS_TEST;user=ssis;password=ssis");
+        //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=MSC_MDS_TEST;user=ssis;password=ssis");
     }
 
     public Statement stFromConnection(Connection connection) throws SQLException {
