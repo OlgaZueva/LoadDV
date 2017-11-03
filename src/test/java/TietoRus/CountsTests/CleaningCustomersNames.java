@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +59,9 @@ public class CleaningCustomersNames {
 
     @Test(enabled = true)
     public void FillingDictExcludedSymbols() throws SQLException, IOException {
-        getPropertiesFile();
+                getPropertiesFile();
+        String create = (properties.getProperty("dictExcludedSymbolsTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
@@ -72,6 +75,8 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void FillingDictEmptyCustomer() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("dictEmptyCustomerTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
@@ -79,6 +84,7 @@ public class CleaningCustomersNames {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
         }
+
     }
 
     @Test(enabled = true)

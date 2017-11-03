@@ -1950,6 +1950,17 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
+    public void Ibox_lnkIboxData() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Кол-во записей по условиям, с которым сравнивается кол-во записей в целевой таблице");
+        System.out.println("берутся из вспомогательной таблицы, которую заполняет отдельный тест (см классс IboxTest.class).");
+        System.out.println("Он выполняется долго, поэтому сюда не включен. Выполнить его отдельно.");
+        int countRowInHub = getCountRowOfHub(properties.getProperty("iBoxData.condition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("iBoxData.lnk.CountRows"));
+        assertRowCount(countRowInHub, countRowInSat);
+    }
+
+    @Test(enabled = true)
     public void BookGods_lnkBookingCargoContMaster() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContMaster.condition.CountRows"));

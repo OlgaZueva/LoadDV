@@ -29,10 +29,10 @@ public class IboxTest {
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
     @Test(enabled = true)
-    public void iBox() throws SQLException, IOException {
+    public void FillingIBoxAdditionalTable() throws SQLException, IOException {
         getPropertiesFile();
-       // String create = (properties.getProperty("iBox.linkTable.create"));
-      //  executeInDWH(create);
+        String create = (properties.getProperty("iBox.linkTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("iBox.linkTable.truncate"));
         executeInDWH(truncate);
 
@@ -310,10 +310,6 @@ public class IboxTest {
         }
 
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-
-        int countRowAfterSelected = getDataFromHub(properties.getProperty("iBox.condition.countRows"), "c");
-        int countRowInLnk = getDataFromHub(properties.getProperty("iBox.lnk.countRows"), "c");
-        assertRowCount(countRowAfterSelected, countRowInLnk);
     }
 
 

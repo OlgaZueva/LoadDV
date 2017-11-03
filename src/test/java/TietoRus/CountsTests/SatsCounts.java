@@ -1,6 +1,7 @@
 package TietoRus.CountsTests;
 
 import TietoRus.system.helpers.helpers.DBHelper;
+import TietoRus.CountsTests.CleaningCustomersNames;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -156,14 +157,24 @@ public class SatsCounts {
 
     @Test(enabled = true)
     public void CustomersSat() throws SQLException, IOException {
+
+        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
+        CreatePrecondition.FillingDictEmptyCustomer();
+        //CreatePrecondition.FillingDictExcludedSymbols();
         getPropertiesFile();
+
+        int countRowinEmptyCustomertable_Adresse  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
+        int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowInSA(properties.getProperty("customers.satConditionIbox.CountRows"));
         System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
         System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
         System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
-        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox;
+        System.out.println("countRowinEmptyCustomertable_Adresse: " + countRowinEmptyCustomertable_Adresse);
+        System.out.println("countRowinEmptyCustomertable_Kunde: " + countRowinEmptyCustomertable_Kunde);
+        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox)
+                - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde);
         int countRowInSat = getCountRowOfHub(properties.getProperty("customers.sat.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSat);
     }
@@ -184,7 +195,8 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
-        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse;
+        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
+        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox;
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customers.satStatus.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSatHubStatus);
     }
@@ -1095,6 +1107,11 @@ public class SatsCounts {
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
+    }
+
+    private Properties getPropertiesFileForMDS() throws IOException {
+        properties.load(new FileReader(new File(String.format("src/test/resources/DWHtoMDS.properties"))));
+        return null;
     }
 
     public void assertRowCount(int countInSource, int countInDest) {
