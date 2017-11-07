@@ -34,6 +34,8 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void CleaningCustomersNames() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("cleanedCustomersNamesTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
         executeInDWH(truncate);
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
@@ -66,7 +68,7 @@ public class CleaningCustomersNames {
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
-            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
             executeInDWH(qwe);
         }
     }
