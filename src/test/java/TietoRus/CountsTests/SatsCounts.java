@@ -167,7 +167,7 @@ public class SatsCounts {
         int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
-        int countRowInSAbyCondition_Ibox = getCountRowInSA(properties.getProperty("customers.satConditionIbox.CountRows"));
+        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satConditionIbox.CountRows"));
         System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
         System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
         System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
@@ -193,10 +193,13 @@ public class SatsCounts {
     @Test(enabled = true)
     public void CustomersSatStatus() throws SQLException, IOException {
         getPropertiesFile();
+        int countRowinEmptyCustomertable_Adresse  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
+        int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
-        int countRowInSAbyCondition = countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox;
+        int countRowInSAbyCondition = ((countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox)
+                - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customers.satStatus.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSatHubStatus);
     }
