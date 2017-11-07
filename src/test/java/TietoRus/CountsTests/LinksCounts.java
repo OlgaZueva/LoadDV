@@ -2176,7 +2176,6 @@ public class LinksCounts {
     @Test(enabled = true)
     public void LoopSearch_lnkLoopSearch() throws SQLException, IOException {
         getPropertiesFile();
-        System.err.println("Линк специфичен. Проверить глазами. В satLnk записываются поля из src-таблицы. В lnk -  два dwhIdHub и два значения из полей. countryCode и locationCode ");
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkLoopSearch.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkLoopSearch.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
