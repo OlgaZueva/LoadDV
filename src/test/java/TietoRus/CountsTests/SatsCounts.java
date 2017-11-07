@@ -1056,7 +1056,7 @@ public class SatsCounts {
     public void LoopSearchSat() throws SQLException, IOException {
         //загрузка данных из EXCEL_LoopSearh будет полностью переделываться. Сата существовать не будет.
         getPropertiesFile();
-        int countRowInHub = getCountRowInSA(properties.getProperty("loopSearch.satCondition.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("loopSearch.sat.CountRows"));
         assertRowCount(countRowInHub, countRowInSat);
     }
