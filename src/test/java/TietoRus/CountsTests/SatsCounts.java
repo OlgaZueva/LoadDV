@@ -182,12 +182,15 @@ public class SatsCounts {
     @Test(enabled = true)
     public void Customers_MasterCustomerNameInSat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionKunde.CountRows"));
-        int countRowByCondition_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionAdresse.CountRows"));
+        System.out.println("Тест проверяет правильность определения masterClient по таблице mdm.masterCustomers");
+        System.out.println("Таблица mdm.masterCustomers загружается отдельым пакетом");
+        System.out.println("dwhIdMasterCliet в satCustomers проставляется пакетами загрузки Customer'ов");
+        int countRowByTMSnumber_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionKunde.CountRows"));
+        int countRowByTMSnumber_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionAdresse.CountRows"));
         int countRowInSatByCondition_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.satKunde.CountRows"));
         int countRowInSatByCondition_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.satAdresse.CountRows"));
-        assertRowCount(countRowByCondition_Kunde, countRowInSatByCondition_Kunde);
-        assertRowCount(countRowByCondition_Adresse, countRowInSatByCondition_Adresse);
+        assertRowCount(countRowByTMSnumber_Kunde, countRowInSatByCondition_Kunde);
+        assertRowCount(countRowByTMSnumber_Adresse, countRowInSatByCondition_Adresse);
     }
 
     @Test(enabled = true)

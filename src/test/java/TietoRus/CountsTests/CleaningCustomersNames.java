@@ -39,7 +39,6 @@ public class CleaningCustomersNames {
         String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
         executeInDWH(truncate);
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
-        System.out.println(excludedSymbols.size());
         String sql = (properties.getProperty("satCustomers.names.select"));
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -68,7 +67,9 @@ public class CleaningCustomersNames {
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
+
             String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
+            System.out.println(qwe);
             executeInDWH(qwe);
         }
     }

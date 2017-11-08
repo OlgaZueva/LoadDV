@@ -171,6 +171,8 @@ public class HubsCounts {
     @Test(enabled = true)
     public void masterCustomers() throws SQLException, IOException {
         getPropertiesFile();
+        System.out.println("Тест проверяет правильность загрузки таблицы mdm.masterCustomers");
+        System.out.println("Таблица mdm.masterCustomers загружается отдельным пакетом");
         int countRowInSA = getCountRowInMDS(properties.getProperty("masterCustomers.MDS.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("masterCustomers.DWH.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
