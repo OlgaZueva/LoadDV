@@ -1112,12 +1112,7 @@ public class SatsCounts {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
 
-    private Properties getPropertiesFileForMDS() throws IOException {
-        properties.load(new FileReader(new File(String.format("src/test/resources/DWHtoMDS.properties"))));
-        return null;
-    }
-
-    public void assertRowCount(int countInSource, int countInDest) {
+       public void assertRowCount(int countInSource, int countInDest) {
         System.out.println("Count rows in Source [" + countInSource + "], in Destination [" + countInDest + "]");
         assertThat(countInDest, equalTo(countInSource));
     }

@@ -168,6 +168,14 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
+    @Test(enabled = true)
+    public void masterCustomers() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInMDS(properties.getProperty("masterCustomers.MDS.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("masterCustomers.DWH.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
     @Test(enabled = false)
     public void hubAccountingTransactionDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
@@ -1091,5 +1099,17 @@ public class HubsCounts {
         return countRowHub;
     }
 
+
+    public int getCountRowInMDS(String saSQL) throws SQLException {
+        Connection connectionToMDS = db.connToMDS();
+        Statement stForMDS = db.stFromConnection(connectionToMDS);
+        ResultSet rsFromMDS = db.rsFromDB(stForMDS, saSQL);
+        int countRowMDS = 0;
+        while (rsFromMDS.next()) {
+            countRowMDS = Integer.parseInt(rsFromMDS.getString("c"));
+        }
+        db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+        return countRowMDS;
+    }
 
 }
