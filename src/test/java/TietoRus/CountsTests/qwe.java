@@ -1,24 +1,24 @@
 package TietoRus.CountsTests;
 
-        import TietoRus.system.helpers.helpers.DBHelper;
-        import org.testng.annotations.Test;
+import TietoRus.system.helpers.helpers.DBHelper;
+import org.testng.annotations.Test;
 
-        import java.io.File;
-        import java.io.FileReader;
-        import java.io.IOException;
-        import java.sql.Connection;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-        import java.sql.Statement;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.Map;
-        import java.util.Properties;
-        import java.util.regex.Pattern;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
-        import static org.apache.commons.lang3.StringUtils.trim;
-        import static org.hamcrest.CoreMatchers.equalTo;
-        import static org.hamcrest.MatcherAssert.assertThat;
+import static org.apache.commons.lang3.StringUtils.trim;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /*
 Тест для проверки механизма MDS_Customers и заполнение спрввочников (во вспомогательные таблицы DWH из MDS).
@@ -29,43 +29,58 @@ public class qwe {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
+    ArrayList finalSql = new ArrayList();
 
     @Test(enabled = true)
     public void CleaningCustomersNames() throws SQLException, IOException {
         getPropertiesFile();
-        String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
-       // executeInDWH(truncate);
+        String create = (properties.getProperty("cleanedCustomersNamesTable1.create"));
+        executeInDWH(create);
+        String truncate = (properties.getProperty("cleanedCustomersNamesTable1.truncate"));
+        executeInDWH(truncate);
+        // FillingDictExcludedSymbols();
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
-        System.out.println(excludedSymbols.size());
-        String sql = (properties.getProperty("dictMasterCustomerName7.select"));
-        System.out.println(sql);
-        Connection connectionToDWH = db.connToMDS();
+        String sql = (properties.getProperty("satCustomers1.names.select"));
+        Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
         while (rsFromDWH.next()) {
             mapForSource = getMapFromSource(rsFromDWH);
-            String originalCustomerName = String.valueOf(mapForSource.get("name"));
+            String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
             }
-            mapForSource.put("name", originalCustomerName);
-            String qwe = (properties.getProperty("dictMasterCustomerName7.insert")
-                    + "'" + originalCustomerName.replace("'", "''") + "')");
+            mapForSource.put("customerName", originalCustomerName);
+            String qwe = (properties.getProperty("cleanedCustomersNamesTable1.insert") + (mapForSource.get("dwhIdHubCustomers"))
+                    + ",'" + originalCustomerName.replace("'", "''") + "','" + (mapForSource.get("TMScustomerNr")) + "');");
             System.out.println(qwe);
-            executeInDWH(qwe);
+            finalSql.add(qwe);
+
+
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        String str = String.join(" ", finalSql);
+        executeInDWH(str);
+
+        String update = (properties.getProperty("cleanedCustomersNamesTable1.update"));
+        executeInDWH(update);
+
+
     }
 
 
     @Test(enabled = true)
     public void FillingDictExcludedSymbols() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("dictExcludedSymbolsTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
-            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+
+            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
+            System.out.println(qwe);
             executeInDWH(qwe);
         }
     }
@@ -74,6 +89,8 @@ public class qwe {
     @Test(enabled = true)
     public void FillingDictEmptyCustomer() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("dictEmptyCustomerTable.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
@@ -81,6 +98,7 @@ public class qwe {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
         }
+
     }
 
     @Test(enabled = true)

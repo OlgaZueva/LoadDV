@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +29,7 @@ public class CleaningCustomersNames {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
+    ArrayList finalSQL = new ArrayList();
 
     @Test(enabled = true)
     public void CleaningCustomersNames() throws SQLException, IOException {
@@ -52,11 +52,13 @@ public class CleaningCustomersNames {
             }
             mapForSource.put("customerName", originalCustomerName);
             String qwe = (properties.getProperty("cleanedCustomersNamesTable.insert") + (mapForSource.get("dwhIdHubCustomers"))
-                    + ",'" + originalCustomerName.replace("'", "''") + "','" +  (mapForSource.get("TMScustomerNr")) + "')");
-            executeInDWH(qwe);
+                    + ",'" + originalCustomerName.replace("'", "''") + "','" + (mapForSource.get("TMScustomerNr")) + "')");
+            finalSQL.add(qwe);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
 
+        String str = String.join(" ", finalSQL);
+        executeInDWH(str);
         String update = (properties.getProperty("cleanedCustomersNamesTable.update"));
         executeInDWH(update);
     }
@@ -64,18 +66,15 @@ public class CleaningCustomersNames {
 
     @Test(enabled = true)
     public void FillingDictExcludedSymbols() throws SQLException, IOException {
-                getPropertiesFile();
+        getPropertiesFile();
         String create = (properties.getProperty("dictExcludedSymbolsTable.create"));
         executeInDWH(create);
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
-        for (int i = 0; i < dictEmptyCustomer.size(); i++) {
-
-            String qwe = (properties.getProperty("dictExcludedSymbols.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
-            System.out.println(qwe);
-            executeInDWH(qwe);
-        }
+        String qwe = String.join(" ", dictEmptyCustomer);
+        executeInDWH(qwe);
+        //}
     }
 
 
@@ -87,6 +86,8 @@ public class CleaningCustomersNames {
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
+
+
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
             executeInDWH(qwe);
@@ -167,14 +168,15 @@ public class CleaningCustomersNames {
     }
 
 
-    public ArrayList getDataFromMDS(String sql) throws SQLException {
+    public ArrayList getDataFromMDS(String select) throws SQLException {
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
-        ResultSet rsFromMDS = db.rsFromDB(stForMDS, sql);
+        ResultSet rsFromMDS = db.rsFromDB(stForMDS, select);
         ArrayList excludedSymbols = new ArrayList();
         String template = null;
         while (rsFromMDS.next()) {
-            template = rsFromMDS.getString("name");
+            template = (properties.getProperty("dictExcludedSymbols.insert") + "'" + rsFromMDS.getString("name").replace("'", "''") + "')");
+            ;
             excludedSymbols.add(template);
             //System.out.println("Template [" + template + "]");
         }
