@@ -34,11 +34,11 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void CleaningCustomersNames() throws SQLException, IOException {
         getPropertiesFile();
+        FillingDictExcludedSymbols();
         String create = (properties.getProperty("cleanedCustomersNamesTable.create"));
         executeInDWH(create);
         String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
         executeInDWH(truncate);
-        FillingDictExcludedSymbols();
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
         String sql = (properties.getProperty("satCustomers.names.select"));
         Connection connectionToDWH = db.connToDWH();
