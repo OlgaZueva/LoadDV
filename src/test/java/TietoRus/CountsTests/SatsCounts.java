@@ -1,7 +1,6 @@
 package TietoRus.CountsTests;
 
 import TietoRus.system.helpers.helpers.DBHelper;
-import TietoRus.CountsTests.CleaningCustomersNames;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -163,8 +162,8 @@ public class SatsCounts {
         //CreatePrecondition.FillingDictExcludedSymbols();
         getPropertiesFile();
 
-        int countRowinEmptyCustomertable_Adresse  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
-        int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
+        int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
+        int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satConditionIbox.CountRows"));
@@ -185,19 +184,26 @@ public class SatsCounts {
         System.out.println("Тест проверяет правильность определения masterClient по таблице mdm.masterCustomers");
         System.out.println("Таблица mdm.masterCustomers загружается отдельым пакетом");
         System.out.println("dwhIdMasterCliet в satCustomers проставляется пакетами загрузки Customer'ов");
-        int countRowByTMSnumber_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionKunde.CountRows"));
-        int countRowByTMSnumber_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.conditionAdresse.CountRows"));
-        int countRowInSatByCondition_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.satKunde.CountRows"));
-        int countRowInSatByCondition_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.satAdresse.CountRows"));
-        assertRowCount(countRowByTMSnumber_Kunde, countRowInSatByCondition_Kunde);
-        assertRowCount(countRowByTMSnumber_Adresse, countRowInSatByCondition_Adresse);
+        /*
+        int countRowByTMSnumber_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_TMSnumber_TMSnumberNotNull_Kunde.CountRows"));
+        int countRowByTMSnumber_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_TMSnumber_TMSnumberNotNull_Adresse.CountRows"));
+        int countRowByCleanNameTMSNotNull_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNotNull_Kunde.CountRows"));
+        int countRowByCleanNameTMSNotNull_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNotNull_Adresse.CountRows"));
+        int countRowByCleanNameTMSNull_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNull_Kunde.CountRows"));
+        int countRowByCleanNameTMSNull_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNull_Adresse.CountRows"));
+        int countRowByAllConditions = (countRowByTMSnumber_Kunde + countRowByTMSnumber_Adresse +
+               countRowByCleanNameTMSNotNull_Kunde + countRowByCleanNameTMSNotNull_Adresse + countRowByCleanNameTMSNull_Kunde + countRowByCleanNameTMSNull_Adresse);
+*/
+        int countRowByUnionCondition = getCountRowOfHub(properties.getProperty("masterCustomerName.UnionCondition.CountRows"));
+        int countRowInSatWithMasterClientId = getCountRowOfHub(properties.getProperty("masterCustomerName.masterClientId.CountRows"));
+        assertRowCount(countRowByUnionCondition, countRowInSatWithMasterClientId);
     }
 
     @Test(enabled = true)
     public void CustomersSatStatus() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowinEmptyCustomertable_Adresse  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
-        int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
+        int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
+        int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
@@ -1115,7 +1121,7 @@ public class SatsCounts {
         properties.load(new FileReader(new File(String.format("src/test/resources/satsCountsSQL.properties"))));
     }
 
-       public void assertRowCount(int countInSource, int countInDest) {
+    public void assertRowCount(int countInSource, int countInDest) {
         System.out.println("Count rows in Source [" + countInSource + "], in Destination [" + countInDest + "]");
         assertThat(countInDest, equalTo(countInSource));
     }
