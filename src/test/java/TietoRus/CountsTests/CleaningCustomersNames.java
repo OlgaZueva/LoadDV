@@ -89,7 +89,7 @@ public class CleaningCustomersNames {
 
 
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
-            String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + dictEmptyCustomer.get(i) + "')");
+            String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
             executeInDWH(qwe);
         }
 
