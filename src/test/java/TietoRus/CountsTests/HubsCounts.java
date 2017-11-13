@@ -173,9 +173,11 @@ public class HubsCounts {
         getPropertiesFile();
         System.out.println("Тест проверяет правильность загрузки таблицы mdm.masterCustomers");
         System.out.println("Таблица mdm.masterCustomers загружается отдельным пакетом");
-        int countRowInSA = getCountRowInMDS(properties.getProperty("masterCustomers.MDS.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("masterCustomers.DWH.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
+        int countRowInMDS_AllCondition = getCountRowInMDS(properties.getProperty("masterCustomers.MDS.CountRows"));
+        int countRowInMDS_TMSNumberNull = getCountRowInMDS(properties.getProperty("masterCustomers.MDS_WithTMSNumberIsnull.CountRows"));
+        int countRowInMDS = countRowInMDS_AllCondition - countRowInMDS_TMSNumberNull;
+        int countRowInDWH = getCountRowOfHub(properties.getProperty("masterCustomers.DWH.CountRows"));
+        assertRowCount(countRowInMDS, countRowInDWH);
     }
 
     @Test(enabled = false)
