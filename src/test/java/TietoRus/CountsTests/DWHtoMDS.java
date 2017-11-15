@@ -25,10 +25,20 @@ public class DWHtoMDS {
 
     @Test(enabled = true)
     public void LocationsTest() throws SQLException, IOException {
-
         getPropertiesFile();
         int countRowInDWH = getCountRowFromDWH(properties.getProperty("locations.DWH.count"));
         int countRowInMDS = getDataFromMDS(properties.getProperty("locations.MDS.count"));
+        assertRowCount(countRowInDWH, countRowInMDS);
+    }
+
+
+    @Test(enabled = true)
+    public void MarketShareTest() throws SQLException, IOException {
+        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
+        CreatePrecondition.FillingDictLocations();
+        getPropertiesFile();
+        int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
+        int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
         assertRowCount(countRowInDWH, countRowInMDS);
     }
 

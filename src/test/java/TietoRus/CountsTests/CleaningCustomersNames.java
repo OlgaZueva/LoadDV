@@ -71,7 +71,7 @@ public class CleaningCustomersNames {
         executeInDWH(create);
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
         executeInDWH(truncate);
-        ArrayList dictEmptyCustomer = getSQLFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
+        ArrayList dictEmptyCustomer = getSQLForExcludedSymbolsFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         String qwe = String.join(" ", dictEmptyCustomer);
         executeInDWH(qwe);
         //}
@@ -86,8 +86,6 @@ public class CleaningCustomersNames {
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
         executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
-
-
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
             executeInDWH(qwe);
@@ -128,8 +126,15 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void FillingDictLocations() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("dictLocations.create"));
+        executeInDWH(create);
         String truncate = (properties.getProperty("dictLocations.truncate"));
         executeInDWH(truncate);
+        ArrayList dictLocations = getSQLForLocationsFromMDS(properties.getProperty("dictLocations.MDS.select"));
+        String qwe = String.join(" ", dictLocations);
+        executeInDWH(qwe);
+
+/*
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
         ResultSet rsFromMDS = db.rsFromDB(stForMDS, properties.getProperty("dictLocations.select"));
@@ -141,6 +146,7 @@ public class CleaningCustomersNames {
             executeInDWH(qwe);
         }
         db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+        */
     }
 
     private void getPropertiesFile() throws IOException {
@@ -168,7 +174,7 @@ public class CleaningCustomersNames {
     }
 
 
-    public ArrayList getSQLFromMDS(String select) throws SQLException {
+    public ArrayList getSQLForExcludedSymbolsFromMDS(String select) throws SQLException {
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
         ResultSet rsFromMDS = db.rsFromDB(stForMDS, select);
@@ -185,6 +191,24 @@ public class CleaningCustomersNames {
         return excludedSymbols;
     }
 
+    public ArrayList getSQLForLocationsFromMDS(String select) throws SQLException {
+        Connection connectionToMDS = db.connToMDS();
+        Statement stForMDS = db.stFromConnection(connectionToMDS);
+        ResultSet rsFromMDS = db.rsFromDB(stForMDS, select);
+        ArrayList array = new ArrayList();
+        String template = null;
+        while (rsFromMDS.next()) {
+            template = (properties.getProperty("dictLocations.insert") + "'" + rsFromMDS.getString("name").replace("'", "''")
+                    + "', '" + rsFromMDS.getString("code").replace("'", "''")
+                    + "')");
+            ;
+            array.add(template);
+            //System.out.println("Template [" + template + "]");
+        }
+        db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
+
+        return array;
+    }
 
     public ArrayList getDataFromMDS(String select) throws SQLException {
         Connection connectionToMDS = db.connToMDS();
