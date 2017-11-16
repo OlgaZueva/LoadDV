@@ -918,9 +918,9 @@ public class SatsCounts {
     // у MarketShareTier4Sat SatStatus'а нет. Hub грузится из EXCEL'я
     public void MarketShareTier4Sat() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("marketShareTier4.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("marketShareTier4.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
+        int countRowInSAByConditionFromEXCEL = getCountRowInSA(properties.getProperty("marketShareTier4.EXCELDataCondition.CountRows"));
+        int countRowInSatFromEXCEL = getCountRowOfHub(properties.getProperty("marketShareTier4.EXCELData.CountRows"));
+        assertRowCount(countRowInSAByConditionFromEXCEL, countRowInSatFromEXCEL);
     }
 
     @Test(enabled = true)
@@ -1066,7 +1066,6 @@ public class SatsCounts {
     // у LoopSearchSat SatStatus'а нет. Hub грузится из EXCEL'я
     @Test(enabled = true)
     public void LoopSearchSat() throws SQLException, IOException {
-        //загрузка данных из EXCEL_LoopSearh будет полностью переделываться. Сата существовать не будет.
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.satCondition.CountRows"));
         int countRowInSat = getCountRowOfHub(properties.getProperty("loopSearch.sat.CountRows"));

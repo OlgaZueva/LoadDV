@@ -935,9 +935,9 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubMarketShareTier4() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = getCountRowInSA(properties.getProperty("marketShareTier4.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("marketShareTier4.hub.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
+        int countRowfromSAExcel = getCountRowInSA(properties.getProperty("marketShareTier4.EXCELData.CountRows"));
+        int countRowInHubFromEXCEL = getCountRowOfHub(properties.getProperty("marketShareTier4.hubFromEXCEL.CountRows"));
+        assertRowCount(countRowfromSAExcel, countRowInHubFromEXCEL);
     }
 
     @Test(enabled = true)
