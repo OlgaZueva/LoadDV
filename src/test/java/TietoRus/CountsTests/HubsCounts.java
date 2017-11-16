@@ -1008,7 +1008,7 @@ public class HubsCounts {
     public void hubLoopSearchLiveScheduleName() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("loopSearchLiveScheduleName.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLiveScheduleName.hub.CountRows"));
+        int countRowInHub = (getCountRowOfHub(properties.getProperty("loopSearchLiveScheduleName.hub.CountRows") +1)); // fake row
         assertRowCount(countRowInSA, countRowInHub);
     }
 
@@ -1016,7 +1016,7 @@ public class HubsCounts {
     public void hubLoopSearchLoopLeg() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("loopSearchLoopLeg.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLoopLeg.hub.CountRows"));
+        int countRowInHub = (getCountRowOfHub(properties.getProperty("loopSearchLoopLeg.hub.CountRows") +1)); // fake row
         assertRowCount(countRowInSA, countRowInHub);
     }
 
