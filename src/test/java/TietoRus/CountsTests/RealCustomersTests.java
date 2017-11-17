@@ -1,6 +1,7 @@
 package TietoRus.CountsTests;
 
 import TietoRus.system.helpers.helpers.DBHelper;
+import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -35,13 +36,14 @@ public class RealCustomersTests {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
+    private GetDataHelper getDataHelper =  new GetDataHelper();
 
     @Test(enabled = true)
     public void RealCustomersCounts() throws SQLException, IOException {
         getPropertiesFile();
         String sqlForExceptionalCustomers = (properties.getProperty("realCustomer.exportBooking.exceptionalCustomers.select"));
         String truncate = (properties.getProperty("realCustomer.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         insertExceptionalCustToTestTable(sqlForExceptionalCustomers, "Y", null);
 
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
@@ -105,7 +107,7 @@ public class RealCustomersTests {
             mapForSource = getMapFromSource(rsFromDWH);
             String qwe = (properties.getProperty("realCustomer.insert") + (mapForSource.get("dwhIdHubBooking")) + "," + (mapForSource.get("dwhIdHubCustomers"))
                     + ",'" + mapForSource.get("customerName") + "', '" + isExceptional + "'," + role + ")");
-            executeInDWH(qwe);
+            getDataHelper.executeInDWH(qwe);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
     }
@@ -125,7 +127,7 @@ public class RealCustomersTests {
             mapForSource.put("customerName", originalCustomerName);
             String qwe = (properties.getProperty("realCustomer.insert") + (mapForSource.get("dwhIdHubBooking")) + "," + (mapForSource.get("dwhIdHubCustomers"))
                     + ",'" + originalCustomerName.replace("'", "''") + "', '" + isExceptional + "'," + role + ")");
-            executeInDWH(qwe);
+            getDataHelper.executeInDWH(qwe);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
     }
@@ -174,13 +176,5 @@ public class RealCustomersTests {
         return mapForSource;
     }
 
-    public void executeInDWH(String sql) throws SQLException {
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        stForDWH.execute(sql);
-        //System.out.println("SQL for Insert in DWH: " + sql);
-        //System.out.println("Executing query in DWH complete!");
-        db.closeConnecions(null, stForDWH, connectionToDWH);
-    }
 }
 

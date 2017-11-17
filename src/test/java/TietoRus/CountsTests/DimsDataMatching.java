@@ -10,10 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class DimsDataMatching {
     private Properties properties = new Properties();
@@ -240,6 +237,20 @@ public class DimsDataMatching {
 
         int countRowInDV = getCountRowInDV(properties.getProperty("bookingCargo.dwh.CountRows"));
         ArrayList arrayRows = getArray(countRowInDV);
+/*
+        System.out.println("Before Sorting:");
+        for(Object counter: arrayRows){
+            System.out.println(counter);
+        }
+
+        Collections.sort(arrayRows);
+
+	   /* ArrayList after sorting
+        System.out.println("After Sorting:");
+        for(Object counter: arrayRows){
+            System.out.println(counter);
+        }
+        */
 
         for (int i = 0; i < arrayRows.size(); i++) {
             String sqlFromDV = (properties.getProperty("bookingCargo.dataInDV.RowByRowNum") + arrayRows.get(i));

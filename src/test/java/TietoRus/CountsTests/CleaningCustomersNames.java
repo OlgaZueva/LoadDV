@@ -1,6 +1,7 @@
 package TietoRus.CountsTests;
 
 import TietoRus.system.helpers.helpers.DBHelper;
+import TietoRus.system.helpers.helpers.GetDataHelper;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -28,6 +29,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class CleaningCustomersNames {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
+    private GetDataHelper getDataHelper = new GetDataHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
     ArrayList finalSQL = new ArrayList();
 
@@ -36,9 +38,9 @@ public class CleaningCustomersNames {
         getPropertiesFile();
         FillingDictExcludedSymbols();
         String create = (properties.getProperty("cleanedCustomersNamesTable.create"));
-        executeInDWH(create);
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("cleanedCustomersNamesTable.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
         String sql = (properties.getProperty("satCustomers.names.select"));
         Connection connectionToDWH = db.connToDWH();
@@ -58,9 +60,9 @@ public class CleaningCustomersNames {
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
 
         String str = String.join(" ", finalSQL);
-        executeInDWH(str);
+        getDataHelper.executeInDWH(str);
         String update = (properties.getProperty("cleanedCustomersNamesTable.update"));
-        executeInDWH(update);
+        getDataHelper.executeInDWH(update);
     }
 
 
@@ -68,27 +70,26 @@ public class CleaningCustomersNames {
     public void FillingDictExcludedSymbols() throws SQLException, IOException {
         getPropertiesFile();
         String create = (properties.getProperty("dictExcludedSymbolsTable.create"));
-        executeInDWH(create);
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("dictExcludedSymbols.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getSQLForExcludedSymbolsFromMDS(properties.getProperty("dictExcludedSymbols.MDS.select"));
         String qwe = String.join(" ", dictEmptyCustomer);
-        executeInDWH(qwe);
-        //}
-    }
+        getDataHelper.executeInDWH(qwe);
+     }
 
 
     @Test(enabled = true)
     public void FillingDictEmptyCustomer() throws SQLException, IOException {
         getPropertiesFile();
         String create = (properties.getProperty("dictEmptyCustomerTable.create"));
-        executeInDWH(create);
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("dictEmptyCustomerTable.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictEmptyCustomer.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
             String qwe = (properties.getProperty("dictEmptyCustomerTable.insert") + "'" + String.valueOf(dictEmptyCustomer.get(i)).replace("'", "''") + "')");
-            executeInDWH(qwe);
+            getDataHelper.executeInDWH(qwe);
         }
 
     }
@@ -97,12 +98,12 @@ public class CleaningCustomersNames {
     public void FillingDictExceptionalCustomer() throws SQLException, IOException {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictExceptionalCustomer.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExceptionalCustomer.select"));
         for (int i = 0; i < dictEmptyCustomer.size(); i++) {
 
             String qwe = (properties.getProperty("dictExceptionalCustomer.insert") + "'" + String.valueOf( dictEmptyCustomer.get(i)).replace("'", "''") + "')");
-            executeInDWH(qwe);
+            getDataHelper.executeInDWH(qwe);
         }
     }
 
@@ -110,7 +111,7 @@ public class CleaningCustomersNames {
     public void FillingDictMasterCustomerName() throws SQLException, IOException {
         getPropertiesFile();
         String truncate = (properties.getProperty("dictMasterCustomerName.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         Connection connectionToMDS = db.connToMDS();
         Statement stForMDS = db.stFromConnection(connectionToMDS);
         ResultSet rsFromMDS = db.rsFromDB(stForMDS, properties.getProperty("dictMasterCustomerName.select"));
@@ -118,7 +119,7 @@ public class CleaningCustomersNames {
             mapForSource = getMapFromSource(rsFromMDS);
             String qwe = (properties.getProperty("dictMasterCustomerName.insert") + "'" + String.valueOf(mapForSource.get("name")).replace("'", "''") + "'," + mapForSource.get("code") + ")");
 
-            executeInDWH(qwe);
+            getDataHelper.executeInDWH(qwe);
         }
         db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
     }
@@ -127,26 +128,12 @@ public class CleaningCustomersNames {
     public void FillingDictLocations() throws SQLException, IOException {
         getPropertiesFile();
         String create = (properties.getProperty("dictLocations.create"));
-        executeInDWH(create);
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("dictLocations.truncate"));
-        executeInDWH(truncate);
+        getDataHelper.executeInDWH(truncate);
         ArrayList dictLocations = getSQLForLocationsFromMDS(properties.getProperty("dictLocations.MDS.select"));
         String qwe = String.join(" ", dictLocations);
-        executeInDWH(qwe);
-
-/*
-        Connection connectionToMDS = db.connToMDS();
-        Statement stForMDS = db.stFromConnection(connectionToMDS);
-        ResultSet rsFromMDS = db.rsFromDB(stForMDS, properties.getProperty("dictLocations.select"));
-        while (rsFromMDS.next()) {
-            mapForSource = getMapFromSource(rsFromMDS);
-            String qwe = (properties.getProperty("dictLocations.insert") + "'"
-                    + String.valueOf(mapForSource.get("name")).replace("'", "''") + "','" + mapForSource.get("code") + "')");
-            System.out.println(qwe);
-            executeInDWH(qwe);
-        }
-        db.closeConnecions(rsFromMDS, stForMDS, connectionToMDS);
-        */
+        getDataHelper.executeInDWH(qwe);
     }
 
     private void getPropertiesFile() throws IOException {
@@ -232,14 +219,6 @@ public class CleaningCustomersNames {
         return mapForSource;
     }
 
-    public void executeInDWH(String sql) throws SQLException {
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        stForDWH.execute(sql);
-        //System.out.println("SQL for Insert in DWH: " + sql);
-        //System.out.println("Executing query in DWH complete!");
-        db.closeConnecions(null, stForDWH, connectionToDWH);
-    }
 
 
 }

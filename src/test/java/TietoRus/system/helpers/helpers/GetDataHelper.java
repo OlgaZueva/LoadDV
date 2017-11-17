@@ -17,6 +17,15 @@ public class GetDataHelper {
     private Map<String, Object> mapAllFromSA = new HashMap<String, Object>();
     private Map<String, Object> mapHubFromDWH = new HashMap<String, Object>();
 
+
+    public void executeInDWH(String sql) throws SQLException {
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        stForDWH.execute(sql);
+        db.closeConnecions(null, stForDWH, connectionToDWH);
+    }
+
+
     public Integer getTryCtnFromSA(String sql) throws SQLException {
         Connection connectionToSA = db.connToSA();
         Statement stForSA = db.stFromConnection(connectionToSA);
