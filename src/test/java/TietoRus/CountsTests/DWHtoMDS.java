@@ -97,7 +97,7 @@ public class DWHtoMDS {
             }
         }
 
-       
+
 
         int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
         int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
