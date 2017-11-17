@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,8 +25,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class DWHtoMDS {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
-    private GetDataHelper getDataHelper =  new GetDataHelper();
-   // private Map<String, Object> mapForSource = new HashMap<String, Object>();
+    private GetDataHelper getDataHelper = new GetDataHelper();
+    // private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
     @Test(enabled = true)
     public void LocationsTest() throws SQLException, IOException {
@@ -48,71 +47,148 @@ public class DWHtoMDS {
         String truncate = (properties.getProperty("mapMarketShareTable.truncate"));
         getDataHelper.executeInDWH(truncate);
 
-        //mapForSource = getKeys(properties.getProperty("mapMarketShareTable.sql.selectKeys"));
 
+        String sqlForKeys = (properties.getProperty("mapMarketShare.sqlKeys.select"));
         String sqlAgencyLocations = (properties.getProperty("mapMarketShare.agencylocations.select"));
+        String sqlForTeusForKeysByAgencyLocations = (properties.getProperty("mapMarketShare.teusForKeysByAgencyLocations.select"));
 
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlAgencyLocations);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlForKeys);
         while (rsFromDWH.next()) {
-            Map mapAgencylocations = getMapFromSource(rsFromDWH);
-            System.out.println(mapAgencylocations);
+            Map mapKeys = getMapFromSource(rsFromDWH);
+            System.out.println(mapKeys);
+            String insertKeys = ((properties.getProperty("mapMarketShare.keys.insert")) + mapKeys.get("year") +
+                    ", " + mapKeys.get("month") + ", '" + mapKeys.get("name") + "')");
+            getDataHelper.executeInDWH(insertKeys);
+
+
+            String sqlForTeusForKeysByAgencyLocationsUpdate = sqlForTeusForKeysByAgencyLocations + " year = " + mapKeys.get("year") +
+                    " and month = " + mapKeys.get("month") + " and name = '" + mapKeys.get("name") + "'";
+
+            Connection connectionToDWHforTeus = db.connToDWH();
+            Statement stForDWHforTeus = db.stFromConnection(connectionToDWHforTeus);
+            ResultSet rsFromDWHforTeus = db.rsFromDB(stForDWHforTeus, sqlForTeusForKeysByAgencyLocationsUpdate);
+            while (rsFromDWHforTeus.next()) {
+                Map mapTeusByAgencyLocations = getMapFromSource(rsFromDWHforTeus);
+                //System.out.println(mapTeusByAgencyLocations);
+                String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("agencyRegion")));
+                String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("agencyRegion")));
+                //System.out.println(teuForDryColumnName);
+                //System.out.println(teuForReeferColumnName);
+
+                String sqlForUpdateTeusByKeys = "Update etl.mapMarketShare_OZ set " + teuForDryColumnName + " = " + mapTeusByAgencyLocations.get("teuForDryContainers") +
+                        ", " + teuForReeferColumnName + " = " + mapTeusByAgencyLocations.get("teuForReeferContainers") + " where year = " +
+                        mapTeusByAgencyLocations.get("year") + " and month = " + mapTeusByAgencyLocations.get("month") + " and name = '" + mapTeusByAgencyLocations.get("name") +
+                        "'";
+                getDataHelper.executeInDWH(sqlForUpdateTeusByKeys);
+            }
+            db.closeConnecions(rsFromDWHforTeus, stForDWHforTeus, connectionToDWHforTeus);
+
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+    }
 
+    private String getTeuForDryColumnName(String agencyCode, String agencyRegion) {
 
+        String teuForDryColumnName = "Not found";
+        if (agencyCode.equals("aar")) {
+            teuForDryColumnName = "marketTeusDryAar";
 
-        //Map mapAgencylocations = getMap (sqlAgencyLocations);
-       // System.out.println(mapAgencylocations);
+        } else if (agencyCode.equals("bud")) {
+            teuForDryColumnName = "marketTeusDryBud";
 
-        ArrayList<String> futureMonths = new ArrayList<String>();
+        } else if (agencyCode.equals("gdy")) {
+            teuForDryColumnName = "marketTeusDryGdy";
 
-        int month = 8;
+        } else if (agencyCode.equals("got")) {
+            teuForDryColumnName = "marketTeusDryGot";
 
-        switch (month) {
-            case 1:
-                futureMonths.add("January");
-            case 2:
-                futureMonths.add("February");
-            case 3:
-                futureMonths.add("March");
-            case 4:
-                futureMonths.add("April");
-            case 5:
-                futureMonths.add("May");
-            case 6:
-                futureMonths.add("June");
-            case 7:
-                futureMonths.add("July");
-            case 8:
-                futureMonths.add("August");
-            case 9:
-                futureMonths.add("September");
-            case 10:
-                futureMonths.add("October");
-            case 11:
-                futureMonths.add("November");
-            case 12:
-                futureMonths.add("December");
-                break;
-            default:
-                break;
+        } else if (agencyCode.equals("hki")) {
+            teuForDryColumnName = "marketTeusDryHki";
+
+        } else if (agencyCode.equals("kop")) {
+            teuForDryColumnName = "marketTeusDryKop";
+
+        } else if (agencyCode.equals("msq")) {
+            teuForDryColumnName = "marketTeusDryMsq";
+
+        } else if (agencyCode.equals("osl")) {
+            teuForDryColumnName = "marketTeusDryOsl";
+
+        } else if (agencyCode.equals("rix")) {
+            teuForDryColumnName = "marketTeusDryRix";
+
+        } else if (agencyCode.equals("rjk")) {
+            teuForDryColumnName = "marketTeusDryRjk";
+
+        } else if (agencyCode.equals("sjj")) {
+            teuForDryColumnName = "marketTeusDrySjj";
+
+        } else if (agencyCode.equals("tal")) {
+            teuForDryColumnName = "marketTeusDryTal";
+
+        } else if (agencyCode.equals("vno")) {
+            teuForDryColumnName = "marketTeusDryVno";
+
+        } else if (agencyCode.equals("mee") & agencyRegion.equals("Adriatic")) {
+            teuForDryColumnName = "marketTeusDryMeeAdriatic";
+
+        } else if (agencyCode.equals("mee") & agencyRegion.equals("ScanBalt")) {
+            teuForDryColumnName = "marketTeusDryMeeScanbalt";
         }
+        return teuForDryColumnName;
+    }
 
-        if (futureMonths.isEmpty()) {
-            System.out.println("Invalid month number");
-        } else {
-            for (String monthName : futureMonths) {
-                System.out.println(monthName);
-            }
+    private String getTeuForReeferColumnName(String agencyCode, String agencyRegion) {
+
+        String teuForReeferColumnName = "Not found";
+        if (agencyCode.equals("aar")) {
+            teuForReeferColumnName = "marketTeusReeferAar";
+
+        } else if (agencyCode.equals("bud")) {
+            teuForReeferColumnName = "marketTeusReeferBud";
+
+        } else if (agencyCode.equals("gdy")) {
+            teuForReeferColumnName = "marketTeusReeferGdy";
+
+        } else if (agencyCode.equals("got")) {
+            teuForReeferColumnName = "marketTeusReeferGot";
+
+        } else if (agencyCode.equals("hki")) {
+            teuForReeferColumnName = "marketTeusReeferHki";
+
+        } else if (agencyCode.equals("kop")) {
+            teuForReeferColumnName = "marketTeusReeferKop";
+
+        } else if (agencyCode.equals("msq")) {
+            teuForReeferColumnName = "marketTeusReeferMsq";
+
+        } else if (agencyCode.equals("osl")) {
+            teuForReeferColumnName = "marketTeusReeferOsl";
+
+        } else if (agencyCode.equals("rix")) {
+            teuForReeferColumnName = "marketTeusReeferRix";
+
+        } else if (agencyCode.equals("rjk")) {
+            teuForReeferColumnName = "marketTeusReeferRjk";
+
+        } else if (agencyCode.equals("sjj")) {
+            teuForReeferColumnName = "marketTeusReeferSjj";
+
+        } else if (agencyCode.equals("tal")) {
+            teuForReeferColumnName = "marketTeusReeferTal";
+
+        } else if (agencyCode.equals("vno")) {
+            teuForReeferColumnName = "marketTeusReeferVno";
+
+        } else if (agencyCode.equals("mee") & agencyRegion.equals("Adriatic")) {
+            teuForReeferColumnName = "marketTeusReeferMeeAdriatic";
+
+        } else if (agencyCode.equals("mee") & agencyRegion.equals("ScanBalt")) {
+            teuForReeferColumnName = "marketTeusReeferMeeScanbalt";
         }
-
-
-
-        //int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
-        //int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
-       // assertRowCount(countRowInDWH, countRowInMDS);
+        return teuForReeferColumnName;
     }
 
     private Map<String, Object> getMap(String sql) throws SQLException {
@@ -137,7 +213,6 @@ public class DWHtoMDS {
         }
         return mapForSource;
     }
-
 
 
     private void getPropertiesFile() throws IOException {

@@ -18,7 +18,7 @@ public class GetDataHelper {
     private Map<String, Object> mapHubFromDWH = new HashMap<String, Object>();
 
 
-    public void executeInDWH(String sql) throws SQLException {
+    public  void executeInDWH(String sql) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         stForDWH.execute(sql);
