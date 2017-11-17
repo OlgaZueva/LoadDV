@@ -52,8 +52,19 @@ public class DWHtoMDS {
 
         String sqlAgencyLocations = (properties.getProperty("mapMarketShare.agencylocations.select"));
 
-        Map mapAgencylocations = getMap (sqlAgencyLocations);
-        System.out.println(mapAgencylocations);
+        Connection connectionToDWH = db.connToDWH();
+        Statement stForDWH = db.stFromConnection(connectionToDWH);
+        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlAgencyLocations);
+        while (rsFromDWH.next()) {
+            Map mapAgencylocations = getMapFromSource(rsFromDWH);
+            System.out.println(mapAgencylocations);
+        }
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+
+
+        //Map mapAgencylocations = getMap (sqlAgencyLocations);
+       // System.out.println(mapAgencylocations);
 
         ArrayList<String> futureMonths = new ArrayList<String>();
 
@@ -99,9 +110,9 @@ public class DWHtoMDS {
 
 
 
-        int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
-        int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
-        assertRowCount(countRowInDWH, countRowInMDS);
+        //int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
+        //int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
+       // assertRowCount(countRowInDWH, countRowInMDS);
     }
 
     private Map<String, Object> getMap(String sql) throws SQLException {
@@ -113,11 +124,19 @@ public class DWHtoMDS {
             for (int k = 1; k <= rsFromDWH.getMetaData().getColumnCount(); k++) {
                 mapForSource.put(rsFromDWH.getMetaData().getColumnName(k), rsFromDWH.getObject(k));
             }
+            System.out.println("mapForSource in sycle:" + mapForSource);
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         return mapForSource;
     }
 
+    public Map<String, Object> getMapFromSource(ResultSet rsFromSource) throws SQLException {
+        Map<String, Object> mapForSource = new HashMap<String, Object>();
+        for (int k = 1; k <= rsFromSource.getMetaData().getColumnCount(); k++) {
+            mapForSource.put(rsFromSource.getMetaData().getColumnName(k), rsFromSource.getObject(k));
+        }
+        return mapForSource;
+    }
 
 
 
