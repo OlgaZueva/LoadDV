@@ -27,7 +27,7 @@ public class DWHtoMDS {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
     private GetDataHelper getDataHelper =  new GetDataHelper();
-    private Map<String, Object> mapForSource = new HashMap<String, Object>();
+   // private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
     @Test(enabled = true)
     public void LocationsTest() throws SQLException, IOException {
@@ -48,36 +48,78 @@ public class DWHtoMDS {
         String truncate = (properties.getProperty("mapMarketShareTable.truncate"));
         getDataHelper.executeInDWH(truncate);
 
-        mapForSource = getKeys(properties.getProperty("mapMarketShareTable.sql.selectKeys"));
+        //mapForSource = getKeys(properties.getProperty("mapMarketShareTable.sql.selectKeys"));
 
-        System.out.println(mapForSource);
+        String sqlAgencyLocations = (properties.getProperty("mapMarketShare.agencylocations.select"));
+
+        Map mapAgencylocations = getMap (sqlAgencyLocations);
+        System.out.println(mapAgencylocations);
+
+        ArrayList<String> futureMonths = new ArrayList<String>();
+
+        int month = 8;
+
+        switch (month) {
+            case 1:
+                futureMonths.add("January");
+            case 2:
+                futureMonths.add("February");
+            case 3:
+                futureMonths.add("March");
+            case 4:
+                futureMonths.add("April");
+            case 5:
+                futureMonths.add("May");
+            case 6:
+                futureMonths.add("June");
+            case 7:
+                futureMonths.add("July");
+            case 8:
+                futureMonths.add("August");
+            case 9:
+                futureMonths.add("September");
+            case 10:
+                futureMonths.add("October");
+            case 11:
+                futureMonths.add("November");
+            case 12:
+                futureMonths.add("December");
+                break;
+            default:
+                break;
+        }
+
+        if (futureMonths.isEmpty()) {
+            System.out.println("Invalid month number");
+        } else {
+            for (String monthName : futureMonths) {
+                System.out.println(monthName);
+            }
+        }
+
+       
 
         int countRowInDWH = getCountRowFromDWH(properties.getProperty("marketShare.DWH.count"));
         int countRowInMDS = getDataFromMDS(properties.getProperty("marketShare.MDS.count"));
         assertRowCount(countRowInDWH, countRowInMDS);
     }
 
-
-
-
-    public Map getKeys (String sql) throws SQLException {
+    private Map<String, Object> getMap(String sql) throws SQLException {
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
+        Map<String, Object> mapForSource = new HashMap<String, Object>();
         while (rsFromDWH.next()) {
-            mapForSource = getMapFromSource(rsFromDWH);
+            for (int k = 1; k <= rsFromDWH.getMetaData().getColumnCount(); k++) {
+                mapForSource.put(rsFromDWH.getMetaData().getColumnName(k), rsFromDWH.getObject(k));
+            }
         }
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         return mapForSource;
     }
 
 
-    public Map<String, Object> getMapFromSource(ResultSet rsFromSource) throws SQLException {
-        for (int k = 1; k <= rsFromSource.getMetaData().getColumnCount(); k++) {
-            mapForSource.put(rsFromSource.getMetaData().getColumnName(k), rsFromSource.getObject(k));
-        }
-        return mapForSource;
-    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/DWHtoMDS.properties"))));
