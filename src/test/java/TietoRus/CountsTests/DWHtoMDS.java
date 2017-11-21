@@ -38,9 +38,9 @@ public class DWHtoMDS {
 
 
     @Test(enabled = true)
-    public void MarketShareTest() throws SQLException, IOException {
-        //CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
-        //CreatePrecondition.FillingDictLocations();
+    public void MarketShareToMDSTest() throws SQLException, IOException {
+        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
+        CreatePrecondition.FillingDictLocations();
         getPropertiesFile();
         String create = (properties.getProperty("mapMarketShareTable.create"));
         getDataHelper.executeInDWH(create);
@@ -57,7 +57,7 @@ public class DWHtoMDS {
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlForKeys);
         while (rsFromDWH.next()) {
             Map mapKeys = getMapFromSource(rsFromDWH);
-            System.out.println(mapKeys);
+            //System.out.println(mapKeys);
             String insertKeys = ((properties.getProperty("mapMarketShare.keys.insert")) + mapKeys.get("year") +
                     ", " + mapKeys.get("month") + ", '" + mapKeys.get("name") + "')");
             getDataHelper.executeInDWH(insertKeys);
@@ -191,20 +191,6 @@ public class DWHtoMDS {
         return teuForReeferColumnName;
     }
 
-    private Map<String, Object> getMap(String sql) throws SQLException {
-        Connection connectionToDWH = db.connToDWH();
-        Statement stForDWH = db.stFromConnection(connectionToDWH);
-        ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
-        Map<String, Object> mapForSource = new HashMap<String, Object>();
-        while (rsFromDWH.next()) {
-            for (int k = 1; k <= rsFromDWH.getMetaData().getColumnCount(); k++) {
-                mapForSource.put(rsFromDWH.getMetaData().getColumnName(k), rsFromDWH.getObject(k));
-            }
-            System.out.println("mapForSource in sycle:" + mapForSource);
-        }
-        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        return mapForSource;
-    }
 
     public Map<String, Object> getMapFromSource(ResultSet rsFromSource) throws SQLException {
         Map<String, Object> mapForSource = new HashMap<String, Object>();

@@ -61,8 +61,10 @@ public class CleaningCustomersNames {
 
         String str = String.join(" ", finalSQL);
         getDataHelper.executeInDWH(str);
-        String update = (properties.getProperty("cleanedCustomersNamesTable.update"));
-        getDataHelper.executeInDWH(update);
+        String updateTnsNumber = (properties.getProperty("cleanedCustomersNamesTable.tnsNumber.update"));
+        getDataHelper.executeInDWH(updateTnsNumber);
+        String updateCustomerName = (properties.getProperty("cleanedCustomersNamesTable.customerName.update"));
+        getDataHelper.executeInDWH(updateCustomerName);
     }
 
 
