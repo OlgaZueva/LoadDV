@@ -97,7 +97,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("booking.union.dwh.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("booking.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -110,6 +110,13 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
+    @Test(enabled = true)
+    public void dimOceanVesselService() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("oceanVesselService.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("oceanVesselService.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
 
     private void getPropertiesFile() throws IOException {
