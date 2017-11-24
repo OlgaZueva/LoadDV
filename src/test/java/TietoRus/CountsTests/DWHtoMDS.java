@@ -36,6 +36,14 @@ public class DWHtoMDS {
         assertRowCount(countRowInDWH, countRowInMDS);
     }
 
+    @Test(enabled = true)
+    public void Customers_mapCustomerNameTest() throws SQLException, IOException {
+        getPropertiesFile();
+        System.err.println("Тест упадет если в mapCustomerName_v существовали предустановленные записи");
+        int countRowInDWH = getCountRowFromDWH(properties.getProperty("customers.DWH.count"));
+        int countRowInMDS = getDataFromMDS(properties.getProperty("customers.MDS.count"));
+        assertRowCount(countRowInDWH, countRowInMDS);
+    }
 
     @Test(enabled = true)
     public void MarketShareToMDSTest() throws SQLException, IOException {
