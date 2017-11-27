@@ -41,9 +41,17 @@ public class RealCustomersTests {
     @Test(enabled = true)
     public void RealCustomersCounts() throws SQLException, IOException {
         getPropertiesFile();
-        String sqlForExceptionalCustomers = (properties.getProperty("realCustomer.exportBooking.exceptionalCustomers.select"));
+        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
+        CreatePrecondition.FillingDictExcludedSymbols();
+        CreatePrecondition.FillingDictEmptyCustomer();
+        CreatePrecondition.FillingDictExceptionalCustomer();
+
+        String create = (properties.getProperty("realCustomerTable.create"));
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("realCustomer.truncate"));
         getDataHelper.executeInDWH(truncate);
+
+        String sqlForExceptionalCustomers = (properties.getProperty("realCustomer.exportBooking.exceptionalCustomers.select"));
         insertExceptionalCustToTestTable(sqlForExceptionalCustomers, "Y", null);
 
         ArrayList excludedSymbols = getDataFromDict(properties.getProperty("dictExcludedSymbols.DWH.select"));
@@ -121,6 +129,7 @@ public class RealCustomersTests {
             String originalCustomerName = String.valueOf(mapForSource.get("customerName"));
             for (int i = 0; i < excludedSymbols.size(); i++) {
                 originalCustomerName = trim(originalCustomerName.replaceAll("(^|\\s)(" + Pattern.quote(String.valueOf(excludedSymbols.get(i))) + ")(\\s|$)", "$1$3"));
+                originalCustomerName =  originalCustomerName.replace("  ", " ");
 
 
             }

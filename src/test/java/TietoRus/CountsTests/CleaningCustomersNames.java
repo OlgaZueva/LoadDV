@@ -102,6 +102,8 @@ public class CleaningCustomersNames {
     @Test(enabled = true)
     public void FillingDictExceptionalCustomer() throws SQLException, IOException {
         getPropertiesFile();
+        String create = (properties.getProperty("dictExceptionalCustomerTable.create"));
+        getDataHelper.executeInDWH(create);
         String truncate = (properties.getProperty("dictExceptionalCustomer.truncate"));
         getDataHelper.executeInDWH(truncate);
         ArrayList dictEmptyCustomer = getDataFromMDS(properties.getProperty("dictExceptionalCustomer.select"));
