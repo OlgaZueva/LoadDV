@@ -78,9 +78,10 @@ public class DWHtoMDS {
             ResultSet rsFromDWHforTeus = db.rsFromDB(stForDWHforTeus, sqlForTeusForKeysByAgencyLocationsUpdate);
             while (rsFromDWHforTeus.next()) {
                 Map mapTeusByAgencyLocations = getMapFromSource(rsFromDWHforTeus);
-                //System.out.println(mapTeusByAgencyLocations);
-                String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocations")));
-                String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocations")));
+                System.out.println(mapTeusByAgencyLocations);
+                System.out.println(String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
+                String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
+                String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
                 //System.out.println(teuForDryColumnName);
                 //System.out.println(teuForReeferColumnName);
 
@@ -88,6 +89,7 @@ public class DWHtoMDS {
                         ", " + teuForReeferColumnName + " = " + mapTeusByAgencyLocations.get("teuForReeferContainers") + " where year = " +
                         mapTeusByAgencyLocations.get("year") + " and month = " + mapTeusByAgencyLocations.get("month") + " and name = '" + mapTeusByAgencyLocations.get("name") +
                         "'";
+                System.out.println(sqlForUpdateTeusByKeys);
                 getDataHelper.executeInDWH(sqlForUpdateTeusByKeys);
             }
             db.closeConnecions(rsFromDWHforTeus, stForDWHforTeus, connectionToDWHforTeus);
@@ -147,7 +149,7 @@ public class DWHtoMDS {
         return teuForDryColumnName;
     }
 
-    private String getTeuForReeferColumnName(String agencyCode, String agencyRegion) {
+    private String getTeuForReeferColumnName(String agencyCode, String fromLocations) {
 
         String teuForReeferColumnName = "Not found";
         if (agencyCode.equals("aar")) {
@@ -189,10 +191,10 @@ public class DWHtoMDS {
         } else if (agencyCode.equals("vno")) {
             teuForReeferColumnName = "marketTeusReeferVno";
 
-        } else if (agencyCode.equals("mee") & agencyRegion.equals("Adriatic")) {
+        } else if (agencyCode.equals("mee") & fromLocations.equals("Russia Black Sea")) {
             teuForReeferColumnName = "marketTeusReeferMeeAdriatic";
 
-        } else if (agencyCode.equals("mee") & agencyRegion.equals("ScanBalt")) {
+        } else if (agencyCode.equals("mee") & fromLocations.equals("Russia")) {
             teuForReeferColumnName = "marketTeusReeferMeeScanbalt";
         }
         return teuForReeferColumnName;
