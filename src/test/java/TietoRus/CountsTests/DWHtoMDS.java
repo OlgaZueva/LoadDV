@@ -57,7 +57,6 @@ public class DWHtoMDS {
 
 
         String sqlForKeys = (properties.getProperty("mapMarketShare.sqlKeys.select"));
-        String sqlAgencyLocations = (properties.getProperty("mapMarketShare.agencylocations.select"));
         String sqlForTeusForKeysByAgencyLocations = (properties.getProperty("mapMarketShare.teusForKeysByAgencyLocations.select"));
 
         Connection connectionToDWH = db.connToDWH();
@@ -80,8 +79,8 @@ public class DWHtoMDS {
             while (rsFromDWHforTeus.next()) {
                 Map mapTeusByAgencyLocations = getMapFromSource(rsFromDWHforTeus);
                 //System.out.println(mapTeusByAgencyLocations);
-                String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("agencyRegion")));
-                String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("agencyRegion")));
+                String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocations")));
+                String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocations")));
                 //System.out.println(teuForDryColumnName);
                 //System.out.println(teuForReeferColumnName);
 
@@ -97,7 +96,7 @@ public class DWHtoMDS {
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
     }
 
-    private String getTeuForDryColumnName(String agencyCode, String agencyRegion) {
+    private String getTeuForDryColumnName(String agencyCode, String fromLocations) {
 
         String teuForDryColumnName = "Not found";
         if (agencyCode.equals("aar")) {
@@ -139,10 +138,10 @@ public class DWHtoMDS {
         } else if (agencyCode.equals("vno")) {
             teuForDryColumnName = "marketTeusDryVno";
 
-        } else if (agencyCode.equals("mee") & agencyRegion.equals("Adriatic")) {
+        } else if (agencyCode.equals("mee") & fromLocations.equals("Russia Black Sea")) {
             teuForDryColumnName = "marketTeusDryMeeAdriatic";
 
-        } else if (agencyCode.equals("mee") & agencyRegion.equals("ScanBalt")) {
+        } else if (agencyCode.equals("mee") & fromLocations.equals("Russia")) {
             teuForDryColumnName = "marketTeusDryMeeScanbalt";
         }
         return teuForDryColumnName;
