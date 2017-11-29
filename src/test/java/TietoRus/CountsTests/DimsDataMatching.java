@@ -175,7 +175,7 @@ public class DimsDataMatching {
     public void dimOvTradeName_matchData() throws SQLException, IOException {
         getPropertiesFile();
 
-        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.union.dwh.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.dwh.CountRows"));
         ArrayList arrayRows = getArray(countRowInDV);
 
         for (int i = 0; i < arrayRows.size(); i++) {
@@ -205,7 +205,7 @@ public class DimsDataMatching {
     public void dimGvaTrade_matchData() throws SQLException, IOException {
         getPropertiesFile();
 
-        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.union.dwh.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.dwh.CountRows"));
         ArrayList arrayRows = getArray(countRowInDV);
 
         for (int i = 0; i < arrayRows.size(); i++) {

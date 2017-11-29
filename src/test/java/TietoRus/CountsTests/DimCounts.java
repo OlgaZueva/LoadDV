@@ -81,7 +81,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimOvTradeName() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.union.dwh.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeName.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
