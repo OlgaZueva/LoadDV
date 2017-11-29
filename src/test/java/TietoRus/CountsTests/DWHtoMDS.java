@@ -78,8 +78,6 @@ public class DWHtoMDS {
             ResultSet rsFromDWHforTeus = db.rsFromDB(stForDWHforTeus, sqlForTeusForKeysByAgencyLocationsUpdate);
             while (rsFromDWHforTeus.next()) {
                 Map mapTeusByAgencyLocations = getMapFromSource(rsFromDWHforTeus);
-                System.out.println(mapTeusByAgencyLocations);
-                System.out.println(String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
                 String teuForDryColumnName = getTeuForDryColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
                 String teuForReeferColumnName = getTeuForReeferColumnName(String.valueOf(mapTeusByAgencyLocations.get("agencyCode")), String.valueOf(mapTeusByAgencyLocations.get("fromLocation")));
                 //System.out.println(teuForDryColumnName);
@@ -89,7 +87,6 @@ public class DWHtoMDS {
                         ", " + teuForReeferColumnName + " = " + mapTeusByAgencyLocations.get("teuForReeferContainers") + " where year = " +
                         mapTeusByAgencyLocations.get("year") + " and month = " + mapTeusByAgencyLocations.get("month") + " and name = '" + mapTeusByAgencyLocations.get("name") +
                         "'";
-                System.out.println(sqlForUpdateTeusByKeys);
                 getDataHelper.executeInDWH(sqlForUpdateTeusByKeys);
             }
             db.closeConnecions(rsFromDWHforTeus, stForDWHforTeus, connectionToDWHforTeus);
