@@ -149,10 +149,12 @@ public class HubsCounts {
         CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
         CreatePrecondition.FillingDictEmptyCustomer();
         getPropertiesFile();
+        /*
         int countRowinEmptyCustomertable_Adresse  = getCountRowOfHub(properties.getProperty("customersAdresse.emptyCustomers.CountRows"));
         System.out.println("countRowinEmptyCustomertable_Adresse: " + countRowinEmptyCustomertable_Adresse);
         int countRowinEmptyCustomertable_Kunde  = getCountRowOfHub(properties.getProperty("customersKunde.emptyCustomers.CountRows"));
         System.out.println("countRowinEmptyCustomertable_Kunde: " + countRowinEmptyCustomertable_Kunde);
+        */
         int countRowInKundeInSA = getCountRowInSA(properties.getProperty("customersKunde.union.CountRows"));
         System.out.println("countRowInKundeInSA: " + countRowInKundeInSA);
         int countRowInAdresseInSA =  getCountRowInSA(properties.getProperty("customersAdresse.union.CountRows"));
@@ -161,8 +163,8 @@ public class HubsCounts {
         System.out.println("countRowInIboxInSA:" + countRowInIboxInSA);
         int countRowInHubFromIbox = getCountRowOfHub(properties.getProperty("customersIbox.hub.CountRows"));
         System.out.println("countRowInHubFromIbox:" + countRowInHubFromIbox);
-        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA + countRowInIboxInSA)
-                - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde)+ 1); //One fake records
+        int countRowInSA = ((countRowInKundeInSA + countRowInAdresseInSA + countRowInIboxInSA)+1);  //One fake records
+                //- (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde)+ 1); //One fake records
         int countRowInHub = getCountRowOfHub(properties.getProperty("customers.hub.CountRows"));
         assertRowCount(countRowInIboxInSA, countRowInHubFromIbox);
         assertRowCount(countRowInSA, countRowInHub);
