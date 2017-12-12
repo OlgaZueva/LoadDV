@@ -202,13 +202,13 @@ public class SatsCounts {
     @Test(enabled = true)
     public void CustomersSatStatus() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
-        int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
+        //int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
+        //int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
-        int countRowInSAbyCondition = ((countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox)
-                - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde));
+        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
+               // - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customers.satStatus.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSatHubStatus);
     }
