@@ -168,6 +168,7 @@ public class DimsDataMatching {
             }
             db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
             matchMaps(mapFromDV, mapFromDM);
+
         }
     }
 
@@ -375,6 +376,31 @@ public class DimsDataMatching {
     }
 
 
+    @Test(enabled = true)
+    public void dimCompany_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("company.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("company.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("company.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
+                        rsFromDWH.getInt("dwhIdHubCompany") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
     }
@@ -399,13 +425,13 @@ public class DimsDataMatching {
         int countRowsForMatch = (int) Math.round(((countRowsInTable * percent) / 100));
         if (countRowsForMatch != 0) {
             int increment = Math.round(countRowsInTable / countRowsForMatch);
-            for (int i = 0; i < (countRowsInTable - increment); i = i + increment) {
+            for (int i = 1; i < (countRowsInTable - increment); i = i + increment) {
                 arrayRows.add(i);
             }
             System.out.println("Кол-во записей пула, которые будут сравниваться: " + arrayRows.size());
             return arrayRows;
         } else
-            for (int i = 0; i < (defaultRowsForMatch); i++) {
+            for (int i = 1; i < (defaultRowsForMatch); i++) {
                 arrayRows.add(i);
             }
 
