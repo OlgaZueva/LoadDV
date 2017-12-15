@@ -68,8 +68,6 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
-
     @Test(enabled = true)
     public void dimGvaTrade() throws SQLException, IOException {
         getPropertiesFile();

@@ -6,11 +6,13 @@ import java.sql.*;
 public class DBHelper {
 
     public Connection connToITest() throws SQLException {
-        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.101.220:1551:ITEST");
+        //return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.101.220:1551:ITEST"); // Oracle9
+        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.101.53:1551:ITEST"); // Oracle12
     }
 
     public Connection connToRTest() throws SQLException {
-        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.1.223:1566:RTEST");
+        //return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.1.223:1566:RTEST"); // Oracle9
+        return DriverManager.getConnection("jdbc:oracle:thin:dwh_etl/T4M2iJfRGw@10.45.1.224:1566:RTEST"); // Oracle12
     }
 
     public Connection connToDM() throws SQLException {
