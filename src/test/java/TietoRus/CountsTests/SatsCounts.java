@@ -23,16 +23,8 @@ public class SatsCounts {
    Блок для таблиц, которые перезагружаются полностью, нет изменений из CDC, поэтому тут действует правило: сколько хабов - столько сатов и сат статусов.
    При загрузке сатов существующая запись в рамках ключа хаба удаляется и вставляется новая.
     *///-----------------------------------------------------------
-    // SAT для WeekendsHolidays не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void WeekendsHolidaysStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("weekendsHolidays.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("weekendsHolidays.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
 
-    @Test(enabled = true)
+       @Test(enabled = true)
     public void ControllingOfficeSat() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("controllingOffice.satCondition.CountRows"));
@@ -246,6 +238,22 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("booking.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("booking.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void WeekendsHolidaysSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("weekendsHolidays.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("weekendsHolidays.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void WeekendsHolidaysStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("weekendsHolidays.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("weekendsHolidays.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
