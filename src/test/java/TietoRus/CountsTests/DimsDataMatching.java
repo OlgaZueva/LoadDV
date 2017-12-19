@@ -13,11 +13,13 @@ import java.sql.Statement;
 import java.util.*;
 
 /*
-Тест сравнивает данные, сформированные контрольным запросом с загружеными в DM данными.
+Тест сравнивает данные, сформированные контрольным запросом с загруженными в DM данными.
 Кол-во строк для проверки задается в properties-файле параметром system.PercentOfRows. Задается в процентах от общего кол-ва записей, пригодных для загрузки из DWH
 Допускается нецелое число, разделитель- точка.
-Если записей в таблице мало, то для сравнения берется кол-во записей, заданное парамером  system.default.RowsForMatch
-Если тест найдет отличие в каком либо из полей, то на консоль будет выведено сообщение об ошибке. Тест не упадет при этом!
+Если записей в таблице мало, то для сравнения берется кол-во записей, заданное парамером  system.default.RowsForMatch -1
+Если тест найдет отличие в каком либо из полей, или обнаружит дубли в DM-таблице, то на консоль будет выведено сообщение об ошибке.
+Тест не упадет при этом, т.е. нужно контролировать глазами!
+Тесты неодинаковые - в некоторых dim'ах (и, соотвественно, тестах) есть особенности.
  */
 public class DimsDataMatching {
     private Properties properties = new Properties();
@@ -208,6 +210,37 @@ public class DimsDataMatching {
             matchMaps(mapFromDV, mapFromDM);
         }
     }
+
+    @Test(enabled = true)
+    public void dimOvTradeNumber_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeNumber.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("ovTradeNumber.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                mapFromDV.put("dmStatus", 1);
+                mapFromDV.put("srcSystemId", 0);
+                mapFromDV.put("validFrom", "2000-01-01");
+                mapFromDV.put("validTo", "2100-01-01");
+
+                String sqlForDM = (properties.getProperty("ovTradeNumber.dataInDM.RowByKeys") + " where ovTradeNumber = '" +
+                        rsFromDWH.getString("ovTradeNumber") + "' and accessCompanyId = '" + rsFromDWH.getInt("accessCompanyId") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
 
     @Test(enabled = true)
     public void dimGvaTrade_matchData() throws SQLException, IOException {
@@ -489,7 +522,8 @@ public class DimsDataMatching {
         while (rsFromDM.next()) {
             if (rsFromDM.getRow() > 1) {
                 System.err.println("Count rows got from DM: " + rsFromDM.getRow()
-                        + ". If its > 1 check the unique key in sql query to DM! SQL: " + sql);
+                        + ". If its > 1 in table exist double rows - it's wrong! Or check the unique key in sql query to DM! SQL: " + sql);
+                System.err.println("Or check the unique key in sql query to DM! SQL: " + sql);
             } else {
                 for (int l = 1; l <= mapForRTestSize; l++) {
                     mapForDM.put(rsFromDM.getMetaData().getColumnName(l), rsFromDM.getObject(l));
