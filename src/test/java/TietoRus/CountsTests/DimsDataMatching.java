@@ -12,6 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
+/*
+Тест сравнивает данные, сформированные контрольным запросом с загружеными в DM данными.
+Кол-во строк для проверки задается в properties-файле параметром system.PercentOfRows. Задается в процентах от общего кол-ва записей, пригодных для загрузки из DWH
+Допускается нецелое число, разделитель- точка.
+Если записей в таблице мало, то для сравнения берется кол-во записей, заданное парамером  system.default.RowsForMatch
+Если тест найдет отличие в каком либо из полей, то на консоль будет выведено сообщение об ошибке. Тест не упадет при этом!
+ */
 public class DimsDataMatching {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
@@ -273,6 +280,32 @@ public class DimsDataMatching {
 
 
     @Test(enabled = true)
+    public void fctBooking_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("fctBookingCargo.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("fctBookingCargo.dataInDM.RowByKeys") + " where dwhIdHubBookingCargo = " +
+                        rsFromDWH.getInt("dwhIdHubBookingCargo") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
     public void dimBooking_matchData() throws SQLException, IOException {
         getPropertiesFile();
 
@@ -296,7 +329,6 @@ public class DimsDataMatching {
             matchMaps(mapFromDV, mapFromDM);
         }
     }
-
 
     @Test(enabled = true)
     public void dimBookingOceanVessel_matchData() throws SQLException, IOException {
