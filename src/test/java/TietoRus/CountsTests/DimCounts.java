@@ -102,6 +102,10 @@ public class DimCounts {
 
 
     @Test(enabled = true)
+    /*
+    В запросе (в процедуре) для определения tradeNameGvaForEmedStat (см спецификацию (DBMappinngDWHDataMart-v1.4P)) убрано условие: where tradeNameGvaForEmedStat is not null
+    Это порождает 200 "лишних" записи в dimLocations, решили, что сбору отчета это не помешает и ко-лво незначительно - оставляем как есть.
+            */
     public void dimLocations() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("locations.dwh.CountRows"));
