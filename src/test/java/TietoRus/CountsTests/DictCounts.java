@@ -15,6 +15,34 @@ package TietoRus.CountsTests;
 
         import static org.hamcrest.CoreMatchers.equalTo;
         import static org.hamcrest.MatcherAssert.assertThat;
+/*
+Тесты для проверки загрузки справочников в DataMart.
+Сравнивается расчетное кол-во записей в DWH с загруженным кол-вом записей в dict-таблицы
+
+Тестовые данные для проверки загрузки изменений (значения в значимых полях д.б. уже существующие в dim-таблицах)
+Ожидаемый результат: новые записи д.б. вставлены, существующие проигнорированы (исключение Region и destinationRegion -  тестовые записи не должны быть вставлены):
+
+INSERT INTO hub.hubFullEmpty (fillingStatus, srcSystemId, createdate, alterdate) VALUES ('F', 99, getdate(), getdate())
+SELECT * FROM hub.hubFullEmpty WHERE srcSystemId=99
+delete FROM hub.hubFullEmpty WHERE srcSystemId=99
+
+INSERT INTO hub.hubCrossBookingType (bookTypeCode, srcSystemId, createdate, alterdate) VALUES ('NA', 99, getdate(), getdate())
+SELECT * FROM hub.hubCrossBookingType WHERE srcSystemId=99
+DELETE  FROM hub.hubCrossBookingType WHERE srcSystemId=99
+
+INSERT INTO hub.hubImportExport (importExportCode, srcSystemId, createdate, alterdate) VALUES ('E', 99, getdate(), getdate())
+SELECT * FROM hub.hubImportExport WHERE srcSystemId=99
+DELETE  FROM hub.hubImportExport WHERE srcSystemId=99
+
+INSERT INTO hub.hubPPCCEE (paymentTermCode, paymentTermName, srcSystemId, createdate, alterdate) VALUES ('C', 'test', 99, getdate(), getdate())
+SELECT * FROM hub.hubPPCCEE  WHERE srcSystemId=99
+DELETE FROM hub.hubPPCCEE  WHERE srcSystemId=99
+
+INSERT INTO sat.satLocationsPortsOverview (dwhIdHubLocationsPortsOverview, agencyRegion, destinationRegion, srcSystemId, createdate, alterdate,  validFrom, validTo)
+ VALUES ( 333333333333, 'ScanBalt', 'CHINA', 99, getdate(), getdate(), getdate(), getdate())
+SELECT  agencyRegion, destinationRegion  FROM sat.satLocationsPortsOverview  WHERE srcSystemId =99
+delete  FROM sat.satLocationsPortsOverview  WHERE srcSystemId =99
+ */
 
 public class DictCounts {
     private Properties properties = new Properties();
