@@ -54,6 +54,31 @@ public class DimsDataMatching {
     }
 
     @Test(enabled = true)
+    public void dimLocations_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+
+        int countRowInDV = getCountRowInDV(properties.getProperty("locations.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("locations.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("locations.dataInDM.RowByKeys") + " where dwhIdHubLocations = " +
+                        rsFromDWH.getInt("dwhIdHubLocations") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
     public void dimFileLiner_matchData() throws SQLException, IOException {
         getPropertiesFile();
 

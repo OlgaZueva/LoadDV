@@ -102,10 +102,10 @@ public class DimCounts {
 
 
     @Test(enabled = true)
-    public void fctBookingCargo() throws SQLException, IOException {
+    public void dimLocations() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("fctBookingCargo.dim.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("locations.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("locations.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 
