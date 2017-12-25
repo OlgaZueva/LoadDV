@@ -1327,7 +1327,8 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
+    //линк удален из системы, см PBI 6016
     public void ExpVessels_lnkExportVesselsCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkExportVesselsCompany.condition.CountRows"));
@@ -1351,7 +1352,8 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
+    //линк удален из системы, см PBI 6016
     public void FaktPost_lnkInvoicePostingAccountingTransaction() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkInvoicePostingAccountingTransaction.condition.CountRows"));
@@ -1359,7 +1361,8 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
+    //линк удален из системы, см PBI 6016
     public void FaktPost_satLnkInvoicePostingAccountingTransaction() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkInvoicePostingAccountingTransaction.lnk.CountRows"));
