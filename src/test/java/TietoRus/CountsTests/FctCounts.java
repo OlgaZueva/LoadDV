@@ -24,10 +24,9 @@ public class FctCounts {
     public void fctBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("fctBookingCargo.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
+        int countRowInFct = getCountRowInDM(properties.getProperty("fctBookingCargo.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
     }
-
 
 
     private void getPropertiesFile() throws IOException {

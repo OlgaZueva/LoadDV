@@ -1007,22 +1007,15 @@ public class HubsCounts {
     }
 
     @Test(enabled = true)
-    public void hubLoopSearchLiveScheduleName() throws SQLException, IOException {
+    // Специальная обработка. Создается факт на основе данных EXCEL-файла по отдельному алгоритму.
+    public void fctLoopSearch() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = (getCountRowInSA(properties.getProperty("loopSearchLiveScheduleName.union.CountRows")) +1 );// fake row
-
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLiveScheduleName.hub.CountRows"));
+        int countRowInSA = getCountRowInSA(properties.getProperty("loopSearch.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.hub.CountRows"));
         System.out.println(countRowInHub);
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = true)
-    public void hubLoopSearchLoopLeg() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSA = (getCountRowInSA(properties.getProperty("loopSearchLoopLeg.union.CountRows")) +1 );// fake row
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearchLoopLeg.hub.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
-    }
 
     @Test(enabled = true)
     public void hubSeagoData() throws SQLException, IOException {

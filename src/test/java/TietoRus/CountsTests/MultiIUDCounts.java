@@ -727,7 +727,12 @@ public class MultiIUDCounts {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
+    /*
+    Работа с таблицей demurrage изменена из-за большого обхема данных по изменениям.
+    Таблица исключена из обработки механизмом "удаление одновеременных вставок и удалений (DeleteMUI)"
+    Тест неактуален
+    */
     public void Demurrage_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countMutiMoments = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.countMutiMoments.counts"));
