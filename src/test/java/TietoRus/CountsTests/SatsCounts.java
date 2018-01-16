@@ -1071,15 +1071,6 @@ public class SatsCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    // у LoopSearchSat SatStatus'а нет. Hub грузится из EXCEL'я
-    @Test(enabled = true)
-    public void LoopSearchSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInHub = getCountRowOfHub(properties.getProperty("loopSearch.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("loopSearch.sat.CountRows"));
-        assertRowCount(countRowInHub, countRowInSat);
-    }
-
     // у FeederCostsSat SatStatus'а нет. Hub грузится из EXCEL'я
     @Test(enabled = true)
     public void FeederCostsSat() throws SQLException, IOException {
