@@ -2184,22 +2184,6 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
-    public void LoopSearch_lnkLoopSearch() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkLoopSearch.condition.CountRows"));
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkLoopSearch.lnk.CountRows"));
-        assertRowCount(countRowByCondition, countRowInLink);
-    }
-
-    @Test(enabled = true)
-    public void LoopSearch_satLnkLoopSearch() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInLink = getCountRowOfHub(properties.getProperty("lnkLoopSearch.lnk.CountRows"));
-        int countRowInSatLink = getCountRowOfHub(properties.getProperty("lnkLoopSearch.satLnk.CountRows"));
-        assertRowCount(countRowInLink, countRowInSatLink);
-    }
-
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/linksCountsSQL.properties"))));
