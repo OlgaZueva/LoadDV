@@ -950,7 +950,7 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)//Изменена загрузка Demurrage. Отдельный алгоритм. Тест неактуален.
     public void hubDemurrageStorage() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("demurrageStorage.union.CountRows"));
