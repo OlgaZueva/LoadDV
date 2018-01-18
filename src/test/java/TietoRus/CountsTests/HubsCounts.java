@@ -32,17 +32,6 @@ public class HubsCounts {
         assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
     }
 
-    @Test(enabled = true)
-    public void hubWeekendsHolidays() throws SQLException, IOException {
-        getPropertiesFile();
-        System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
-        System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
-        int countRowInSA = getCountRowInSA(properties.getProperty("weekendsHolidays.union.CountRows"));
-        int countRowInHub = getCountRowOfHub(properties.getProperty("weekendsHolidays.hub.CountRows"));
-        assertRowCount(countRowInSA, countRowInHub);
-    }
-
     @Test(enabled = false)
     public void hubControllingOfficeDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
@@ -127,6 +116,17 @@ public class HubsCounts {
     /*-------------------------------------------------------------
     Конец блока для таблиц, которые перезагружаются полностью.
 *///-----------------------------------------------------------
+
+
+    @Test(enabled = true)
+    public void hubWeekendsHolidays() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("weekendsHolidays.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("weekendsHolidays.hub.CountRows"));
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+
     @Test(enabled = false)
     public void hubPaymentsDataFromSAToView() throws SQLException, IOException {
         getPropertiesFile();
