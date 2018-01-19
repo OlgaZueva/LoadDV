@@ -940,7 +940,7 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSat);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // Изменен алгоритм работы с Demurrageю Специальная обработка. тест неактуален
     public void DemurrageStorageSat() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowInSA(properties.getProperty("demurrageStorage.satCondition.CountRows"));
@@ -948,7 +948,7 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSat);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // Изменен алгоритм работы с Demurrageю Специальная обработка. тест неактуален
     public void DemurrageStorageStatus() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowInSA(properties.getProperty("demurrageStorage.satStatusCondition.CountRows"));

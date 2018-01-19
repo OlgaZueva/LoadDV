@@ -1018,6 +1018,26 @@ public class HubsCounts {
 
 
     @Test(enabled = true)
+    // Специальная обработка. Создается факт на основе данных MSCRUS_DEMURRAGE- таблиц по отдельному алгоритму.
+    public void fctDemurrage_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.mscrus.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("demurrage.mscrus.hub.CountRows"));
+        System.out.println(countRowInHub);
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
+    // Специальная обработка. Создается факт на основе данных UNITY_DEMURRAGE по отдельному алгоритму.
+    public void fctDemurrage_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.unity.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("demurrage.unity.hub.CountRows"));
+        System.out.println(countRowInHub);
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
+    @Test(enabled = true)
     public void hubSeagoData() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("seagoData.union.CountRows"));

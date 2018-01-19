@@ -20,7 +20,7 @@ public class DBHelper {
         //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataMartTest;user=ssis;password=ssis");
         return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataMartTestCh;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=DataMartTest;user=ssis;password=ssis");
-        //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataMartTest;user=ssis;password=ssis");
+       //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataMartTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataMartTest;user=sa;password=JGdedf&#fsqwhdc");
     }
 
@@ -28,7 +28,7 @@ public class DBHelper {
 
         return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=StagingAreaTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=StagingAreaTest;user=ssis;password=ssis");
-        //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
+       // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=StagingArea;user=sa;password=JGdedf&#fsqwhdc");
     }
 
