@@ -24,17 +24,9 @@ public class UsersCounts {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
-    @Test(enabled = false)
-    public void usersInSAView() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInMSCRUS = getCountRowInSA(properties.getProperty("users.MSCRUS.CountRows"));
-        int countRowInUNITY = getCountRowInSA(properties.getProperty("users.UNITY.CountRows"));
-        int countRowInView = getCountRowInSA(properties.getProperty("users.View.CountRows"));
-        assertRowCount((countRowInMSCRUS + countRowInUNITY), countRowInView);
-    }
 
     @Test(enabled = true)
-    public void usersInDWH() throws SQLException, IOException {
+    public void users() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("users.union.CountRows"));
         int countRowInDWH = getCountRowInDWH(properties.getProperty("users.destinationTable.CountRows"));
@@ -42,10 +34,7 @@ public class UsersCounts {
     }
 
     @Test(enabled = true)
-    public void usersCompanyInDWH() throws SQLException, IOException {
-        System.err.println("В Adgang встречаются случаи, когда в обоих таблицах есть записи с одним и тем же VOR_REF, но разными AD_Login");
-        System.err.println("В AdgangLin для них приходит разное кол-во записей. Контрольный зпрос задваивает такие. Но система создает все верно");
-        System.err.println("Поэтому падение теста не считать ошибкой");
+    public void usersCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowFromAdgangLinOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangLinOnly.CountRows"));
         int countRowFromAdgangOnly = getCountRowInDWH(properties.getProperty("usersCompany.conditionForAdgangOnly.CountRows"));
@@ -54,6 +43,22 @@ public class UsersCounts {
         System.out.println("Столько записей д.б. создано из Adgang: " + countRowFromAdgangOnly);
         System.out.println("Столько записей д.б. в stUserCompany с учетом загруженого из Adgand: " + countRowByCondition);
         int countRowInDestination = getCountRowInDWH(properties.getProperty("usersCompany.destinationTable.CountRows"));
+        assertRowCount(countRowByCondition, countRowInDestination);
+    }
+
+    @Test(enabled = true)
+    public void deletedUsers() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("deletesUsers.union.CountRows"));
+        int countRowInDWH = getCountRowInDWH(properties.getProperty("deletesUsers.destinationTable.CountRows"));
+        assertRowCount(countRowInSA, countRowInDWH);
+    }
+
+    @Test(enabled = true)
+    public void deletedUsersCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowByCondition = getCountRowInDWH(properties.getProperty("deletedUsersCompany.condition.CountRows"));
+        int countRowInDestination = getCountRowInDWH(properties.getProperty("deletedUsersCompany.destinationTable.CountRows"));
         assertRowCount(countRowByCondition, countRowInDestination);
     }
 

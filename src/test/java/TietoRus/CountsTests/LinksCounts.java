@@ -1829,7 +1829,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInHub = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCompany.condition.CountRows"));
@@ -1837,7 +1837,7 @@ public class LinksCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageContainerDemurrageRules() throws SQLException, IOException {
         getPropertiesFile();
         int countRowBy_STD_RULE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.STD_RULE.condition.CountRows"));
@@ -1850,7 +1850,7 @@ public class LinksCounts {
         //checkErrors(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.error.CountRows")); // ошибки проверяла- все те, что нужны ()
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_satLnkDemurrageStorageContainerDemurrageRules() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerDemurrageRules.lnk.CountRows"));
@@ -1858,7 +1858,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageContainerMoveTypes() throws SQLException, IOException {
         getPropertiesFile();
         int countRowBy_START_MOVE_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.START_MOVE.condition.CountRows"));
@@ -1871,7 +1871,7 @@ public class LinksCounts {
         checkErrors(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.error.CountRows"));
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.@Test(enabled = true)
     public void Demurrage_satLnkDemurrageStorageContainerMoveTypes() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageContainerMoveTypes.lnk.CountRows"));
@@ -1880,7 +1880,7 @@ public class LinksCounts {
     }
 
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageInvoice() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.condition.CountRows"));
@@ -1889,7 +1889,7 @@ public class LinksCounts {
         //checkErrors(properties.getProperty("lnkDemurrageStorageInvoice.error.CountRows")); // ошибки проверяла- все те, что нужны ()
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_satLnkDemurrageStorageInvoice() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageInvoice.lnk.CountRows"));
@@ -1897,7 +1897,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageCurrency() throws SQLException, IOException {
         getPropertiesFile();
         int countRowBy_CLIENT_CURRENCY_Condition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.CLIENT_CURRENCY.condition.CountRows"));
@@ -1911,7 +1911,7 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_satLnkDemurrageStorageCurrency() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCurrency.lnk.CountRows"));
@@ -2040,7 +2040,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void BookGods_lnkBookingCargoDemurrageStorage() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.condition.CountRows"));
@@ -2049,7 +2049,7 @@ public class LinksCounts {
         checkErrors(properties.getProperty("lnkBookingCargoDemurrageStorage.error.CountRows"));
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void BookGods_satLnkBookingCargoDemurrageStorage() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoDemurrageStorage.lnk.CountRows"));

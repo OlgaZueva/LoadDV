@@ -86,9 +86,9 @@ public class HubsCounts {
     public void hubCompany() throws SQLException, IOException {
         System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
         System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
+        System.out.println("В этом случае хабов будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
         getPropertiesFile();
-        int countRowInSA = (getCountRowInSA(properties.getProperty("company.union.CountRows")) +1);
+        int countRowInSA = (getCountRowInSA(properties.getProperty("company.union.CountRows")) +1);//fake row
         int countRowInHub =getCountRowOfHub(properties.getProperty("company.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
@@ -1001,7 +1001,7 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubBranch() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInSA = (getCountRowInSA(properties.getProperty("branch.union.CountRows")) + 1);
+        int countRowInSA = (getCountRowInSA(properties.getProperty("branch.union.CountRows")) + 1);//fake row
         int countRowInHub = getCountRowOfHub(properties.getProperty("branch.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);
     }
