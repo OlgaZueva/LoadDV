@@ -309,7 +309,7 @@ public class DemurrageTest {
                     + mapForSource.get("srcSystemId") + "," + mapForSource.get("validFrom") + ")");
 
             //finalSQL.add(qwe);
-            System.out.println(qwe);
+            //System.out.println(qwe);
             getDataHelper.executeInDWH(qwe);
 
 
@@ -317,8 +317,8 @@ public class DemurrageTest {
         }
 
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-        String str = String.join(" ", finalSQL);
-        getDataHelper.executeInDWH(str);
+        //String str = String.join(" ", finalSQL);
+        //getDataHelper.executeInDWH(str);
     }
 
 
