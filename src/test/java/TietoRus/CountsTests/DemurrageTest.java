@@ -76,7 +76,7 @@ public class DemurrageTest {
             mapForSource.put("stdCurrency", rsFromDWH.getString("STD_CURRENCY"));
             mapForSource.put("startMoveCode", rsFromDWH.getString("START_MOVE"));
             mapForSource.put("endMoveCode", rsFromDWH.getString("END_MOVE"));
-            mapForSource.put("client", rsFromDWH.getDouble("CLIENT"));
+            mapForSource.put("client", rsFromDWH.getInt("CLIENT"));
             mapForSource.put("srcSystemId", rsFromDWH.getInt("srcSystemId"));
             mapForSource.put("validFrom", rsFromDWH.getDate("CdcTimestamp"));
 
@@ -289,28 +289,30 @@ public class DemurrageTest {
             }
             mapForSource.put(nameDwhIdHubCROSS_BOOKING_TYPE, dwhIdHubCrossBookingType);
 */
-            String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + "," +
-                    mapForSource.get("containerNr") + "," + mapForSource.get("demurrageStorageCode") + ","
-                    + mapForSource.get("demurrageId") + ","
-                    + mapForSource.get("demurrageStorageStatus") + "," + mapForSource.get("amount") + ","
-                    + mapForSource.get("invoicedAmount") + "," + mapForSource.get("theoreticalAmount") + ","
-                    + mapForSource.get("reissue") + "," + mapForSource.get("clientRoe") + ","
+            String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
+                    mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
+                    + mapForSource.get("demurrageId") + ",'"
+                    + mapForSource.get("demurrageStorageStatus") + "'," + mapForSource.get("amount") + ","
+                    + mapForSource.get("invoicedAmount") + "," + mapForSource.get("theoreticalAmount") + ",'"
+                    + mapForSource.get("reissue") + "'," + mapForSource.get("clientRoe") + ","
                     + mapForSource.get("roe") + "," + mapForSource.get("stdCurrencyRoe") + ","
-                    + mapForSource.get("stdCurrencyRoe") + "," + mapForSource.get("daysNumber") + ","
-                    + mapForSource.get("startDate") + "," + mapForSource.get("endDate") + ","
-                    + mapForSource.get("startMark") + "," + mapForSource.get("endMark") + ","
-                    + mapForSource.get("startMark") + "," + mapForSource.get("endMark") + ","
+                     + mapForSource.get("daysNumber") + ",'"
+                    + mapForSource.get("startDate") + "','" + mapForSource.get("endDate") + "','"
+                    + mapForSource.get("startMark") + "','" + mapForSource.get("endMark") + "',"
                     + mapForSource.get("startDays") + "," + mapForSource.get("freeDays") + ","
                     + mapForSource.get("stdDays") + "," + mapForSource.get("ruleId") + ","
-                    + mapForSource.get("stdRuleId") + "," + mapForSource.get("orderNr") + ","
-                    + mapForSource.get("clientCurrency") + "," + mapForSource.get("demurrCurrency") + ","
-                    + mapForSource.get("stdCurrency") + "," + mapForSource.get("startMoveCode") + ","
-                    + mapForSource.get("startDays") + "," + mapForSource.get("freeDays") + ","
-                    + mapForSource.get("endMoveCode") + "," + mapForSource.get("client") + ","
+                    + mapForSource.get("stdRuleId") + "," + mapForSource.get("orderNr") + ",'"
+                    + mapForSource.get("clientCurrency") + "','" + mapForSource.get("demurrCurrency") + "','"
+                    + mapForSource.get("stdCurrency") + "','" + mapForSource.get("startMoveCode") + "','"
+                    + mapForSource.get("endMoveCode") + "'," + mapForSource.get("client") + ","
+                    + "null" + ","  + "null" + ","  + "null" + ","  + "null" + ","  + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + ","
                     + mapForSource.get("srcSystemId") + "," + mapForSource.get("validFrom") + ")");
-            finalSQL.add(qwe);
 
-            //executeInDWH(qwe);
+            //finalSQL.add(qwe);
+            System.out.println(qwe);
+            getDataHelper.executeInDWH(qwe);
+
+
 
         }
 
