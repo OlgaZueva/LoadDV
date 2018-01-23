@@ -11,10 +11,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,7 +39,7 @@ public class DemurrageTest {
         //executeInDWH(truncate);
         getDataHelper.executeInDWH(truncate);
 
-        String sql = (properties.getProperty("demurrage.allData.select"));
+        String sql = (properties.getProperty("demurrage.allData.MSCRUS.select"));
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
@@ -77,175 +74,184 @@ public class DemurrageTest {
             mapForSource.put("startMoveCode", rsFromDWH.getString("START_MOVE"));
             mapForSource.put("endMoveCode", rsFromDWH.getString("END_MOVE"));
             mapForSource.put("client", rsFromDWH.getInt("CLIENT"));
-            String sqlDwhIdHubCompany = (properties.getProperty("dwhIdHubCompany.id.select") +  " " + properties.getProperty("companyId.value.select") +
+
+            String sqlDwhIdHubCompany = (properties.getProperty("dwhIdHubCompany.id.select") +
                     rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     rsFromDWH.getInt("srcSystemId"));
-            Connection connectionToDWHForValues = db.connToDWH();
-            Statement stForDWHForValues = db.stFromConnection(connectionToDWHForValues);
-            ResultSet rsFromDWHForValues = db.rsFromDB(stForDWHForValues, sqlDwhIdHubCompany);
-            while (rsFromDWHForValues.next()) {
-                mapForSource.put("dwhIdHubCompany", rsFromDWHForValues.getInt("dwhIdHubCompany"));
-                db.closeConnecions(rsFromDWHForValues, stForDWHForValues, connectionToDWHForValues);
-                mapForSource.put("srcSystemId", rsFromDWH.getInt("srcSystemId"));
+
+// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubBookingCargo, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
+            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") + rsFromDWH.getString("CONT_NO") +
+                    (properties.getProperty("dwhIdHubBookingCargo.id.select.part2") + rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                            rsFromDWH.getInt("srcSystemId")));
+
+            String sqlDwhIdHubContainerDemurrageRulesSTD = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
+                    rsFromDWH.getString("STD_RULE_ID") + " AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdHubContainerDemmurageRulesFACT = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
+                    rsFromDWH.getString("RULE_ID") + " AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
+            String sqlDwhIdHubContainerMoveTypesStartMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
+                    rsFromDWH.getString("START_MOVE") + "' AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
+            String sqlDwhIdHubContainerMoveTypesEndMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
+                    rsFromDWH.getString("START_MOVE") + "' AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdHubCurrencyDemurrCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
+                    rsFromDWH.getString("CURRENCY") + "' AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdHubCurrencyClientCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
+                    rsFromDWH.getString("CLIENT_CURR") + "' AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdHubCurrencyStdCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
+                    rsFromDWH.getString("STD_CURRENCY") + "' AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdHubCustomers = (properties.getProperty("dwhIdHubCustomers.id.select") +
+                    rsFromDWH.getString("CLIENT") + " AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            String sqlDwhIdhubInvoice = (properties.getProperty("dwhIdhubInvoice.id.select") +
+                    rsFromDWH.getString("ORDRE_NO") + " AND " + properties.getProperty("companyId.value.select") +
+                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    rsFromDWH.getInt("srcSystemId"));
+
+            mapForSource.put("dwhIdHubBookingCargo", getValueHubId(sqlDwhIdHubBookingCargo, "dwhIdHubBookingCargo"));
+            mapForSource.put("dwhIdHubCompany", getValueHubId(sqlDwhIdHubCompany, "dwhIdHubCompany"));
+            mapForSource.put("dwhIdHubContainerDemurrageRulesSTD", getValueHubId(sqlDwhIdHubContainerDemurrageRulesSTD, "dwhIdHubContainerDemurrageRules"));
+            mapForSource.put("dwhIdHubContainerDemmurageRulesFACT", getValueHubId(sqlDwhIdHubContainerDemmurageRulesFACT, "dwhIdHubContainerDemurrageRules"));
+            mapForSource.put("dwhIdHubContainerMoveTypesStartMove", getValueHubId(sqlDwhIdHubContainerMoveTypesStartMove, "dwhIdHubContainerMoveTypes"));
+            mapForSource.put("dwhIdHubContainerMoveTypesEndMove", getValueHubId(sqlDwhIdHubContainerMoveTypesEndMove, "dwhIdHubContainerMoveTypes"));
+
+            Integer dwhIdHubCurrency_DemurCur = getValueHubId(sqlDwhIdHubCurrencyDemurrCurrency, "dwhIdHubCurrency");
+            if (dwhIdHubCurrency_DemurCur == null) {
+                mapForSource.put("dwhIdHubCurrencyDemurrCurrency", -1);
+            } else {
+                mapForSource.put("dwhIdHubCurrencyDemurrCurrency", dwhIdHubCurrency_DemurCur);
+            }
+
+            Integer dwhIdHubCurrency_ClientCur = getValueHubId(sqlDwhIdHubCurrencyClientCurrency, "dwhIdHubCurrency");
+            if (dwhIdHubCurrency_ClientCur == null) {
+                mapForSource.put("dwhIdHubCurrencyClientCurrency", -1);
+            } else {
+                mapForSource.put("dwhIdHubCurrencyClientCurrency", dwhIdHubCurrency_ClientCur);
+            }
+
+            Integer dwhIdHubCurrency_StdCur = getValueHubId(sqlDwhIdHubCurrencyStdCurrency, "dwhIdHubCurrency");
+            if (dwhIdHubCurrency_StdCur == null) {
+                mapForSource.put("dwhIdHubCurrencyStdCurrency", -1);
+            } else {
+                mapForSource.put("dwhIdHubCurrencyStdCurrency", dwhIdHubCurrency_StdCur);
+            }
+
+            Integer dwhIdHubCustomers = getValueHubId(sqlDwhIdHubCustomers, "dwhIdHubCustomers");
+            if (dwhIdHubCustomers == null || dwhIdHubCustomers == 9999) {
+                mapForSource.put("dwhIdHubCustomers", -1);
+            } else {
+                mapForSource.put("dwhIdHubCustomers", dwhIdHubCustomers);
+            }
+
+            if (rsFromDWH.getInt("ORDRE_NO") == 0) {
+                mapForSource.put("dwhIdhubInvoice", null);
+            } else {
+                mapForSource.put("dwhIdhubInvoice", getValueHubId(sqlDwhIdhubInvoice, "dwhIdhubInvoice"));
+            }
+
+            mapForSource.put("srcSystemId", rsFromDWH.getInt("srcSystemId"));
+
+            if (rsFromDWH.getDate("CdcTimestamp") == null) {
+                mapForSource.put("validFrom", "01-01-2000");
+            } else {
                 mapForSource.put("validFrom", rsFromDWH.getDate("CdcTimestamp"));
-
-
-            /*
-
-            if (rsFromDWH.getString("PAYM_TERMS") == (null)) {
-                dwhIdHubPPCCEE = -1;
-            } else {
-                String sqlDwhIdHubPPCCEE = ("select " + nameDwhIdHubPPCCEE + " " + properties.getProperty("iBox.hubPPCCEE.select")
-                        + rsFromDWH.getString("PAYM_TERMS") + "\'");
-                dwhIdHubPPCCEE = getDataFromHub(sqlDwhIdHubPPCCEE, nameDwhIdHubPPCCEE);
-            }
-            mapForSource.put(nameDwhIdHubPPCCEE, dwhIdHubPPCCEE);
-
-            if (rsFromDWH.getString("FULL_EMPTY") == (null)) {
-                dwhIdHubFullEmpty = -1;
-            } else {
-                String sqlDwhIdHubFullEmpty = ("select " + nameDwhIdHubFullEmpty + " " + properties.getProperty("iBox.hubFullEmpty.select")
-                        + rsFromDWH.getString("FULL_EMPTY") + "\'");
-                dwhIdHubFullEmpty = getDataFromHub(sqlDwhIdHubFullEmpty, nameDwhIdHubFullEmpty);
-            }
-            mapForSource.put(nameDwhIdHubFullEmpty, dwhIdHubFullEmpty);
-
-//---------------------------
-            if (rsFromDWH.getString("PORT_LOAD_CODE") == (null)) {
-                dwhIdHubLocations = -1;
-            } else {
-                String sqlDwhIdHubLocationsPOL = ("select " + nameDwhIdHubLocations + " " + properties.getProperty("iBox.hubLocations.select")
-                        + rsFromDWH.getString("PORT_LOAD_CODE") + "\'" + " and accessCompanyId= " + accesCompanyId);
-                dwhIdHubLocations = getDataFromHub(sqlDwhIdHubLocationsPOL, nameDwhIdHubLocations);
-            }
-            mapForSource.put(nameDwhIdHubLocationsPOL, dwhIdHubLocations);
-//--
-            if (rsFromDWH.getString("PORT_DISCH_CODE") == (null)) {
-                dwhIdHubLocations = -1;
-            } else {
-                String sqlDwhIdHubLocationsPOD = ("select " + nameDwhIdHubLocations + " " + properties.getProperty("iBox.hubLocations.select")
-                        + rsFromDWH.getString("PORT_DISCH_CODE") + "\'" + " and accessCompanyId= " + accesCompanyId);
-                dwhIdHubLocations = getDataFromHub(sqlDwhIdHubLocationsPOD, nameDwhIdHubLocations);
             }
 
-
-//---------------------------
-            if (rsFromDWH.getString("BOOK_PARTY") == (null)) {
-                dwhIdHubCustomers = -1;
-            } else {
-                String sqlDwhIdHubCustomersBOOK_PARTY = ("select " + nameDwhIdHubCustomers + " " + properties.getProperty("iBox.hubCustomersPart1.select")
-                        + rsFromDWH.getString("BOOK_PARTY").replace("'", "''") + properties.getProperty("iBox.hubCustomersPart2.select")
-                        + rsFromDWH.getString("BL_NUMBER") + "' and accessCompanyId= " + accesCompanyId);
-                dwhIdHubCustomers = getDataFromHub(sqlDwhIdHubCustomersBOOK_PARTY, nameForMapDwhIdHubCustomers);
-            }
-            mapForSource.put(nameDwhIdHubCustomersBOOK_PARTY, dwhIdHubCustomers);
-
-            if (rsFromDWH.getString("LQ_FORWARDER") == (null)) {
-                dwhIdHubCustomers = -1;
-            } else {
-                String sqlDwhIdHubCustomersFORWARDER = ("select " + nameDwhIdHubCustomers + " " + properties.getProperty("iBox.hubCustomersPart1.select")
-                        + rsFromDWH.getString("LQ_FORWARDER").replace("'", "''") + properties.getProperty("iBox.hubCustomersPart2.select")
-                        + rsFromDWH.getString("BL_NUMBER") + "' and accessCompanyId= " + accesCompanyId);
-                dwhIdHubCustomers = getDataFromHub(sqlDwhIdHubCustomersFORWARDER, nameForMapDwhIdHubCustomers);
-            }
-            mapForSource.put(nameDwhIdHubCustomersFORWARDER, dwhIdHubCustomers);
-
-//--
-            if (rsFromDWH.getString("FREIGHTPAYER") == (null)) {
-                dwhIdHubCustomers = -1;
-            } else {
-                String sqlDwhIdHubCustomersFREIGHTPAYER = ("select " + nameDwhIdHubCustomers + " " + properties.getProperty("iBox.hubCustomersPart1.select")
-                        + rsFromDWH.getString("FREIGHTPAYER").replace("'", "''") + properties.getProperty("iBox.hubCustomersPart2.select")
-                        + rsFromDWH.getString("BL_NUMBER") + "' and accessCompanyId= " + accesCompanyId);
-                dwhIdHubCustomers = getDataFromHub(sqlDwhIdHubCustomersFREIGHTPAYER, nameForMapDwhIdHubCustomers);
-            }
-            mapForSource.put(nameDwhIdHubCustomersFREIGHTPAYER, dwhIdHubCustomers);
-
-//--
-            if (rsFromDWH.getString("STAT_CUSTOMER") == (null)) {
-                dwhIdHubCustomers = -1;
-            } else {
-                String sqlDwhIdHubCustomersSTAT_CUSTOMER = ("select " + nameDwhIdHubCustomers + " " + properties.getProperty("iBox.hubCustomersPart1.select")
-                        + rsFromDWH.getString("STAT_CUSTOMER").replace("'", "''") + properties.getProperty("iBox.hubCustomersPart2.select")
-                        + rsFromDWH.getString("BL_NUMBER") + "' and accessCompanyId= " + accesCompanyId);
-                dwhIdHubCustomers = getDataFromHub(sqlDwhIdHubCustomersSTAT_CUSTOMER, nameForMapDwhIdHubCustomers);
-            }
-
-            if (rsFromDWH.getString("C_OV_STATUS") == (null)) {
-                dwhIdHubOceanVesselStatus = -1;
-            } else {
-                String sqlDwhIdHubOceanVesselStatus = ("select " + nameDwhIdHubOceanVesselStatus + " " + properties.getProperty("iBox.hubOceanVesselStatus.select")
-                        + rsFromDWH.getString("C_OV_STATUS") + "' and accessCompanyId= " + accesCompanyId);
-                dwhIdHubOceanVesselStatus = getDataFromHub(sqlDwhIdHubOceanVesselStatus, nameDwhIdHubOceanVesselStatus);
-            }
-            mapForSource.put(nameDwhIdHubOCEAN_VESSEL_STATUS, dwhIdHubOceanVesselStatus);
-
-            //--
-            if (rsFromDWH.getString("C_BL_NR_PREFIX") == (null)) {
-                dwhIdHubCrossBookingType = getDataFromHub(properties.getProperty("iBox.hubCrossBookingType_NA.select"), nameDwhIdHubCrossBookingType);
-            } else {
-                String sqlDwhIdHubCrossBookingType = ("select " + nameDwhIdHubCrossBookingType + " " + properties.getProperty("iBox.hubCrossBookingType.select")
-                        + rsFromDWH.getString("C_BL_NR_PREFIX") + "\'");
-                dwhIdHubCrossBookingType = getDataFromHub(sqlDwhIdHubCrossBookingType, nameDwhIdHubCrossBookingType);
-                if (dwhIdHubCrossBookingType == null) {
-                    dwhIdHubCrossBookingType = getDataFromHub(properties.getProperty("iBox.hubCrossBookingType_NA.select"), nameDwhIdHubCrossBookingType);
-                }
-            }
-            mapForSource.put(nameDwhIdHubCROSS_BOOKING_TYPE, dwhIdHubCrossBookingType);
-*/
-                String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
-                        mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
-                        + mapForSource.get("demurrageId") + ",'"
-                        + mapForSource.get("demurrageStorageStatus") + "'," + mapForSource.get("amount") + ","
-                        + mapForSource.get("invoicedAmount") + "," + mapForSource.get("theoreticalAmount") + ",'"
-                        + mapForSource.get("reissue") + "'," + mapForSource.get("clientRoe") + ","
-                        + mapForSource.get("roe") + "," + mapForSource.get("stdCurrencyRoe") + ","
-                        + mapForSource.get("daysNumber") + ",'"
-                        + mapForSource.get("startDate") + "','" + mapForSource.get("endDate") + "','"
-                        + mapForSource.get("startMark") + "','" + mapForSource.get("endMark") + "',"
-                        + mapForSource.get("startDays") + "," + mapForSource.get("freeDays") + ","
-                        + mapForSource.get("stdDays") + "," + mapForSource.get("ruleId") + ","
-                        + mapForSource.get("stdRuleId") + "," + mapForSource.get("orderNr") + ",'"
-                        + mapForSource.get("clientCurrency") + "','" + mapForSource.get("demurrCurrency") + "','"
-                        + mapForSource.get("stdCurrency") + "','" + mapForSource.get("startMoveCode") + "','"
-                        + mapForSource.get("endMoveCode") + "'," + mapForSource.get("client") + ","
-                        + mapForSource.get("dwhIdHubCompany") + ","
-                        + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + "," + "null" + ","
-                        + mapForSource.get("srcSystemId") + "," + mapForSource.get("validFrom") + ")");
-
-                //finalSQL.add(qwe);
-                System.out.println(qwe);
-                getDataHelper.executeInDWH(qwe);
+            //mapForSource.put("validFrom", rsFromDWH.getDate("CdcTimestamp"));
 
 
-            }
+            String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
+                    mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
+                    + mapForSource.get("demurrageId") + ",'"
+                    + mapForSource.get("demurrageStorageStatus") + "'," + mapForSource.get("amount") + ","
+                    + mapForSource.get("invoicedAmount") + "," + mapForSource.get("theoreticalAmount") + ",'"
+                    + mapForSource.get("reissue") + "'," + mapForSource.get("clientRoe") + ","
+                    + mapForSource.get("roe") + "," + mapForSource.get("stdCurrencyRoe") + ","
+                    + mapForSource.get("daysNumber") + ", CONVERT(datetime, '"
+                    + mapForSource.get("startDate") + "', 102) , CONVERT(datetime, '" + mapForSource.get("endDate") + "', 102),'"
+                    + mapForSource.get("startMark") + "','" + mapForSource.get("endMark") + "',"
+                    + mapForSource.get("startDays") + "," + mapForSource.get("freeDays") + ","
+                    + mapForSource.get("stdDays") + "," + mapForSource.get("ruleId") + ","
+                    + mapForSource.get("stdRuleId") + "," + mapForSource.get("orderNr") + ",'"
+                    + mapForSource.get("clientCurrency") + "','" + mapForSource.get("demurrCurrency") + "','"
+                    + mapForSource.get("stdCurrency") + "','" + mapForSource.get("startMoveCode") + "','"
+                    + mapForSource.get("endMoveCode") + "'," + mapForSource.get("client") + ","
+                    + mapForSource.get("dwhIdHubBookingCargo") + "," + mapForSource.get("dwhIdHubCompany") + ","
+                    + mapForSource.get("dwhIdHubContainerDemurrageRulesSTD") + "," + mapForSource.get("dwhIdHubContainerDemmurageRulesFACT") + ","
+                    + mapForSource.get("dwhIdHubContainerMoveTypesStartMove") + "," + mapForSource.get("dwhIdHubContainerMoveTypesEndMove") + ","
+                    + mapForSource.get("dwhIdHubCurrencyDemurrCurrency") + "," + mapForSource.get("dwhIdHubCurrencyClientCurrency") + ","
+                    + mapForSource.get("dwhIdHubCurrencyStdCurrency") + "," + mapForSource.get("dwhIdHubCustomers") + ","
+                    + mapForSource.get("dwhIdhubInvoice") + ","
+                    + mapForSource.get("srcSystemId") + ",CONVERT(datetime, '" + mapForSource.get("validFrom") + "', 102))");
 
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            //String str = String.join(" ", finalSQL);
-            //getDataHelper.executeInDWH(str);
+            //finalSQL.add(qwe);
+            System.out.println(qwe);
+            //getDataHelper.executeInDWH(qwe);
+
+
         }
 
-    }
-        private void getPropertiesFile () throws IOException {
-            properties.load(new FileReader(new File(String.format("src/test/resources/demurrage.properties"))));
-        }
+        db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+        //String str = String.join(" ", finalSQL);
+        //getDataHelper.executeInDWH(str);
 
-        public void assertRowCount ( int countInSource, int countInDest){
-            System.out.println("Count rows in Source [" + countInSource + "], in Destination [" + countInDest + "]");
-            assertThat(countInDest, equalTo(countInSource));
-        }
-
-        public Integer getDataFromHub (String sql, String nameDwhIdHub) throws SQLException {
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
-            Integer template = null;
-            while (rsFromDWH.next()) {
-                template = rsFromDWH.getInt(nameDwhIdHub);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            return template;
-        }
+        String updateReissue = (properties.getProperty("demurrage.reissue.update"));
+        getDataHelper.executeInDWH(updateReissue);
+        String updateStartMark = (properties.getProperty("demurrage.startMark.update"));
+        getDataHelper.executeInDWH(updateStartMark);
+        String updateEndMark = (properties.getProperty("demurrage.endMark.update"));
+        getDataHelper.executeInDWH(updateEndMark);
+        String updateStdCurrency = (properties.getProperty("demurrage.stdCurrency.update"));
+        getDataHelper.executeInDWH(updateStdCurrency);
 
 
     }
+
+
+    private void getPropertiesFile() throws IOException {
+        properties.load(new FileReader(new File(String.format("src/test/resources/demurrage.properties"))));
+    }
+
+    public void assertRowCount(int countInSource, int countInDest) {
+        System.out.println("Count rows in Source [" + countInSource + "], in Destination [" + countInDest + "]");
+        assertThat(countInDest, equalTo(countInSource));
+    }
+
+
+    public Integer getValueHubId(String sql, String nameDwhIdHub) throws SQLException {
+        Connection connectionToDWHForValues = db.connToDWH();
+        Statement stForDWHForValues = db.stFromConnection(connectionToDWHForValues);
+        ResultSet rsFromDWHForValues = db.rsFromDB(stForDWHForValues, sql);
+        Integer values = null;
+        while (rsFromDWHForValues.next()) {
+            values = rsFromDWHForValues.getInt(nameDwhIdHub);
+        }
+        db.closeConnecions(rsFromDWHForValues, stForDWHForValues, connectionToDWHForValues);
+        return values;
+    }
+
+
+}
