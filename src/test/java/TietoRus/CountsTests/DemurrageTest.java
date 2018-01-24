@@ -18,6 +18,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 /*
 Тест для проверки механизма загрузки Demurrage
+Тест по условиям, описанным в специфиакации собирает данные для каждой записи, формирует запрос на вставку в тестовую таблицу.
+После завершения работы теста данные нужно сравнить вручную.
+Количество записей тест проверит.
 
  */
 
@@ -27,18 +30,18 @@ public class DemurrageTest {
     private GetDataHelper getDataHelper = new GetDataHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
-    ArrayList finalSQL = new ArrayList();
+    //ArrayList finalSQL = new ArrayList();
+    List<String> finalSQL = new ArrayList<String>();
 
     @Test(enabled = true)
     public void MSCRUS_FillingDemurrageTestTable() throws SQLException, IOException {
         getPropertiesFile();
+   // Создание и зачистка тестовой таблицы
         String create = (properties.getProperty("demurrage.linkTable.create"));
         getDataHelper.executeInDWH(create);
-        //executeInDWH(create);
         String truncate = (properties.getProperty("demurrage.linkTable.truncate"));
-        //executeInDWH(truncate);
         getDataHelper.executeInDWH(truncate);
-
+//-----------Выбираем данные из SA-таблицы с учетом условий и формируем MAP, в котрой каждый элемент соотвествуюет полю dwh-таблицы
         String sql = (properties.getProperty("demurrage.allData.MSCRUS.select"));
         Connection connectionToDWH = db.connToDWH();
         Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -74,62 +77,63 @@ public class DemurrageTest {
             mapForSource.put("startMoveCode", rsFromDWH.getString("START_MOVE"));
             mapForSource.put("endMoveCode", rsFromDWH.getString("END_MOVE"));
             mapForSource.put("client", rsFromDWH.getInt("CLIENT"));
+            mapForSource.put("srcSystemId", rsFromDWH.getInt("srcSystemId"));
 
             String sqlDwhIdHubCompany = (properties.getProperty("dwhIdHubCompany.id.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     rsFromDWH.getInt("srcSystemId"));
 
 // В настоящий момент по условиям могут быть выбраны несколько dwhIdHubBookingCargo, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") + rsFromDWH.getString("CONT_NO") +
-                    (properties.getProperty("dwhIdHubBookingCargo.id.select.part2") + rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                            rsFromDWH.getInt("srcSystemId")));
+            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") +  mapForSource.get("containerNr") +
+                    (properties.getProperty("dwhIdHubBookingCargo.id.select.part2") + mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                            mapForSource.get("srcSystemId")));
 
             String sqlDwhIdHubContainerDemurrageRulesSTD = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
-                    rsFromDWH.getString("STD_RULE_ID") + " AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("stdRuleId") + " AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubContainerDemmurageRulesFACT = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
-                    rsFromDWH.getString("RULE_ID") + " AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("ruleId") + " AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
 // В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
             String sqlDwhIdHubContainerMoveTypesStartMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    rsFromDWH.getString("START_MOVE") + "' AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
 // В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
             String sqlDwhIdHubContainerMoveTypesEndMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    rsFromDWH.getString("START_MOVE") + "' AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCurrencyDemurrCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
-                    rsFromDWH.getString("CURRENCY") + "' AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("demurrCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCurrencyClientCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
-                    rsFromDWH.getString("CLIENT_CURR") + "' AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("clientCurrency")  + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCurrencyStdCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
-                    rsFromDWH.getString("STD_CURRENCY") + "' AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("stdCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCustomers = (properties.getProperty("dwhIdHubCustomers.id.select") +
-                    rsFromDWH.getString("CLIENT") + " AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("client") + " AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             String sqlDwhIdhubInvoice = (properties.getProperty("dwhIdhubInvoice.id.select") +
-                    rsFromDWH.getString("ORDRE_NO") + " AND " + properties.getProperty("companyId.value.select") +
-                    rsFromDWH.getInt("COMPANY") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    rsFromDWH.getInt("srcSystemId"));
+                    mapForSource.get("orderNr") + " AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
+                    mapForSource.get("srcSystemId"));
 
             mapForSource.put("dwhIdHubBookingCargo", getValueHubId(sqlDwhIdHubBookingCargo, "dwhIdHubBookingCargo"));
             mapForSource.put("dwhIdHubCompany", getValueHubId(sqlDwhIdHubCompany, "dwhIdHubCompany"));
@@ -166,13 +170,11 @@ public class DemurrageTest {
                 mapForSource.put("dwhIdHubCustomers", dwhIdHubCustomers);
             }
 
-            if (rsFromDWH.getInt("ORDRE_NO") == 0) {
+            if (mapForSource.get("orderNr").equals(0)) {
                 mapForSource.put("dwhIdhubInvoice", null);
             } else {
                 mapForSource.put("dwhIdhubInvoice", getValueHubId(sqlDwhIdhubInvoice, "dwhIdhubInvoice"));
             }
-
-            mapForSource.put("srcSystemId", rsFromDWH.getInt("srcSystemId"));
 
             if (rsFromDWH.getDate("CdcTimestamp") == null) {
                 mapForSource.put("validFrom", "01-01-2000");
@@ -180,8 +182,8 @@ public class DemurrageTest {
                 mapForSource.put("validFrom", rsFromDWH.getDate("CdcTimestamp"));
             }
 
-            //mapForSource.put("validFrom", rsFromDWH.getDate("CdcTimestamp"));
-
+  //--- конец блока сбора и формирования данных
+            // --- собираем запрос на вставкузаписей с тестовую таблицу
 
             String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
                     mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
@@ -207,17 +209,17 @@ public class DemurrageTest {
                     + mapForSource.get("dwhIdhubInvoice") + ","
                     + mapForSource.get("srcSystemId") + ",CONVERT(datetime, '" + mapForSource.get("validFrom") + "', 102))");
 
-            //finalSQL.add(qwe);
-            System.out.println(qwe);
+            finalSQL.add(qwe);
+            System.out.println(finalSQL.size());
             //getDataHelper.executeInDWH(qwe);
-
-
         }
 
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         //String str = String.join(" ", finalSQL);
         //getDataHelper.executeInDWH(str);
+//--- конец блока формирования и вставки записей в тестовую таблицу
 
+  //-- ---- обновление тестовой таблицы - замена текстовых значение null на пустые значения
         String updateReissue = (properties.getProperty("demurrage.reissue.update"));
         getDataHelper.executeInDWH(updateReissue);
         String updateStartMark = (properties.getProperty("demurrage.startMark.update"));
@@ -226,8 +228,10 @@ public class DemurrageTest {
         getDataHelper.executeInDWH(updateEndMark);
         String updateStdCurrency = (properties.getProperty("demurrage.stdCurrency.update"));
         getDataHelper.executeInDWH(updateStdCurrency);
-
-
+        String updateClientCurrency = (properties.getProperty("demurrage.clientCurrency.update"));
+        getDataHelper.executeInDWH(updateClientCurrency);
+        String updateDemurrCurrency = (properties.getProperty("demurrage.demurrCurrency.update"));
+        getDataHelper.executeInDWH(updateDemurrCurrency);
     }
 
 

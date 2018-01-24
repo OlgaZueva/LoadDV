@@ -26,7 +26,7 @@ public class DBHelper {
 
     public Connection connToSA() throws SQLException {
 
-        //return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=StagingAreaTest;user=ssis;password=ssis");
+       // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=StagingAreaTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=StagingAreaTest;user=ssis;password=ssis");
         return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=StagingArea;user=sa;password=JGdedf&#fsqwhdc");

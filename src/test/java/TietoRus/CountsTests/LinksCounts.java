@@ -2168,7 +2168,7 @@ public class LinksCounts {
         assertRowCount(countRowInLink, countRowInSatLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)// алгоритм работы  таблицей Demurrage изменен. тест неактуален.
     public void Demurrage_lnkDemurrageStorageCustomer() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.condition.CountRows"));
@@ -2176,7 +2176,7 @@ public class LinksCounts {
         assertRowCount(countRowByCondition, countRowInLink);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void Demurrage_satLnkDemurrageStorageCustomer() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkDemurrageStorageCustomer.lnk.CountRows"));

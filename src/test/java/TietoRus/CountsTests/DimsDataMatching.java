@@ -78,6 +78,8 @@ public class DimsDataMatching {
         }
     }
 
+
+
     @Test(enabled = true)
     public void dimFileLiner_matchData() throws SQLException, IOException {
         getPropertiesFile();
@@ -483,6 +485,42 @@ public class DimsDataMatching {
                 mapFromDV = getMapFromDV(rsFromDWH);
                 String sqlForDM = (properties.getProperty("company.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
                         rsFromDWH.getInt("dwhIdHubCompany") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void dimTransshipmentPorts_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        /*
+        ВНИМАНИЕ!. Dim специфичен. Перед запуском нужно вставить тестовые данные:
+        INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode,portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate)
+                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), null)
+        INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode,portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate)
+                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), null)
+
+        Эти записи одинаковые по ключу, но с разными potrName. В dim должна попысть одна из них- первая.
+         */
+        System.err.println("См комментарий к тесту!");
+        int countRowInDV = getCountRowInDV(properties.getProperty("transshipmentPorts.dwh.CountRows"));
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("transshipmentPorts.dataInDV.RowByRowNum") + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("transshipmentPorts.dataInDM.RowByKeys") + " where locationCode = '" +
+                        rsFromDWH.getInt("locationCode") + "' and validFromBusiness = '" + rsFromDWH.getString("validFromBusiness")
+                        + "' and validToBusiness = '" + rsFromDWH.getString("validToBusiness")+ "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
             }
