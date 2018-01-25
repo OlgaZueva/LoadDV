@@ -19,6 +19,19 @@ public class HubsCounts {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
+    /*
+    Каждый тест содержит контрольный запрос (выводящий число подходящих записей) на SA-таблицу и запрос кол-ва записей в hub_таблице и сравнивает их.
+    Пракчтически все хабы в ключе содержат SELSKAB, который может быть удалени при какой-либо из загрузок изменений (до удаления записи с ним могли быть справедливо загружены).
+    Контрольный запрос учитывает такие записи.
+    Кроме того, при первоначальной загрузке в таблицы BOGF_TRANS, SAG, BOOK, ORDRE и CONT_RULES попадают записи, подходяшие под условия удаления механизмомо DisсardAgency.
+    Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,
+    а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо.
+    С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW
+    Это какие то старые буки и записи с "кривыми"датами, которые нужны, мы их загружаем и контрольные запросы на хабы, создающиеся на этих таблицах это учитывают.
+   */
+
+
+
         /*-------------------------------------------------------------
    Блок для таблиц, которые перезагружаются полностью, нет изменений из CDC, поэтому тут действует правило: сколько хабов - столько сатов и сат статусов.
    При загрузке сатов существующая запись в рамках ключа хаба удаляется и вставляется новая.
@@ -84,9 +97,10 @@ public class HubsCounts {
 
     @Test(enabled = true)
     public void hubCompany() throws SQLException, IOException {
-        System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
-        System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабов будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
+        /*
+        В ключе есть SELSKAB, который может быть удалени при какой-либо из загрузок изменений (до удаления записи с ним могля быть справедливо загружены).
+        Контрольный запрос учитывает такие ситуации
+         */
         getPropertiesFile();
         int countRowInSA = (getCountRowInSA(properties.getProperty("company.union.CountRows")) +1);//fake row
         int countRowInHub =getCountRowOfHub(properties.getProperty("company.hub.CountRows"));
@@ -916,10 +930,6 @@ public class HubsCounts {
 
     @Test(enabled = true)
     public void hubContainerDemurrageRules() throws SQLException, IOException {
-        System.err.println("В таблицу ContRules при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
-        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
-        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
-        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("containerDemurrageRules.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("containerDemurrageRules.hub.CountRows"));
@@ -1001,6 +1011,10 @@ public class HubsCounts {
     @Test(enabled = true)
     public void hubBranch() throws SQLException, IOException {
         getPropertiesFile();
+        /*
+        В ключе есть SELSKAB, который может быть удалени при какой-либо из загрузок изменений (до удаления записи с ним могля быть справедливо загружены).
+        Контрольный запрос учитывает такие ситуации
+         */
         int countRowInSA = (getCountRowInSA(properties.getProperty("branch.union.CountRows")) + 1);//fake row
         int countRowInHub = getCountRowOfHub(properties.getProperty("branch.hub.CountRows"));
         assertRowCount(countRowInSA, countRowInHub);

@@ -140,6 +140,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimContainerType() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("запрос на каунт не учитыает записииз sat.satContainerTypeSpecEquip. Разобраться как они должны быть связаны, если нет в ней прямого dwhIdHubContainerTypeп");
         int countRowInDV = getCountRowInDV(properties.getProperty("containerType.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("containerType.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
@@ -161,6 +162,21 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
+    @Test(enabled = true)
+    public void dimTradeForEmedStat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("tradeForEmedStat.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("tradeForEmedStat.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimBookingHaulageDetails() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingHaulageDetails.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingHaulageDetails.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));

@@ -744,7 +744,7 @@ public class MultiIUDCounts {
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // обработка Demurage изменеена. Из функционаа MultyIUD таблица исклбчена. тест неактуален.
     public void Demurrage_UNITY() throws SQLException, IOException {
         getPropertiesFile();
         int countMutiMoments = getCountRowInSA(properties.getProperty("demurrage.UNITY.countMutiMoments.counts"));
