@@ -580,6 +580,35 @@ public class DimsDataMatching {
         }
     }
 
+
+    @Test(enabled = true)
+    public void dimCompanyLocation_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("companyLocation.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubCompany) AS RowNumber, * " +
+                    properties.getProperty("companyLocation.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("companyLocation.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
+                        rsFromDWH.getInt("dwhIdHubCompany") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                System.out.println(mapFromDV.size());
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
     }
@@ -639,7 +668,7 @@ public class DimsDataMatching {
                         + ". If its > 1 in table exist double rows - it's wrong! Or check the unique key in sql query to DM! SQL: " + sql);
                 System.err.println("Or check the unique key in sql query to DM! SQL: " + sql);
             } else {
-                for (int l = 1; l <= mapForRTestSize; l++) {
+                for (int l = 1; l < mapForRTestSize; l++) {
                     mapForDM.put(rsFromDM.getMetaData().getColumnName(l), rsFromDM.getObject(l));
                 }
             }
