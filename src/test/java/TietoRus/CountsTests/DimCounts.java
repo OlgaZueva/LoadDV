@@ -52,13 +52,6 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = true)
-    public void dimBookingManifest() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingManifest.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("bookingManifest.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
 
     @Test(enabled = true)
     public void dimCountry() throws SQLException, IOException {
@@ -185,6 +178,16 @@ public class DimCounts {
         System.out.println(query);
         int countRowInDV = getCountRowInDV(query);
         int countRowInDim = getCountRowInDM(properties.getProperty("companyLocation.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimBookingManifest() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingManifest.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingManifest.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 

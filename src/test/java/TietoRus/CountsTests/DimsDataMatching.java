@@ -183,32 +183,6 @@ public class DimsDataMatching {
 
 
     @Test(enabled = true)
-    public void dimBookingManifest_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingManifest.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("bookingManifest.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("bookingManifest.dataInDM.RowByKeys") + " where dwhIdHubBookingManifest = " +
-                        rsFromDWH.getInt("dwhIdHubBookingManifest") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-
-        }
-    }
-
-    @Test(enabled = true)
     public void dimOvTradeName_matchData() throws SQLException, IOException {
         getPropertiesFile();
 
@@ -601,13 +575,42 @@ public class DimsDataMatching {
                 String sqlForDM = (properties.getProperty("companyLocation.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
                         rsFromDWH.getInt("dwhIdHubCompany") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
-                System.out.println(mapFromDV.size());
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
             }
             db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
             matchMaps(mapFromDV, mapFromDM);
         }
     }
+
+    @Test(enabled = true)
+    public void dimBookingManifest_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingManifest.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubBookingManifest) AS RowNumber, * " +
+                    properties.getProperty("bookingManifest.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("bookingManifest.dataInDM.RowByKeys") + " where dwhIdHubBookingManifest = " +
+                        rsFromDWH.getInt("dwhIdHubBookingManifest") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+
+        }
+    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
@@ -668,7 +671,7 @@ public class DimsDataMatching {
                         + ". If its > 1 in table exist double rows - it's wrong! Or check the unique key in sql query to DM! SQL: " + sql);
                 System.err.println("Or check the unique key in sql query to DM! SQL: " + sql);
             } else {
-                for (int l = 1; l < mapForRTestSize; l++) {
+                for (int l = 1; l <= mapForRTestSize; l++) {
                     mapForDM.put(rsFromDM.getMetaData().getColumnName(l), rsFromDM.getObject(l));
                 }
             }
