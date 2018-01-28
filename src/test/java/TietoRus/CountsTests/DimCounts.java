@@ -37,14 +37,6 @@ public class DimCounts {
     }
 
     @Test(enabled = true)
-    public void dimControllingOffice() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("controllingOffice.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("controllingOffice.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
     public void dimVesselRegistry() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("vesselRegistry.dwh.CountRows"));
@@ -123,23 +115,6 @@ public class DimCounts {
     }
 
     @Test(enabled = true)
-    public void dimOceanVesselService() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("oceanVesselService.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("oceanVesselService.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
-    public void dimContainerType() throws SQLException, IOException {
-        getPropertiesFile();
-        System.err.println("запрос на каунт не учитыает записииз sat.satContainerTypeSpecEquip. Разобраться как они должны быть связаны, если нет в ней прямого dwhIdHubContainerTypeп");
-        int countRowInDV = getCountRowInDV(properties.getProperty("containerType.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("containerType.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
     public void dimCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("company.dwh.CountRows"));
@@ -152,22 +127,6 @@ public class DimCounts {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("transshipmentPorts.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("transshipmentPorts.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
-    public void dimTradeForEmedStat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("tradeForEmedStat.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("tradeForEmedStat.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
-    public void dimBookingHaulageDetails() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingHaulageDetails.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("bookingHaulageDetails.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 
@@ -188,6 +147,98 @@ public class DimCounts {
         System.out.println(query);
         int countRowInDV = getCountRowInDV(query);
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingManifest.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimContainerType() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("containerType.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("containerType.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimBookingHaulageDetails() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingHaulageDetails.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingHaulageDetails.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimCompanyRegion() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("companyRegion.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("companyRegion.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimControllingOffice() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("controllingOffice.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("controllingOffice.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimLocationDestinationRegion() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locationDestinationRegion.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("locationDestinationRegion.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimLocationRegion() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locationRegion.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("locationRegion.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
+    @Test(enabled = true)
+    public void dimOceanVesselService() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("oceanVesselService.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("oceanVesselService.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimOceanVesselStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("oceanVesselStatus.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("oceanVesselStatus.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
+    @Test(enabled = true)
+    public void dimTradeForEmedStat() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("tradeForEmedStat.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("tradeForEmedStat.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 

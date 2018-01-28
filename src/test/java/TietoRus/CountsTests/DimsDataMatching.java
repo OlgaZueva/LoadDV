@@ -107,31 +107,6 @@ public class DimsDataMatching {
 
 
     @Test(enabled = true)
-    public void dimControllingOffice_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("controllingOffice.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("controllingOffice.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("controllingOffice.datainDM.RowByKeys") + " where dwhIdHubControllingOffice = " +
-                        rsFromDWH.getInt("dwhIdHubControllingOffice") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-        }
-    }
-
-    @Test(enabled = true)
     public void dimVesselRegistry_matchData() throws SQLException, IOException {
         getPropertiesFile();
 
@@ -389,59 +364,6 @@ public class DimsDataMatching {
         }
     }
 
-
-    @Test(enabled = true)
-    public void dimOceanVesselService_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("oceanVesselService.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("oceanVesselService.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("oceanVesselService.dataInDM.RowByKeys") + " where dwhIdHubOceanVesselService = " +
-                        rsFromDWH.getInt("dwhIdHubOceanVesselService") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-        }
-    }
-
-
-    @Test(enabled = true)
-    public void dimContainerType_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("containerType.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("containerType.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("containerType.dataInDM.RowByKeys") + " where dwhIdHubContainerType = " +
-                        rsFromDWH.getInt("dwhIdHubContainerType") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-        }
-    }
-
-
     @Test(enabled = true)
     public void dimCompany_matchData() throws SQLException, IOException {
         getPropertiesFile();
@@ -503,58 +425,6 @@ public class DimsDataMatching {
         }
     }
 
-
-    @Test(enabled = true)
-    public void dimTradeForEmedStat_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("tradeForEmedStat.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("tradeForEmedStat.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("tradeForEmedStat.dataInDM.RowByKeys") + " where tradeNameGvaForEmedStat = '" +
-                        rsFromDWH.getInt("tradeNameGvaForEmedStat")  + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-        }
-    }
-
-    @Test(enabled = true)
-    public void dimBookingHaulageDetails_matchData() throws SQLException, IOException {
-        getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingHaulageDetails.dwh.CountRows"));
-        ArrayList arrayRows = getArray(countRowInDV);
-
-        for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("bookingHaulageDetails.dataInDV.RowByRowNum") + arrayRows.get(i));
-            System.out.println("sqlFromDV: " + sqlFromDV);
-            Connection connectionToDWH = db.connToDWH();
-            Statement stForDWH = db.stFromConnection(connectionToDWH);
-            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
-            while (rsFromDWH.next()) {
-                mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("bookingHaulageDetails.dataInDM.RowByKeys") + " where dwhIdhubBookingHaulageDetails = " +
-                        rsFromDWH.getInt("dwhIdhubBookingHaulageDetails") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
-                System.out.println("sqlForDM: " + sqlForDM);
-                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
-            }
-            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
-            matchMaps(mapFromDV, mapFromDM);
-        }
-    }
-
-
     @Test(enabled = true)
     public void dimCompanyLocation_matchData() throws SQLException, IOException {
         getPropertiesFile();
@@ -608,6 +478,262 @@ public class DimsDataMatching {
 
             matchMaps(mapFromDV, mapFromDM);
 
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimContainerType_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("containerType.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubContainerType) AS RowNumber, * " +
+                    properties.getProperty("containerType.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("containerType.dataInDM.RowByKeys") + " where dwhIdHubContainerType = " +
+                        rsFromDWH.getInt("dwhIdHubContainerType") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void dimBookingHaulageDetails_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingHaulageDetails.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdhubBookingHaulageDetails) AS RowNumber, * " +
+                    properties.getProperty("bookingHaulageDetails.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("bookingHaulageDetails.dataInDM.RowByKeys") + " where dwhIdhubBookingHaulageDetails = " +
+                        rsFromDWH.getInt("dwhIdhubBookingHaulageDetails") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void dimCompanyRegion_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("companyRegion.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubCompany) AS RowNumber, * " +
+                    properties.getProperty("companyRegion.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("companyRegion.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
+                        rsFromDWH.getInt("dwhIdHubCompany") + " and regionName = '" + rsFromDWH.getString("regionName")
+                        + "' and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimControllingOffice_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("controllingOffice.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubControllingOffice) AS RowNumber, * " +
+                    properties.getProperty("controllingOffice.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("controllingOffice.dataInDM.RowByKeys") + " where dwhIdHubControllingOffice = " +
+                        rsFromDWH.getInt("dwhIdHubControllingOffice") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimLocationDestinationRegion_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locationDestinationRegion.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubLocations) AS RowNumber, * " +
+                    properties.getProperty("locationDestinationRegion.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("locationDestinationRegion.dataInDM.RowByKeys") + " where dwhIdHubLocations = " +
+                        rsFromDWH.getInt("dwhIdHubLocations") + " and destinationRegionName = '" + rsFromDWH.getString("destinationRegionName")
+                        + "' and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void dimLocationRegion_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locationRegion.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubLocations) AS RowNumber, * " +
+                    properties.getProperty("locationRegion.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("locationRegion.dataInDM.RowByKeys") + " where dwhIdHubLocations = " +
+                        rsFromDWH.getInt("dwhIdHubLocations") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+
+    @Test(enabled = true)
+    public void dimOceanVesselService_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("oceanVesselService.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubOceanVesselService) AS RowNumber, * " +
+                    properties.getProperty("oceanVesselService.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("oceanVesselService.dataInDM.RowByKeys") + " where dwhIdHubOceanVesselService = " +
+                        rsFromDWH.getInt("dwhIdHubOceanVesselService") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimOceanVesselStatus_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("oceanVesselStatus.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubOceanVesselStatus) AS RowNumber, * " +
+                    properties.getProperty("oceanVesselStatus.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("oceanVesselStatus.dataInDM.RowByKeys") + " where dwhIdHubOceanVesselStatus = " +
+                        rsFromDWH.getInt("dwhIdHubOceanVesselStatus") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimTradeForEmedStat_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("tradeForEmedStat.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " tradeNameGvaForEmedStat) AS RowNumber, * " +
+                    properties.getProperty("tradeForEmedStat.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("tradeForEmedStat.dataInDM.RowByKeys") + " where tradeNameGvaForEmedStat = '" +
+                        rsFromDWH.getInt("tradeNameGvaForEmedStat") + "' and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+
+            matchMaps(mapFromDV, mapFromDM);
         }
     }
 
