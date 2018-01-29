@@ -54,30 +54,6 @@ public class DimCounts {
     }
 
     @Test(enabled = true)
-    public void dimGvaTrade() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
-    public void dimOvTradeName() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeName.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeName.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
-    public void dimOvTradeNumber() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("ovTradeNumber.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeNumber.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
     public void dimBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("bookingCargo.dwh.CountRows"));
@@ -85,20 +61,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
-    @Test(enabled = true)
-    /*
-    В запросе (в процедуре) для определения tradeNameGvaForEmedStat (см спецификацию (DBMappinngDWHDataMart-v1.4P)) убрано условие: where tradeNameGvaForEmedStat is not null
-    Это порождает 200 "лишних" записи в dimLocations, решили, что сбору отчета это не помешает и ко-лво незначительно - оставляем как есть.
-            */
-    public void dimLocations() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("locations.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("locations.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
+   @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
@@ -241,6 +204,50 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("tradeForEmedStat.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
+
+
+    @Test(enabled = true)
+    public void dimOvTradeName() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("ovTradeName.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeName.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimOvTradeNumber() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("ovTradeNumber.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("ovTradeNumber.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimLocations() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locations.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("locations.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
+    @Test(enabled = true)
+    public void dimGvaTrade() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("gvaTrade.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
