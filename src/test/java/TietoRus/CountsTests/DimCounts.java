@@ -23,6 +23,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimCustomers() throws SQLException, IOException {
         getPropertiesFile();
+        // тест пригоден к использованию в текущем варианте (версия 1)
         int countRowInDV = getCountRowInDV(properties.getProperty("customers.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("customers.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
@@ -30,6 +31,7 @@ public class DimCounts {
 
     @Test(enabled = true)
     public void dimFileLiner() throws SQLException, IOException {
+        // тест пригоден к использованию в текущем варианте (версия 1)
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("fileLiner.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("fileLiner.dim.CountRows"));

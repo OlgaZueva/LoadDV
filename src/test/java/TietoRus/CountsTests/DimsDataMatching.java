@@ -31,7 +31,7 @@ public class DimsDataMatching {
     @Test(enabled = true)
     public void dimCustomers_matchData() throws SQLException, IOException {
         getPropertiesFile();
-
+// тест пригоден к использованию в текущем варианте (версия 1)
         int countRowInDV = getCountRowInDV(properties.getProperty("customers.dwh.CountRows"));
         ArrayList arrayRows = getArray(countRowInDV);
 
@@ -56,7 +56,7 @@ public class DimsDataMatching {
     @Test(enabled = true)
     public void dimFileLiner_matchData() throws SQLException, IOException {
         getPropertiesFile();
-
+// тест пригоден к использованию в текущем варианте (версия 1)
         int countRowInDV = getCountRowInDV(properties.getProperty("fileLiner.dwh.CountRows"));
         ArrayList arrayRows = getArray(countRowInDV);
 
@@ -297,7 +297,7 @@ public class DimsDataMatching {
                 mapFromDV = getMapFromDV(rsFromDWH);
                 String sqlForDM = (properties.getProperty("transshipmentPorts.dataInDM.RowByKeys") + " where locationCode = '" +
                         rsFromDWH.getInt("locationCode") + "' and validFromBusiness = '" + rsFromDWH.getString("validFromBusiness")
-                        + "' and validToBusiness = '" + rsFromDWH.getString("validToBusiness")+ "\'");
+                        + "' and validToBusiness = '" + rsFromDWH.getString("validToBusiness") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
             }
@@ -452,6 +452,9 @@ public class DimsDataMatching {
     @Test(enabled = true)
     public void dimControllingOffice_matchData() throws SQLException, IOException {
         getPropertiesFile();
+        System.err.println("Запрос привыборе записей не учитывает значение в validFrom и не выбирает саты и статусы, соотвественно этому значению, поэтому неhub-полях, которые менялись могут быть расхождения");
+        System.err.println("Например если при первоначальной загрузке поле_1 не было заполнено, а при загрузке изменений оно уже заполнено, то запрос вернет две записи с одинаково заполненным полем_1");
+        System.err.println("тогда как на самом деле у одной из них (с более ранним validFrom оно должно быть пустм - как  и было на эту дату)");
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("controllingOffice.dataInDV.commonPart");
         int countRowInDV = getCountRowInDV(query);
         ArrayList arrayRows = getArray(countRowInDV);
@@ -803,8 +806,8 @@ public class DimsDataMatching {
 
 
     public void matchMaps(Map<String, Object> mapDV, Map<String, Object> mapDM) {
-        // System.out.println("Map from DV = " + mapDV);
-        // System.out.println("Map from DM = " + mapDM);
+        //System.out.println("Map from DV = " + mapDV);
+        //System.out.println("Map from DM = " + mapDM);
 
         if (mapDM.size() == 0) {
             System.err.println("Record in DataMart not found!");
