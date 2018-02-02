@@ -10,7 +10,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /*
 Тест сравнивает данные, сформированные контрольным запросом с загруженными в DM данными.
@@ -324,7 +327,8 @@ public class DimsDataMatching {
             while (rsFromDWH.next()) {
                 mapFromDV = getMapFromDV(rsFromDWH);
                 String sqlForDM = (properties.getProperty("companyLocation.dataInDM.RowByKeys") + " where dwhIdHubCompany = " +
-                        rsFromDWH.getInt("dwhIdHubCompany") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                        rsFromDWH.getInt("dwhIdHubCompany") + " and dwhIdHubLocations = " +
+                        rsFromDWH.getInt("dwhIdHubLocations") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
             }
@@ -681,7 +685,13 @@ public class DimsDataMatching {
 
     @Test(enabled = true)
     public void dimLocations_matchData() throws SQLException, IOException {
+            /*
+        Контрольный запрос учитывает validFrom и выбирает саты и статусы соотвественно. Плюс, процедура getDimLocations вне зависимости от результата
+трех внешних соединений для  dwhIdHubLocations берет validFrom из satLocationsPortsOverview. Что порождает лишние записи Это решили оставить - не мешает.
+Контрольный запрос это учитывает.
+         */
         getPropertiesFile();
+        System.out.println("dimLocations_matchData. В случае падения теста см комментарий к нему");
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locations.dataInDV.commonPart");
         int countRowInDV = getCountRowInDV(query);
         ArrayList arrayRows = getArray(countRowInDV);
@@ -696,6 +706,7 @@ public class DimsDataMatching {
             ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
             while (rsFromDWH.next()) {
                 mapFromDV = getMapFromDV(rsFromDWH);
+                mapFromDV.remove("dwhIdHubLocationsPortsOverview");
                 String sqlForDM = (properties.getProperty("locations.dataInDM.RowByKeys") + " where dwhIdHubLocations = " +
                         rsFromDWH.getInt("dwhIdHubLocations") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);

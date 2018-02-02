@@ -63,7 +63,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-   @Test(enabled = true)
+    @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
@@ -196,7 +196,6 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
     @Test(enabled = true)
     public void dimTradeForEmedStat() throws SQLException, IOException {
         getPropertiesFile();
@@ -206,7 +205,6 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("tradeForEmedStat.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
-
 
     @Test(enabled = true)
     public void dimOvTradeName() throws SQLException, IOException {
@@ -231,13 +229,18 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimLocations() throws SQLException, IOException {
         getPropertiesFile();
+        /*
+        Контрольный запрос учитывает validFrom и выбирает саты и статусы соотвественно. Плюс, процедура getDimLocations вне зависимости от результата
+трех внешних соединений для  dwhIdHubLocations берет validFrom из satLocationsPortsOverview. Что порождает лишние записи Это решили оставить - не мешает.
+Контрольный запрос это учитывает.
+         */
+        System.out.println("dimLocations_matchData. В случае падения теста см комментарий к нему");
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locations.dataInDV.commonPart");
         System.out.println(query);
         int countRowInDV = getCountRowInDV(query);
         int countRowInDim = getCountRowInDM(properties.getProperty("locations.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
-
 
     @Test(enabled = true)
     public void dimGvaTrade() throws SQLException, IOException {
@@ -248,7 +251,6 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
-
 
 
     private void getPropertiesFile() throws IOException {
