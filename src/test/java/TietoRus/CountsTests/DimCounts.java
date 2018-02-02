@@ -39,15 +39,6 @@ public class DimCounts {
     }
 
     @Test(enabled = true)
-    public void dimVesselRegistry() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("vesselRegistry.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("vesselRegistry.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-
-    @Test(enabled = true)
     public void dimCountry() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("country.dwh.CountRows"));
@@ -232,7 +223,9 @@ public class DimCounts {
         /*
         Контрольный запрос учитывает validFrom и выбирает саты и статусы соотвественно. Плюс, процедура getDimLocations вне зависимости от результата
 трех внешних соединений для  dwhIdHubLocations берет validFrom из satLocationsPortsOverview. Что порождает лишние записи Это решили оставить - не мешает.
-Контрольный запрос это учитывает.
+Контрольный запрос это учитывает (последний UNION в контрольном запросе). Но записи из satLocationsPortsOverview множатся из-за привязки к satLocations
+(т.е. если в satLocations более одной записи, различающиеся одним из загружаемых в DM полей, то завпрос записей в satLocationsPortsOverview вернет столько же.
+Это не победила (О.Зуева) , надо смотреть галазами что не так при падении теста. )
          */
         System.out.println("dimLocations_matchData. В случае падения теста см комментарий к нему");
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locations.dataInDV.commonPart");
@@ -251,6 +244,28 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
+
+    @Test(enabled = true)
+    public void dimTransportMode() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("transportMode.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("transportMode.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+
+    @Test(enabled = true)
+    public void dimVesselRegistry() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("vesselRegistry.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("vesselRegistry.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
 
 
     private void getPropertiesFile() throws IOException {
@@ -285,7 +300,7 @@ public class DimCounts {
         db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
         return countRowHub;
     }
-
+  
 
 }
 
