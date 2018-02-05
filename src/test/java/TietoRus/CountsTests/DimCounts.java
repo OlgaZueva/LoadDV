@@ -260,13 +260,15 @@ public class DimCounts {
 
     @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
+        /*
+        02.2018. Контрольный запрос этого теста переработан- count считается по всем нужным таблицам без "лишних"  полей
+        И в тесте нужно использовать именно booking.dwh.CountRows -запрос
+         */
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("booking.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("booking.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
-    }
+       }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
