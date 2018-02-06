@@ -666,7 +666,7 @@ public class LinksCounts {
         int countRowByCondition_PORT_SAIL = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_SAIL.CountRows"));
         int countRowByCondition_PORT_FEED = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_FEED.CountRows"));
         System.out.println("countRowByCondition_AFG_ZONE: " + countRowByCondition_AFG_ZONE);
-        System.out.println("countRowByCondition_AFG_ZONE: " + countRowByCondition_ANK_ZONE);
+        System.out.println("countRowByCondition_ANK_ZONE: " + countRowByCondition_ANK_ZONE);
         //System.out.println("countRowByCondition_ANK_ZONE_notNull: " + countRowByCondition_ANK_ZONE_notNull);
         //System.out.println("countRowByCondition_ANK_ZONE_Null: " + countRowByCondition_ANK_ZONE_Null);
         //System.out.println("countRowByCondition_ANK_ZONE_BothNull: " + countRowByCondition_ANK_ZONE_BothNull);
