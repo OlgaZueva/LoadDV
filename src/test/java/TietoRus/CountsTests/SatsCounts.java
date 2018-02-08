@@ -94,11 +94,146 @@ public class SatsCounts {
 
 
     /*-------------------------------------------------------------
-Блок для таблиц, изменения по которым получаем из CDC, но саты каждый раз создаем новые, поэтому тут действует правило: сколько хабов - столько сатов и сат статусов.
+Блок для таблиц, изменения по которым получаем из CDC, но саты каждый раз создаем новые.
 Такие таблицы называем "без версионирования".
+Записи в sat и satStatus заносим только неудаленные (sa.cdcOperation != 'D ' or sa.cdcOperation is null).
+Ввиду того, что это правило (несохранять удаленные записи) действует и на satStatus для таблиц без версионирования,
+то для этих таблиц действует правило: сколько sat'ов столько и satStatus'ов.
+И при проверке на существование записи в hash sat'а не входит поле cdcTimeStamp.
 При загрузке сатов существующая запись в рамках ключа хаба удаляется и вставляется новая.
+
+02.2018 О. Зуева: работает не как было задумано. Надо копаться подробно. Отложили на времена когда будет время
+Единственное отличие от сатов с версионированием -  в hash sat'а (по которому проверяется на существование записи) не
+
+
 *///-----------------------------------------------------------
 
+    @Test(enabled = true)
+    public void BookingEventsSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEvents.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingEvents.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingEventsStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEvents.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingEvents.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void BookingEMCRemarksSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingEMCRemarksStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void BookingManifestSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifest.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingManifest.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingManifestStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifest.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingManifest.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void InvoicePostingSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("invoicePosting.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("invoicePosting.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void InvoicePostingStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("invoicePosting.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("invoicePosting.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void BookingDTXFileSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingDTXFile.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingDTXFile.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingDTXFileStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingDTXFile.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingDTXFile.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+
+    @Test(enabled = true)
+    public void BookingManifestedHaulageSat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingManifestedHaulageStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void ContainerStatusEventsGVASat() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContainerStatusEventsGVAStatus() throws SQLException, IOException {
+        System.err.println("См комментарий к группе тестов");
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
 
     /*-------------------------------------------------------------
     Конец блока для таблиц без версионирования
@@ -706,39 +841,7 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
-    @Test(enabled = true)
-    public void BookingManifestedHaulageSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingManifestedHaulageStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingManifestedHaulage.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void BookingEventsSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEvents.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingEvents.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingEventsStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEvents.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingEvents.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
+     @Test(enabled = true)
     public void BookingCargoSat() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satCondition.CountRows"));
@@ -751,54 +854,6 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingCargo.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void BookingManifestSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifest.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingManifest.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingManifestStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingManifest.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingManifest.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void BookingDTXFileSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingDTXFile.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingDTXFile.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingDTXFileStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingDTXFile.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingDTXFile.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void BookingEMCRemarksSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingEMCRemarksStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingEMCRemarks.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
@@ -858,22 +913,6 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void InvoicePostingSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("invoicePosting.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("invoicePosting.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void InvoicePostingStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("invoicePosting.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("invoicePosting.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
@@ -1022,22 +1061,6 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerDemurrageRules.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void ContainerStatusEventsGVASat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void ContainerStatusEventsGVAStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
