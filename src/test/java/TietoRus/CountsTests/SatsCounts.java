@@ -233,7 +233,6 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
-
     @Test(enabled = true)
     public void PaymentsSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -331,7 +330,6 @@ public class SatsCounts {
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("transportMode.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
-
 
     @Test(enabled = true)
     public void ContainerLocationSat() throws SQLException, IOException {
