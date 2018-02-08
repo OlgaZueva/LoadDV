@@ -19,6 +19,14 @@ public class SatsCounts {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
+
+    /*
+     Тесты могут падать из-за наличия дубликатов
+     Они появляются, если в одной сессии загрузки есть одинаковые записи по загружаемым полям и хаба не существует;
+      --у satCustomers есть особенность - cdcTimeStamp в hash не входит. Hash'а вообще нет- сравниваются все поля напрямик.
+     */
+
+
     /*-------------------------------------------------------------
    Блок для таблиц, которые перезагружаются полностью, нет изменений из CDC, поэтому тут действует правило: сколько хабов - столько сатов и сат статусов.
    При загрузке сатов существующая запись в рамках ключа хаба удаляется и вставляется новая.
@@ -1032,16 +1040,18 @@ public class SatsCounts {
 
     @Test(enabled = true)
     public void CustomersSat() throws SQLException, IOException {
-        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
-        CreatePrecondition.FillingDictEmptyCustomer();
+        System.out.println("Тесты могут падать из-за наличия дубликатов");
+        System.out.println("Они появляются, если в одной сессии загрузки есть одинаковые записи по загружаемым полям и хаба не существует");
+        System.out.println("у satCustomers есть особенность - cdcTimeStamp в hash не входит. Hesh'а вообще нет- сравниваются все поля напрямик");
         getPropertiesFile();
         int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
         int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
         int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satConditionIbox.CountRows"));
+        int countRowInSAbyCondition_UnionKundeAdresse = getCountRowInSA(properties.getProperty("customers.union.CountRows"));
         System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
         System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
         System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
-        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
+        int countRowInSAbyCondition = (countRowInSAbyCondition_UnionKundeAdresse + countRowInSAbyCondition_Ibox);
         int countRowInSat = getCountRowOfHub(properties.getProperty("customers.sat.CountRows"));
         assertRowCount(countRowInSAbyCondition, countRowInSat);
     }
