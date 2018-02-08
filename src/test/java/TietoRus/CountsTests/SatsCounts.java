@@ -198,7 +198,6 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
-
     @Test(enabled = true)
     public void BookingManifestedHaulageSat() throws SQLException, IOException {
         System.err.println("См комментарий к группе тестов");
@@ -230,7 +229,7 @@ public class SatsCounts {
     public void ContainerStatusEventsGVAStatus() throws SQLException, IOException {
         System.err.println("См комментарий к группе тестов");
         getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.sat.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerStatusEventsGVA.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
@@ -747,79 +746,6 @@ public class SatsCounts {
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("vgmCode.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
-    /*-------------------------------------------------------------
-    Конец блока для таблиц с версионированием
-*///-----------------------------------------------------------
-
-
-    @Test(enabled = true)
-    //SatStatus'а нет -  строится на hubCompany + EdiKonv
-    public void CompanyAgentCodeSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("companyAgentCode.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("companyAgentCode.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-
-    @Test(enabled = true)
-    public void CustomersSat() throws SQLException, IOException {
-
-        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
-        CreatePrecondition.FillingDictEmptyCustomer();
-        //CreatePrecondition.FillingDictExcludedSymbols();
-        getPropertiesFile();
-
-        //int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
-        //int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
-        int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
-        int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
-        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satConditionIbox.CountRows"));
-        System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
-        System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
-        System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
-        //System.out.println("countRowinEmptyCustomertable_Adresse: " + countRowinEmptyCustomertable_Adresse);
-        //System.out.println("countRowinEmptyCustomertable_Kunde: " + countRowinEmptyCustomertable_Kunde);
-        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
-        //- (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde);
-        int countRowInSat = getCountRowOfHub(properties.getProperty("customers.sat.CountRows"));
-        assertRowCount(countRowInSAbyCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void Customers_MasterCustomerNameInSat() throws SQLException, IOException {
-        getPropertiesFile();
-        System.out.println("Тест проверяет правильность определения masterClient по таблице mdm.masterCustomers");
-        System.out.println("Таблица mdm.masterCustomers загружается отдельым пакетом");
-        System.out.println("dwhIdMasterCliet в satCustomers проставляется пакетами загрузки Customer'ов");
-        /*
-        int countRowByTMSnumber_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_TMSnumber_TMSnumberNotNull_Kunde.CountRows"));
-        int countRowByTMSnumber_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_TMSnumber_TMSnumberNotNull_Adresse.CountRows"));
-        int countRowByCleanNameTMSNotNull_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNotNull_Kunde.CountRows"));
-        int countRowByCleanNameTMSNotNull_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNotNull_Adresse.CountRows"));
-        int countRowByCleanNameTMSNull_Kunde = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNull_Kunde.CountRows"));
-        int countRowByCleanNameTMSNull_Adresse = getCountRowOfHub(properties.getProperty("masterCustomerName.condition_CleanName_TMSnumberNull_Adresse.CountRows"));
-        int countRowByAllConditions = (countRowByTMSnumber_Kunde + countRowByTMSnumber_Adresse +
-               countRowByCleanNameTMSNotNull_Kunde + countRowByCleanNameTMSNotNull_Adresse + countRowByCleanNameTMSNull_Kunde + countRowByCleanNameTMSNull_Adresse);
-*/
-        int countRowByUnionCondition = getCountRowOfHub(properties.getProperty("masterCustomerName.UnionCondition.CountRows"));
-        int countRowInSatWithMasterClientId = getCountRowOfHub(properties.getProperty("masterCustomerName.masterClientId.CountRows"));
-        assertRowCount(countRowByUnionCondition, countRowInSatWithMasterClientId);
-    }
-
-    @Test(enabled = true)
-    public void CustomersSatStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        //int countRowinEmptyCustomertable_Adresse = getCountRowOfHub(properties.getProperty("customers.emptyCustomersAdresse.CountRows"));
-        //int countRowinEmptyCustomertable_Kunde = getCountRowOfHub(properties.getProperty("customers.emptyCustomersKunde.CountRows"));
-        int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
-        int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
-        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
-        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
-        // - (countRowinEmptyCustomertable_Adresse + countRowinEmptyCustomertable_Kunde));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customers.satStatus.CountRows"));
-        assertRowCount(countRowInSAbyCondition, countRowInSatHubStatus);
-    }
 
     @Test(enabled = true)
     public void AccountingTransactionSat() throws SQLException, IOException {
@@ -841,22 +767,6 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
-     @Test(enabled = true)
-    public void BookingCargoSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCargo.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void BookingCargoStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingCargo.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
     @Test(enabled = true)
     public void ContainerMovesSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -870,49 +780,6 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("containerMoves.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerMoves.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    // SAT для OceanVesselService не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void OceanVesselServiceStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("oceanVesselService.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("oceanVesselService.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    // SAT для OceanVesselStatus не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void OceanVesselStatusStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("oceanVesselStatus.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("oceanVesselStatus.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    // SAT для ImsChargeLines не создается. Только SatStatus проверяем.
-    @Test(enabled = true)
-    public void ImsChargeLinesStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("imsChargeLines.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("imsChargeLines.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void SpecialContractTypesSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("specialContractTypes.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("specialContractTypes.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void SpecialContractTypesStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
@@ -956,6 +823,152 @@ public class SatsCounts {
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
+    @Test(enabled = true)
+    public void ContMasterSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("contMaster.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("contMaster.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContMasterStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("contMaster.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("contMaster.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void ContainerDemurrageRulesSat() throws SQLException, IOException {
+        getPropertiesFile();
+        System.err.println("В таблицу ContRule при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
+        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
+        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
+        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("containerDemurrageRules.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void ContainerDemurrageRulesStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerDemurrageRules.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+    /*-------------------------------------------------------------
+    Конец блока для таблиц с версионированием
+*///-----------------------------------------------------------
+
+
+    @Test(enabled = true)
+    //SatStatus'а нет -  строится на hubCompany + EdiKonv
+    public void CompanyAgentCodeSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("companyAgentCode.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("companyAgentCode.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    // SAT для OceanVesselService не создается. Только SatStatus проверяем.
+    @Test(enabled = true)
+    public void OceanVesselServiceStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("oceanVesselService.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("oceanVesselService.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    // SAT для OceanVesselStatus не создается. Только SatStatus проверяем.
+    @Test(enabled = true)
+    public void OceanVesselStatusStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("oceanVesselStatus.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("oceanVesselStatus.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    // SAT для ImsChargeLines не создается. Только SatStatus проверяем.
+    @Test(enabled = true)
+    public void ImsChargeLinesStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("imsChargeLines.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("imsChargeLines.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void CustomersSat() throws SQLException, IOException {
+
+        CleaningCustomersNames CreatePrecondition = new CleaningCustomersNames();
+        CreatePrecondition.FillingDictEmptyCustomer();
+        getPropertiesFile();
+        int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satConditionKunde.CountRows"));
+        int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satConditionAdresse.CountRows"));
+        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satConditionIbox.CountRows"));
+        System.out.println("countRowInSAbyCondition_Kunde: " + countRowInSAbyCondition_Kunde);
+        System.out.println("countRowInSAbyCondition_Adresse: " + countRowInSAbyCondition_Adresse);
+        System.out.println("countRowInSAbyCondition_Ibox: " + countRowInSAbyCondition_Ibox);
+        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
+        int countRowInSat = getCountRowOfHub(properties.getProperty("customers.sat.CountRows"));
+        assertRowCount(countRowInSAbyCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void Customers_MasterCustomerNameInSat() throws SQLException, IOException {
+        getPropertiesFile();
+        System.out.println("Тест проверяет правильность определения masterClient по таблице mdm.masterCustomers");
+        System.out.println("Таблица mdm.masterCustomers загружается отдельым пакетом");
+        System.out.println("dwhIdMasterCliet в satCustomers проставляется пакетами загрузки Customer'ов");
+        int countRowByUnionCondition = getCountRowOfHub(properties.getProperty("masterCustomerName.UnionCondition.CountRows"));
+        int countRowInSatWithMasterClientId = getCountRowOfHub(properties.getProperty("masterCustomerName.masterClientId.CountRows"));
+        assertRowCount(countRowByUnionCondition, countRowInSatWithMasterClientId);
+    }
+
+    @Test(enabled = true)
+    public void CustomersSatStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAbyCondition_Kunde = getCountRowInSA(properties.getProperty("customers.satStatusConditionKunde.CountRows"));
+        int countRowInSAbyCondition_Adresse = getCountRowInSA(properties.getProperty("customers.satStatusConditionAdresse.CountRows"));
+        int countRowInSAbyCondition_Ibox = getCountRowOfHub(properties.getProperty("customers.satStatusConditionIbox.CountRows"));
+        int countRowInSAbyCondition = (countRowInSAbyCondition_Kunde + countRowInSAbyCondition_Adresse + countRowInSAbyCondition_Ibox);
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("customers.satStatus.CountRows"));
+        assertRowCount(countRowInSAbyCondition, countRowInSatHubStatus);
+    }
+
+     @Test(enabled = true)
+    public void BookingCargoSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("bookingCargo.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void BookingCargoStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("bookingCargo.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("bookingCargo.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
+
+    @Test(enabled = true)
+    public void SpecialContractTypesSat() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("specialContractTypes.satCondition.CountRows"));
+        int countRowInSat = getCountRowOfHub(properties.getProperty("specialContractTypes.sat.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSat);
+    }
+
+    @Test(enabled = true)
+    public void SpecialContractTypesStatus() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSAByCondition = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatusCondition.CountRows"));
+        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("specialContractTypes.satStatus.CountRows"));
+        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
+    }
 
     //У ContainerTypeSpecEquip SatStatus'а нет. HUB грузится из EXCEL'я
     @Test(enabled = true)
@@ -965,7 +978,6 @@ public class SatsCounts {
         int countRowInSat = getCountRowOfHub(properties.getProperty("containerTypeSpecEquip.sat.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSat);
     }
-
 
     //У ControllingOfficeAuxLocation нет SatStatus'а. HUB'ом является hubControllingOffice, satStatus которому проставляется пакетом satControllingOfficeStatus
     @Test(enabled = true)
@@ -997,7 +1009,7 @@ public class SatsCounts {
         assertRowCount(countRowInHub, countRowInSat);
     }
 
-    //Sat вспомогательный, для того чтобы собрать доп инфу по кастомерам из бука. Формируется по таблице Book. SatStatus' (о создается пакетом satBooking)
+    //Sat вспомогательный, для того чтобы собрать доп инфу по кастомерам из бука. Формируется по таблице Book. SatStatus'a отдельного нет
     @Test(enabled = true)
     public void BookingCustomersSat() throws SQLException, IOException {
         getPropertiesFile();
@@ -1024,43 +1036,6 @@ public class SatsCounts {
         getPropertiesFile();
         int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerMoveTypes.satStatusCondition.CountRows"));
         int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerMoveTypes.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-    @Test(enabled = true)
-    public void ContMasterSat() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("contMaster.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("contMaster.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void ContMasterStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("contMaster.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("contMaster.satStatus.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
-    }
-
-
-    @Test(enabled = true)
-    public void ContainerDemurrageRulesSat() throws SQLException, IOException {
-        getPropertiesFile();
-        System.err.println("В таблицу ContRule при первоначальной загрузке загружаются данные, которые попадают под условия удаления механизмом DisсardAgency (это кривые даты).");
-        System.err.println("С заказчиком это обсуждалось - эти записи нужны и должны быть прогружены в DHW");
-        System.err.println("Поскольку после первоначальной загрузки мы не запускаем механизм DisсardAgency, то эти записи загрузим в DWH,");
-        System.err.println("а далее, после первой загрузки изменений механизм запускаем регулярно и данные т.о. удалим. Это ожидаемо. Контрольный запрос составлен с учетом этой особенности");
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satCondition.CountRows"));
-        int countRowInSat = getCountRowOfHub(properties.getProperty("containerDemurrageRules.sat.CountRows"));
-        assertRowCount(countRowInSAByCondition, countRowInSat);
-    }
-
-    @Test(enabled = true)
-    public void ContainerDemurrageRulesStatus() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInSAByCondition = getCountRowInSA(properties.getProperty("containerDemurrageRules.satStatusCondition.CountRows"));
-        int countRowInSatHubStatus = getCountRowOfHub(properties.getProperty("containerDemurrageRules.satStatus.CountRows"));
         assertRowCount(countRowInSAByCondition, countRowInSatHubStatus);
     }
 
