@@ -1001,7 +1001,7 @@ public class LinksCounts {
     @Test(enabled = true)
     public void BookMftFile_lnkBookingDTXFileCompany() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingManifestCompany.lnk.CountRows"));
+        int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingDTXFileCompany.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
     }

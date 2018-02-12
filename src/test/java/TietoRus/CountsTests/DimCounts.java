@@ -54,15 +54,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = true)
-    public void dimBookingOceanVessel() throws SQLException, IOException {
-        getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingOceanVessel.dwh.CountRows"));
-        int countRowInDim = getCountRowInDM(properties.getProperty("bookingOceanVessel.dim.CountRows"));
-        assertRowCount(countRowInDV, countRowInDim);
-    }
-
-    @Test(enabled = true)
+   @Test(enabled = true)
     public void dimCompany() throws SQLException, IOException {
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("company.dwh.CountRows"));
@@ -209,7 +201,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void dimLocations() throws SQLException, IOException {
         getPropertiesFile();
         /*
@@ -258,7 +250,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false)
     public void dimBooking() throws SQLException, IOException {
         /*
         02.2018. Контрольный запрос этого теста переработан- count считается по всем нужным таблицам без "лишних"  полей
@@ -269,6 +261,16 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("booking.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
        }
+
+    @Test(enabled = true)
+    public void dimBookingOceanVessel() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingOceanVessel.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("bookingOceanVessel.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
