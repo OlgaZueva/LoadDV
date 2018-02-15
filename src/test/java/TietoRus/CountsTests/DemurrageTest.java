@@ -21,7 +21,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 Тест по условиям, описанным в специфиакации собирает данные для каждой записи, формирует запрос на вставку в тестовую таблицу.
 После завершения работы теста данные нужно сравнить вручную.
 Количество записей тест проверит.
-
+Выполняется с учетом кол-ва записей Demurrage ооочень долго. Ждать окончания не имеет смысла  - проверка файктически одноразовая.
+Достаточно дождаться загрузки нескольких сотен записей и сравнить загруженное с целевой таблицей вручную.
  */
 
 public class DemurrageTest {
@@ -30,16 +31,15 @@ public class DemurrageTest {
     private GetDataHelper getDataHelper = new GetDataHelper();
     private Map<String, Object> mapForSource = new HashMap<String, Object>();
 
-    //ArrayList finalSQL = new ArrayList();
     List<String> finalSQL = new ArrayList<String>();
 
     @Test(enabled = true)
     public void MSCRUS_FillingDemurrageTestTable() throws SQLException, IOException {
         getPropertiesFile();
         // Создание и зачистка тестовой таблицы
-        String create = (properties.getProperty("demurrage.linkTable.create"));
+        String create = (properties.getProperty("demurrage.linkTableMSCRUS.create"));
         getDataHelper.executeInDWH(create);
-        String truncate = (properties.getProperty("demurrage.linkTable.truncate"));
+        String truncate = (properties.getProperty("demurrage.linkTableMSCRUS.truncate"));
         getDataHelper.executeInDWH(truncate);
 //-----------Выбираем данные из SA-таблицы с учетом условий и формируем MAP, в котрой каждый элемент соотвествуюет полю dwh-таблицы
         String sql = (properties.getProperty("demurrage.allData.MSCRUS.select"));
@@ -48,26 +48,44 @@ public class DemurrageTest {
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
         while (rsFromDWH.next()) {
             mapForSource.put("accessCompanyId", rsFromDWH.getInt("COMPANY"));
-            mapForSource.put("bookingNumber", rsFromDWH.getInt("BOOK_NO"));
+            mapForSource.put("bookingNumber", rsFromDWH.getLong("BOOK_NO"));
             mapForSource.put("containerNr", rsFromDWH.getString("CONT_NO"));
             mapForSource.put("demurrageStorageCode", rsFromDWH.getString("CODE"));
             mapForSource.put("demurrageId", rsFromDWH.getInt("DEM_ID"));
             mapForSource.put("demurrageStorageStatus", rsFromDWH.getString("STATUS"));
-            mapForSource.put("amount", rsFromDWH.getDouble("AMOUNT"));
-            mapForSource.put("invoicedAmount", rsFromDWH.getDouble("INVOICED_AMOUNT"));
-            mapForSource.put("theoreticalAmount", rsFromDWH.getDouble("THEORETICAL_AMOUNT"));
+            Double amount = rsFromDWH.getDouble("AMOUNT");
+            putDoubleValues(amount, "amount");
+
+            Double invoicedAmount = rsFromDWH.getDouble("INVOICED_AMOUNT");
+            putDoubleValues(invoicedAmount, "invoicedAmount");
+
+            Double theoreticalAmount = rsFromDWH.getDouble("THEORETICAL_AMOUNT");
+            putDoubleValues(theoreticalAmount, "theoreticalAmount");
             mapForSource.put("reissue", rsFromDWH.getString("REISSUE"));
-            mapForSource.put("clientRoe", rsFromDWH.getDouble("CLIENT_ROE"));
-            mapForSource.put("roe", rsFromDWH.getDouble("ROE"));
-            mapForSource.put("stdCurrencyRoe", rsFromDWH.getDouble("STD_ROE"));
-            mapForSource.put("daysNumber", rsFromDWH.getInt("DAYS"));
+            Double clientRoe = rsFromDWH.getDouble("CLIENT_ROE");
+            putDoubleValues(clientRoe, "clientRoe");
+
+            Double roe = rsFromDWH.getDouble("ROE");
+            putDoubleValues(roe, "roe");
+
+            Double stdCurrencyRoe = rsFromDWH.getDouble("STD_ROE");
+            putDoubleValues(stdCurrencyRoe, "stdCurrencyRoe");
+
+            int daysNumber = rsFromDWH.getInt("DAYS");
+            putIntValues(daysNumber, "daysNumber");
             mapForSource.put("startDate", rsFromDWH.getDate("START_DATE"));
             mapForSource.put("endDate", rsFromDWH.getDate("END_DATE"));
             mapForSource.put("startMark", rsFromDWH.getString("START_MARK"));
             mapForSource.put("endMark", rsFromDWH.getString("END_MARK"));
-            mapForSource.put("startDays", rsFromDWH.getInt("START_DAYS"));
-            mapForSource.put("freeDays", rsFromDWH.getInt("FREE_DAYS"));
-            mapForSource.put("stdDays", rsFromDWH.getInt("STD_DAYS"));
+
+            int startDays = rsFromDWH.getInt("START_DAYS");
+            putIntValues(startDays, "startDays");
+
+            int freeDays = rsFromDWH.getInt("FREE_DAYS");
+            putIntValues(freeDays, "freeDays");
+
+            int stdDays = rsFromDWH.getInt("STD_DAYS");
+            putIntValues(stdDays, "stdDays");
             mapForSource.put("ruleId", rsFromDWH.getInt("RULE_ID"));
             mapForSource.put("stdRuleId", rsFromDWH.getInt("STD_RULE_ID"));
             mapForSource.put("orderNr", rsFromDWH.getInt("ORDRE_NO"));
@@ -84,10 +102,12 @@ public class DemurrageTest {
                     rsFromDWH.getInt("srcSystemId"));
 
 // В настоящий момент по условиям могут быть выбраны несколько dwhIdHubBookingCargo, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") +  mapForSource.get("containerNr") +
+            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") + mapForSource.get("containerNr") +
                     (properties.getProperty("dwhIdHubBookingCargo.id.select.part2") + mapForSource.get("accessCompanyId") + " AND " +
-                            properties.getProperty("srcSystemId.value.select") +  mapForSource.get("srcSystemId") + " " +
-                            (properties.getProperty("dwhIdHubBookingCargo.id.select.part3"))));
+                            (properties.getProperty("dwhIdHubBookingCargo.id.select.part3") + mapForSource.get("bookingNumber") + " AND " +
+                                    properties.getProperty("srcSystemId.value.select") + mapForSource.get("srcSystemId") + " " +
+                                    (properties.getProperty("dwhIdHubBookingCargo.id.select.part4")))));
+
             String sqlDwhIdHubContainerDemurrageRulesSTD = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
                     mapForSource.get("stdRuleId") + " AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
@@ -97,26 +117,14 @@ public class DemurrageTest {
                     mapForSource.get("ruleId") + " AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
-/*
-// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubContainerMoveTypesStartMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
-                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    mapForSource.get("srcSystemId"));
 
-// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubContainerMoveTypesEndMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
-                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    mapForSource.get("srcSystemId"));
-*/
             String sqlDwhIdHubCurrencyDemurrCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
                     mapForSource.get("demurrCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCurrencyClientCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
-                    mapForSource.get("clientCurrency")  + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("clientCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
 
@@ -139,11 +147,9 @@ public class DemurrageTest {
             mapForSource.put("dwhIdHubCompany", getValueHubId(sqlDwhIdHubCompany, "dwhIdHubCompany"));
             mapForSource.put("dwhIdHubContainerDemurrageRulesSTD", getValueHubId(sqlDwhIdHubContainerDemurrageRulesSTD, "dwhIdHubContainerDemurrageRules"));
             mapForSource.put("dwhIdHubContainerDemurrageRulesFACT", getValueHubId(sqlDwhIdHubContainerDemurrageRulesFACT, "dwhIdHubContainerDemurrageRules"));
-            /*
-            mapForSource.put("dwhIdHubContainerMoveTypesStartMove", getValueHubId(sqlDwhIdHubContainerMoveTypesStartMove, "dwhIdHubContainerMoveTypes"));
-            mapForSource.put("dwhIdHubContainerMoveTypesEndMove", getValueHubId(sqlDwhIdHubContainerMoveTypesEndMove, "dwhIdHubContainerMoveTypes"));
-*/
+
             Integer dwhIdHubCurrency_DemurCur = getValueHubId(sqlDwhIdHubCurrencyDemurrCurrency, "dwhIdHubCurrency");
+
             if (dwhIdHubCurrency_DemurCur == null) {
                 mapForSource.put("dwhIdHubCurrencyDemurrCurrency", -1);
             } else {
@@ -165,7 +171,8 @@ public class DemurrageTest {
             }
 
             Integer dwhIdHubCustomers = getValueHubId(sqlDwhIdHubCustomers, "dwhIdHubCustomers");
-            if (dwhIdHubCustomers == null || dwhIdHubCustomers == 9999) {
+            Object client = mapForSource.get("client");
+            if (dwhIdHubCustomers == null|| client.equals(9999) ) {
                 mapForSource.put("dwhIdHubCustomers", -1);
             } else {
                 mapForSource.put("dwhIdHubCustomers", dwhIdHubCustomers);
@@ -186,7 +193,7 @@ public class DemurrageTest {
             //--- конец блока сбора и формирования данных
             // --- собираем запрос на вставкузаписей с тестовую таблицу
 
-            String qwe = (properties.getProperty("demurrage.fct.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
+            String qwe = (properties.getProperty("demurrage.fctMSCRUS.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
                     mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
                     + mapForSource.get("demurrageId") + ",'"
                     + mapForSource.get("demurrageStorageStatus") + "'," + mapForSource.get("amount") + ","
@@ -203,8 +210,7 @@ public class DemurrageTest {
                     + mapForSource.get("stdCurrency") + "','" + mapForSource.get("startMoveCode") + "','"
                     + mapForSource.get("endMoveCode") + "'," + mapForSource.get("client") + ","
                     + mapForSource.get("dwhIdHubBookingCargo") + "," + mapForSource.get("dwhIdHubCompany") + ","
-                    + mapForSource.get("dwhIdHubContainerDemurrageRulesSTD") + "," + mapForSource.get("dwhIdHubContainerDemmurageRulesFACT") + ","
-                    /*+ mapForSource.get("dwhIdHubContainerMoveTypesStartMove") + "," + mapForSource.get("dwhIdHubContainerMoveTypesEndMove") + ","*/
+                    + mapForSource.get("dwhIdHubContainerDemurrageRulesSTD") + "," + mapForSource.get("dwhIdHubContainerDemurrageRulesFACT") + ","
                     + mapForSource.get("dwhIdHubCurrencyDemurrCurrency") + "," + mapForSource.get("dwhIdHubCurrencyClientCurrency") + ","
                     + mapForSource.get("dwhIdHubCurrencyStdCurrency") + "," + mapForSource.get("dwhIdHubCustomers") + ","
                     + mapForSource.get("dwhIdhubInvoice") + ","
@@ -235,6 +241,7 @@ public class DemurrageTest {
         getDataHelper.executeInDWH(updateDemurrCurrency);
     }
 
+
     @Test(enabled = true)
     public void UNITY_FillingDemurrageTestTable() throws SQLException, IOException {
         getPropertiesFile();
@@ -250,26 +257,44 @@ public class DemurrageTest {
         ResultSet rsFromDWH = db.rsFromDB(stForDWH, sql);
         while (rsFromDWH.next()) {
             mapForSource.put("accessCompanyId", rsFromDWH.getInt("COMPANY"));
-            mapForSource.put("bookingNumber", rsFromDWH.getInt("BOOK_NO"));
+            mapForSource.put("bookingNumber", rsFromDWH.getLong("BOOK_NO"));
             mapForSource.put("containerNr", rsFromDWH.getString("CONT_NO"));
             mapForSource.put("demurrageStorageCode", rsFromDWH.getString("CODE"));
             mapForSource.put("demurrageId", rsFromDWH.getInt("DEM_ID"));
             mapForSource.put("demurrageStorageStatus", rsFromDWH.getString("STATUS"));
-            mapForSource.put("amount", rsFromDWH.getDouble("AMOUNT"));
-            mapForSource.put("invoicedAmount", rsFromDWH.getDouble("INVOICED_AMOUNT"));
-            mapForSource.put("theoreticalAmount", rsFromDWH.getDouble("THEORETICAL_AMOUNT"));
+            Double amount = rsFromDWH.getDouble("AMOUNT");
+            putDoubleValues(amount, "amount");
+
+            Double invoicedAmount = rsFromDWH.getDouble("INVOICED_AMOUNT");
+            putDoubleValues(invoicedAmount, "invoicedAmount");
+
+            Double theoreticalAmount = rsFromDWH.getDouble("THEORETICAL_AMOUNT");
+            putDoubleValues(theoreticalAmount, "theoreticalAmount");
             mapForSource.put("reissue", rsFromDWH.getString("REISSUE"));
-            mapForSource.put("clientRoe", rsFromDWH.getDouble("CLIENT_ROE"));
-            mapForSource.put("roe", rsFromDWH.getDouble("ROE"));
-            mapForSource.put("stdCurrencyRoe", rsFromDWH.getDouble("STD_ROE"));
-            mapForSource.put("daysNumber", rsFromDWH.getInt("DAYS"));
+            Double clientRoe = rsFromDWH.getDouble("CLIENT_ROE");
+            putDoubleValues(clientRoe, "clientRoe");
+
+            Double roe = rsFromDWH.getDouble("ROE");
+            putDoubleValues(roe, "roe");
+
+            Double stdCurrencyRoe = rsFromDWH.getDouble("STD_ROE");
+            putDoubleValues(stdCurrencyRoe, "stdCurrencyRoe");
+
+            int daysNumber = rsFromDWH.getInt("DAYS");
+            putIntValues(daysNumber, "daysNumber");
             mapForSource.put("startDate", rsFromDWH.getDate("START_DATE"));
             mapForSource.put("endDate", rsFromDWH.getDate("END_DATE"));
             mapForSource.put("startMark", rsFromDWH.getString("START_MARK"));
             mapForSource.put("endMark", rsFromDWH.getString("END_MARK"));
-            mapForSource.put("startDays", rsFromDWH.getInt("START_DAYS"));
-            mapForSource.put("freeDays", rsFromDWH.getInt("FREE_DAYS"));
-            mapForSource.put("stdDays", rsFromDWH.getInt("STD_DAYS"));
+
+            int startDays = rsFromDWH.getInt("START_DAYS");
+            putIntValues(startDays, "startDays");
+
+            int freeDays = rsFromDWH.getInt("FREE_DAYS");
+            putIntValues(freeDays, "freeDays");
+
+            int stdDays = rsFromDWH.getInt("STD_DAYS");
+            putIntValues(stdDays, "stdDays");
             mapForSource.put("ruleId", rsFromDWH.getInt("RULE_ID"));
             mapForSource.put("stdRuleId", rsFromDWH.getInt("STD_RULE_ID"));
             mapForSource.put("orderNr", rsFromDWH.getInt("ORDRE_NO"));
@@ -286,10 +311,12 @@ public class DemurrageTest {
                     rsFromDWH.getInt("srcSystemId"));
 
 // В настоящий момент по условиям могут быть выбраны несколько dwhIdHubBookingCargo, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") +  mapForSource.get("containerNr") +
+            String sqlDwhIdHubBookingCargo = (properties.getProperty("dwhIdHubBookingCargo.id.select.part1") + mapForSource.get("containerNr") +
                     (properties.getProperty("dwhIdHubBookingCargo.id.select.part2") + mapForSource.get("accessCompanyId") + " AND " +
-                            properties.getProperty("srcSystemId.value.select") +  mapForSource.get("srcSystemId") + " " +
-                            (properties.getProperty("dwhIdHubBookingCargo.id.select.part3"))));
+                            (properties.getProperty("dwhIdHubBookingCargo.id.select.part3") + mapForSource.get("bookingNumber") + " AND " +
+                                    properties.getProperty("srcSystemId.value.select") + mapForSource.get("srcSystemId") + " " +
+                                    (properties.getProperty("dwhIdHubBookingCargo.id.select.part4")))));
+
             String sqlDwhIdHubContainerDemurrageRulesSTD = (properties.getProperty("dwhIdHubContainerDemurrageRules.id.select") +
                     mapForSource.get("stdRuleId") + " AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
@@ -299,26 +326,14 @@ public class DemurrageTest {
                     mapForSource.get("ruleId") + " AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
-/*
-// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubContainerMoveTypesStartMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
-                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    mapForSource.get("srcSystemId"));
 
-// В настоящий момент по условиям могут быть выбраны несколько dwhIdHubContainerMoveTypes, поэтому тут выбирается просто первый. Должно быть уточнено и изменено. Могут юыть неточности
-            String sqlDwhIdHubContainerMoveTypesEndMove = (properties.getProperty("dwhIdHubContainerMoveTypes.id.select") +
-                    mapForSource.get("startMoveCode") + "' AND " + properties.getProperty("companyId.value.select") +
-                    mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
-                    mapForSource.get("srcSystemId"));
-*/
             String sqlDwhIdHubCurrencyDemurrCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
                     mapForSource.get("demurrCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
 
             String sqlDwhIdHubCurrencyClientCurrency = (properties.getProperty("dwhIdHubCurrency.id.select") +
-                    mapForSource.get("clientCurrency")  + "' AND " + properties.getProperty("companyId.value.select") +
+                    mapForSource.get("clientCurrency") + "' AND " + properties.getProperty("companyId.value.select") +
                     mapForSource.get("accessCompanyId") + " AND " + properties.getProperty("srcSystemId.value.select") +
                     mapForSource.get("srcSystemId"));
 
@@ -341,11 +356,9 @@ public class DemurrageTest {
             mapForSource.put("dwhIdHubCompany", getValueHubId(sqlDwhIdHubCompany, "dwhIdHubCompany"));
             mapForSource.put("dwhIdHubContainerDemurrageRulesSTD", getValueHubId(sqlDwhIdHubContainerDemurrageRulesSTD, "dwhIdHubContainerDemurrageRules"));
             mapForSource.put("dwhIdHubContainerDemurrageRulesFACT", getValueHubId(sqlDwhIdHubContainerDemurrageRulesFACT, "dwhIdHubContainerDemurrageRules"));
-            /*
-            mapForSource.put("dwhIdHubContainerMoveTypesStartMove", getValueHubId(sqlDwhIdHubContainerMoveTypesStartMove, "dwhIdHubContainerMoveTypes"));
-            mapForSource.put("dwhIdHubContainerMoveTypesEndMove", getValueHubId(sqlDwhIdHubContainerMoveTypesEndMove, "dwhIdHubContainerMoveTypes"));
-*/
+
             Integer dwhIdHubCurrency_DemurCur = getValueHubId(sqlDwhIdHubCurrencyDemurrCurrency, "dwhIdHubCurrency");
+
             if (dwhIdHubCurrency_DemurCur == null) {
                 mapForSource.put("dwhIdHubCurrencyDemurrCurrency", -1);
             } else {
@@ -367,7 +380,8 @@ public class DemurrageTest {
             }
 
             Integer dwhIdHubCustomers = getValueHubId(sqlDwhIdHubCustomers, "dwhIdHubCustomers");
-            if (dwhIdHubCustomers == null || dwhIdHubCustomers == 9999) {
+            Object client = mapForSource.get("client");
+            if (dwhIdHubCustomers == null|| client.equals(9999) ) {
                 mapForSource.put("dwhIdHubCustomers", -1);
             } else {
                 mapForSource.put("dwhIdHubCustomers", dwhIdHubCustomers);
@@ -388,7 +402,7 @@ public class DemurrageTest {
             //--- конец блока сбора и формирования данных
             // --- собираем запрос на вставкузаписей с тестовую таблицу
 
-            String qwe = (properties.getProperty("demurrage.fctUNTIY.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
+            String qwe = (properties.getProperty("demurrage.fctUNITY.insert") + mapForSource.get("accessCompanyId") + "," + mapForSource.get("bookingNumber") + ",'" +
                     mapForSource.get("containerNr") + "','" + mapForSource.get("demurrageStorageCode") + "',"
                     + mapForSource.get("demurrageId") + ",'"
                     + mapForSource.get("demurrageStorageStatus") + "'," + mapForSource.get("amount") + ","
@@ -405,8 +419,7 @@ public class DemurrageTest {
                     + mapForSource.get("stdCurrency") + "','" + mapForSource.get("startMoveCode") + "','"
                     + mapForSource.get("endMoveCode") + "'," + mapForSource.get("client") + ","
                     + mapForSource.get("dwhIdHubBookingCargo") + "," + mapForSource.get("dwhIdHubCompany") + ","
-                    + mapForSource.get("dwhIdHubContainerDemurrageRulesSTD") + "," + mapForSource.get("dwhIdHubContainerDemmurageRulesFACT") + ","
-                    /*+ mapForSource.get("dwhIdHubContainerMoveTypesStartMove") + "," + mapForSource.get("dwhIdHubContainerMoveTypesEndMove") + ","*/
+                    + mapForSource.get("dwhIdHubContainerDemurrageRulesSTD") + "," + mapForSource.get("dwhIdHubContainerDemurrageRulesFACT") + ","
                     + mapForSource.get("dwhIdHubCurrencyDemurrCurrency") + "," + mapForSource.get("dwhIdHubCurrencyClientCurrency") + ","
                     + mapForSource.get("dwhIdHubCurrencyStdCurrency") + "," + mapForSource.get("dwhIdHubCustomers") + ","
                     + mapForSource.get("dwhIdhubInvoice") + ","
@@ -436,6 +449,23 @@ public class DemurrageTest {
         String updateDemurrCurrency = (properties.getProperty("demurrage.demurrCurrencyUNITY.update"));
         getDataHelper.executeInDWH(updateDemurrCurrency);
     }
+
+    private void putIntValues(int variable, String mapFieldName) {
+        if (variable == 0) {
+            mapForSource.put(mapFieldName, null);
+        } else {
+            mapForSource.put(mapFieldName, variable);
+        }
+    }
+
+    private void putDoubleValues(Double variable, String mapFieldName) {
+        if (variable == 0) {
+            mapForSource.put(mapFieldName, null);
+        } else {
+            mapForSource.put(mapFieldName, variable);
+        }
+    }
+
 
 
     private void getPropertiesFile() throws IOException {
