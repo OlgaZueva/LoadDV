@@ -201,7 +201,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void dimLocations() throws SQLException, IOException {
         getPropertiesFile();
         /*
@@ -250,7 +250,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
         /*
         02.2018. Контрольный запрос этого теста переработан- count считается по всем нужным таблицам без "лишних"  полей
@@ -312,6 +312,17 @@ public class DimCounts {
         int countRowInDim = getCountRowInDM(properties.getProperty("dimCurrency.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
+
+    @Test(enabled = true)
+    public void dimInvoice() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimInvoice.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("dimInvoice.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
