@@ -140,7 +140,7 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-    @Test(enabled = true)
+    @Test(enabled = false) // См таску 6899 - по ней пакет удален из проекта
     public void dimLocationRegion() throws SQLException, IOException {
         getPropertiesFile();
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locationRegion.dataInDV.commonPart");
@@ -333,6 +333,25 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
+    @Test(enabled = true)
+    public void dimWeekendsHolidays() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimWeekendsHolidays.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("dimWeekendsHolidays.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimWorkingTime() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimWorkingTime.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("dimWorkingTime.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
