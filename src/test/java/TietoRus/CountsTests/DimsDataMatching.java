@@ -203,10 +203,11 @@ public class DimsDataMatching {
         getPropertiesFile();
         /*
         ВНИМАНИЕ!. Dim специфичен. Перед запуском нужно вставить тестовые данные:
-        INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode,portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate)
-                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), null)
-        INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode,portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate)
-                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), null)
+
+INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode, portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate, createDate, alterDate)
+                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), NULL, GETDATE() -1 , GETDATE() -1)
+        INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, locationCode,countryCode,portName, serialPortNumber, isTransshipmentPort, validFromBusiness, validToBusiness, deleteDate,createDate, alterDate)
+                  VALUES ('OZLoop1', 'OZ2', 'TEST', 'TE', 'TestNAme2', 8, 'Y', CONVERT(datetime,'2017-10-21', 102),CONVERT(datetime,'2019-01-01', 102), null, getdate()-2 , GETDATE() -1)
 
         Эти записи одинаковые по ключу, но с разными potrName. В dim должна попысть одна из них- первая.
          */
