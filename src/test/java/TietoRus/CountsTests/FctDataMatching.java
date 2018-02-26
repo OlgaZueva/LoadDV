@@ -28,14 +28,16 @@ public class FctDataMatching {
 
 
     @Test(enabled = true)
-    public void fctBooking_matchData() throws SQLException, IOException {
+    public void fctBookingCargo_matchData() throws SQLException, IOException {
         getPropertiesFile();
-
-        int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("fctBookingCargo.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
         ArrayList arrayRows = getArray(countRowInDV);
 
         for (int i = 0; i < arrayRows.size(); i++) {
-            String sqlFromDV = (properties.getProperty("fctBookingCargo.dataInDV.RowByRowNum") + arrayRows.get(i));
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubBookingCargo) AS RowNumber, * " +
+                    properties.getProperty("fctBookingCargo.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
             System.out.println("sqlFromDV: " + sqlFromDV);
             Connection connectionToDWH = db.connToDWH();
             Statement stForDWH = db.stFromConnection(connectionToDWH);
@@ -52,7 +54,32 @@ public class FctDataMatching {
         }
     }
 
+    @Test(enabled = true)
+    public void factBookingChargeLines_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingChargeLines.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
 
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubBookingChargeLines) AS RowNumber, * " +
+                    properties.getProperty("fctBookingCargo.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("factBookingChargeLines.dataInDM.RowByKeys") + " where dwhIdHubBookingChargeLines = " +
+                        rsFromDWH.getInt("dwhIdHubBookingChargeLines") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
 
 
     private void getPropertiesFile() throws IOException {

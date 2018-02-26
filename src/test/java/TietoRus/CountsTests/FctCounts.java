@@ -23,10 +23,23 @@ public class FctCounts {
     @Test(enabled = true)
     public void fctBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("fctBookingCargo.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
         int countRowInFct = getCountRowInDM(properties.getProperty("fctBookingCargo.fct.CountRows"));
         assertRowCount(countRowInDV, countRowInFct);
     }
+
+    @Test(enabled = true)
+    public void factBookingChargeLines() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingChargeLines.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingChargeLines.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
 
 
     private void getPropertiesFile() throws IOException {
