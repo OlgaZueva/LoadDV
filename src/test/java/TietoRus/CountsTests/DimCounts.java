@@ -373,6 +373,26 @@ public class DimCounts {
         assertRowCount(countRowInDV, countRowInDim);
     }
 
+    @Test(enabled = true)
+    public void dimContainerLocation() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimContainerLocation.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("dimContainerLocation.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
+    @Test(enabled = true)
+    public void dimContainerMoveTypes() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimContainerMoveTypes.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInDim = getCountRowInDM(properties.getProperty("dimContainerMoveTypes.dim.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
     }
