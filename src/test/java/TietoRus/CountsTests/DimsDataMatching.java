@@ -968,7 +968,7 @@ INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, location
             ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
             while (rsFromDWH.next()) {
                 mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty(" .dataInDM.RowByKeys") + " where dwhIdhubWeekendsHolidays = " +
+                String sqlForDM = (properties.getProperty("dimWeekendsHolidays.dataInDM.RowByKeys") + " where dwhIdhubWeekendsHolidays = " +
                         rsFromDWH.getInt("dwhIdhubWeekendsHolidays") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
@@ -998,6 +998,60 @@ INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, location
                 mapFromDV = getMapFromDV(rsFromDWH);
                 String sqlForDM = (properties.getProperty("dimWorkingTime.dataInDM.RowByKeys") + " where dwhIdHubWorkingTime = " +
                         rsFromDWH.getInt("dwhIdHubWorkingTime") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimBookingManifestAdditionals_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimBookingManifestAdditionals.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdhubBookingManifestAdditionals) AS RowNumber, * " +
+                    properties.getProperty("dimBookingManifestAdditionals.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("dimBookingManifestAdditionals.dataInDM.RowByKeys") + " where dwhIdhubBookingManifestAdditionals = " +
+                        rsFromDWH.getInt("dwhIdhubBookingManifestAdditionals") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
+    @Test(enabled = true)
+    public void dimBookingManifestedHaulage_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimBookingManifestedHaulage.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdhubBookingManifestAdditionals) AS RowNumber, * " +
+                    properties.getProperty("dimBookingManifestedHaulage.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("dimBookingManifestedHaulage.dataInDM.RowByKeys") + " where dwhIdhubBookingManifestAdditionals = " +
+                        rsFromDWH.getInt("dwhIdhubBookingManifestAdditionals") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
             }
