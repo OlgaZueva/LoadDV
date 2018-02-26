@@ -1114,6 +1114,33 @@ INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, location
         }
     }
 
+
+    @Test(enabled = true)
+    public void dimImsChargeLines_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimImsChargeLines.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubImsChargeLines) AS RowNumber, * " +
+                    properties.getProperty("dimImsChargeLines.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("dimImsChargeLines.dataInDM.RowByKeys") + " where dwhIdHubImsChargeLines = " +
+                        rsFromDWH.getInt("dwhIdHubImsChargeLines") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/dimsCountsSQL.properties"))));
     }
