@@ -40,7 +40,25 @@ public class FctCounts {
         assertRowCount(countRowInDV, countRowInFct);
     }
 
+    @Test(enabled = true)
+    public void factBookingCharges() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingCharges.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingCharges.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
 
+    @Test(enabled = true)
+    public void factBookingEvents() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingEvents.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingEvents.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
