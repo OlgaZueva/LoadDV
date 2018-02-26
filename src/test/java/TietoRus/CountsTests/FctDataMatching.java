@@ -135,6 +135,33 @@ public class FctDataMatching {
         }
     }
 
+    @Test(enabled = true)
+    public void factContainerMoves_matchData() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factContainerMoves.dataInDV.commonPart");
+        int countRowInDV = getCountRowInDV(query);
+        ArrayList arrayRows = getArray(countRowInDV);
+
+        for (int i = 0; i < arrayRows.size(); i++) {
+
+            String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdHubContainerMoves) AS RowNumber, * " +
+                    properties.getProperty("factContainerMoves.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+            System.out.println("sqlFromDV: " + sqlFromDV);
+            Connection connectionToDWH = db.connToDWH();
+            Statement stForDWH = db.stFromConnection(connectionToDWH);
+            ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
+            while (rsFromDWH.next()) {
+                mapFromDV = getMapFromDV(rsFromDWH);
+                String sqlForDM = (properties.getProperty("factContainerMoves.dataInDM.RowByKeys") + " where dwhIdHubContainerMoves = " +
+                        rsFromDWH.getInt("dwhIdHubContainerMoves") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
+                System.out.println("sqlForDM: " + sqlForDM);
+                mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
+            }
+            db.closeConnecions(rsFromDWH, stForDWH, connectionToDWH);
+            matchMaps(mapFromDV, mapFromDM);
+        }
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
     }

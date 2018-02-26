@@ -60,6 +60,19 @@ public class FctCounts {
         assertRowCount(countRowInDV, countRowInFct);
     }
 
+    @Test(enabled = true)
+    public void factContainerMoves() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factContainerMoves.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factContainerMoves.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
+
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
     }
