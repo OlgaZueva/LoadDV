@@ -110,6 +110,37 @@ public class FctCounts {
         assertRowCount(countRowInDV, countRowInFct);
     }
 
+    @Test(enabled = true)
+    public void factInvoicePosting() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factInvoicePosting.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factInvoicePosting.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
+    @Test(enabled = true)
+    public void factPayments() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factPayments.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factPayments.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
+    @Test(enabled = true)
+    public void factValidCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factValidCompany.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factValidCompany.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
     }
