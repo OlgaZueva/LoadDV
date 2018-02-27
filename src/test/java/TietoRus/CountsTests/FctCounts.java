@@ -102,6 +102,7 @@ public class FctCounts {
 
     @Test(enabled = true)
     public void factInvoiceLines() throws SQLException, IOException {
+        System.out.println("factInvoiceLines. В спеке исправлен lnk на satLnk, если процедура выбирает из линка - создать задучу");
         getPropertiesFile();
         String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factInvoiceLines.dataInDV.commonPart");
         System.out.println(query);
