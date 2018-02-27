@@ -70,8 +70,45 @@ public class FctCounts {
         assertRowCount(countRowInDV, countRowInFct);
     }
 
+    @Test(enabled = true)
+    public void fctDemurrageStorageMscRus() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("fctDemurrageStorageMscRus.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("fctDemurrageStorageMscRus.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
 
+    @Test(enabled = true)
+    public void fctDemurrageStorageUnity() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("fctDemurrageStorageUnity.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("fctDemurrageStorageUnity.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
 
+    @Test(enabled = true)
+    public void factFileRoe() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factFileRoe.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factFileRoe.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
+
+    @Test(enabled = true)
+    public void factInvoiceLines() throws SQLException, IOException {
+        getPropertiesFile();
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factInvoiceLines.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
+        int countRowInFct = getCountRowInDM(properties.getProperty("factInvoiceLines.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInFct);
+    }
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
