@@ -1099,6 +1099,16 @@ public class HubsCounts {
         assertRowCount(countRowInSA, countRowInHub);
     }
 
+    @Test(enabled = true)
+    // Специальная обработка. Создается факт на основе данных saValidAgency по отдельному алгоритму.
+    public void fctValidCompany() throws SQLException, IOException {
+        getPropertiesFile();
+        int countRowInSA = getCountRowInSA(properties.getProperty("validCompany.union.CountRows"));
+        int countRowInHub = getCountRowOfHub(properties.getProperty("validCompany.fct.CountRows"));
+        System.out.println(countRowInHub);
+        assertRowCount(countRowInSA, countRowInHub);
+    }
+
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/hubsCountsSQL.properties"))));
     }

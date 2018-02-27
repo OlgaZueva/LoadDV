@@ -352,7 +352,7 @@ public class FctDataMatching {
         }
     }
 
-    
+
 
     private void getPropertiesFile() throws IOException {
         properties.load(new FileReader(new File(String.format("src/test/resources/fctCountsSQL.properties"))));
