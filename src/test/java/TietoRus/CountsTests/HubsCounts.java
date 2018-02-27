@@ -1105,7 +1105,6 @@ public class HubsCounts {
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("validCompany.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("validCompany.fct.CountRows"));
-        System.out.println(countRowInHub);
         assertRowCount(countRowInSA, countRowInHub);
     }
 
