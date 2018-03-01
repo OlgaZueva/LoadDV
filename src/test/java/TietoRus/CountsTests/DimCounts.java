@@ -49,7 +49,9 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowInDV = getCountRowInDV(properties.getProperty("bookingCargo.dwh.CountRows"));
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingCargo.dataInDV.commonPart");
+        System.out.println(query);
+        int countRowInDV = getCountRowInDV(query);
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingCargo.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
