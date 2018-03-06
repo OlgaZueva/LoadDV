@@ -19,7 +19,7 @@ public class DBHelper {
 
     public Connection connToDM() throws SQLException {
 
-        // return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataMart;user=sa;password=JGdedf&#fsqwhdc");
+         //return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataMart;user=sa;password=JGdedf&#fsqwhdc");
        // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataMartTest;user=ssis;password=ssis");
        // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataMartTestCh;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=DataMartTest;user=ssis;password=ssis");
@@ -29,7 +29,7 @@ public class DBHelper {
 
     public Connection connToSA() throws SQLException {
 
-        // return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=StagingArea;user=sa;password=JGdedf&#fsqwhdc");
+       //  return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=StagingArea;user=sa;password=JGdedf&#fsqwhdc");
        // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=StagingAreaTest;user=ssis;password=ssis");
         //return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=StagingAreaTest;user=ssis;password=ssis");
         return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=StagingAreaTest;user=ssis;password=ssis");
@@ -37,7 +37,7 @@ public class DBHelper {
     }
 
     public Connection connToDWH() throws SQLException {
-        // return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataVault;user=sa;password=JGdedf&#fsqwhdc");
+         //return DriverManager.getConnection("jdbc:sqlserver://10.45.101.96;databaseName=DataVault;user=sa;password=JGdedf&#fsqwhdc");
        // return DriverManager.getConnection("jdbc:sqlserver://10.45.1.122;databaseName=DataVaultTest;user=ssis;password=ssis");
         // return DriverManager.getConnection("jdbc:sqlserver://10.21.11.15;databaseName=DataVaultTest;user=ssis;password=ssis");
         return DriverManager.getConnection("jdbc:sqlserver://10.21.11.11;databaseName=DataVaultTest;user=ssis;password=ssis");

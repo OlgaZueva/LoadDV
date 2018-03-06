@@ -639,61 +639,74 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
-    public void lnkBookingLocations() throws SQLException, IOException {
+    public void lnkBookingLocationsByEachLocation() throws SQLException, IOException {
         getPropertiesFile();
+
         int countRowByCondition_AFG_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_AFG_ZONE.CountRows"));
-        int countRowByCondition_ANK_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE.CountRows"));
-        //int countRowByCondition_ANK_ZONE_notNull = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_notNull.CountRows"));
-        //int countRowByCondition_ANK_ZONE_Null = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_Null.CountRows"));
-        //int countRowByCondition_ANK_ZONE_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE_Null_ForBothNull.CountRows")) -
-        //      countRowByCondition_ANK_ZONE_Null);
-        int countRowByCondition_POD_notNull = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POD_notNull.CountRows"));
-        int countRowByCondition_POD_Null = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POD_Null.CountRows"));
-        int countRowByCondition_POD_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POD_BothNull.CountRows")) -
-                countRowByCondition_POD_Null);
-        int countRowByCondition_POR_notNull = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_notNull.CountRows"));
-        int countRowByCondition_POR_Null = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_Null.CountRows"));
-        int countRowByCondition_POR_BothNull = (getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR_Null_ForBothNull.CountRows")) -
-                countRowByCondition_POR_Null);
+        int countRowInLnk_AFG_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.AFG_ZONE.CountRows"));
+        matchCountsSpecial("AFG_ZONE", countRowByCondition_AFG_ZONE, countRowInLnk_AFG_ZONE);
+
+       int countRowByCondition_ANK_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_ANK_ZONE.CountRows"));
+        int countRowInLnk_ANK_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.ANK_ZONE.CountRows"));
+        matchCountsSpecial("ANK_ZONE", countRowByCondition_ANK_ZONE, countRowInLnk_ANK_ZONE);
+
         int countRowByCondition_PORT_TRANS = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS.CountRows"));
+        int countRowInLnk_PORT_TRANS = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_TRANS.CountRows"));
+        matchCountsSpecial("PORT_TRANS", countRowByCondition_PORT_TRANS, countRowInLnk_PORT_TRANS);
+
         int countRowByCondition_PORT_TRANS2 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS2.CountRows"));
+        int countRowInLnk_PORT_TRANS2 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_TRANS2.CountRows"));
+        matchCountsSpecial("PORT_TRANS2", countRowByCondition_PORT_TRANS2, countRowInLnk_PORT_TRANS2);
+
         int countRowByCondition_PORT_TRANS3 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS3.CountRows"));
+        int countRowInLnk_PORT_TRANS3 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_TRANS3.CountRows"));
+        matchCountsSpecial("PORT_TRANS3", countRowByCondition_PORT_TRANS3, countRowInLnk_PORT_TRANS3);
+
         int countRowByCondition_PORT_TRANS4 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS4.CountRows"));
+        int countRowInLnk_PORT_TRANS4 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_TRANS4.CountRows"));
+        matchCountsSpecial("PORT_TRANS4", countRowByCondition_PORT_TRANS4, countRowInLnk_PORT_TRANS4);
+
         int countRowByCondition_PORT_TRANS5 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_TRANS5.CountRows"));
+        int countRowInLnk_PORT_TRANS5 = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_TRANS5.CountRows"));
+        matchCountsSpecial("PORT_TRANS5", countRowByCondition_PORT_TRANS5, countRowInLnk_PORT_TRANS5);
+
         int countRowByCondition_FREIGHT_PAY = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_FREIGHT_PAY.CountRows"));
+        int countRowInLnk_FREIGHT_PAY = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.FREIGHT_PAY.CountRows"));
+        matchCountsSpecial("FREIGHT_PAY", countRowByCondition_FREIGHT_PAY, countRowInLnk_FREIGHT_PAY);
+
         int countRowByCondition_FREIGHT_PAY_IMS = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_FREIGHT_PAY_IMS.CountRows"));
+        int countRowInLnk_FREIGHT_PAY_IMS = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.FREIGHT_PAY_IMS.CountRows"));
+        matchCountsSpecial("FREIGHT_PAY_IMS", countRowByCondition_FREIGHT_PAY_IMS, countRowInLnk_FREIGHT_PAY_IMS);
+
         int countRowByCondition_DRY_PORT = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_DRY_PORT.CountRows"));
+        int countRowInLnk_DRY_PORT = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.DRY_PORT.CountRows"));
+        matchCountsSpecial("DRY_PORT", countRowByCondition_DRY_PORT, countRowInLnk_DRY_PORT);
+
         int countRowByCondition_PORT_SAIL = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_SAIL.CountRows"));
+        int countRowInLnk_PORT_SAIL = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_SAIL.CountRows"));
+        matchCountsSpecial("PORT_SAIL", countRowByCondition_PORT_SAIL, countRowInLnk_PORT_SAIL);
+
         int countRowByCondition_PORT_FEED = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_PORT_FEED.CountRows"));
-        System.out.println("countRowByCondition_AFG_ZONE: " + countRowByCondition_AFG_ZONE);
-        System.out.println("countRowByCondition_ANK_ZONE: " + countRowByCondition_ANK_ZONE);
-        //System.out.println("countRowByCondition_ANK_ZONE_notNull: " + countRowByCondition_ANK_ZONE_notNull);
-        //System.out.println("countRowByCondition_ANK_ZONE_Null: " + countRowByCondition_ANK_ZONE_Null);
-        //System.out.println("countRowByCondition_ANK_ZONE_BothNull: " + countRowByCondition_ANK_ZONE_BothNull);
-        System.out.println("countRowByCondition_POD_notNull: " + countRowByCondition_POD_notNull);
-        System.out.println("countRowByCondition_POD_Null: " + countRowByCondition_POD_Null);
-        System.out.println("countRowByCondition_POD_BothNull: " + countRowByCondition_POD_BothNull);
-        System.out.println("countRowByCondition_POR_notNull: " + countRowByCondition_POR_notNull);
-        System.out.println("countRowByCondition_POR_Null: " + countRowByCondition_POR_Null);
-        System.out.println("countRowByCondition_POR_BothNull: " + countRowByCondition_POR_BothNull);
-        System.out.println("countRowByCondition_PORT_TRANS: " + countRowByCondition_PORT_TRANS);
-        System.out.println("countRowByCondition_PORT_TRANS2: " + countRowByCondition_PORT_TRANS2);
-        System.out.println("countRowByCondition_PORT_TRANS3: " + countRowByCondition_PORT_TRANS3);
-        System.out.println("countRowByCondition_PORT_TRANS4: " + countRowByCondition_PORT_TRANS4);
-        System.out.println("countRowByCondition_PORT_TRANS5: " + countRowByCondition_PORT_TRANS5);
-        System.out.println("countRowByCondition_FREIGHT_PAY: " + countRowByCondition_FREIGHT_PAY);
-        System.out.println("countRowByCondition_FREIGHT_PAY_IMS: " + countRowByCondition_FREIGHT_PAY_IMS);
-        System.out.println("countRowByCondition_DRY_PORT: " + countRowByCondition_DRY_PORT);
-        System.out.println("countRowByCondition_PORT_SAIL: " + countRowByCondition_PORT_SAIL);
-        System.out.println("countRowByCondition_PORT_FEED: " + countRowByCondition_PORT_FEED);
+        int countRowInLnk_PORT_FEED = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.PORT_FEED.CountRows"));
+        matchCountsSpecial("PORT_FEED", countRowByCondition_PORT_FEED, countRowInLnk_PORT_FEED);
+
+        int countRowByCondition_POD = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POD.union.CountRows"));
+        int countRowInLnk_POD = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.POD.CountRows"));
+        matchCountsSpecial("POD", countRowByCondition_POD, countRowInLnk_POD);
+
+        int countRowByCondition_POR = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_POR.union.CountRows"));
+        int countRowInLnk_POR = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.POR.CountRows"));
+        matchCountsSpecial("POR", countRowByCondition_POR, countRowInLnk_POR);
+
+
         int countRowByCondition = countRowByCondition_AFG_ZONE + countRowByCondition_ANK_ZONE
-                + countRowByCondition_POD_notNull + countRowByCondition_POD_Null + countRowByCondition_POD_BothNull + countRowByCondition_POR_notNull
-                + countRowByCondition_POR_Null + countRowByCondition_POR_BothNull +
+                + countRowByCondition_POD + countRowByCondition_POR +
                 countRowByCondition_PORT_TRANS + countRowByCondition_PORT_TRANS2 +
                 countRowByCondition_PORT_TRANS3 + countRowByCondition_PORT_TRANS4 + countRowByCondition_PORT_TRANS5 + countRowByCondition_FREIGHT_PAY +
                 countRowByCondition_FREIGHT_PAY_IMS + countRowByCondition_DRY_PORT + countRowByCondition_PORT_SAIL + countRowByCondition_PORT_FEED;
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingLocations.lnk.CountRows"));
         assertRowCount(countRowByCondition, countRowInLink);
+
     }
 
     @Test(enabled = true)
@@ -2228,4 +2241,15 @@ public class LinksCounts {
         db.closeConnecions(rsFromSA, stForSA, connectionToSA);
         return countRowSA;
     }
+
+    private void matchCountsSpecial(String name , int countByCondition, int countInLnk) {
+        if (countInLnk != countByCondition) {
+            System.err.println(name + " not asserting! Its Error! Expected: " +  countByCondition
+                    + " but was: " + countInLnk + ". Lost "  +  (countByCondition - countInLnk) + " rows!");
+
+        } else {
+            System.out.println(name + " successfully asserting!");
+        }
+    }
 }
+
