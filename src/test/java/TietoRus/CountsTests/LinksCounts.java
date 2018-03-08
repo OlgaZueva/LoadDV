@@ -639,7 +639,7 @@ public class LinksCounts {
     }
 
     @Test(enabled = true)
-    public void lnkBookingLocationsByEachLocation() throws SQLException, IOException {
+    public void lnkBookingLocations() throws SQLException, IOException {
         getPropertiesFile();
 
         int countRowByCondition_AFG_ZONE = getCountRowOfHub(properties.getProperty("lnkBookingLocations.condition_AFG_ZONE.CountRows"));
