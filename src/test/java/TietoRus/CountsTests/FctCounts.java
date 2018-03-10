@@ -1,19 +1,19 @@
 package TietoRus.CountsTests;
 
-        import TietoRus.system.helpers.helpers.DBHelper;
-        import org.testng.annotations.Test;
+import TietoRus.system.helpers.helpers.DBHelper;
+import org.testng.annotations.Test;
 
-        import java.io.File;
-        import java.io.FileReader;
-        import java.io.IOException;
-        import java.sql.Connection;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-        import java.sql.Statement;
-        import java.util.Properties;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Properties;
 
-        import static org.hamcrest.CoreMatchers.equalTo;
-        import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class FctCounts {
     private Properties properties = new Properties();
@@ -23,51 +23,44 @@ public class FctCounts {
     @Test(enabled = true)
     public void fctBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("fctBookingCargo.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("fctBookingCargo.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("fctBookingCargo.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("fctBookingCargo.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void factBookingChargeLines() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingChargeLines.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingChargeLines.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factBookingChargeLines.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factBookingChargeLines.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void factBookingCharges() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingCharges.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingCharges.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factBookingCharges.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factBookingCharges.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void factBookingEvents() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factBookingEvents.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factBookingEvents.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factBookingEvents.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factBookingEvents.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void factContainerMoves() throws SQLException, IOException {
+        /* Контрольный запрос на посчет числа записей в DWH(factContainerMoves.dwh.CountRows) несовсем точно выбирает данныеиз-за присуствия dwhIdHubBookingCargo в ключе
+        Поэтому если расчетное число меньше, чем кол-во записей в DM, то тест можно считат успешным. На всякий случай можно вруну сравнить записи и убедиться что все нормально.
+        */
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factContainerMoves.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factContainerMoves.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factContainerMoves.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factContainerMoves.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
@@ -93,32 +86,32 @@ public class FctCounts {
     @Test(enabled = true)
     public void factFileRoe() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factFileRoe.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factFileRoe.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
-    }
+        int countRowInDV = getCountRowInDV(properties.getProperty("factFileRoe.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factFileRoe.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+     }
 
     @Test(enabled = true)
     public void factInvoiceLines() throws SQLException, IOException {
-        System.out.println("factInvoiceLines. В спеке исправлен lnk на satLnk, если процедура выбирает из линка - создать задучу");
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factInvoiceLines.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factInvoiceLines.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factInvoiceLines.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factInvoiceLines.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void factInvoicePosting() throws SQLException, IOException {
+        /*
+        satInvoicePosting является сатом без версионирования, т.е. каждый раз он перегружается.
+         В satLnkInvoicePostingCurrency же записи никуда не изчезают.
+         Поэтому контрольное число  с фактиеским будет несовпадать в большую сторону (предполагаемх будет будет больше, чем число фактических записей)
+         И это верно -записи в satLnkInvoicePostingCurrency будут с более ранним ValidFrom, нежели в сате и их не будет в факте. Это нормально.
+         Переодически стоит убеждаться в этом, просмотрев глазами отлиющиеся записи
+         */
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factInvoicePosting.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factInvoicePosting.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
+        int countRowInDV = getCountRowInDV(properties.getProperty("factInvoicePosting.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factInvoicePosting.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
