@@ -117,12 +117,10 @@ public class FctCounts {
     @Test(enabled = true)
     public void factPayments() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("factPayments.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInFct = getCountRowInDM(properties.getProperty("factPayments.fct.CountRows"));
-        assertRowCount(countRowInDV, countRowInFct);
-    }
+        int countRowInDV = getCountRowInDV(properties.getProperty("factPayments.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("factPayments.fct.CountRows"));
+        assertRowCount(countRowInDV, countRowInDim);
+            }
 
     @Test(enabled = true)
     public void factValidCompany() throws SQLException, IOException {

@@ -23,7 +23,6 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimCustomers() throws SQLException, IOException {
         getPropertiesFile();
-        // тест пригоден к использованию в текущем варианте (версия 1)
         int countRowInDV = getCountRowInDV(properties.getProperty("customers.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("customers.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
@@ -31,7 +30,6 @@ public class DimCounts {
 
     @Test(enabled = true)
     public void dimFileLiner() throws SQLException, IOException {
-        // тест пригоден к использованию в текущем варианте (версия 1)
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("fileLiner.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("fileLiner.dim.CountRows"));
@@ -49,9 +47,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingCargo() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingCargo.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingCargo.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingCargo.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -85,9 +81,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingManifest() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingManifest.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingManifest.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingManifest.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -105,9 +99,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingHaulageDetails() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingHaulageDetails.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingHaulageDetails.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingHaulageDetails.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -245,19 +237,13 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimVesselRegistry() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("vesselRegistry.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("vesselRegistry.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("vesselRegistry.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 
     @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
-        /*
-        02.2018. Контрольный запрос этого теста переработан- count считается по всем нужным таблицам без "лишних"  полей
-        И в тесте нужно использовать именно booking.dwh.CountRows -запрос
-         */
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("booking.dim.CountRows"));
@@ -267,9 +253,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingOceanVessel() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingOceanVessel.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingOceanVessel.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingOceanVessel.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -277,20 +261,15 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimExportVessels() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("exportVessels.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("exportVessels.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("exportVessels.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 
-
     @Test(enabled = true)
     public void dimBookingDTXFile() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("bookingDTXFile.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("bookingDTXFile.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("bookingDTXFile.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -318,9 +297,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimInvoice() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimInvoice.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("dimInvoice.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("dimInvoice.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -328,9 +305,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimInvoicePosting() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimInvoicePosting.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("dimInvoicePosting.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("dimInvoicePosting.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -358,9 +333,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimBookingManifestAdditionals() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimBookingManifestAdditionals.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("dimBookingManifestAdditionals.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("dimBookingManifestAdditionals.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
