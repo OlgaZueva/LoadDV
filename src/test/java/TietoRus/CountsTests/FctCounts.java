@@ -55,7 +55,7 @@ public class FctCounts {
     @Test(enabled = true)
     public void factContainerMoves() throws SQLException, IOException {
         /* Контрольный запрос на посчет числа записей в DWH(factContainerMoves.dwh.CountRows) несовсем точно выбирает данныеиз-за присуствия dwhIdHubBookingCargo в ключе
-        Поэтому если расчетное число меньше, чем кол-во записей в DM, то тест можно считат успешным. На всякий случай можно вруну сравнить записи и убедиться что все нормально.
+        Поэтому если расчетное число меньше, чем кол-во записей в DM, то тест можно считат успешным. На всякий случай можно вручную сравнить записи и убедиться что все нормально.
         */
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("factContainerMoves.dwh.CountRows"));
@@ -106,7 +106,7 @@ public class FctCounts {
          В satLnkInvoicePostingCurrency же записи никуда не изчезают.
          Поэтому контрольное число  с фактиеским будет несовпадать в большую сторону (предполагаемх будет будет больше, чем число фактических записей)
          И это верно -записи в satLnkInvoicePostingCurrency будут с более ранним ValidFrom, нежели в сате и их не будет в факте. Это нормально.
-         Переодически стоит убеждаться в этом, просмотрев глазами отлиющиеся записи
+         Переодически стоит убеждаться в этом, просмотрев глазами отличающиеся записи
          */
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("factInvoicePosting.dwh.CountRows"));
