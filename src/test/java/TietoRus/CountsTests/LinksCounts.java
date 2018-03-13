@@ -2000,6 +2000,7 @@ public class LinksCounts {
 
     @Test(enabled = true)
     public void BookGods_lnkBookingCargoContainerMoves() throws SQLException, IOException {
+        //13.03.2018 будет добавлено условие построения линка (<...> and saBookGods.CONT_ANT is not null) Запрос переделан.
         getPropertiesFile();
         int countRowByCondition = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.condition.CountRows"));
         int countRowInLink = getCountRowOfHub(properties.getProperty("lnkBookingCargoContainerMoves.lnk.CountRows"));
