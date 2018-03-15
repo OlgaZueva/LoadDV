@@ -95,11 +95,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookManifest_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid  =  getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookManifest.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -107,11 +105,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookManifest_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookManifest.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookManifest.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookManifest.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid  =  getCountRowInSA(properties.getProperty("bookManifest.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookManifest.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
