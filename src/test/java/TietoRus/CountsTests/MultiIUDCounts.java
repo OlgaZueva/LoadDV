@@ -22,8 +22,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 Второй запрос выбирает записи с максимальным значением cdcRsid в каждой группе (группа формируется по ключу).
 Для каждой группы должны быть помечены на удаление все записи, кроме последней (значение cdcRsid это однозначно определяет -  максимальное последнее).
 Число удаленных записей считается как раздница между кол-вом, котрое вернулпервый запрос  и кол-вом, которое вернул второй запрос.
-
-Не написаны тесты проверки EdiKonv и Henvis -  там нужно больше запросов из-за того, что по этим таблицам строится несколько хабов
 */
 
 
@@ -598,11 +596,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ContRules_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("contRules.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contRules.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("contRules.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("contRules.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contRules.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("contRules.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("contRules.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -610,43 +606,53 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ContRules_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("contRules.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contRules.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("contRules.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("contRules.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contRules.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("contRules.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("contRules.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = false)
-    /*
-    Работа с таблицей demurrage изменена из-за большого обхема данных по изменениям.
-    Таблица исключена из обработки механизмом "удаление одновеременных вставок и удалений (DeleteMUI)"
-    Тест неактуален
-    */
-    public void Demurrage_MSCRUS() throws SQLException, IOException {
+    @Test(enabled = true)
+    public void EdiKonv_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
-        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.MSCRUS.delete.count"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ediKonv.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("ediKonv.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("ediKonv.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-    @Test(enabled = false) // обработка Demurage изменеена. Из функционаа MultyIUD таблица исклбчена. тест неактуален.
-    public void Demurrage_UNITY() throws SQLException, IOException {
+    @Test(enabled = true)
+    public void EdiKonv_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("demurrage.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("demurrage.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("demurrage.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("demurrage.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
-        int countRowInSA = getCountRowInSA(properties.getProperty("demurrage.UNITY.delete.count"));
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ediKonv.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("ediKonv.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("ediKonv.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
+
+    @Test(enabled = true)
+    public void Henvis_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("henvis.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("henvis.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("henvis.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void Henvis_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("henvis.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("henvis.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("henvis.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
 
 
     private void getPropertiesFile() throws IOException {
