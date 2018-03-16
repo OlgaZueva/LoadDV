@@ -478,11 +478,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ShipKurs_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("shipKurs.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -490,11 +488,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ShipKurs_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("shipKurs.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("shipKurs.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("shipKurs.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("shipKurs.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("shipKurs.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -502,11 +498,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void Vgm_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("vgm.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("vgm.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("vgm.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("vgm.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("vgm.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -514,11 +508,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void Vgm_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("vgm.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("vgm.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("vgm.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("vgm.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("vgm.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("vgm.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -526,11 +518,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookBemInternal_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -538,11 +528,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookBemInternal_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookBemInternal.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -550,11 +538,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void CtsContEvent_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("ctsContEvent.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -562,24 +548,19 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void CtsContEvent_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("ctsContEvent.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
 
-
     @Test(enabled = true)
     public void Commodity_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("commodity.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("commodity.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("commodity.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("commodity.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("commodity.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("commodity.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("commodity.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -587,11 +568,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void Commodity_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("commodity.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("commodity.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("commodity.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("commodity.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("commodity.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("commodity.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("commodity.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -599,11 +578,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ContMaster_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("contMaster.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -611,11 +588,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void ContMaster_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("contMaster.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contMaster.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("contMaster.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("contMaster.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("contMaster.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("contMaster.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("contMaster.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
