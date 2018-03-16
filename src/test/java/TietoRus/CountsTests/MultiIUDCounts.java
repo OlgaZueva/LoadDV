@@ -195,11 +195,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookMftFile_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookMftFile.MSCRUS.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -207,11 +205,9 @@ public class MultiIUDCounts {
     @Test(enabled = true)
     public void BookMftFile_UNITY() throws SQLException, IOException {
         getPropertiesFile();
-        int countMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.countMutiMoments.counts"));
-        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.MomentsMultiIUD.notD.counts"));
-        int countDWithHub = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.InDWithHub.counts"));
-        int countAllD = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.InDAll.counts"));
-        int countRowByCondition = (countAllForMutiMoments - countMutiMoments) + (countAllD - countDWithHub);
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid  =  getCountRowInSA(properties.getProperty("bookMftFile.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
         int countRowInSA = getCountRowInSA(properties.getProperty("bookMftFile.UNITY.delete.count"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
