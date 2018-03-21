@@ -7,11 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -27,13 +23,22 @@ import static org.hamcrest.MatcherAssert.assertThat;
 SET_OF_SELSKAB: select SELSKAB from EDI_KONV where AGENT = 'MSC' and FELT = 'ID' and FRA = 'DWH_LOAD_SELSKAB' and TIL = 'Y'
 DWH_START_DATE: SELECT to_date(c_val, 'dd.mm.yyyy') FROM uts_constants WHERE c_name = 'DWH_START_DATE'
 Выбраны они должны быть пакетом в источниках (не в SA).
-Тесты выбирают значения параметров в SA (не в источниках). И применимы могут быть при ненарушеной целостности данных (данные в таблицах, по которым выбираются параметры
-должны соотвествовать основным данным в SA (особое внимание к DWH_START_DATE))
  */
 
-public class DiscardAgencyCountsTests {
+public abstract class DiscardAgencyCountsTests {
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
+
+
+
+    public DiscardAgencyCountsTests() throws SQLException, ParseException, IOException {
+        getPropertiesFile();
+        String getDWH_START_DATEsql = properties.getProperty("DWH_START_DATE.sql");
+
+         String DWH_START_DATE = getDWH_START_DATE_RTEST(getDWH_START_DATEsql);
+    }
+
+
 
 
     @Test(enabled = true)
@@ -374,22 +379,34 @@ public class DiscardAgencyCountsTests {
         return countRowSA;
     }
 
-    private String getDWH_START_DATE() throws SQLException, ParseException {
-        String sql = "SELECT c_val  FROM scan.uts_constants WHERE c_name = 'DWH_START_DATE'";
+    private String getDWH_START_DATE_RTEST(String sql) throws SQLException, ParseException {
+        System.out.println("sql: " + sql);
         Connection connectionToRTest = db.connToRTest();
         Statement statmentForRTest = db.stFromConnection(connectionToRTest);
         ResultSet rsFromRTest = db.rsFromDB(statmentForRTest, sql);
         String c_val = null;
         while (rsFromRTest.next()) {
             c_val = rsFromRTest.getString("c_val");
-            System.out.println("c_val: " + c_val);
-            DateFormat format = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
-            //date = format.parse(c_val);
-            //date = java.sql.Date.valueOf(c_val);
-            //System.out.println(date);
         }
         db.closeConnecions(rsFromRTest, statmentForRTest, connectionToRTest);
-
         return c_val;
     }
+
+    public int getCountRowsInRTest(String table) throws IOException, SQLException {
+        getPropertiesFile();
+        String sql = properties.getProperty(table);
+        //System.out.println("Запрос кол-ва строк из RTest: " + sql);
+        Connection connectionToRTest = db.connToRTest();
+        Statement statmentForRTest = db.stFromConnection(connectionToRTest);
+        ResultSet rsCountRowFromRTest = db.rsFromDB(statmentForRTest, sql);
+        int countRowInRTest = 0;
+        while (rsCountRowFromRTest.next()) {
+            countRowInRTest = Integer.parseInt(rsCountRowFromRTest.getString("c"));
+        }
+        rsCountRowFromRTest.close();
+        statmentForRTest.close();
+        connectionToRTest.close();
+        return countRowInRTest;
+    }
 }
+
