@@ -69,7 +69,6 @@ public class DiscardAgencyCountsTests {
         int countRowByCondition = countRowInMSCRUS + countRowInUNITY;
         int countRowInSA = getCountRowInSA(properties.getProperty("adresse.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
-
     }
 
     @Test(enabled = true)
@@ -133,7 +132,14 @@ public class DiscardAgencyCountsTests {
     @Test(enabled = true)
     public void BookGods() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInSA(properties.getProperty("bookGods.union.counts"));
+        String queryMSCRUS = properties.getProperty("common.part1") + " " + properties.getProperty("bookGods.MSCRUS.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +"))q";
+        String queryUNITY = properties.getProperty("common.part1") + " " + properties.getProperty("bookGods.UNITY.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +"))q";
+        System.out.println(queryMSCRUS);
+        int countRowInMSCRUS = getCountRowInSA(queryMSCRUS);
+        int countRowInUNITY = getCountRowInSA(queryUNITY);
+        int countRowByCondition = countRowInMSCRUS + countRowInUNITY;
         int countRowInSA = getCountRowInSA(properties.getProperty("bookGods.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
