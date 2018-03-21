@@ -6,8 +6,13 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -20,31 +25,33 @@ import static org.hamcrest.MatcherAssert.assertThat;
 Описание функциональности: В SA должны быть логически удалены записи, которые не соотвествуют условиям. У каждой таблицы, к которой применимо, свои условия отбора.
 Все условия касаются либо одного параметра, либо двух, есть исключения.
 Значения параметров, учавствующих в условиях, по которым записи должны быть найдены и логически удалены:
-SET_OF_SELSKAB: select SELSKAB from EDI_KONV where AGENT = 'MSC' and FELT = 'ID' and FRA = 'DWH_LOAD_SELSKAB' and TIL = 'Y'
-DWH_START_DATE: SELECT to_date(c_val, 'dd.mm.yyyy') FROM uts_constants WHERE c_name = 'DWH_START_DATE'
+SET_OF_SELSKAB: select SELSKAB from EDI_KONV_ETL_V where AGENT = 'MSC' and FELT = 'ID' and FRA = 'DWH_LOAD_SELSKAB' and TIL = 'Y'
+DWH_START_DATE: SELECT to_date(c_val, 'dd.mm.yyyy') FROM uts_constants_etl_V WHERE c_name = 'DWH_START_DATE'
 Выбраны они должны быть пакетом в источниках (не в SA).
  */
 
-public abstract class DiscardAgencyCountsTests {
+public class DiscardAgencyCountsTests {
+
+
+
     private Properties properties = new Properties();
     private DBHelper db = new DBHelper();
 
 
-
-    public DiscardAgencyCountsTests() throws SQLException, ParseException, IOException {
-        getPropertiesFile();
-        String getDWH_START_DATEsql = properties.getProperty("DWH_START_DATE.sql");
-
-         String DWH_START_DATE = getDWH_START_DATE_RTEST(getDWH_START_DATEsql);
-    }
-
-
-
-
     @Test(enabled = true)
-    public void AbPost() throws SQLException, IOException {
+    public void AbPost() throws SQLException, IOException, ParseException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInSA(properties.getProperty("abPost.union.counts"));
+        String queryMSCRUS = properties.getProperty("common.part1") + " " + properties.getProperty("abPost.MSCRUS.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +") or dato < (" +
+                properties.getProperty("common.part3") +          getDWH_START_DATE_RTEST(properties.getProperty("DWH_START_DATE.sql")) +
+                properties.getProperty("common.part4") + ")q";
+        String queryUNITY = properties.getProperty("common.part1") + " " + properties.getProperty("abPost.UNITY.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +") or dato < (" +
+                properties.getProperty("common.part3") +          getDWH_START_DATE_RTEST(properties.getProperty("DWH_START_DATE.sql")) +
+                properties.getProperty("common.part4") + ")q";
+        int countRowInMSCRUS = getCountRowInSA(queryMSCRUS);
+        int countRowInUNITY = getCountRowInSA(queryUNITY);
+        int countRowByCondition = countRowInMSCRUS + countRowInUNITY;
         int countRowInSA = getCountRowInSA(properties.getProperty("abPost.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
     }
@@ -52,21 +59,38 @@ public abstract class DiscardAgencyCountsTests {
     @Test(enabled = true)
     public void Adresse() throws SQLException, IOException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInSA(properties.getProperty("adresse.union.counts"));
+        String queryMSCRUS = properties.getProperty("common.part1") + " " + properties.getProperty("adresse.MSCRUS.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +"))q";
+        String queryUNITY = properties.getProperty("common.part1") + " " + properties.getProperty("adresse.UNITY.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +"))q";
+        System.out.println(queryMSCRUS);
+        int countRowInMSCRUS = getCountRowInSA(queryMSCRUS);
+        int countRowInUNITY = getCountRowInSA(queryUNITY);
+        int countRowByCondition = countRowInMSCRUS + countRowInUNITY;
         int countRowInSA = getCountRowInSA(properties.getProperty("adresse.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
+
     }
 
     @Test(enabled = true)
     public void BogfTrans() throws SQLException, IOException, ParseException {
         getPropertiesFile();
-        int countRowByCondition = getCountRowInSA(properties.getProperty("bogfTrans.union.counts"));
+        String queryMSCRUS = properties.getProperty("common.part1") + " " + properties.getProperty("bogfTrans.MSCRUS.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +") or dato < (" +
+                properties.getProperty("common.part3") +          getDWH_START_DATE_RTEST(properties.getProperty("DWH_START_DATE.sql")) +
+                properties.getProperty("common.part4") + ")q";
+        String queryUNITY = properties.getProperty("common.part1") + " " + properties.getProperty("bogfTrans.UNITY.tableName") + " " +
+                properties.getProperty("common.part2") + getSelscabFromRTest(properties.getProperty("SET_OF_SELSKAB.sql")) +") or dato < (" +
+                properties.getProperty("common.part3") +          getDWH_START_DATE_RTEST(properties.getProperty("DWH_START_DATE.sql")) +
+                properties.getProperty("common.part4") + ")q";
+        int countRowInMSCRUS = getCountRowInSA(queryMSCRUS);
+        int countRowInUNITY = getCountRowInSA(queryUNITY);
+        int countRowByCondition = countRowInMSCRUS + countRowInUNITY;
         int countRowInSA = getCountRowInSA(properties.getProperty("bogfTrans.destination.counts"));
         assertRowCount(countRowByCondition, countRowInSA);
-
     }
 
-     @Test(enabled = true)
+    @Test(enabled = true)
     public void Book() throws SQLException, IOException {
         getPropertiesFile();
         int countRowByCondition = getCountRowInSA(properties.getProperty("book.union.counts"));
@@ -380,7 +404,6 @@ public abstract class DiscardAgencyCountsTests {
     }
 
     private String getDWH_START_DATE_RTEST(String sql) throws SQLException, ParseException {
-        System.out.println("sql: " + sql);
         Connection connectionToRTest = db.connToRTest();
         Statement statmentForRTest = db.stFromConnection(connectionToRTest);
         ResultSet rsFromRTest = db.rsFromDB(statmentForRTest, sql);
@@ -392,21 +415,46 @@ public abstract class DiscardAgencyCountsTests {
         return c_val;
     }
 
-    public int getCountRowsInRTest(String table) throws IOException, SQLException {
-        getPropertiesFile();
-        String sql = properties.getProperty(table);
-        //System.out.println("Запрос кол-ва строк из RTest: " + sql);
+    private String getDWH_START_DATE_ITEST(String sql) throws SQLException, ParseException {
+        Connection connectionToITest = db.connToITest();
+        Statement statmentForITest = db.stFromConnection(connectionToITest);
+        ResultSet rsFromITest = db.rsFromDB(statmentForITest, sql);
+        String c_val = null;
+        while (rsFromITest.next()) {
+            c_val = rsFromITest.getString("c_val");
+        }
+        db.closeConnecions(rsFromITest, statmentForITest, connectionToITest);
+        return c_val;
+    }
+
+    public String getSelscabFromRTest(String sql) throws SQLException {
+        List<String> MSCRUSselskabPool = new ArrayList<String>();
         Connection connectionToRTest = db.connToRTest();
         Statement statmentForRTest = db.stFromConnection(connectionToRTest);
         ResultSet rsCountRowFromRTest = db.rsFromDB(statmentForRTest, sql);
-        int countRowInRTest = 0;
         while (rsCountRowFromRTest.next()) {
-            countRowInRTest = Integer.parseInt(rsCountRowFromRTest.getString("c"));
+            MSCRUSselskabPool.add(String.valueOf((rsCountRowFromRTest.getInt("SELSKAB"))));
         }
         rsCountRowFromRTest.close();
         statmentForRTest.close();
         connectionToRTest.close();
-        return countRowInRTest;
+        String selscab = String.join(", ", MSCRUSselskabPool);
+        return selscab;
+    }
+
+    public String getSelscabFromITest(String sql) throws SQLException {
+        List<String> UNITYselskabPool = new ArrayList<String>();
+        Connection connectionToITest = db.connToITest();
+        Statement statmentForITest = db.stFromConnection(connectionToITest);
+        ResultSet rsCountRowFromITest = db.rsFromDB(statmentForITest, sql);
+        while (rsCountRowFromITest.next()) {
+            UNITYselskabPool.add(String.valueOf((rsCountRowFromITest.getInt("SELSKAB"))));
+        }
+        rsCountRowFromITest.close();
+        statmentForITest.close();
+        connectionToITest.close();
+        String selscab = String.join(", ", UNITYselskabPool);
+        return selscab;
     }
 }
 
