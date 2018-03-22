@@ -54,9 +54,6 @@ public class FctCounts {
 
     @Test(enabled = true)
     public void factContainerMoves() throws SQLException, IOException {
-        /* Контрольный запрос на посчет числа записей в DWH(factContainerMoves.dwh.CountRows) несовсем точно выбирает данныеиз-за присуствия dwhIdHubBookingCargo в ключе
-        Поэтому если расчетное число меньше, чем кол-во записей в DM, то тест можно считат успешным. На всякий случай можно вручную сравнить записи и убедиться что все нормально.
-        */
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("factContainerMoves.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("factContainerMoves.fct.CountRows"));

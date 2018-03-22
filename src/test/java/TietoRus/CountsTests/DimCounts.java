@@ -195,18 +195,14 @@ public class DimCounts {
 
     @Test(enabled = true)
     public void dimLocations() throws SQLException, IOException {
-        getPropertiesFile();
         /*
-        Контрольный запрос учитывает validFrom и выбирает саты и статусы соотвественно. Плюс, процедура getDimLocations вне зависимости от результата
-трех внешних соединений для  dwhIdHubLocations берет validFrom из satLocationsPortsOverview. Что порождает лишние записи Это решили оставить - не мешает.
-Контрольный запрос это учитывает (последний UNION в контрольном запросе). Но записи из satLocationsPortsOverview множатся из-за привязки к satLocations
-(т.е. если в satLocations более одной записи, различающиеся одним из загружаемых в DM полей, то завпрос записей в satLocationsPortsOverview вернет столько же.
-Это не победила (О.Зуева) , надо смотреть галазами что не так при падении теста. )
+        Процедура getDimLocations вне зависимости от результата трех внешних соединений для  dwhIdHubLocations берет validFrom из satLocationsPortsOverview.
+        Что порождает лишние записи Это решили оставить - не мешает. Контрольный запрос этого не уитывает.
+        Т.е. если записей в destination-таблице больше, чем расчитано контрольным запросом, то это нормально.
          */
         System.out.println("dimLocations_matchData. В случае падения теста см комментарий к нему");
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("locations.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        getPropertiesFile();
+        int countRowInDV = getCountRowInDV(properties.getProperty("locations.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("locations.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
