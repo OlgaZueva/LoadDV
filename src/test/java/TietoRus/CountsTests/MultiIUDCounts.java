@@ -71,6 +71,47 @@ public class MultiIUDCounts {
     }
 
     @Test(enabled = true)
+    public void BookKor_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookKor.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookKor.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookKor.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookKor_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookKor.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookKor.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookKor.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+
+    @Test(enabled = true)
+    public void BookGods_MSCRUS() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookGods.MSCRUS.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookGods.MSCRUS.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookGods.MSCRUS.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
+    public void BookGods_UNITY() throws SQLException, IOException {
+        getPropertiesFile();
+        int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookGods.UNITY.allInMultyMoments.counts"));
+        int countMaxRsid = getCountRowInSA(properties.getProperty("bookGods.UNITY.maxRsid.counts"));
+        int countRowByCondition = (countAllForMutiMoments - countMaxRsid);
+        int countRowInSA = getCountRowInSA(properties.getProperty("bookGods.UNITY.delete.count"));
+        assertRowCount(countRowByCondition, countRowInSA);
+    }
+
+    @Test(enabled = true)
     public void BookDryPort_MSCRUS() throws SQLException, IOException {
         getPropertiesFile();
         int countAllForMutiMoments = getCountRowInSA(properties.getProperty("bookDryPort.MSCRUS.allInMultyMoments.counts"));
