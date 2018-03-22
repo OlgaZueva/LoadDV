@@ -89,9 +89,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimContainerType() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("containerType.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("containerType.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("containerType.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -216,9 +214,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimGvaTrade() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("gvaTrade.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("gvaTrade.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("gvaTrade.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
@@ -313,10 +309,8 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimWeekendsHolidays() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimWeekendsHolidays.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
-        int countRowInDim = getCountRowInDM(properties.getProperty("dimWeekendsHolidays.dim.CountRows"));
+        int countRowInDV = getCountRowInDV(properties.getProperty("weekendsHolidays.dwh.CountRows"));
+        int countRowInDim = getCountRowInDM(properties.getProperty("weekendsHolidays.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
 

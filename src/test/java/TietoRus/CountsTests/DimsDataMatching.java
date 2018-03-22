@@ -917,21 +917,21 @@ INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, location
     @Test(enabled = true)
     public void dimWeekendsHolidays_matchData() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimWeekendsHolidays.dataInDV.commonPart");
+        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("weekendsHolidays.dataInDV.commonPart");
         int countRowInDV = getCountRowInDV(query);
         ArrayList arrayRows = getArray(countRowInDV);
 
         for (int i = 0; i < arrayRows.size(); i++) {
 
             String sqlFromDV = (properties.getProperty("common.sql.byRownum") + " dwhIdhubWeekendsHolidays) AS RowNumber, * " +
-                    properties.getProperty("dimWeekendsHolidays.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
+                    properties.getProperty("weekendsHolidays.dataInDV.commonPart") + ") q where RowNumber =" + arrayRows.get(i));
             System.out.println("sqlFromDV: " + sqlFromDV);
             Connection connectionToDWH = db.connToDWH();
             Statement stForDWH = db.stFromConnection(connectionToDWH);
             ResultSet rsFromDWH = db.rsFromDB(stForDWH, sqlFromDV);
             while (rsFromDWH.next()) {
                 mapFromDV = getMapFromDV(rsFromDWH);
-                String sqlForDM = (properties.getProperty("dimWeekendsHolidays.dataInDM.RowByKeys") + " where dwhIdhubWeekendsHolidays = " +
+                String sqlForDM = (properties.getProperty("weekendsHolidays.dataInDM.RowByKeys") + " where dwhIdhubWeekendsHolidays = " +
                         rsFromDWH.getInt("dwhIdhubWeekendsHolidays") + " and validFrom = '" + rsFromDWH.getString("validFrom") + "\'");
                 System.out.println("sqlForDM: " + sqlForDM);
                 mapFromDM = getMapFromDM(mapFromDV.size(), sqlForDM);
