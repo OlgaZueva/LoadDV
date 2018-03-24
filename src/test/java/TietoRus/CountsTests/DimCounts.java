@@ -341,9 +341,7 @@ public class DimCounts {
     @Test(enabled = true)
     public void dimContainerLocation() throws SQLException, IOException {
         getPropertiesFile();
-        String query = properties.getProperty("common.sql.forCount") + " " + properties.getProperty("dimContainerLocation.dataInDV.commonPart");
-        System.out.println(query);
-        int countRowInDV = getCountRowInDV(query);
+        int countRowInDV = getCountRowInDV(properties.getProperty("dimContainerLocation.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("dimContainerLocation.dim.CountRows"));
         assertRowCount(countRowInDV, countRowInDim);
     }
