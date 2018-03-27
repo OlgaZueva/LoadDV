@@ -34,13 +34,13 @@ public class HubsCounts {
     /*-------------------------------------------------------------
 Блок для таблиц, которые перезагружаются полностью, нет изменений из CDC, поэтому тут действует правило: сколько хабов - столько сатов и сат статусов.
 При загрузке сатов существующая запись в рамках ключа хаба удаляется и вставляется новая.
+Т.к. хабы строятся на перезагружаемых полностью таблицфх, то могут быть нюансы: если хаб был создан, потом запись физически удалили из источника, то
+хабов будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы.
 *///-----------------------------------------------------------
 
     @Test(enabled = true)
     public void hubControllingOffice() throws SQLException, IOException {
-        System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
-        System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
+        System.out.println("В случае паденя теста см комментарий к блоку тестов");
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("controllingOffice.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("controllingOffice.hub.CountRows"));
@@ -49,9 +49,7 @@ public class HubsCounts {
 
     @Test(enabled = true)
     public void hubContainerType() throws SQLException, IOException {
-        System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
-        System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
+        System.out.println("В случае паденя теста см комментарий к блоку тестов");
         getPropertiesFile();
         int countRowInSA = (getCountRowInSA(properties.getProperty("containerType.union.CountRows")) + 1);
         int countRowInHub = getCountRowOfHub(properties.getProperty("containerType.hub.CountRows"));
@@ -64,6 +62,7 @@ public class HubsCounts {
         В ключе есть SELSKAB, который может быть удалени при какой-либо из загрузок изменений (до удаления записи с ним могля быть справедливо загружены).
         Контрольный запрос учитывает такие ситуации
          */
+        System.out.println("В случае паденя теста см комментарий к блоку тестов");
         getPropertiesFile();
         int countRowInSA = (getCountRowInSA(properties.getProperty("company.union.CountRows")) + 1);//fake row
         int countRowInHub = getCountRowOfHub(properties.getProperty("company.hub.CountRows"));
@@ -72,9 +71,7 @@ public class HubsCounts {
 
     @Test(enabled = true)
     public void hubShipItConstants() throws SQLException, IOException {
-        System.out.println("Могут быть нюансы если хаб был создан, потом запись физически удалили из источника и загрузили изменения");
-        System.out.println("В данном случае перегрузили всю таблицу");
-        System.out.println("В этом случае хабо будет больше, чем расчетное число, потому как контрольный запрос идет на SA-таблицы");
+        System.out.println("В случае паденя теста см комментарий к блоку тестов");
         getPropertiesFile();
         int countRowInSA = getCountRowInSA(properties.getProperty("shipItConstants.union.CountRows"));
         int countRowInHub = getCountRowOfHub(properties.getProperty("shipItConstants.hub.CountRows"));
