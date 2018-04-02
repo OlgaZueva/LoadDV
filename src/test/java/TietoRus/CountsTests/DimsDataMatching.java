@@ -696,7 +696,7 @@ INSERT INTO DataVaultTest.fct.fctLoopSearch (liveScheduleName, loopLeg, location
 Запрос на проверку данных составлен только на выборку validFrom из satBooking, из остальных таблиц в него включать будет слишком громоздко и решила этого не делать
 Т.о. данный тест не покажет истинное положение и егго можно назвать некорректным. Запрос соотвествует спеке версии 1.5.
 Контрольный запрос booking.dwh.CountRows составлен как должно быть и если этот тест упадет- нужно искать проблему при помощи booking.dwh.CountRows -запроса.
-
+02.04.2018 добавлена загрузка поля dwhIdHubContainerLocation из satLnkBookingContainerLocation запрос на выборку данных для сравнения не переделывался.
  */
         getPropertiesFile();
         System.err.println("Cм коммент к тесту");

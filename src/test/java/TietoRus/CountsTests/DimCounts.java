@@ -236,6 +236,8 @@ public class DimCounts {
 
     @Test(enabled = true)
     public void dimBooking() throws SQLException, IOException {
+        //02.04.2018 добавлена загрузка поля dwhIdHubContainerLocation из satLnkBookingContainerLocation
+
         getPropertiesFile();
         int countRowInDV = getCountRowInDV(properties.getProperty("booking.dwh.CountRows"));
         int countRowInDim = getCountRowInDM(properties.getProperty("booking.dim.CountRows"));
